@@ -1,0 +1,13 @@
+.advertisment {
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    border-radius: inherit;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.advertisment::-webkit-scrollbar {
+    display: none;
+}
+

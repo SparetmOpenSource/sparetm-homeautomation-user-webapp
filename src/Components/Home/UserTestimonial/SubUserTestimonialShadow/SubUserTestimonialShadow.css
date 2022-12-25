@@ -1,0 +1,22 @@
+.userTestimonial_list_box_shadow {
+    background: rgb(212, 9, 223, 0.1);
+    border-radius: 0.6rem;
+}
+
+.userTestimonial_list_box_shadow :nth-child(1),
+.userTestimonial_list_box_shadow :nth-child(5),
+.userTestimonial_list_box_shadow :nth-child(6),
+.userTestimonial_list_box_shadow :nth-child(12),
+.userTestimonial_list_box_shadow :nth-child(3),
+.userTestimonial_list_box_shadow :nth-child(7),
+.userTestimonial_list_box_shadow :nth-child(8),
+.userTestimonial_list_box_shadow :nth-child(10) {
+    grid-column: span 1;
+}
+
+.userTestimonial_list_box_shadow:nth-child(2),
+.userTestimonial_list_box_shadow:nth-child(4),
+.userTestimonial_list_box_shadow:nth-child(9),
+.userTestimonial_list_box_shadow:nth-child(11) {
+    grid-column: span 2;
+}

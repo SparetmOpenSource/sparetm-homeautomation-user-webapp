@@ -1,0 +1,117 @@
+.policy {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-auto-rows: 100%;
+    grid-gap: 10px;
+    border-radius: inherit;
+}
+
+.policy_column_2_container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 90%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-y: scroll;
+}
+
+.policy_column_2_container_info {
+    width: 100%;
+    margin: 1em 0;
+}
+
+/* ******************************************************* */
+
+.policy_column_1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+    padding: 1em;
+    backdrop-filter: blur(50px);
+}
+.policy_column_1_img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.policy_column_2 {
+    border-radius: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 2em;
+    padding-right: 3em;
+}
+.policy_column_2_btn {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    height: 10%;
+}
+
+/* ******************************************************* */
+
+.policy_column_2_container::-webkit-scrollbar {
+    display: none;
+}
+
+.policy_column_2_container_info_header,
+.policy_column_2_container_info_date {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.policy_column_2_container_info_statement {
+    width: 100%;
+}
+
+/* ***************************Media-Query****************************** */
+
+.policy_column_2_container_info_header h1 {
+    /* 2x16 px, line height = 150% of font-size */
+    margin: 0;
+    font-size: 2rem;
+    line-height: 48px;
+    color: inherit;
+}
+.policy_column_2_container_info_date p {
+    /* 1x16 px, line height = 150% of font-size */
+    font-size: 1rem;
+    line-height: 24px;
+    font-weight: 400;
+    color: inherit;
+}
+.policy_column_2_container_info_statement p {
+    /* 1.12x16 px, line height = 150% of font-size */
+    font-size: 1.5rem;
+    line-height: 36px;
+    font-weight: 300;
+    color: inherit;
+}
+
+@media (width <= 1280px) {
+    .policy_column_2_container_info_header h1 {
+        font-size: 1.5rem;
+        line-height: 36px;
+    }
+    .policy_column_2_container_info_date p {
+        font-size: 1rem;
+        line-height: 24px;
+    }
+    .policy_column_2_container_info_statement p {
+        font-size: 1.3rem;
+        line-height: 31.5px;
+    }
+}

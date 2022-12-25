@@ -1,0 +1,110 @@
+.form {
+    height: 100%;
+    border-radius: inherit;
+    padding: 1em 0.5em;
+}
+.form_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: scroll;
+    height: 100%;
+    border-radius: inherit;
+    padding: 1.5em 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.form_wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* ****************************** */
+h1 {
+    font-size: 24px;
+    line-height: 36px;
+}
+p {
+    font-size: 16px;
+    line-height: 24px;
+}
+h1,
+p {
+    color: lavender;
+}
+/* ****************************** */
+
+.form_field {
+    width: 80%;
+    padding: 0.7em;
+    border-radius: inherit;
+    font-size: 1rem;
+    line-height: 24px;
+    transition: 0.5s all ease;
+    margin-top: 1em;
+    border: 3px solid grey;
+}
+
+.form_field:focus {
+    outline-offset: 5px;
+    border: 3px solid orange;
+    transition: 0.5s all ease;
+}
+
+/* ******************************* */
+.form_error {
+    color: red;
+    background: rgb(255, 0, 0, 0.1);
+    padding: 0.5em 1.5em 0.5em 1.5em;
+    border-radius: 0.8em;
+    font-size: 0.87rem;
+    line-height: 21px;
+}
+/* ********************************* */
+
+.form_toggleBtn,
+.form_appPolicies {
+    text-align: center;
+    width: 100%;
+}
+
+.form_toggleBtn p,
+.form_appPolicies p {
+    font-size: 1rem;
+    line-height: 24px;
+    cursor: pointer;
+    color: lavender;
+}
+
+.form_toggleBtn p:hover,
+.form_appPolicies p:hover {
+    text-decoration: underline;
+    color: #00b5ff !important;
+}
+
+/* ******************************************* */
+
+@media (width <= 1280px) {
+    .form_field {
+        padding: 0.5em;
+        font-size: 0.87rem;
+        line-height: 21px;
+    }
+    h1 {
+        font-size: 24px;
+        line-height: 36px;
+    }
+    p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .form_toggleBtn p,
+    .form_appPolicies p {
+        font-size: 0.87rem;
+        line-height: 21px;
+    }
+    .add_css_to_prevent_overflow {
+        justify-content: inherit;
+    }
+}

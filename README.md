@@ -58,3 +58,6 @@ initial:-
     "react-scripts": "5.0.1",
     "typescript": "^4.9.4",
     "web-vitals": "^2.1.4"
+
+    added:-
+    npm i axios, framer-motion, react-hook-form, react-icons, react-query, react-router-dom, react-select, react-simple-star-rating, react-toastify

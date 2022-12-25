@@ -1,0 +1,19 @@
+.windowBackdropModel {
+    width: clamp(50%, 1500px, 92%);
+    height: min(90%, 800px);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: lavender;
+}
+
+.window_modal_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
