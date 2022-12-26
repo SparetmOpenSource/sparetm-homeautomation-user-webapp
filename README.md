@@ -61,3 +61,5 @@ initial:-
 
     added:-
     npm i axios, framer-motion, react-hook-form, react-icons, react-query, react-router-dom, react-select, react-simple-star-rating, react-toastify
+
+    notes -> check ProfileConfigWrapper, formToAddProfile

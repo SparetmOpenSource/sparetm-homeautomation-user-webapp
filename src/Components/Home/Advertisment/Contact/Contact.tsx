@@ -189,7 +189,7 @@ const Contact = () => {
             >
                 {openPrivacyModel && (
                     <WindowBackdropModel
-                        backdropColor="rgb(31, 33, 35,0.8)"
+                        backdropColor="rgba(10,10,10,.86)"
                         handleClose={closePrivacy}
                     >
                         <Policy />

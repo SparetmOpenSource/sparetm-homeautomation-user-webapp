@@ -10,13 +10,13 @@ const Policy = () => {
         <div className="policy">
             <div
                 className="policy_column_1"
-                style={{ background: 'rgb(37, 41, 45, 0.1)' }}
+                style={{ background: 'rgb(37, 41, 45)' }}
             >
                 {/* '#25292D' */}
                 <span
                     className="policy_column_1_img"
                     style={{
-                        background: 'rgb(46, 52, 56, 0.1)',
+                        background: 'rgb(46, 52, 56)',
                         // background: '#a5e3b9',
                     }}
                 >
@@ -31,7 +31,7 @@ const Policy = () => {
             </div>
             <div
                 className="policy_column_2"
-                style={{ background: 'rgb(37, 41, 45,0.9)' }}
+                style={{ background: 'rgb(37, 41, 45)' }}
             >
                 {/* '#25292D' */}
                 <span className="policy_column_2_btn">

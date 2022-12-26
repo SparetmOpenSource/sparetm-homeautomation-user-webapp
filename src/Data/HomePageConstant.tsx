@@ -177,6 +177,7 @@ export const page_4_docs_list = [
         href: 'https://www.google.com/',
     },
 ];
+
 export const page_4_developers_list = [
     {
         id: 1,
