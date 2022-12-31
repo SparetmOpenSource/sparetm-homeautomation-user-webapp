@@ -12,12 +12,10 @@ const Policy = () => {
                 className="policy_column_1"
                 style={{ background: 'rgb(37, 41, 45)' }}
             >
-                {/* '#25292D' */}
                 <span
                     className="policy_column_1_img"
                     style={{
                         background: 'rgb(46, 52, 56)',
-                        // background: '#a5e3b9',
                     }}
                 >
                     <img
@@ -33,7 +31,6 @@ const Policy = () => {
                 className="policy_column_2"
                 style={{ background: 'rgb(37, 41, 45)' }}
             >
-                {/* '#25292D' */}
                 <span className="policy_column_2_btn">
                     <CustomButton
                         label="Cookie"
@@ -59,7 +56,6 @@ const Policy = () => {
                                 className="policy_column_2_container_info_header"
                                 style={{
                                     color: 'lavender',
-                                    // color: 'black',
                                 }}
                             >
                                 <h1>{PolicyStatement[0].type}</h1>
@@ -68,7 +64,6 @@ const Policy = () => {
                                 className="policy_column_2_container_info_date"
                                 style={{
                                     color: '#909ba6',
-                                    // color: 'black',
                                 }}
                             >
                                 <p>{PolicyStatement[0].date}</p>
@@ -77,7 +72,6 @@ const Policy = () => {
                                 className="policy_column_2_container_info_statement"
                                 style={{
                                     color: 'lavender',
-                                    // color: 'black',
                                 }}
                             >
                                 <p>{PolicyStatement[0].statement}</p>
@@ -93,7 +87,6 @@ const Policy = () => {
                                 className="policy_column_2_container_info_header"
                                 style={{
                                     color: 'lavender',
-                                    // color: 'black',
                                 }}
                             >
                                 <h1>{PolicyStatement[1].type}</h1>
@@ -102,7 +95,6 @@ const Policy = () => {
                                 className="policy_column_2_container_info_date"
                                 style={{
                                     color: '#909ba6',
-                                    // color: 'black',
                                 }}
                             >
                                 <p>{PolicyStatement[1].date}</p>
@@ -111,7 +103,6 @@ const Policy = () => {
                                 className="policy_column_2_container_info_statement"
                                 style={{
                                     color: 'lavender',
-                                    // color: 'black',
                                 }}
                             >
                                 <p>{PolicyStatement[1].statement}</p>

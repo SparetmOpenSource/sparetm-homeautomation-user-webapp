@@ -1,3 +1,7 @@
+import { RoutePath } from "./Constant";
+import { ImProfile } from 'react-icons/im';
+import { AiFillEdit, AiOutlineAppstoreAdd } from 'react-icons/ai';
+
 export const AuthToken =
     'wOhI3LUC6CzqTj8JATleIaFkReJH6qmmnasmDz_xFnSXdd9ZDS-tlNFPO_iHtj0V4e8';
 export const OpenWeatherApiKey = '4bf811a36c73b0b190a93be4d9925d4c';
@@ -12,6 +16,27 @@ export const ProfileConfigTypography = {
     form_subHeader: "Let's create your home with the basic details.",
     select_room_error: 'Max 6 rooms can be added',
 };
+
+    export const NavigationList = [
+        {
+            id: 1,
+            to: RoutePath.AddProfileConfig,
+            icon: <AiOutlineAppstoreAdd />,
+            label: 'Add',
+        },
+        {
+            id: 2,
+            to: RoutePath.SelectProfileConfig,
+            icon: <ImProfile />,
+            label: 'Select',
+        },
+        {
+            id: 3,
+            to: RoutePath.EditProfileConfig,
+            icon: <AiFillEdit />,
+            label: 'Edit',
+        },
+    ];
 
 export const ProfileConfigRoomNames = [
     { roomType: 'Bathroom', value: 'Bathroom', label: 'Bathroom' },

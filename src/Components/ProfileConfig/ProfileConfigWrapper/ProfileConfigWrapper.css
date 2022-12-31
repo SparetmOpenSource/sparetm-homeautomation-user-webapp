@@ -11,16 +11,12 @@
 
 /* ************************************ */
 
-.profileConfigWrapper_column_1 {
-    padding: 0.5em;
-    /* background: red; */
-}
+.profileConfigWrapper_column_1,
 .profileConfigWrapper_column_2 {
     padding: 0.5em;
-    /* background: rgb(169, 203, 55); */
 }
 
-/* ************************************** */
+/* ************************************* */
 
 .profileConfigWrapper_column_1_nav {
     display: flex;
@@ -31,51 +27,38 @@
     height: 70%;
     padding: 0.8em;
     border-radius: 1.5em;
+    -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
 }
+
 .profileConfigWrapper_column_1_nav div {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     width: 100%;
     height: 32%;
+    transform: none;
 }
+
+a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0.5em;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .profileConfigWrapper_column_1_nav div p {
     margin: 0.5em;
     font-size: 1rem;
     line-height: 24px;
+    color: lavender;
 }
+
 .profileConfigWrapper_column_1_nav div:hover {
     border-radius: inherit;
-    cursor: pointer;
     background: rgb(31, 33, 35, 0.5);
-    color: #00ffff;
-}
-
-/* ************************** */
-
-.profileConfigWrapper_column_2_form {
-    display: flex;
-    height: 100%;
-    gap: 1em;
-}
-.profileConfigWrapper_column_2_form_col_1 {
-    width: 50%;
-    border-radius: 1.5em;
-    padding: 0.5em;
-}
-.profileConfigWrapper_column_2_form_col_2 {
-    width: 50%;
-    border-radius: 0.6em;
-}
-
-/* ********************************* */
-
-.profileConfigWrapper_column_2_select_profile {
-    height: 100%;
-    background: yellow;
-}
-.profileConfigWrapper_column_2_edit_profile {
-    height: 100%;
-    background: rgb(255, 0, 191);
 }

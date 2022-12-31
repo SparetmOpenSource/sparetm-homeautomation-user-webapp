@@ -1,4 +1,4 @@
-import ProfileConfigWrapper from "../Components/ProfileConfig/ProfileConfigWrapper/ProfileConfigWrapper";
+import ProfileConfigWrapper from '../Components/ProfileConfig/ProfileConfigWrapper/ProfileConfigWrapper';
 
 const ProfileConfig = () => {
     const styles = {

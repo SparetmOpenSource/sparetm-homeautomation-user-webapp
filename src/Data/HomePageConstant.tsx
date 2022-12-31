@@ -146,17 +146,17 @@ export const page_4_socialContact_list = [
     {
         id: 1,
         name: 'GitHub',
-        href: 'https://github.com/HomeAutomationStartup',
+        href: 'https://github.com/SparetmOpenSource',
     },
     {
         id: 2,
         name: 'Instagram',
-        href: 'https://www.google.com/',
+        href: 'https://www.instagram.com/_sparetm/',
     },
     {
         id: 3,
         name: 'Contact us',
-        href: 'https://www.google.com/',
+        href: 'https://www.linkedin.com/in/sparetm',
     },
 ];
 
@@ -165,16 +165,19 @@ export const page_4_docs_list = [
         id: 1,
         name: 'Examples',
         href: 'https://www.google.com/',
+        to: '',
     },
     {
         id: 2,
         name: 'Link',
         href: 'https://www.google.com/',
+        to: '',
     },
     {
         id: 3,
         name: 'Link',
         href: 'https://www.google.com/',
+        to: '',
     },
 ];
 
@@ -183,16 +186,19 @@ export const page_4_developers_list = [
         id: 1,
         name: 'Link',
         href: 'https://www.google.com/',
+        to: '',
     },
     {
         id: 2,
         name: 'Link',
         href: 'https://www.google.com/',
+        to: '',
     },
     {
         id: 3,
         name: 'Link',
         href: 'https://www.google.com/',
+        to: '',
     },
 ];
 export const page_4_getHelp_list = [
@@ -200,16 +206,19 @@ export const page_4_getHelp_list = [
         id: 1,
         name: 'Blog Topics',
         href: 'https://www.google.com/',
+        to: '',
     },
     {
         id: 2,
         name: 'Request',
         href: 'https://www.google.com/',
+        to: '',
     },
     {
         id: 3,
         name: 'Screen Info',
         href: 'https://www.google.com/',
+        to: '',
     },
 ];
 // export const page_4_policy_list = [

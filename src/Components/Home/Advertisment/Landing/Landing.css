@@ -38,6 +38,9 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease-in-out;
+    -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 .landing_content_col_1_row_1,

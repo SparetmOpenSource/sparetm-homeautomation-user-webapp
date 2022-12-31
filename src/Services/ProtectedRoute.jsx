@@ -12,7 +12,7 @@ const useAuth = () => {
 
 const ProtectedRoute = () => {
     const auth = useAuth();
-    return auth ? <Outlet /> : <Navigate to={RoutePath.home} />;
+    return auth ? <Outlet /> : <Navigate to={RoutePath.Home} />;
 };
 
 export default ProtectedRoute;

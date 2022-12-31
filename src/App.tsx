@@ -3,6 +3,7 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import './App.css';
 import GlobalRoutes from './Components/Others/GlobalRoutes';
+//import ProfileConfig from './Pages/ProfileConfig';
 const queryClient = new QueryClient();
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
                 <Router>
                     <GlobalRoutes />
                 </Router>
+                {/* <ProfileConfig/> */}
             </div>
             <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         </QueryClientProvider>
