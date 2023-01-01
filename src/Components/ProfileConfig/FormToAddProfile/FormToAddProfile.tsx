@@ -58,12 +58,11 @@ const FormToAddProfile = () => {
     const onProSubmit = (data: any) => {
         Object.assign(
             data,
-            { countryName: country },
-            { countryCode: countryCode },
-            { state: state },
-            { cityName: city },
+            { country_name: country },
+            { country_code: countryCode },
+            { state_name: state },
+            { city_name: city },
             { room: room },
-            { picType: 'Man' },
         );
         console.log(data);
         // PostDataWithoutToken(Url.profile_creation_url + ADMIN, data);
