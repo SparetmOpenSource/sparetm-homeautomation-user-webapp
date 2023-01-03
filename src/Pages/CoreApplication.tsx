@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { HiCollection } from 'react-icons/hi';
@@ -11,7 +11,7 @@ import {
 } from 'react-icons/md';
 import { RiSecurePaymentLine } from 'react-icons/ri';
 import { TbLogout } from 'react-icons/tb';
-import { OpenWeatherApiKey } from '../Data/ProfileConfigConstant';
+//import { OpenWeatherApiKey } from '../Data/ProfileConfigConstant';
 import { AnimatePresence, motion } from 'framer-motion';
 import ConfirmationBackdropModel from '../Components/Others/FramerMotionBackdrop/ConfirmationBackdropModel/ConfirmationBackdropModel';
 import { logOut } from '../Utils/AuthHelperFn';
@@ -41,31 +41,31 @@ const CoreApplication = () => {
 
     /***********************************************************/
 
-    var headers = new Headers();
-    headers.append('Accept', 'application/json');
+    // var headers = new Headers();
+    // headers.append('Accept', 'application/json');
 
-    var requestOptions = {
-        method: 'GET',
-        headers: headers,
-        redirect: 'follow',
-    };
+    // var requestOptions = {
+    //     method: 'GET',
+    //     headers: headers,
+    //     redirect: 'follow',
+    // };
 
-    const getcoordinates = async () => {
-        try {
-            const response = await fetch(
-                `https://api.openweathermap.org/geo/1.0/direct?q=Ranchi,IN&limit=1&appid=${OpenWeatherApiKey}`,
-                requestOptions as any,
-            );
-            const coordinatesData: any = await response.json();
-            localStorage.setItem('lat', coordinatesData[0].lat);
-            localStorage.setItem('lon', coordinatesData[0].lon);
-        } catch (error) {
-            return console.log('error', error);
-        }
-    };
-    useEffect(() => {
-        getcoordinates();
-    });
+    // const getcoordinates = async () => {
+    //     try {
+    //         const response = await fetch(
+    //             `https://api.openweathermap.org/geo/1.0/direct?q=Ranchi,IN&limit=1&appid=${OpenWeatherApiKey}`,
+    //             requestOptions as any,
+    //         );
+    //         const coordinatesData: any = await response.json();
+    //         localStorage.setItem('lat', coordinatesData[0].lat);
+    //         localStorage.setItem('lon', coordinatesData[0].lon);
+    //     } catch (error) {
+    //         return console.log('error', error);
+    //     }
+    // };
+    // useEffect(() => {
+    //     getcoordinates();
+    // });
 
     const SideNav_Upper_List = [
         {
