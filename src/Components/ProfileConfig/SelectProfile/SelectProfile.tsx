@@ -26,21 +26,6 @@ const SelectProfile = () => {
                 {!isLoading && (
                     <div className="selectProfile_wrapper_loaded">
                         <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
-                        <ProfileCard col={ColorValue} />
                     </div>
                 )}
             </div>
