@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-//import { useNavigate } from 'react-router-dom';
+import { LoginUser } from '../../../Services/LoginUser';
+import { useNavigate } from 'react-router-dom';
 import CustomButton from '../../Others/Button/CustomButton';
 import './Form.css';
 
 const LoginForm = (props: any) => {
-    //  const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const {
         register: login,
@@ -19,7 +20,7 @@ const LoginForm = (props: any) => {
     const onLogSubmit = (data: any) => {
         console.log(data);
         reset();
-        // LoginUser(data, navigate);
+        LoginUser(data, navigate);
     };
     return (
         <div className="form" style={{ background: '#25292D' }}>

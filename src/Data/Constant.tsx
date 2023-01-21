@@ -1,12 +1,20 @@
+export const RootUrl = {
+    authMS: 'http://localhost:8085',
+};
+
 export const RoutePath = {
-    home: '/',
-    profileConfig: '/profileconfig',
-    // mainApplication: '/app',
-    // room: 'room/:type',
-    // premium: 'app/premium',
-    // setting: 'app/setting',
-    // dashboard: 'dashboard',
-    // connection: 'app/connection',
+    Home: '/',
+    About: '/about',
+    ProfileConfig: '/profileconfig',
+    AddProfileConfig: '/profileconfig/add',
+    SelectProfileConfig: '/profileconfig/select',
+    EditProfileConfig: '/profileconfig/edit',
+    CoreApplication: '/app',
+    Dashboard: 'dashboard',
+    DeviceRoom: 'room/:type',
+    Premium: 'premium',
+    Setting: 'setting',
+    Connection: 'connection',
 };
 
 export const SpringSuspense = {

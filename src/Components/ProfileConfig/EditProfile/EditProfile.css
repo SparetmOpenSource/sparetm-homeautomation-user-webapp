@@ -1,0 +1,9 @@
+.editProfile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e57254;
+    width: 100%;
+    height: 100%;
+    color:lavender;
+}

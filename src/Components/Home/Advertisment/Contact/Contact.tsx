@@ -9,8 +9,10 @@ import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import WindowBackdropModel from '../../../Others/FramerMotionBackdrop/WindowBackdropModel/WindowBackdropModel';
 import Policy from '../../Policy/Policy';
+import { Link } from 'react-router-dom';
 
 const Contact = () => {
+    
     /*************************************BACKDROP*************************************/
 
     // const [resolutionModelOpen, setResolutionModelOpen] = useState(false);
@@ -72,7 +74,7 @@ const Contact = () => {
                     </section>
                     <section className="contact_content_row_1_col_2">
                         <span>
-                            <p>DOCS</p>
+                            <p>DOCUMENTS</p>
                             <ul>
                                 {page_4_docs_list.map((item) => (
                                     <li key={item?.id}>
@@ -147,7 +149,16 @@ const Contact = () => {
                                 </p>
                             </li>
                             <li>
-                                <p>ABOUT</p>
+                                <Link to="/about">
+                                    <p
+                                        style={{
+                                            color: 'lavender',
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        ABOUT
+                                    </p>
+                                </Link>
                             </li>
                         </ul>
                         <ul>
@@ -162,26 +173,6 @@ const Contact = () => {
 
             {/***********************************BACKDROP*********************************/}
 
-            {/* <AnimatePresence
-                initial={false}
-                exitBeforeEnter={true}
-                onExitComplete={() => null}
-            >
-                {resolutionModelOpen && (
-                    <InformationBackdropModel
-                        backdropColor="rgb(202, 231, 234, 0.2)"
-                        handleClose={closeResInfo}
-                    >
-                         Open Bridge is under testing and needs user feedback. We
-                        need some input on screen resolution and would love to
-                        get feedback through email. Your screen width is{' '}
-                        <span style={{ color: 'orangered' }}>{width}</span>
-                        and your screen height is{' '}
-                        <span style={{ color: 'orangered' }}>{height}</span>.
-                    </InformationBackdropModel>
-                )}
-            </AnimatePresence>  */}
-
             <AnimatePresence
                 initial={false}
                 exitBeforeEnter={true}
@@ -189,7 +180,7 @@ const Contact = () => {
             >
                 {openPrivacyModel && (
                     <WindowBackdropModel
-                        backdropColor="rgb(31, 33, 35,0.8)"
+                        backdropColor="rgba(10,10,10,.86)"
                         handleClose={closePrivacy}
                     >
                         <Policy />

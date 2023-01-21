@@ -1,0 +1,51 @@
+.coreAppDashBoard {
+    display: flex;
+    height: 100%;
+    border-radius: 0.6em;
+    gap: 0.6rem;
+}
+
+.coreAppDashBoard_content {
+    height: 100%;
+    width: 74%;
+    display: flex;
+    flex-direction: column;
+    border-radius: inherit;
+    gap: 1rem;
+}
+
+.coreAppDashBoard_notification {
+    height: 100%;
+    width: 26%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+    gap: 0.6rem;
+    background: #181818;
+    border-radius: inherit;
+}
+
+/* ******************************** */
+
+.coreAppDashBoard_content > :first-child {
+    height: 30%;
+    border-radius: inherit;
+    /* background: #181818; */
+}
+
+.coreAppDashBoard_content > :last-child {
+    height: 70%;
+    border-radius: inherit;
+    background: #181818;
+}
+
+/* ******************************** */
+
+.coreAppDashBoard_notification div {
+    height: 15%;
+    background: rgb(173, 216, 230, 0.5);
+    border-radius: inherit;
+}
+.coreAppDashBoard_notification > :last-child {
+    height: 55%;
+}

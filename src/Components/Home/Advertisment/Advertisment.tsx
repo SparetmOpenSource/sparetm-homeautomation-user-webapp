@@ -1,8 +1,11 @@
+import React from 'react';
 import './Advertisment.css';
-import AppFeatures from './AppFeatures/AppFeatures';
-import Contact from './Contact/Contact';
 import Landing from './Landing/Landing';
-import UserReview from './UserReview/UserReview';
+
+const AppFeatures = React.lazy(() => import('./AppFeatures/AppFeatures'));
+const Contact = React.lazy(() => import('./Contact/Contact'));
+const UserReview = React.lazy(() => import('./UserReview/UserReview'));
+
 const Advertisment = () => {
     return (
         <div className="advertisment">

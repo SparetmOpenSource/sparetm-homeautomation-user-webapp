@@ -1,12 +1,15 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Url } from '../../../Data/HomePageConstant';
+import { RegisterUser } from '../../../Services/RegisterUser';
 import CustomButton from '../../Others/Button/CustomButton';
 import WindowBackdropModel from '../../Others/FramerMotionBackdrop/WindowBackdropModel/WindowBackdropModel';
 import Policy from './../Policy/Policy';
 import './Form.css';
 
 const RegistrationForm = (props: any) => {
+
     const [modelOpen, setModelOpen] = useState(false);
     const open = () => {
         setModelOpen(true);
@@ -26,7 +29,7 @@ const RegistrationForm = (props: any) => {
 
     const onRegSubmit = (data: any) => {
         console.log(data);
-        // RegisterUser(Url.user_registration_url, data);
+        RegisterUser(Url.user_registration_url, data);
         reset();
     };
     return (
@@ -180,6 +183,7 @@ const RegistrationForm = (props: any) => {
                     )}
             </form>
             {/*************************************BACKDROP*************************************/}
+
             <AnimatePresence
                 initial={false}
                 exitBeforeEnter={true}
@@ -187,7 +191,7 @@ const RegistrationForm = (props: any) => {
             >
                 {modelOpen && (
                     <WindowBackdropModel
-                        backdropColor="rgb(31, 33, 35,0.8)"
+                        backdropColor="rgba(10,10,10,.86)"
                         handleClose={close}
                     >
                         <Policy />

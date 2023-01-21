@@ -1,0 +1,85 @@
+.coreAppDashboardStatusPanel {
+    height: 100%;
+    border-radius: inherit;
+    padding: 0.5em;
+}
+
+/* ********************Weather Panel************************* */
+
+.coreAppDashboardStatusPanel_weather {
+    height: 100%;
+    display: flex;
+    border-radius: inherit;
+    gap: 1rem;
+}
+
+/* ******************* */
+
+.coreAppDashboardStatusPanel_weather > :first-child {
+    display: flex;
+    width: 40%;
+    height: 100%;
+    background: #434738;
+    border-radius: inherit;
+    color: lavender;
+    cursor: pointer;
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.coreAppDashboardStatusPanel_weather > :last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    height: 100%;
+    background: #b5d43b;
+    border-radius: inherit;
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+/* ******************** */
+
+.coreAppDashboardStatusPanel_weather > :first-child section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.5em;
+    overflow: hidden;
+}
+.coreAppDashboardStatusPanel_weather > :first-child > :first-child {
+    width: 50%;
+}
+.coreAppDashboardStatusPanel_weather > :first-child > :last-child {
+    width: 50%;
+}
+
+.coreAppDashboardStatusPanel_weather > :first-child span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* *********************** */
+
+.coreAppDashboardStatusPanel_weather > :first-child section span h1 {
+    font-size: 5rem;
+    line-height: 120px;
+    font-weight: 100;
+    margin: 0;
+}
+
+.coreAppDashboardStatusPanel_weather > :first-child section span p {
+    font-size: 1.5rem;
+    line-height: 36px;
+    font-weight: 100;
+    margin: 0;
+}
+
+/* ******************** */

@@ -32,8 +32,8 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: orangered;
-    color:  orangered;
+    background-color: rgb(255, 255, 255);
+    color:  rgb(255, 255, 255);
 }
 
 .dot-collision::before,
@@ -49,8 +49,8 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color:  orangered;
-    color:  orangered;
+    background-color:  rgb(255, 255, 255);
+    color:  rgb(255, 255, 255);
     animation: dotCollisionBefore 2s infinite ease-in;
 }
 
@@ -59,8 +59,8 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color:  orangered;
-    color: orangered;
+    background-color:  rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
     animation: dotCollisionAfter 2s infinite ease-in;
     animation-delay: 1s;
 }

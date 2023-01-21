@@ -12,7 +12,7 @@ const useAuth = () => {
 };
 const PublicRoute = () => {
     const auth = useAuth();
-    return auth ? <Navigate to={RoutePath.accountConfiguration} /> : <Outlet />;
+    return auth ? <Navigate to={RoutePath.ProfileConfig} /> : <Outlet />;
 };
 
 export default PublicRoute;
