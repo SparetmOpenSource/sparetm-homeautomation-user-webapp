@@ -2,10 +2,38 @@ import './SelectProfile.css';
 import LoadingFade from '../../Others/LoadingAnimation/LoadingFade/LoadingFade';
 import ProfileCard from '../ProfileCard/ProfileCard';
 import { useOutletContext } from 'react-router-dom';
+import { ReactQueryFetch } from '../../../API/ReactQuery';
+import { getAppAdminUser } from '../../../Utils/AuthHelperFn';
+import { getProfiles } from '../../../API/ProfileConfigApi';
+
 
 const SelectProfile = () => {
     const ColorValue: any = useOutletContext();
-    const isLoading = false;
+    const appUser = getAppAdminUser();
+    /*{----------------------------------------------------------------------------------------------------------}*/
+
+    const profiles = () => {
+        return getProfiles(appUser);
+    };
+    const onSuccess = (data: any) => {
+        // toast.success('successfully fetched');
+        console.log(data?.data);
+    };
+    const onError = (error: any) => {
+        // toast.error(error.message);
+        console.log(error.response.data?.message);
+    };
+    const status = true;
+    const { isLoading, data } = ReactQueryFetch(
+        'select_profile',
+        profiles,
+        onSuccess,
+        onError,
+        status,
+    );
+
+    /*{----------------------------------------------------------------------------------------------------------}*/
+
     return (
         <div
             className="selectProfile"
@@ -25,7 +53,16 @@ const SelectProfile = () => {
                 )}
                 {!isLoading && (
                     <div className="selectProfile_wrapper_loaded">
-                        <ProfileCard col={ColorValue} />
+                        {data?.data?.body?.map((el: any) => (
+                            <ProfileCard
+                                key={el.profileId}
+                                profileId={el.profileId}
+                                profileName={el.profileName}
+                                roomCount={el.roomCount}
+                                deviceCount={el.deviceCount}
+                                col={ColorValue}
+                            />
+                        ))}
                     </div>
                 )}
             </div>

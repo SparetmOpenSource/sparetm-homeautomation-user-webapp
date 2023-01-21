@@ -5,7 +5,7 @@ const EditProfile = () => {
       const ColorValue: any = useOutletContext();
   return (
       <div className="editProfile" style={{ background: ColorValue + '80' }}>
-          <h1>Edit profile page</h1>
+          <h1>Edit profile section is under construction</h1>
       </div>
   );
 }

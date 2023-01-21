@@ -13,6 +13,8 @@ import {
     ProfileConfigRoomNames,
     StateUrl,
 } from '../../../Data/ProfileConfigConstant';
+import { PostDataWithoutToken } from '../../../Services/PostDataWithoutToken';
+import { getAppAdminUser } from '../../../Utils/AuthHelperFn';
 const animatedComponents = makeAnimated();
 
 const FormToAddProfile = () => {
@@ -45,7 +47,7 @@ const FormToAddProfile = () => {
     const [room, setRoom] = useState([]);
 
     const sentence = ProfileConfigTypography.form_header.split('');
-    // let ADMIN = getAppAdminUser();
+    const appUser = getAppAdminUser();
     const {
         register: profileRegister,
         formState: { errors: proErrors },
@@ -58,14 +60,17 @@ const FormToAddProfile = () => {
     const onProSubmit = (data: any) => {
         Object.assign(
             data,
-            { country_name: country },
-            { country_code: countryCode },
-            { state_name: state },
-            { city_name: city },
+            { countryName: country },
+            { countryCode: countryCode },
+            { stateName: state },
+            { cityName: city },
             { room: room },
         );
         console.log(data);
-        // PostDataWithoutToken(Url.profile_creation_url + ADMIN, data);
+        PostDataWithoutToken(
+            'http://localhost:8086/mpa/api/v1/profiles?admin=' + appUser,
+            data,
+        );
         reset();
     };
 

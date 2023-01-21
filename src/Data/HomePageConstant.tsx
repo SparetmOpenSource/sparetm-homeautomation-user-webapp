@@ -1,3 +1,10 @@
+import { RootUrl } from "./Constant";
+
+export const Url = {
+    user_registration_url: RootUrl.authMS + '/api/v1/users/create',
+    user_login_url: RootUrl.authMS + '/api/v1/users/authenticate',
+};
+
 export const HomePageTypography = {
     page_1: {
         app_name: 'Open Bridge',

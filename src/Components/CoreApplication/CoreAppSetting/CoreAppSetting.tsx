@@ -1,10 +1,11 @@
+import './CoreAppSetting.css';
 
 const CoreAppSetting = () => {
-  return (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <h1>CoreAppSetting</h1>
-      </div>
-  );
-}
+    return (
+        <div className="coreAppSetting">
+            <h1>Setting section is under construction</h1>
+        </div>
+    );
+};
 
-export default CoreAppSetting
+export default CoreAppSetting;

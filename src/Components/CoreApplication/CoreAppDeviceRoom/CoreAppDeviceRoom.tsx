@@ -1,7 +1,9 @@
+import './CoreAppDeviceRoom.css';
+
 const CoreAppDeviceRoom = () => {
     return (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <h1>CoreAppDeviceRoom</h1>
+        <div className="coreAppDeviceRoom">
+            <h1>Device Room section is under construction</h1>
         </div>
     );
 };

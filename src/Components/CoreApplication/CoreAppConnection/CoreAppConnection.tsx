@@ -1,10 +1,11 @@
+import './CoreAppConnection.css';
 
 const CoreAppConnection = () => {
-  return (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <h1>CoreAppConnection</h1>
-      </div>
-  );
-}
+    return (
+        <div className="coreAppConnection">
+            <h1>Connection section is under construction</h1>
+        </div>
+    );
+};
 
-export default CoreAppConnection
+export default CoreAppConnection;

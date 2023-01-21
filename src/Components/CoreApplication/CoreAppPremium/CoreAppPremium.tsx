@@ -1,10 +1,11 @@
+import './CoreAppPremium.css';
 
 const CoreAppPremium = () => {
-  return (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <h1>CoreAppPremium</h1>
-      </div>
-  );
-}
+    return (
+        <div className="coreAppPremium">
+            <h1>Premium section is under construction</h1>
+        </div>
+    );
+};
 
-export default CoreAppPremium
+export default CoreAppPremium;

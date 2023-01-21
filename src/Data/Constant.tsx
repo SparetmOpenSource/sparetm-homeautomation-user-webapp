@@ -1,3 +1,7 @@
+export const RootUrl = {
+    authMS: 'http://localhost:8085',
+};
+
 export const RoutePath = {
     Home: '/',
     About: '/about',

@@ -8,7 +8,7 @@ import { openProfileOnClick } from '../../../Utils/AuthHelperFn';
 const ProfileCard = (props: any) => {
     const navigate = useNavigate();
     const handleClick = (profileId: any) => {
-         openProfileOnClick(profileId, navigate);
+        openProfileOnClick(profileId, navigate);
     };
     return (
         <motion.div
@@ -35,8 +35,18 @@ const ProfileCard = (props: any) => {
                         <p style={{ fontSize: '16px' }}>{props.profileName}</p>
                     </span>
                     <span className="profileCard_container_row_2_info">
-                        <p style={{ fontSize: '24px', color: '#E2FF00' }}>56</p>
-                        <p style={{ fontSize: '14px' }}>Devices</p>
+                        <span>
+                            <p style={{ fontSize: '16px', color: '#E2FF00' }}>
+                                {props.roomCount}
+                            </p>
+                            <p style={{ fontSize: '10px' }}>Rooms</p>
+                        </span>
+                        <span>
+                            <p style={{ fontSize: '16px', color: '#E2FF00' }}>
+                                {props.deviceCount}
+                            </p>
+                            <p style={{ fontSize: '10px' }}>Devices</p>
+                        </span>
                     </span>
                 </section>
             </div>

@@ -69,8 +69,15 @@
     align-items: center;
     justify-content: center;
     border-top: 1px solid rgb(229, 196, 84);
-    flex-direction: column;
 }
-.profileCard_container_row_2_info p {
+.profileCard_container_row_2_info span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 50%;
+}
+.profileCard_container_row_2_info span p {
     margin: 0;
 }

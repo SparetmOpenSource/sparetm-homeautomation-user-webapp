@@ -1,4 +1,4 @@
-import { RoutePath } from "../Data/Constant";
+import { RoutePath } from '../Data/Constant';
 
 // Get JWT Token
 export const setAccessToken = (response: any) => {
@@ -47,6 +47,7 @@ export const logOut = (navigate: any) => {
     removeAccessToken();
     removeAppAdminUser();
     removeProfileId();
+    //removeCityCountryStateToken();
     navigate(RoutePath.Home);
 };
 
@@ -57,4 +58,6 @@ export const openProfileOnClick = (profileId: any, navigate: any) => {
     navigate(RoutePath.CoreApplication);
 };
 
-
+export const removeCityCountryStateToken = () => {
+    localStorage.removeItem('cityCountryStateToken');
+};
