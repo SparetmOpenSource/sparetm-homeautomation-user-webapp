@@ -1,0 +1,94 @@
+.selectProfile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0.5em;
+    border-radius: 0.6em;
+    -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+/* ************************************** */
+
+.selectProfile_search {
+    height: 14.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #07161B;
+    border-radius: inherit;
+}
+
+.selectProfile_search input {
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.selectProfile_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 84.5%; 
+    background-color: #07161B;
+    border-radius: inherit;
+    /* padding-bottom: 2em; */
+}
+
+/* ************************************** */
+
+.selectProfile_wrapper_isLoading {
+    width: 100%;
+    height: 100%;
+}
+
+.selectProfile_wrapper_loaded {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    gap: 3rem;
+    padding: 2.5em;
+    grid-template-columns: repeat(6, 1fr);
+    overflow: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.selectProfile_wrapper_loaded::-webkit-scrollbar {
+    display: none;
+}
+
+.selectProfile_wrapper_loaded_empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.selectProfile_wrapper_loaded_empty p{
+    color: lavender;
+}
+.selectProfile_wrapper_loaded_empty_link{
+     color: aqua;
+}
+.selectProfile_search input {
+    border: none;
+    outline: 0;
+    width: 70%;
+    min-height: 4em;
+    background: #25292d;
+    padding-left: 1em;
+    border-radius: 10px;
+    color: lavender;
+}
+
+@media (width <=1280px) {
+    .selectProfile_wrapper_loaded {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
