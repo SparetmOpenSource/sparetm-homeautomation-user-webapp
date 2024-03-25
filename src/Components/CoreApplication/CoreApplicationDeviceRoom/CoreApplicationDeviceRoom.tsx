@@ -6,17 +6,17 @@ import { TfiPowerOff } from 'react-icons/tfi';
 import { useQueryClient } from 'react-query';
 import { useLocation, useOutletContext } from 'react-router-dom';
 import './CoreApplicationDeviceRoom.css';
-import {
-    catchError,
-    displayToastify
-} from '../../../Utils/HelperFn';
+import { catchError, displayToastify } from '../../../Utils/HelperFn';
 import { getMqttCred } from '../../../Api.tsx/ProfileConfigApis';
 import { useReactQuery_Get } from '../../../Api.tsx/useReactQuery_Get';
 import { useUpdateAllDeviceStatus } from '../../../Api.tsx/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 import ButtonLink from '../../Others/CustomButton/ButtonLink';
 import LoadingFade from '../../Others/LoadingAnimation/LoadingFade';
-import { getAppAdminUser, getProfileName } from '../../../Utils/ProfileConfigHelperFn';
+import {
+    getAppAdminUser,
+    getProfileName,
+} from '../../../Utils/ProfileConfigHelperFn';
 
 const CoreApplicationDeviceRoom = () => {
     const location = useLocation();
@@ -24,9 +24,12 @@ const CoreApplicationDeviceRoom = () => {
     const roomType: any = location.pathname.split('/')[3].replace('%20', ' ');
     const data: any = useOutletContext();
     const [allDeviceStatus, setAllDeviceStatus]: any = useState(false);
-    const [deviceOn, setDeviceOn] = useState(0);
-    const [deviceOff, setDeviceOff] = useState(0);
-    const [totalDevice, setTotalDevice] = useState(0);
+    // const [deviceOn, setDeviceOn] = useState(0);
+    // const [deviceOff, setDeviceOff] = useState(0);
+    // const [totalDevice, setTotalDevice] = useState(0);
+    const [deviceOn] = useState(0);
+    const [deviceOff] = useState(0);
+    const [totalDevice] = useState(0);
     const queryClient = useQueryClient();
     const adminName = getAppAdminUser();
 

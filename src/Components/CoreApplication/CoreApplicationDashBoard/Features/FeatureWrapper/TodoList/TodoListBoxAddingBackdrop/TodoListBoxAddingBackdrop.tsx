@@ -2,14 +2,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './TodoListBoxAddingBackdrop.css';
 import {
-    catchError,
-    displayToastify,
-} from '../../../../../../../Utils/HelperFn';
+    catchError} from '../../../../../../../Utils/HelperFn';
 import CalenderFrame from '../../../../../../Others/Calendar/CalenderFrame';
 import Button from '../../../../../../Others/CustomButton/Button';
 import TextBlinkAnimation from '../../../../../../Others/TextBlinkAnimation/TextBlinkAnimation';
 import { useAddTodo } from '../../../../../../../Api.tsx/CoreAppApis';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../Data/Enum';
+//import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../Data/Enum';
 import {
     getProfileId,
     getProfileName,
