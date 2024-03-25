@@ -1,0 +1,41 @@
+{
+    "select_profile": {
+        "headers": {
+            "count": [
+                "1"
+            ]
+        },
+        "body": [
+            {
+                "profileId": "d3b5b54d-efaf-43t8-bd8a-07972ac60368",
+                "profileName": "Shubham",
+                "roomCount": "4",
+                "updatedAt": "12-03-2024 12:16:29",
+                "deviceCount": "9"
+            },
+            {
+                "profileId": "d3b5b54d-efaf-43d8-bd8a-07972sc60368",
+                "profileName": "Rahul",
+                "roomCount": "6",
+                "updatedAt": "11-03-2024 12:16:29",
+                "deviceCount": "11"
+            },
+            {
+                "profileId": "d3b9b54d-efaf-43d8-bd8a-07972ac60368",
+                "profileName": "Mohit",
+                "roomCount": "1",
+                "updatedAt": "16-03-2024 12:16:29",
+                "deviceCount": "6"
+            },
+            {
+                "profileId": "d3b5b54d-efaf-43d8-id8a-07972ac60368",
+                "profileName": "Rocky",
+                "roomCount": "2",
+                "updatedAt": "19-03-2024 12:16:29",
+                "deviceCount": "7"
+            }
+        ],
+        "statusCode": "OK",
+        "statusCodeValue": 200
+    }
+}

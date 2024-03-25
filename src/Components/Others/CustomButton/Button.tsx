@@ -1,10 +1,10 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import './Button.css';
 
 const Button = (props: any) => {
     const status: boolean = props.status ? props.status : false;
     return (
-     <motion.button
+        <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="custom_btn"
@@ -20,8 +20,8 @@ const Button = (props: any) => {
             type="submit"
         >
             {props.label}
-            </motion.button>
-  )
-}
+        </motion.button>
+    );
+};
 
-export default Button
+export default Button;

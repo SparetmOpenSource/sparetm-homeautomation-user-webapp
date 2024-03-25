@@ -9,14 +9,17 @@
     text-align: center;
     border-radius: 0.5rem;
 }
+
 .skeleton {
     opacity: 0.7;
     animation: skeleton-loading 1s linear infinite alternate;
 }
+
 @keyframes skeleton-loading {
     0% {
         background-color: rgb(7, 11, 13);
     }
+
     100% {
         background-color: rgb(122, 122, 122);
     }
@@ -67,24 +70,28 @@
 }
 
 @keyframes dotCollisionBefore {
+
     0%,
     50%,
     75%,
     100% {
         transform: translateX(0);
     }
+
     25% {
         transform: translateX(-25px);
     }
 }
 
 @keyframes dotCollisionAfter {
+
     0%,
     50%,
     75%,
     100% {
         transform: translateX(0);
     }
+
     25% {
         transform: translateX(25px);
     }

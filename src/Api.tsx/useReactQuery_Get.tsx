@@ -30,5 +30,3 @@ export const useReactQuery_Get = (
         staleTime: stale_Time, // Default time is 0sec. time after isFetching will trigger
     });
 };
-
-

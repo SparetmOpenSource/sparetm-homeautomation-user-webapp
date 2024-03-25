@@ -1,8 +1,13 @@
 import axios from 'axios';
-import { RoutePath } from '../Data/Constants';
-import { Url } from '../Data/LogInUserConstant';
-import { catchError,setAccessToken, setAppAdminUser } from '../Utils/HelperFn';
+import {
+    APPPROFILEKEY,
+    OFFLINETESTUSERNAMEKEY,
+    RoutePath,
+} from '../Data/Constants';
+import { catchError } from '../Utils/HelperFn';
 import { APPPROFILE, OFFLINECRED } from '../Data/Enum';
+import { homeUrl } from '../Api.tsx/HomeApi';
+import { setAccessToken, setAppAdminUser } from '../Utils/ProfileConfigHelperFn';
 
 const login = (response: any, navigate: any) => {
     setAccessToken(response);
@@ -19,18 +24,33 @@ export const LoginUser = async (data: any, navigate: any) => {
     };
     try {
         let response = null;
-        if (localStorage.getItem('appProfile') === APPPROFILE.STATUSON) {
-            response = await axios.post(Url.user_login_url, data, options);
+        if (localStorage.getItem(APPPROFILEKEY) === APPPROFILE.STATUSON) {
+            response = await axios.post(
+                homeUrl.app_login,
+                data,
+                options,
+            );
         } else {
             response = {
                 data: {
-                    userName: localStorage.getItem('offlineTestUserName'),
-                    token: OFFLINECRED.TOKEN
-                }
-            }
+                    body: {
+                        admin_name: localStorage.getItem(
+                            OFFLINETESTUSERNAMEKEY,
+                        ),
+                        access_token: OFFLINECRED.TOKEN,
+                    },
+                },
+            };
         }
         login(response, navigate);
     } catch (error) {
         catchError(error);
     }
 };
+
+
+
+ 
+
+
+

@@ -11,7 +11,7 @@
 }
 
 .profileCard:hover {
-    background: linear-gradient(130deg,#ff7a18,#af002d 41.07%,#319197 76.05%);
+    background: linear-gradient(130deg, #ff7a18, #af002d 41.07%, #319197 76.05%);
 }
 
 .profileCard_container {
@@ -60,7 +60,8 @@
     text-align: center;
     padding-top: 1em;
 }
-.profileCard_container_row_2_name p{
+
+.profileCard_container_row_2_name p {
     color: lavender;
 }
 
@@ -75,7 +76,7 @@
 
 .profileCard_container_row_2_info span {
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 100%;

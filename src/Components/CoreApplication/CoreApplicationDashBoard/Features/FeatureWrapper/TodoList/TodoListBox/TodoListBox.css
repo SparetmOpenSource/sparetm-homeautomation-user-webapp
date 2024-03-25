@@ -1,0 +1,73 @@
+.schedular_tap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 70px;
+    background: white;
+    background: #1f2123;
+    margin-bottom: 1.5em;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    position: relative;
+    overflow: hidden;
+}
+
+.schedular_tap_comp_status {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: absolute;
+    left: 0;
+    transition: all 0.2s ease;
+    border-radius: inherit;
+    padding-right: 1em;
+}
+
+.schedular_tap:hover .schedular_tap_col_2 {
+    transition: all 0.2s ease;
+    background: rgb(98, 255, 0, 0.8);
+}
+
+.schedular_container> :last-child {
+    margin-bottom: 0;
+}
+
+.schedular_tap_col_1 {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    color: lavender;
+    padding-left: 1em;
+}
+
+.schedular_tap_col_1 h1 {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.schedular_tap_col_1 p {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.schedular_tap_col_2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 20%;
+    height: 100%;
+    background: rgb(98, 255, 0, 0.2);
+    border-radius: inherit;
+    transition: all 0.5s ease;
+    z-index: 100;
+    cursor: pointer;
+}

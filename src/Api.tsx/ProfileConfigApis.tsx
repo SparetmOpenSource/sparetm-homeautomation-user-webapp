@@ -24,8 +24,8 @@ const profileUrl = {
     get_country: 'https://www.universal-tutorial.com/api/countries/',
     get_city: 'https://www.universal-tutorial.com/api/cities/',
     get_state: 'https://www.universal-tutorial.com/api/states/',
-    get_profiles: '/mpa/api/v1/profiles?admin=',
-    get_profile: '/mpa/api/v1/profile?admin=',
+    get_all_profile: '/mpa/api/v1/profiles/all?admin=',
+    get_profile: '/mpa/api/v1/profiles?id=',
     add_profile: '/mpa/api/v1/profiles?admin=',
     get_mqtt_cred: '/mpa/api/v1/profiles/mqtt/cred?admin=',
 };
@@ -54,13 +54,20 @@ export const getCityCountryStateToken = async () => {
 };
 /********************************Fetch all profiles********************************/
 export const getProfiles = async (appUser: any) => {
-    return await api.get(profileUrl.get_profiles + appUser, getHeaderConfig);
+    return await api.get(profileUrl.get_all_profile + appUser, getHeaderConfig);
 };
 
 /*************************Fetch specific profile*******************************/
-export const getProfile = async (appUser: any, profileId: any) => {
+// export const getProfile = async (appUser: any, profileId: any) => {
+//     return await api.get(
+//         `${profileUrl.get_profile}${appUser}&id=${profileId}`,
+//         getHeaderConfig,
+//     );
+// };
+
+export const getProfile = async (profileId: any) => {
     return await api.get(
-        `${profileUrl.get_profile}${appUser}&id=${profileId}`,
+        `${profileUrl.get_profile}${profileId}`,
         getHeaderConfig,
     );
 };
@@ -73,7 +80,11 @@ export const useAddProfiles = (
 ) => {
     return useMutation(
         (data) => {
-            return api.post(profileUrl.add_profile + appUser, data, postHeaderConfig);
+            return api.post(
+                profileUrl.add_profile + appUser,
+                data,
+                postHeaderConfig,
+            );
         },
         { onSuccess: on_Success, onError: on_Error },
     );

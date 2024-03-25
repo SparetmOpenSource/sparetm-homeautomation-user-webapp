@@ -47,7 +47,10 @@ export const useDeleteTodo = (on_Error: any, closeDeleteTodo: any) => {
     const queryClient = useQueryClient();
     return useMutation(
         (todoId) => {
-            return api.delete(featureUrl.del_todo_list + todoId, postHeaderConfig);
+            return api.delete(
+                featureUrl.del_todo_list + todoId,
+                postHeaderConfig,
+            );
         },
         {
             onSuccess: () => {
@@ -279,7 +282,10 @@ export const useDeleteDevice = (on_Error: any, closeDeleteDevice: any) => {
     const queryClient = useQueryClient();
     return useMutation(
         (deviceId) => {
-            return api.delete(featureUrl.del_device + deviceId, postHeaderConfig);
+            return api.delete(
+                featureUrl.del_device + deviceId,
+                postHeaderConfig,
+            );
         },
         {
             onSuccess: () => {
@@ -291,4 +297,3 @@ export const useDeleteDevice = (on_Error: any, closeDeleteDevice: any) => {
         },
     );
 };
-

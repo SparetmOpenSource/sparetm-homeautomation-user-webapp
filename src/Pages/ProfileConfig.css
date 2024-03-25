@@ -8,26 +8,27 @@
     grid-gap: 0.5em;
 }
 
-.profileConfig>:first-child{
+.profileConfig>:first-child {
     min-width: 120px;
     display: flex;
     justify-content: center;
     padding-top: 1rem;
-} 
-.profileConfig>:first-child >:first-child{
+}
+
+.profileConfig>:first-child>:first-child {
     width: 80%;
     height: 80%;
     /* background-color: #2E3438; */
     background-color: rgb(7, 22, 27);
     color: lavender;
     border-radius: 1rem;
-        padding: 0.8em;
-        -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
-        -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
-        box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    padding: 0.8em;
+    -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.profileConfig>:first-child >:first-child div {
+.profileConfig>:first-child>:first-child div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,7 +37,7 @@
     transform: none;
 }
 
-.profileConfig>:first-child >:first-child a {
+.profileConfig>:first-child>:first-child a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,7 +47,7 @@
     cursor: pointer;
 }
 
-.profileConfig>:first-child >:first-child div p {
+.profileConfig>:first-child>:first-child div p {
     margin: 0.5em;
     font-size: 1rem;
     line-height: 24px;

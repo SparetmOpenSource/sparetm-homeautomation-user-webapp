@@ -1,8 +1,8 @@
-import { motion, useAnimationControls } from "framer-motion";
-import { useState } from "react";
+import { motion, useAnimationControls } from 'framer-motion';
+import { useState } from 'react';
 import './TextBlinkAnimation.css';
 
-const  TextBlinkAnimation = ({
+const TextBlinkAnimation = ({
     children,
     color,
     size,

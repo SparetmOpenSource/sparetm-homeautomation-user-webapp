@@ -1,0 +1,133 @@
+.calenderFrame {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    padding: 0.5em;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.calenderFrame::-webkit-scrollbar {
+    display: none;
+}
+
+.calenderFrame_reset {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: inherit;
+}
+
+.calenderFrame_content {
+    width: 100%;
+}
+
+/* ********************************************* */
+.calendar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    border-radius: inherit;
+    padding: 0.5em;
+}
+
+.calendar_header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.calendar_header> :first-child,
+.calendar_header> :last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+}
+
+.calendar_header> :first-child {
+    border-radius: 0.5em;
+}
+
+.calendar_header> :last-child {
+    cursor: pointer;
+    justify-content: space-around;
+}
+
+.calendar_content {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.calendar_content_day {
+    /* *****query***** */
+    height: 3em;
+    /* *****query***** */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell {
+    height: 2.5em;
+    padding: 0.1em;
+}
+
+.cell_container {
+    /* *****query***** */
+    height: 2.5em;
+    /* *****query***** */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.cell_container:hover {
+    background-color: orangered !important;
+    border-radius: 0.5em;
+    color: rgb(255, 255, 255);
+}
+
+/* *********************color********************** */
+.calenderFrame {
+    background: #CEC7BF;
+}
+
+.calenderFrame_reset {
+    background: rgb(6, 22, 27);
+    color: lavender;
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.calendar_header> :first-child {
+    background: rgb(6, 22, 27, 0.7);
+    color: lavender;
+}
+
+.calendar_content_day {
+    background: #CEC7BF;
+    color: rgb(0, 0, 0);
+}
+
+.cell_container {
+    background: #CEC7BF;
+    color: rgb(0, 0, 0);
+}

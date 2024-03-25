@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
 import './ProfileCard.css';
-import { CgProfile } from 'react-icons/cg';
+// import { CgProfile } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
-import { openProfileOnClick } from '../../../../Utils/HelperFn';
+import { openProfileOnClick } from '../../../../Utils/ProfileConfigHelperFn';
 
-const ProfileCard = (props:any) => {
+const ProfileCard = (props: any) => {
     const navigate = useNavigate();
     const handleClick = (profileId: any, profileName: any) => {
-           openProfileOnClick(profileName, profileId, navigate); 
+        openProfileOnClick(profileName, profileId, navigate);
     };
     return (
         <motion.div
@@ -25,7 +25,8 @@ const ProfileCard = (props:any) => {
                         value={{ size: '3em', color: props?.col }}
                     >
                         <span>
-                            <CgProfile />
+                            {/* <CgProfile /> */}
+                            {props?.face}
                         </span>
                     </IconContext.Provider>
                 </span>
@@ -42,10 +43,14 @@ const ProfileCard = (props:any) => {
                             <p style={{ fontSize: '10px' }}>Rooms</p>
                         </span>
                         <span>
-                            <p style={{ fontSize: '13px', color: '#E2FF00' }}>
-                                {props?.updatedAt} 
+                            {/* <p style={{ fontSize: '13px', color: '#E2FF00' }}>
+                                {props?.updatedAt}
                             </p>
-                            <p style={{ fontSize: '10px' }}>Last updated</p>
+                            <p style={{ fontSize: '10px' }}>Last updated</p> */}
+                            <p style={{ fontSize: '13px', color: '#E2FF00' }}>
+                                {props?.deviceCount}
+                            </p>
+                            <p style={{ fontSize: '10px' }}>Device</p>
                         </span>
                     </span>
                 </section>
@@ -55,4 +60,3 @@ const ProfileCard = (props:any) => {
 };
 
 export default ProfileCard;
-

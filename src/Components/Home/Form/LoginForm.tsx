@@ -3,14 +3,21 @@ import './Form.css';
 import Button from '../../Others/CustomButton/Button';
 import TextBlinkAnimation from '../../Others/TextBlinkAnimation/TextBlinkAnimation';
 import { displayToastify } from '../../../Utils/HelperFn';
-import { APPPROFILE, OFFLINECRED, TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
+import {
+    APPPROFILE,
+    OFFLINECRED,
+    TOASTIFYCOLOR,
+    TOASTIFYSTATE,
+} from '../../../Data/Enum';
 import { useNavigate } from 'react-router-dom';
 import { LoginUser } from '../../../Services/LogInUser';
-import { LogInCredLength } from '../../../Data/LogInUserConstant';
+import { LogInCredLength } from '../../../Data/HomePageConstant';
+import { APPPROFILEKEY } from '../../../Data/Constants';
+import { setOfflineUser } from '../../../Utils/ProfileConfigHelperFn';
 
 const LoginForm = () => {
     const navigate = useNavigate();
-    const formColor: any = "white";
+    const formColor: any = 'white';
     const sentence = 'Sign In!'.split('');
 
     const {
@@ -21,14 +28,23 @@ const LoginForm = () => {
     } = useForm({
         mode: 'onBlur',
     });
-
+//   data?.password === OFFLINECRED.PASSWORD &&
+//       data?.userName === OFFLINECRED.USERNAME;
     const onLogSubmit = (data: any) => {
         reset();
-        if (localStorage.getItem('appProfile') === APPPROFILE.STATUSOFF) {
-            if (data?.password === OFFLINECRED.PASSWORD && data?.userName === OFFLINECRED.USERNAME) {
+        if (localStorage.getItem(APPPROFILEKEY) === APPPROFILE.STATUSOFF) {
+            if (
+                data?.password === OFFLINECRED.PASSWORD &&
+                data?.email === OFFLINECRED.EMAIL
+            ) {
+                setOfflineUser(OFFLINECRED.USERNAME, data?.password);
                 LoginUser(data, navigate);
             } else {
-                displayToastify('Invalid cred for offline mode', TOASTIFYCOLOR.DARK, TOASTIFYSTATE.INFO)
+                displayToastify(
+                    'Invalid cred for offline mode',
+                    TOASTIFYCOLOR.DARK,
+                    TOASTIFYSTATE.INFO,
+                );
             }
         } else {
             LoginUser(data, navigate);
@@ -36,26 +52,29 @@ const LoginForm = () => {
     };
 
     return (
-         <div className="form">
+        <div className="form">
             <form
                 onSubmit={handleLogSubmit(onLogSubmit)}
                 className="form_wrapper"
             >
-                <h1> {sentence.map((letter:any, index:any) => {
-                    return (
-                        <TextBlinkAnimation
-                            key={index}
-                            color="rgb(8, 18, 41)"
-                            size="calc(35px + (45 - 35) * ((100vw - 1280px) / (1600 - 1280)))"
-                            height="27px"
-                            weight="700"
-                            opacity="0.5"
-                            mode="color-burn"
-                        >
-                            {letter === ' ' ? '\u00A0' : letter}
-                        </TextBlinkAnimation>
-                    );
-                })}</h1>
+                <h1>
+                    {' '}
+                    {sentence.map((letter: any, index: any) => {
+                        return (
+                            <TextBlinkAnimation
+                                key={index}
+                                color="rgb(8, 18, 41)"
+                                size="calc(35px + (45 - 35) * ((100vw - 1280px) / (1600 - 1280)))"
+                                height="27px"
+                                weight="700"
+                                opacity="0.5"
+                                mode="color-burn"
+                            >
+                                {letter === ' ' ? '\u00A0' : letter}
+                            </TextBlinkAnimation>
+                        );
+                    })}
+                </h1>
                 <p>We are really happy to see you again!</p>
 
                 {/* ***********************UserName field************************* */}
@@ -63,21 +82,21 @@ const LoginForm = () => {
                 <input
                     type="text"
                     className="form_field"
-                    placeholder="User Name"
+                    placeholder="Email"
                     style={{
                         background: formColor,
                         color: 'black',
-                        marginBottom:"1.5rem"
+                        marginBottom: '1.5rem',
                     }}
-                    {...login('userName', {
-                        required: 'user name is required',
+                    {...login('email', {
+                        required: 'email is required',
                         minLength: {
                             value: LogInCredLength.userName.min,
-                            message: 'user name is too short',
+                            message: 'email is too short',
                         },
                         maxLength: {
                             value: LogInCredLength.userName.max,
-                            message: 'user name is too long',
+                            message: 'email is too long',
                         },
                     })}
                 />
@@ -94,9 +113,9 @@ const LoginForm = () => {
                     className="form_field"
                     placeholder="Password"
                     style={{
-                          background: formColor, 
-                     color: 'black',
-                        marginBottom:"1.5rem"
+                        background: formColor,
+                        color: 'black',
+                        marginBottom: '1.5rem',
                     }}
                     {...login('password', {
                         required: 'password is required',

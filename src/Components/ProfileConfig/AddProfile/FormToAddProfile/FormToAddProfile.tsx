@@ -5,13 +5,32 @@ import { useForm } from 'react-hook-form';
 import Select, { createFilter } from 'react-select';
 import TextBlinkAnimation from '../../../Others/TextBlinkAnimation/TextBlinkAnimation';
 import { useNavigate } from 'react-router-dom';
-import { getCityList, getCountryList, getStateList, successMessage, useAddProfiles } from '../../../../Api.tsx/ProfileConfigApis';
+import {
+    getCityList,
+    getCountryList,
+    getStateList,
+    successMessage,
+    useAddProfiles,
+} from '../../../../Api.tsx/ProfileConfigApis';
 import { useReactQuery_Get } from '../../../../Api.tsx/useReactQuery_Get';
-import { catchError, displayToastify, getAppAdminUser } from '../../../../Utils/HelperFn';
+import {
+    catchError,
+    displayToastify,
+} from '../../../../Utils/HelperFn';
 import Button from '../../../Others/CustomButton/Button';
-import { ProfileConfigRoomNames, ProfileConfigTypography, RoutePath, SelectColorStyles } from '../../../../Data/Constants';
-import { APPPROFILE, TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
+import {
+    ProfileConfigRoomNames,
+    ProfileConfigTypography,
+    RoutePath,
+    SelectColorStyles,
+} from '../../../../Data/Constants';
+import {
+    APPPROFILE,
+    TOASTIFYCOLOR,
+    TOASTIFYSTATE,
+} from '../../../../Data/Enum';
 import { useOutletContext } from 'react-router-dom';
+import { getAppAdminUser } from '../../../../Utils/ProfileConfigHelperFn';
 const animatedComponents = makeAnimated();
 
 const FormToAddProfile = (props: any) => {
@@ -40,13 +59,25 @@ const FormToAddProfile = (props: any) => {
         },
     };
     const on_City_Error = (error: any) => {
-        displayToastify(error?.message, TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.ERROR);
+        displayToastify(
+            error?.message,
+            TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.ERROR,
+        );
     };
     const on_State_Error = (error: any) => {
-        displayToastify(error?.message, TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.ERROR);
+        displayToastify(
+            error?.message,
+            TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.ERROR,
+        );
     };
     const on_Country_Error = (error: any) => {
-        displayToastify(error?.message, TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.ERROR);
+        displayToastify(
+            error?.message,
+            TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.ERROR,
+        );
     };
     const on_City_Success = () => {};
     const on_State_Success = () => {};
@@ -119,7 +150,11 @@ const FormToAddProfile = (props: any) => {
     /*********************CREATING PROFILE**********************/
 
     const on_AddProfiles_Success = () => {
-        displayToastify(`${successMessage.profile_added}`, TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.SUCCESS);
+        displayToastify(
+            `${successMessage.profile_added}`,
+            TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.SUCCESS,
+        );
         handleGoToSelectProfile();
     };
     const on_AddProfiles_Error = (error: any) => {
@@ -143,7 +178,11 @@ const FormToAddProfile = (props: any) => {
             { room: room },
         );
         if (localStorage.getItem('appProfile') === APPPROFILE.STATUSOFF) {
-            displayToastify('You are using the app in offline mode. Please select the profile directly.',TOASTIFYCOLOR.LIGHT,TOASTIFYSTATE.INFO)
+            displayToastify(
+                'You are using the app in offline mode. Please select the profile directly.',
+                TOASTIFYCOLOR.LIGHT,
+                TOASTIFYSTATE.INFO,
+            );
         } else {
             mutate(data); // creating profile
         }

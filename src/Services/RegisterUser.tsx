@@ -12,7 +12,11 @@ export const RegisterUser = async (url: any, data: any) => {
     await axios
         .post(url, data, options)
         .then((response) => {
-            displayToastify(response?.data?.message, TOASTIFYCOLOR.DARK, TOASTIFYSTATE.ERROR);
+            displayToastify(
+                response,
+                TOASTIFYCOLOR.DARK,
+                TOASTIFYSTATE.ERROR,
+            );
         })
         .catch((error) => {
             catchError(error);

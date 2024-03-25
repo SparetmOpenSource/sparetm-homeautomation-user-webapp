@@ -1,24 +1,26 @@
 import { useState } from 'react';
-import {Outlet, useNavigate} from 'react-router-dom';
-import { displayToastify, getAppAdminUser, getProfileId } from '../Utils/HelperFn';
+import { Outlet, useNavigate } from 'react-router-dom';
+import {
+    displayToastify
+} from '../Utils/HelperFn';
 import { useReactQuery_Get } from '../Api.tsx/useReactQuery_Get';
 import { getProfile } from '../Api.tsx/ProfileConfigApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import CoreApplicationNav from '../Components/CoreApplication/CoreApplicationNav/CoreApplicationNav';
 import { AnimatePresence } from 'framer-motion';
 import ConfirmationBackdropModel from '../Components/Others/BackdropModel/ConfirmationBackdropModel/ConfirmationBackdropModel';
-import { RoutePath } from '../Data/Constants';
+import { appLogOut, getProfileId, profileLogOut } from '../Utils/ProfileConfigHelperFn';
 
 const CoreApplication = () => {
-    const appUser = getAppAdminUser();
+    //const appUser = getAppAdminUser();
     const profileId = getProfileId();
     const navigate = useNavigate();
     const [firstRoomRoute, setFirstRoomRoute]: any = useState();
-    
-      /*************************************BACKDROP*************************************/
-  
-    const [logoutModelOpen, setLogoutModelOpen]:any = useState(false);
-    const [accountModelOpen, setAccountModelOpen]:any = useState(false);
+
+    /*************************************BACKDROP*************************************/
+
+    const [logoutModelOpen, setLogoutModelOpen]: any = useState(false);
+    const [accountModelOpen, setAccountModelOpen]: any = useState(false);
     const openLogout = () => {
         setLogoutModelOpen(true);
     };
@@ -32,13 +34,17 @@ const CoreApplication = () => {
         setAccountModelOpen(false);
     };
     const profileFn = () => {
-        return getProfile(appUser, profileId);
+        return getProfile(profileId);
     };
     const on_Success = (data: any) => {
-        setFirstRoomRoute(data?.data?.body?.room[0]?.room_type);
+        setFirstRoomRoute(data?.data?.body?.room[0]?.roomType);
     };
     const on_Error = (error: any) => {
-        displayToastify(error?.response?.data?.message, TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.ERROR);
+        displayToastify(
+            error?.response?.data?.message,
+            TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.ERROR,
+        );
     };
 
     const { data } = useReactQuery_Get(
@@ -76,8 +82,15 @@ const CoreApplication = () => {
                     height: '100%',
                 }}
             >
-                 <CoreApplicationNav firstRoomRoute={firstRoomRoute} logoutModelOpen={logoutModelOpen} accountModelOpen={accountModelOpen} openLogout={openLogout} closeLogout={closeLogout} openAccount={openAccount} closeAccount={closeAccount } />
-                
+                <CoreApplicationNav
+                    firstRoomRoute={firstRoomRoute}
+                    logoutModelOpen={logoutModelOpen}
+                    accountModelOpen={accountModelOpen}
+                    openLogout={openLogout}
+                    closeLogout={closeLogout}
+                    openAccount={openAccount}
+                    closeAccount={closeAccount}
+                />
             </section>
 
             {/* **************************Content*************************** */}
@@ -111,14 +124,12 @@ const CoreApplication = () => {
             >
                 {accountModelOpen && (
                     <ConfirmationBackdropModel
-                        backgroundColor=""
+                        backgroundColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
                         foregroundColor="rgb(21, 26, 30)"
                         handleClose={closeAccount}
                         text="You want to switch profile, Are you sure?"
                         btn_text="Yes"
-                        setConfirmation={() =>
-                            navigate(RoutePath.SelectProfileConfig)
-                        }
+                        setConfirmation={() => profileLogOut(navigate)}
                     />
                 )}
             </AnimatePresence>
@@ -130,19 +141,17 @@ const CoreApplication = () => {
             >
                 {logoutModelOpen && (
                     <ConfirmationBackdropModel
-                        backgroundColor=""
+                        backgroundColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
                         foregroundColor="rgb(21, 26, 30)"
                         handleClose={closeLogout}
                         text="Oh no! You are leaving. Are you sure?"
                         btn_text="Yes, Log me out"
-                        // setConfirmation={() => logOut(navigate)}
-                        setConfirmation={() => displayToastify('Logging out', TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.INFO)}
+                        setConfirmation={() => appLogOut(navigate)}
                     />
                 )}
             </AnimatePresence>
 
             {/*************************************BACKDROP*************************************/}
-            
         </div>
     );
 };

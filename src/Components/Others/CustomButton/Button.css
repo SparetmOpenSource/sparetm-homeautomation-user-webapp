@@ -18,3 +18,8 @@
     border-radius: 40px;
     transition: 0.1s all ease;
 }
+
+.link_custom_btn_active {
+    background: gold;
+    color: black;
+}

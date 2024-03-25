@@ -1,4 +1,4 @@
-import { RoutePath} from '../Data/Constants'
+import { RoutePath } from '../Data/Constants';
 import React, { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import LoadingFade from '../Components/Others/LoadingAnimation/LoadingFade';
@@ -8,19 +8,46 @@ import ProtectedRoute from '../Services/ProtectedRoute';
 const Home = React.lazy(() => import('./HomePage'));
 const SignInSignUp = React.lazy(() => import('./SignInSignUpPage'));
 const ProfilePage = React.lazy(() => import('./ProfileConfigPage'));
-const AddProfile =  React.lazy(() => import('./../Components/ProfileConfig/AddProfile/AddProfile'));
-const SelectProfile = React.lazy(() => import('./../Components/ProfileConfig/SelectProfile/SelectProfile'));
+const AddProfile = React.lazy(
+    () => import('./../Components/ProfileConfig/AddProfile/AddProfile'),
+);
+const SelectProfile = React.lazy(
+    () => import('./../Components/ProfileConfig/SelectProfile/SelectProfile'),
+);
 const CoreApplication = React.lazy(() => import('./CoreApplication'));
-const CoreApplicationDashBoard = React.lazy(() => import('./../Components/CoreApplication/CoreApplicationDashBoard/CoreApplicationDashBoard'));
-const CoreApplicationPremium = React.lazy(() => import('./../Components/CoreApplication/CoreApplicationPremium/CoreApplicationPremium'));
-const CoreApplicationSetting =  React.lazy(() => import('../Components/CoreApplication/CoreApplicationSetting/CoreApplicationSetting'));
-const CoreApplicationDeviceRoom = React.lazy(() => import('./../Components/CoreApplication/CoreApplicationDeviceRoom/CoreApplicationDeviceRoom'));
+const CoreApplicationDashBoard = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationDashBoard/CoreApplicationDashBoard'
+        ),
+);
+const CoreApplicationPremium = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationPremium/CoreApplicationPremium'
+        ),
+);
+const CoreApplicationSetting = React.lazy(
+    () =>
+        import(
+            '../Components/CoreApplication/CoreApplicationSetting/CoreApplicationSetting'
+        ),
+);
+const CoreApplicationDeviceRoom = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationDeviceRoom/CoreApplicationDeviceRoom'
+        ),
+);
+
+const TodoListWrapper = React.lazy(
+    () => import('./../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/TodoList/TodoListWrapper'),
+);
 
 export const GlobalRoutes = () => {
     return (
-       <Suspense fallback={<LoadingFade />}>
+        <Suspense fallback={<LoadingFade />}>
             <Routes>
-
                 {/* -----------Public route----------- */}
                 <Route element={<PublicRoute />}>
                     <Route
@@ -52,8 +79,7 @@ export const GlobalRoutes = () => {
 
                 {/* -----------Protected route----------- */}
                 <Route element={<ProtectedRoute />}>
-
-                     {/************************************************/}
+                    {/************************************************/}
                     {/********************Profile*********************/}
                     {/************************************************/}
 
@@ -86,12 +112,12 @@ export const GlobalRoutes = () => {
                             path={RoutePath.SelectProfileConfig}
                             element={
                                 <Suspense fallback={<LoadingFade />}>
-                                    <SelectProfile /> 
+                                    <SelectProfile />
                                 </Suspense>
                             }
                         />
                     </Route>
-                     {/************************************************/}
+                    {/************************************************/}
                     {/******************CORE APPLICATION**************/}
                     {/************************************************/}
 
@@ -116,7 +142,7 @@ export const GlobalRoutes = () => {
                             path={RoutePath.Dashboard}
                             element={
                                 <Suspense fallback={<LoadingFade />}>
-                                    <CoreApplicationDashBoard /> 
+                                    <CoreApplicationDashBoard />
                                 </Suspense>
                             }
                         >
@@ -133,8 +159,7 @@ export const GlobalRoutes = () => {
                                 path={RoutePath.Dashboard_Todo}
                                 element={
                                     <Suspense fallback={<LoadingFade />}>
-                                        {/* <ToDoListWrapper /> */}
-                                        <h1>ToDoListWrapper</h1>
+                                        <TodoListWrapper />
                                     </Suspense>
                                 }
                             />
@@ -167,7 +192,7 @@ export const GlobalRoutes = () => {
                             path={RoutePath.Premium}
                             element={
                                 <Suspense fallback={<LoadingFade />}>
-                                    <CoreApplicationPremium /> 
+                                    <CoreApplicationPremium />
                                 </Suspense>
                             }
                         />
@@ -178,7 +203,7 @@ export const GlobalRoutes = () => {
                             path={RoutePath.Setting}
                             element={
                                 <Suspense fallback={<LoadingFade />}>
-                                    <CoreApplicationSetting /> 
+                                    <CoreApplicationSetting />
                                 </Suspense>
                             }
                         />
@@ -247,7 +272,6 @@ export const GlobalRoutes = () => {
                             /> */}
                         </Route>
                     </Route>
-
                 </Route>
 
                 {/* -----------Not found route----------- */}
@@ -261,5 +285,5 @@ export const GlobalRoutes = () => {
                 />
             </Routes>
         </Suspense>
-  )
-}
+    );
+};

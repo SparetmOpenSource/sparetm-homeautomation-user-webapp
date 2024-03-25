@@ -31,7 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 84.5%; 
+    height: 84.5%;
     background-color: #07161B;
     border-radius: inherit;
     /* padding-bottom: 2em; */
@@ -70,12 +70,15 @@
     justify-content: center;
     flex-direction: column;
 }
-.selectProfile_wrapper_loaded_empty p{
+
+.selectProfile_wrapper_loaded_empty p {
     color: lavender;
 }
-.selectProfile_wrapper_loaded_empty_link{
-     color: aqua;
+
+.selectProfile_wrapper_loaded_empty_link {
+    color: aqua;
 }
+
 .selectProfile_search input {
     border: none;
     outline: 0;

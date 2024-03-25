@@ -1,0 +1,126 @@
+.coreAppDashboardStatusPanel {
+    height: 100%;
+    border-radius: inherit;
+}
+
+.coreAppDashboardStatusPanel_isLoading {
+    height: 100%;
+    width: 100%;
+    border-radius: inherit;
+}
+
+/* ************************************** */
+
+.coreAppDashboardStatusPanel_isLoaded {
+    height: 100%;
+    display: flex;
+    border-radius: inherit;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.coreAppDashboardStatusPanel_isLoaded> :first-child {
+    display: flex;
+    width: 40%;
+    height: 100%;
+    border-radius: inherit;
+    background-color: rgb(206, 199, 191);
+    color: gray;
+    cursor: pointer;
+}
+
+/* ******************************************* */
+
+.coreAppDashboardStatusPanel_isLoaded> :last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    height: 100%;
+    background-color: #b5d43b;
+    border-radius: inherit;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+/* ************************************************* */
+
+.coreAppDashboardStatusPanel_isLoaded> :first-child section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.5em;
+    overflow: hidden;
+}
+
+.coreAppDashboardStatusPanel_isLoaded> :first-child> :first-child {
+    width: 60%;
+}
+
+.coreAppDashboardStatusPanel_isLoaded> :first-child> :last-child {
+    width: 40%;
+}
+
+.coreAppDashboardStatusPanel_isLoaded> :first-child section div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* *********************** */
+
+.coreAppDashboardStatusPanel_isLoaded> :first-child section div h1 {
+    font-size: 4.5rem;
+    line-height: 108px;
+    font-weight: 100;
+    margin: 0;
+    text-align: center;
+}
+
+.coreAppDashboardStatusPanel_isLoaded> :first-child section div p {
+    font-size: 1.31rem;
+    line-height: 31.5px;
+    font-weight: 100;
+    margin: 0;
+    text-align: center;
+}
+
+/* ****************************************** */
+
+.coreAppDashboardStatusPanel_isLoaded> :last-child> :first-child {
+    display: flex;
+    width: 100%;
+    height: 50%;
+}
+
+.coreAppDashboardStatusPanel_isLoaded> :last-child> :last-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 1rem 0rem;
+    width: 100%;
+    height: 50%;
+}
+
+.coreAppDashboardStatusPanel_isLoaded> :last-child> :first-child> :first-child {
+    height: 100%;
+    width: 60%;
+}
+
+.coreAppDashboardStatusPanel_isLoaded> :last-child> :first-child> :last-child {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem 0rem;
+    height: 100%;
+    width: 40%;
+}
+
+.coreAppDashboardStatusPanel_isLoaded> :last-child> :first-child> :last-child p {
+    margin: 0;
+    font-size: 1.5rem;
+}

@@ -1,0 +1,108 @@
+.form {
+    height: 100%;
+    width: 100%;
+    border-radius: 0.6em;
+    padding: 1em 0.5em;
+    padding: 1em;
+    margin: 0 auto;
+}
+
+.form_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    border-radius: inherit;
+    padding: 1.5em 0;
+}
+
+.form_container::-webkit-scrollbar {
+    display: none;
+}
+
+/* *************************************************** */
+
+.form_field {
+    width: 60%;
+    padding: 0.7em;
+    border-radius: inherit;
+    font-size: 1rem;
+    line-height: 24px;
+    transition: 0.5s all ease;
+    margin: 1em 0;
+    border: 3px solid grey;
+    -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.form_field:focus {
+    outline-offset: 5px;
+    border: 3px solid orange;
+    transition: 0.5s all ease;
+}
+
+/* *************************************************************** */
+
+.form_error {
+    color: red;
+    background: rgb(255, 0, 0, 0.1);
+    padding: 0.5em 1.5em 0.5em 1.5em;
+    border-radius: 0.8em;
+    font-size: 0.87rem;
+    line-height: 21px;
+}
+
+.form_heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 30%;
+    padding: 1em;
+}
+
+.form_heading p {
+    font-size: 1rem;
+    line-height: 24px;
+}
+
+/* ********************************* */
+
+.form_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 70%;
+    padding: 1em;
+    border-radius: inherit;
+}
+.form_wrapper > :first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+    border-radius: inherit;
+}
+.form_wrapper > :last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+    background: #1f2123;
+    border-radius: inherit;
+    padding: 1em;
+    -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+}

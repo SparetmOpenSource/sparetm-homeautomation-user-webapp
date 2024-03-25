@@ -1,16 +1,16 @@
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { logOut } from "../Utils/HelperFn"
-import "./ProfileConfig.css";
-import { motion } from "framer-motion";
-import { IconContext } from "react-icons";
-import { RoutePath } from "../Data/Constants";
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import './ProfileConfig.css';
+import { motion } from 'framer-motion';
+import { IconContext } from 'react-icons';
+import { RoutePath } from '../Data/Constants';
 import { ImProfile } from 'react-icons/im';
 import { AiOutlineAppstoreAdd } from 'react-icons/ai';
-import { HiOutlineLogout } from "react-icons/hi";
+import { HiOutlineLogout } from 'react-icons/hi';
+import { appLogOut } from '../Utils/ProfileConfigHelperFn';
 
 const ProfileConfig = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+    const navigate = useNavigate();
+    const location = useLocation();
     const colorValue =
         location.pathname === RoutePath.AddProfileConfig
             ? '#00ffff'
@@ -34,13 +34,13 @@ const ProfileConfig = () => {
             label: 'Select',
             listPath: '/profileconfig/select',
             currentPath: location.pathname.replace('%20', ''),
-      }
+        },
     ];
-  return (
-    <div className="profileConfig">
-      <section>
-        <span>
-           {NavigationList.map((item: any) => (
+    return (
+        <div className="profileConfig">
+            <section>
+                <span>
+                    {NavigationList.map((item: any) => (
                         <div
                             style={{
                                 borderRadius: 'inherit',
@@ -69,34 +69,36 @@ const ProfileConfig = () => {
                                 <p>{item.label}</p>
                             </Link>
                         </div>
-           ))}
-           <div
-                            style={{
-                                borderRadius: 'inherit'
-                            }}
-                        >
-                            <Link to={RoutePath.Auth}>
-                                <motion.span
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    onClick={()=>logOut(navigate) }
+                    ))}
+                    <div
+                        style={{
+                            borderRadius: 'inherit',
+                        }}
+                    >
+                        <Link to={RoutePath.Auth}>
+                            <motion.span
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => appLogOut(navigate)}
+                            >
+                                <IconContext.Provider
+                                    value={{
+                                        size: '3em',
+                                        color: colorValue,
+                                    }}
                                 >
-                                    <IconContext.Provider
-                                        value={{
-                                            size: '3em',
-                                            color: colorValue,
-                                        }}
-                                    >
-                                        <HiOutlineLogout /> 
-                                    </IconContext.Provider>
-                                </motion.span>
-                            </Link>
-                        </div>
-        </span>
-      </section>
-      <section><Outlet context={colorValue} /></section>
-    </div>
-  )
-}
+                                    <HiOutlineLogout />
+                                </IconContext.Provider>
+                            </motion.span>
+                        </Link>
+                    </div>
+                </span>
+            </section>
+            <section>
+                <Outlet context={colorValue} />
+            </section>
+        </div>
+    );
+};
 
-export default ProfileConfig
+export default ProfileConfig;

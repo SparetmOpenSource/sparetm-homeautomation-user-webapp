@@ -1,12 +1,27 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import {
+    MdBrightness4,
+    MdBrightness7,
+    MdBrightnessLow,
+    MdBrightnessMedium,
+} from 'react-icons/md';
 
 export const RootUrl = {
     authMS: 'http://localhost:8085',
 };
 
-export const AppName = "OpenBridge";
-export const NotificationColor =  "rgb(46,52,56)";//"#1F2123"; //  "#CEC7BF";
+export const NETWORKERRORKEY = 'Network Error';
+export const APPTOKENKEY = 'appToken';
+export const APPPROFILEKEY = 'appProfile';
+export const OFFLINETESTUSERNAMEKEY = 'offlineTestUserName';
+export const OFFLINETESTPASSWORDKEY = 'offlineTestPassword';
+export const APPUSERKEY = 'appUser';
+export const PROFILEIDKEY = 'profileId';
+export const PROFILENAMEKEY = 'profileName';
+export const NOTIFICATIONCOLORKEY = 'notificationColor';
 
+export const AppName = 'OpenBridge';
+//export const NotificationColor = 'rgb(46,52,56)'; //"#1F2123"; //  "#CEC7BF";
 
 export const RoutePath = {
     // Home route
@@ -55,15 +70,9 @@ export const home_contact_social_list = [
 
 // ------------------Home signIn/SignUp Form------------------------//
 
-export const useMountEffect = (fun: any, dep:any) => useEffect(fun, [dep]);  // eslint-disable-line react-hooks/exhaustive-deps
+export const useMountEffect = (fun: any, dep: any) => useEffect(fun, [dep]); // eslint-disable-line react-hooks/exhaustive-deps
 
 // -------------------- core app constant ----------------------- //
-
-export const todoStatus = [
-    'STATUS_NEW',
-    'STATUS_INPROGRESS',
-    'STATUS_COMPLETED',
-];
 
 export const weather_quote_constant = {
     fetch_delay_time: 1000000000, //15x60x1000 = 900000
@@ -77,7 +86,6 @@ export let Current_Date_Time = new Date().toLocaleDateString('en-us', {
     day: 'numeric',
 });
 
-
 // ----------------- profile config constant ------------------ //
 
 export const ProfileConfigTypography = {
@@ -86,24 +94,76 @@ export const ProfileConfigTypography = {
     select_room_error: 'Max 6 rooms can be added',
 };
 
-let RoomNamesConst: string[] = ['Bathroom','Bedroom','Dining Room','Drawing Room','Hall','Kitchen','Living Room','Master Bedroom','Room','Store Room','Study Room'];
+let RoomNamesConst: string[] = [
+    'Bathroom',
+    'Bedroom',
+    'Dining Room',
+    'Drawing Room',
+    'Hall',
+    'Kitchen',
+    'Living Room',
+    'Master Bedroom',
+    'Room',
+    'Store Room',
+    'Study Room',
+];
 
 export const ProfileConfigRoomNames = [
-    { room_type: RoomNamesConst[0], value: RoomNamesConst[0], label: RoomNamesConst[0]},
-    { room_type: RoomNamesConst[1], value: RoomNamesConst[1], label: RoomNamesConst[1] },
-    { room_type: RoomNamesConst[2], value: RoomNamesConst[2], label: RoomNamesConst[2] },
-    { room_type: RoomNamesConst[3], value: RoomNamesConst[3], label: RoomNamesConst[3] },
-    { room_type: RoomNamesConst[4], value: RoomNamesConst[4], label:RoomNamesConst[4] },
-    { room_type: RoomNamesConst[5], value:RoomNamesConst[5], label: RoomNamesConst[5]},
-    { room_type: RoomNamesConst[6], value: RoomNamesConst[6], label: RoomNamesConst[6]},
     {
-        room_type:RoomNamesConst[7],
+        roomType: RoomNamesConst[0],
+        value: RoomNamesConst[0],
+        label: RoomNamesConst[0],
+    },
+    {
+        roomType: RoomNamesConst[1],
+        value: RoomNamesConst[1],
+        label: RoomNamesConst[1],
+    },
+    {
+        roomType: RoomNamesConst[2],
+        value: RoomNamesConst[2],
+        label: RoomNamesConst[2],
+    },
+    {
+        roomType: RoomNamesConst[3],
+        value: RoomNamesConst[3],
+        label: RoomNamesConst[3],
+    },
+    {
+        roomType: RoomNamesConst[4],
+        value: RoomNamesConst[4],
+        label: RoomNamesConst[4],
+    },
+    {
+        roomType: RoomNamesConst[5],
+        value: RoomNamesConst[5],
+        label: RoomNamesConst[5],
+    },
+    {
+        roomType: RoomNamesConst[6],
+        value: RoomNamesConst[6],
+        label: RoomNamesConst[6],
+    },
+    {
+        roomType: RoomNamesConst[7],
         value: RoomNamesConst[7],
         label: RoomNamesConst[7],
     },
-    { room_type: RoomNamesConst[8], value: RoomNamesConst[8], label:RoomNamesConst[8] },
-    { room_type:RoomNamesConst[9], value: RoomNamesConst[9], label:RoomNamesConst[9] },
-    { room_type: RoomNamesConst[10], value:RoomNamesConst[10], label:RoomNamesConst[10] },
+    {
+        roomType: RoomNamesConst[8],
+        value: RoomNamesConst[8],
+        label: RoomNamesConst[8],
+    },
+    {
+        roomType: RoomNamesConst[9],
+        value: RoomNamesConst[9],
+        label: RoomNamesConst[9],
+    },
+    {
+        roomType: RoomNamesConst[10],
+        value: RoomNamesConst[10],
+        label: RoomNamesConst[10],
+    },
 ];
 
 export const SelectColorStyles = {
@@ -149,3 +209,20 @@ export const SpringSuspense = {
     },
 };
 
+export const deviceTypeArr = ['gadget', 'appliance'];
+
+export const ChangeBrightnessIcon = (brightness: any) => {
+    let icon: any;
+    if (brightness >= 0 && brightness < 20) {
+        icon = <MdBrightnessLow />;
+    } else if (brightness >= 20 && brightness < 40) {
+        icon = <MdBrightness4 />;
+    } else if (brightness >= 40 && brightness < 70) {
+        icon = <MdBrightnessMedium />;
+    } else if (brightness >= 70 && brightness <= 100) {
+        icon = <MdBrightness7 />;
+    }
+    return icon;
+};
+
+export const GadgetRgbDefaultColor = ['177', '216', '213', '0.9', 'regular'];

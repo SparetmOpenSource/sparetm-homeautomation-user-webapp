@@ -4,12 +4,13 @@ import Button from '../../Others/CustomButton/Button';
 import { displayToastify } from '../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 import TextBlinkAnimation from '../../Others/TextBlinkAnimation/TextBlinkAnimation';
-import { RegistrationCredLength, Url } from '../../../Data/LogInUserConstant';
 import { RegisterUser } from '../../../Services/RegisterUser';
+import { homeUrl } from '../../../Api.tsx/HomeApi';
+import { RegistrationCredLength } from '../../../Data/HomePageConstant';
 
 const RegistrationForm = () => {
     // const [modelOpen, setModelOpen] = useState(false);
-    const formColor: any = "white";
+    const formColor: any = 'white';
     const sentence = 'Sign Up!'.split('');
     // const open = () => {
     //     setModelOpen(true);
@@ -28,7 +29,7 @@ const RegistrationForm = () => {
     });
 
     const onRegSubmit = (data: any) => {
-        RegisterUser(Url.user_registration_url, data);
+        RegisterUser(homeUrl.app_registration, data);
         reset();
     };
     return (
@@ -37,42 +38,38 @@ const RegistrationForm = () => {
                 onSubmit={handleRegSubmit(onRegSubmit)}
                 className="form_wrapper add_css_to_prevent_overflow"
             >
-                 <h1> {sentence.map((letter:any, index:any) => {
-                    return (
-                        <TextBlinkAnimation
-                            key={index}
-                            color="rgb(8, 18, 41)"
-                            size="calc(35px + (45 - 35) * ((100vw - 1280px) / (1600 - 1280)))"
-                            height="27px"
-                            weight="700"
-                            opacity="0.5"
-                            mode="color-burn"
-                        >
-                            {letter === ' ' ? '\u00A0' : letter}
-                        </TextBlinkAnimation>
-                    );
-                })}</h1>
-                {/* ****************************UserName field********************************* */}
+                <h1>
+                    {' '}
+                    {sentence.map((letter: any, index: any) => {
+                        return (
+                            <TextBlinkAnimation
+                                key={index}
+                                color="rgb(8, 18, 41)"
+                                size="calc(35px + (45 - 35) * ((100vw - 1280px) / (1600 - 1280)))"
+                                height="27px"
+                                weight="700"
+                                opacity="0.5"
+                                mode="color-burn"
+                            >
+                                {letter === ' ' ? '\u00A0' : letter}
+                            </TextBlinkAnimation>
+                        );
+                    })}
+                </h1>
+
+                {/* ************************************User Name field************************************ */}
 
                 <input
                     type="text"
                     className="form_field"
                     placeholder="User Name*"
                     style={{
-                        background:formColor,
-                      color: 'black',
-                          marginBottom:"1rem"
+                        background: formColor,
+                        color: 'black',
+                        marginBottom: '1rem',
                     }}
                     {...registration('userName', {
-                        required: 'user name is required',
-                        minLength: {
-                            value: RegistrationCredLength.userName.min,
-                            message: 'user name is too short',
-                        },
-                        maxLength: {
-                            value: RegistrationCredLength.userName.max,
-                            message: 'user name is too long',
-                        },
+                        required: 'name is required',
                     })}
                 />
                 {regErrors.userName && (
@@ -81,25 +78,54 @@ const RegistrationForm = () => {
                     </p>
                 )}
 
-                {/* ************************************Name field************************************ */}
+                {/* ************************************First Name field************************************ */}
 
                 <input
                     type="text"
                     className="form_field"
-                    placeholder="Full Name*"
+                    placeholder="First Name*"
                     style={{
                         background: formColor,
-                       color: 'black',
-                          marginBottom:"1rem"
+                        color: 'black',
+                        marginBottom: '1rem',
                     }}
-                    {...registration('name', {
+                    {...registration('firstName', {
                         required: 'name is required',
                         minLength: {
-                            value: RegistrationCredLength.fullName.min,
+                            value: RegistrationCredLength.name.min,
                             message: 'name is too short',
                         },
                         maxLength: {
-                            value: RegistrationCredLength.fullName.max,
+                            value: RegistrationCredLength.name.max,
+                            message: 'name is too long',
+                        },
+                    })}
+                />
+                {regErrors.name && (
+                    <p className="form_error">
+                        {(regErrors?.name as any)?.message}
+                    </p>
+                )}
+
+                {/* ************************************Last Name field************************************ */}
+
+                <input
+                    type="text"
+                    className="form_field"
+                    placeholder="Last Name*"
+                    style={{
+                        background: formColor,
+                        color: 'black',
+                        marginBottom: '1rem',
+                    }}
+                    {...registration('lastName', {
+                        required: 'name is required',
+                        minLength: {
+                            value: RegistrationCredLength.name.min,
+                            message: 'name is too short',
+                        },
+                        maxLength: {
+                            value: RegistrationCredLength.name.max,
                             message: 'name is too long',
                         },
                     })}
@@ -117,9 +143,9 @@ const RegistrationForm = () => {
                     className="form_field"
                     placeholder="Password*"
                     style={{
-                        background:formColor,
-                      color: 'black',
-                          marginBottom:"1rem"
+                        background: formColor,
+                        color: 'black',
+                        marginBottom: '1rem',
                     }}
                     {...registration('password', {
                         required: 'password is required',
@@ -147,8 +173,8 @@ const RegistrationForm = () => {
                     placeholder="Email*"
                     style={{
                         background: formColor,
-                         color: 'black',
-                          marginBottom:"1rem"
+                        color: 'black',
+                        marginBottom: '1rem',
                     }}
                     {...registration('email', {
                         required: 'email is required',
@@ -170,8 +196,14 @@ const RegistrationForm = () => {
                             label="Submit"
                             textCol="black"
                             backCol="#e2ff00"
-                        width="150px"
-                          fn={()=>displayToastify('Signing Up',TOASTIFYCOLOR.DARK,TOASTIFYSTATE.INFO)} 
+                            width="150px"
+                            fn={() =>
+                                displayToastify(
+                                    'Signing Up',
+                                    TOASTIFYCOLOR.DARK,
+                                    TOASTIFYSTATE.INFO,
+                                )
+                            }
                         />
                     )}
             </form>

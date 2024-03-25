@@ -1,11 +1,9 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import './CanvasAnimation.css';
 
-const CanvasAnimation = ({ children}: any) => {
+const CanvasAnimation = ({ children }: any) => {
     useEffect(() => {
-        var canvas = document.getElementById(
-            'canvas',
-        ) as HTMLCanvasElement;
+        var canvas = document.getElementById('canvas') as HTMLCanvasElement;
         var ctx = canvas.getContext('2d');
         var col = function (
             x: any,
@@ -64,10 +62,8 @@ const CanvasAnimation = ({ children}: any) => {
     }, []);
 
     return (
-         <div className="canvas">
-            <div className="canvas_div_container">
-                  {children}
-            </div>
+        <div className="canvas">
+            <div className="canvas_div_container">{children}</div>
             <div className="canvas_container">
                 <canvas id="canvas" width="32" height="32" />
             </div>

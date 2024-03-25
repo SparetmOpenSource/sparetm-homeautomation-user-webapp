@@ -24,7 +24,7 @@ const ConfirmationBackdropModel = ({
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                style={{ background:foregroundColor }}
+                style={{ background: foregroundColor }}
             >
                 <ConfirmationModalButton onClick={handleClose} />
                 {text}
@@ -46,7 +46,7 @@ const ConfirmationBackdropModel = ({
                 </span>
             </motion.div>
         </Backdrop>
-    )
+    );
 };
 
 const ConfirmationModalButton = ({ onClick }: any) => (
