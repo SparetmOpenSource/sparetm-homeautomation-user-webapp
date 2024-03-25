@@ -81,19 +81,20 @@ const TodoListWrapper = () => {
         catchError(error);
     };
 
-    const { isLoading, data } = useReactQuery_Get(
-        'get_todo_list',
-        todoFn,
-        on_Success,
-        on_Error,
-        true, // !fetch_On_Click_Status
-        true, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        0, // Stale Time
-    );
+    // const { isLoading, data } = useReactQuery_Get(
+      const { isLoading } = useReactQuery_Get(
+          'get_todo_list',
+          todoFn,
+          on_Success,
+          on_Error,
+          true, // !fetch_On_Click_Status
+          true, // refetch_On_Mount
+          false, // refetch_On_Window_Focus
+          false, // refetch_Interval
+          false, // refetch_Interval_In_Background
+          300000, // Cache time
+          0, // Stale Time
+      );
     // data?.data?.body?
     let listData = [
         {
