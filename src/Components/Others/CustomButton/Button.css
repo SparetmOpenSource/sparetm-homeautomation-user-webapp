@@ -1,0 +1,25 @@
+.custom_btn {
+    font-size: 1rem;
+    line-height: 24px;
+    font-weight: 100;
+    border-radius: 4px;
+    text-align: center;
+    border: solid rgb(8, 18, 41);
+    border-width: 2px;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.1s all ease;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.custom_btn:hover {
+    border-radius: 40px;
+    transition: 0.1s all ease;
+}
+
+.link_custom_btn_active {
+    background: gold;
+    color: black;
+}

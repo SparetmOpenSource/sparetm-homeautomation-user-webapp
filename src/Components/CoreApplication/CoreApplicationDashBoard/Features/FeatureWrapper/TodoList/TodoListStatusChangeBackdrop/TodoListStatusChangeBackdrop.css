@@ -1,0 +1,72 @@
+.confirmationBackdropModel {
+    width: clamp(50%, 700px, 90%);
+    height: min(50%, 300px);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgb(21, 26, 30);
+    color: lavender;
+}
+
+.confirmation_modal_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+.backdropModel_btn_container {
+    width: 80%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/* ******************************** */
+
+.form_container1 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2em;
+}
+
+.form_container1 > :first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 70%;
+    padding: 1em;
+}
+.form_container1 > :first-child div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    height: 100%;
+    width: 30%;
+    border-radius: 0.5em;
+}
+.form_container1 > :first-child div input {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-bottom: 1em;
+}
+.form_container1 > :first-child div label {
+    margin-top: 1em;
+    font-size: 1.5rem;
+}
+.form_container1 > :last-child {
+    width: 100%;
+    height: 30%;
+}
