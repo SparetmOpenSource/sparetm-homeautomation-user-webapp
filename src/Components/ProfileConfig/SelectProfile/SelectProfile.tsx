@@ -1,5 +1,5 @@
 import './SelectProfile.css';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useLocation, useOutletContext } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { catchError } from '../../../Utils/HelperFn';
 import { getProfiles } from '../../../Api.tsx/ProfileConfigApis';
@@ -19,11 +19,14 @@ import { FaFaceSadTear } from 'react-icons/fa6';
 import { FaFaceGrinSquintTears } from 'react-icons/fa6';
 import { FaFaceSurprise } from 'react-icons/fa6';
 import { APPPROFILE } from '../../../Data/Enum';
-import jsonApiResponse from "./../../../Data/SampleApiResponse.json"
+import jsonApiResponse from './../../../Data/SampleApiResponse.json';
 import { getAppAdminUser } from '../../../Utils/ProfileConfigHelperFn';
+import { useEffect } from 'react';
+import { PROFILE_COLOR } from '../../../Data/ColorConstant';
 
 const SelectProfile = () => {
-    const ColorValue: any = useOutletContext();
+    const location = useLocation();
+    const [colorValue, setBackgroundColor]: any = useOutletContext();
     const appUser = getAppAdminUser();
     let dataArr: any[] = [];
 
@@ -68,11 +71,17 @@ const SelectProfile = () => {
     } else {
         dataArr = jsonApiResponse?.select_profile?.body;
     }
+
+    useEffect(() => {
+        if (location?.pathname === RoutePath.SelectProfileConfig) {
+            setBackgroundColor(PROFILE_COLOR.OUTER);
+        }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
     return (
         <div
             className="selectProfile"
-            // style={{ background: ColorValue + '80' }}
-            style={{ background: 'rgb(37,41,45)' }}
+            style={{ background: colorValue + '25' }}
         >
             <div className="selectProfile_search">
                 <input type="text" placeholder="Search with profile name..." />
@@ -100,7 +109,7 @@ const SelectProfile = () => {
                                         )
                                     ]
                                 }
-                                col={ColorValue}
+                                col={colorValue}
                             />
                         ))}
                     </div>

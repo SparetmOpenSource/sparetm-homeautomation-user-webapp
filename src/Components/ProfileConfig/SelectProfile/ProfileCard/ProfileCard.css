@@ -5,6 +5,7 @@
     border-radius: 0.6em;
     cursor: pointer;
     background: #2e3438;
+    background-color: rgb(11, 20, 22);
     -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
@@ -42,6 +43,7 @@
 .profileCard_container_row_1 {
     height: 30%;
     background: #25292d;
+    background-color: rgb(26, 40, 45);
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
 }
@@ -49,6 +51,7 @@
 .profileCard_container_row_2 {
     height: 70%;
     background: #2e3438;
+    background-color: rgb(11, 20, 22, 0.5);
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
     overflow: hidden;

@@ -23,7 +23,7 @@ const TodoListWrapper = () => {
     const [openDeleteTodoModel, setOpenDeleteTodoModel]: any = useState(false);
     const [idToBeDeleted, setIdToBeDeleted]: any = useState();
     const [idToBeUpdatedStatus, setIdToBeUpdatedStatus]: any = useState();
-    const [statusToBeUpdated, setstatusToBeUpdated]: any = useState();
+    const [statusToBeUpdated, setStatusToBeUpdated]: any = useState();
 
     const closeDeleteTodo = () => {
         setOpenDeleteTodoModel(false);
@@ -39,7 +39,7 @@ const TodoListWrapper = () => {
     };
     const openChangeStatus = (id: any, status: any) => {
         setIdToBeUpdatedStatus(id);
-        setstatusToBeUpdated(status);
+        setStatusToBeUpdated(status);
         setOpenChangeStatusModel(true);
     };
 
@@ -81,95 +81,19 @@ const TodoListWrapper = () => {
         catchError(error);
     };
 
-    // const { isLoading, data } = useReactQuery_Get(
-      const { isLoading } = useReactQuery_Get(
-          'get_todo_list',
-          todoFn,
-          on_Success,
-          on_Error,
-          true, // !fetch_On_Click_Status
-          true, // refetch_On_Mount
-          false, // refetch_On_Window_Focus
-          false, // refetch_Interval
-          false, // refetch_Interval_In_Background
-          300000, // Cache time
-          0, // Stale Time
-      );
-    // data?.data?.body?
-    let listData = [
-        {
-            id: '1',
-            subject: 'Car Wash',
-            statement: 'Have to wash car before week end',
-            status: 'NEW',
-            updated_at: '2024-02-22T15:09:34.261',
-            targetedCompletion: '2024-02-22T15:09:34.261',
-        },
-        {
-            id: '1',
-            subject: 'Car Wash',
-            statement: 'Have to wash car before week end',
-            status: 'NEW',
-            updated_at: '2024-02-22T15:09:34.261',
-            targetedCompletion: '2024-02-22T15:09:34.261',
-        },
-        {
-            id: '1',
-            subject: 'Car Wash',
-            statement: 'Have to wash car before week end',
-            status: 'NEW',
-            updated_at: '2024-02-22T15:09:34.261',
-            targetedCompletion: '2024-02-22T15:09:34.261',
-        },
-        {
-            id: '1',
-            subject: 'Car Wash',
-            statement: 'Have to wash car before week end',
-            status: 'NEW',
-            updated_at: '2024-02-22T15:09:34.261',
-            targetedCompletion: '2024-02-22T15:09:34.261',
-        },
-        {
-            id: '1',
-            subject: 'Car Wash',
-            statement: 'Have to wash car before week end',
-            status: 'NEW',
-            updated_at: '2024-02-22T15:09:34.261',
-            targetedCompletion: '2024-02-22T15:09:34.261',
-        },
-        {
-            id: '1',
-            subject: 'Car Wash',
-            statement: 'Have to wash car before week end',
-            status: 'NEW',
-            updated_at: '2024-02-22T15:09:34.261',
-            targetedCompletion: '2024-02-22T15:09:34.261',
-        },
-        {
-            id: '1',
-            subject: 'Car Wash',
-            statement: 'Have to wash car before week end',
-            status: 'NEW',
-            updated_at: '2024-02-22T15:09:34.261',
-            targetedCompletion: '2024-02-22T15:09:34.261',
-        },
-        {
-            id: '1',
-            subject: 'Car Wash',
-            statement: 'Have to wash car before week end',
-            status: 'NEW',
-            updated_at: '2024-02-22T15:09:34.261',
-            targetedCompletion: '2024-02-22T15:09:34.261',
-        },
-        {
-            id: '1',
-            subject: 'Car Wash',
-            statement: 'Have to wash car before week end',
-            status: 'NEW',
-            updated_at: '2024-02-22T15:09:34.261',
-            targetedCompletion: '2024-02-22T15:09:34.261',
-        },
-    ];
+    const { isLoading, data } = useReactQuery_Get(
+        'get_todo_list',
+        todoFn,
+        on_Success,
+        on_Error,
+        true, // !fetch_On_Click_Status
+        true, // refetch_On_Mount
+        false, // refetch_On_Window_Focus
+        false, // refetch_Interval
+        false, // refetch_Interval_In_Background
+        300000, // Cache time
+        0, // Stale Time
+    );
 
     /*{----------------------------------------------------------------------------------------------------------}*/
 
@@ -199,7 +123,7 @@ const TodoListWrapper = () => {
             )}
 
             {!isLoading &&
-                listData?.map((el: any) => (
+                data?.body?.map((el: any) => (
                     <TodoListBox
                         key={el.id}
                         subject={el.subject}

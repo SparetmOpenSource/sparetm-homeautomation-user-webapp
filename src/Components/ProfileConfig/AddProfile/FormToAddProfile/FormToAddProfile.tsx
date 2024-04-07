@@ -13,10 +13,7 @@ import {
     useAddProfiles,
 } from '../../../../Api.tsx/ProfileConfigApis';
 import { useReactQuery_Get } from '../../../../Api.tsx/useReactQuery_Get';
-import {
-    catchError,
-    displayToastify,
-} from '../../../../Utils/HelperFn';
+import { catchError, displayToastify } from '../../../../Utils/HelperFn';
 import Button from '../../../Others/CustomButton/Button';
 import {
     ProfileConfigRoomNames,
@@ -29,13 +26,11 @@ import {
     TOASTIFYCOLOR,
     TOASTIFYSTATE,
 } from '../../../../Data/Enum';
-import { useOutletContext } from 'react-router-dom';
 import { getAppAdminUser } from '../../../../Utils/ProfileConfigHelperFn';
 const animatedComponents = makeAnimated();
 
 const FormToAddProfile = (props: any) => {
     const navigate = useNavigate();
-    const parentColorValue: any = useOutletContext();
     const [country, setCountry] = useState();
     const [countryCode, setCountryCode] = useState();
     const [state, setState] = useState();
@@ -177,6 +172,7 @@ const FormToAddProfile = (props: any) => {
             { cityName: city },
             { room: room },
         );
+        console.log(data);
         if (localStorage.getItem('appProfile') === APPPROFILE.STATUSOFF) {
             displayToastify(
                 'You are using the app in offline mode. Please select the profile directly.',
@@ -192,7 +188,7 @@ const FormToAddProfile = (props: any) => {
         setRoom(el);
     };
     var addCountry = (el: any) => {
-        setCountryCode(el.country_short_name);
+        setCountryCode(el.country_phone_code);
         setCountry(el.country_name);
     };
     var addState = (el: any) => {
@@ -218,7 +214,7 @@ const FormToAddProfile = (props: any) => {
         <form
             className="addProfile_form"
             onSubmit={handleProSubmit(onProSubmit)}
-            // style={{ background: `${parentColorValue}1a`}}
+            
         >
             <section>
                 <div>
@@ -227,7 +223,7 @@ const FormToAddProfile = (props: any) => {
                             return (
                                 <TextBlinkAnimation
                                     key={index}
-                                    color={parentColorValue}
+                                    color={props.parentColorValue}
                                     size="3rem"
                                 >
                                     {letter === ' ' ? '\u00A0' : letter}
@@ -280,6 +276,27 @@ const FormToAddProfile = (props: any) => {
                         {room.length > 6 && (
                             <p className="addProfile_form_error">
                                 {ProfileConfigTypography.select_room_error}
+                            </p>
+                        )}
+                    </span>
+                    <span>
+                        <p>Enter your mobile number</p>
+                        <input
+                            type="tel"
+                            className="addProfile_form_field"
+                            placeholder="enter..."
+                            {...profileRegister('mobileNumber', {
+                                required: 'mobile Number is required',
+                                maxLength: {
+                                    value: 11,
+                                    message:
+                                        'mobile number must be 10 to 11 digit',
+                                },
+                            })}
+                        />
+                        {proErrors.mobileNumber && (
+                            <p className="addProfile_form_error">
+                                {(proErrors?.mobileNumber as any)?.message}
                             </p>
                         )}
                     </span>

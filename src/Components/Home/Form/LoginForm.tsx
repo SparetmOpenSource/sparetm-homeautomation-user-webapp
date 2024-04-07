@@ -14,10 +14,11 @@ import { LoginUser } from '../../../Services/LogInUser';
 import { LogInCredLength } from '../../../Data/HomePageConstant';
 import { APPPROFILEKEY } from '../../../Data/Constants';
 import { setOfflineUser } from '../../../Utils/ProfileConfigHelperFn';
+import { SIGNIN_SIGNUP_COLOR } from '../../../Data/ColorConstant';
 
 const LoginForm = () => {
     const navigate = useNavigate();
-    const formColor: any = 'white';
+    const formColor: any = SIGNIN_SIGNUP_COLOR.FORM;
     const sentence = 'Sign In!'.split('');
 
     const {
@@ -63,12 +64,11 @@ const LoginForm = () => {
                         return (
                             <TextBlinkAnimation
                                 key={index}
-                                color="rgb(8, 18, 41)"
+                                color="rgb(242,242,242)"
                                 size="calc(35px + (45 - 35) * ((100vw - 1280px) / (1600 - 1280)))"
                                 height="27px"
                                 weight="700"
                                 opacity="0.5"
-                                mode="color-burn"
                             >
                                 {letter === ' ' ? '\u00A0' : letter}
                             </TextBlinkAnimation>
@@ -85,7 +85,7 @@ const LoginForm = () => {
                     placeholder="Email"
                     style={{
                         background: formColor,
-                        color: 'black',
+                        color: 'white',
                         marginBottom: '1.5rem',
                     }}
                     {...login('email', {
@@ -114,7 +114,7 @@ const LoginForm = () => {
                     placeholder="Password"
                     style={{
                         background: formColor,
-                        color: 'black',
+                        color: 'white',
                         marginBottom: '1.5rem',
                     }}
                     {...login('password', {
@@ -141,7 +141,7 @@ const LoginForm = () => {
                     <Button
                         label="Submit"
                         textCol="black"
-                        backCol="#e2ff00"
+                        backCol="rgb(8,246,125)"
                         width="150px"
                     />
                 )}

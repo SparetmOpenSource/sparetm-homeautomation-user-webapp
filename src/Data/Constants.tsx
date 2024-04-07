@@ -110,57 +110,57 @@ let RoomNamesConst: string[] = [
 
 export const ProfileConfigRoomNames = [
     {
-        roomType: RoomNamesConst[0],
+        room_type: RoomNamesConst[0],
         value: RoomNamesConst[0],
         label: RoomNamesConst[0],
     },
     {
-        roomType: RoomNamesConst[1],
+        room_type: RoomNamesConst[1],
         value: RoomNamesConst[1],
         label: RoomNamesConst[1],
     },
     {
-        roomType: RoomNamesConst[2],
+        room_type: RoomNamesConst[2],
         value: RoomNamesConst[2],
         label: RoomNamesConst[2],
     },
     {
-        roomType: RoomNamesConst[3],
+        room_type: RoomNamesConst[3],
         value: RoomNamesConst[3],
         label: RoomNamesConst[3],
     },
     {
-        roomType: RoomNamesConst[4],
+        room_type: RoomNamesConst[4],
         value: RoomNamesConst[4],
         label: RoomNamesConst[4],
     },
     {
-        roomType: RoomNamesConst[5],
+        room_type: RoomNamesConst[5],
         value: RoomNamesConst[5],
         label: RoomNamesConst[5],
     },
     {
-        roomType: RoomNamesConst[6],
+        room_type: RoomNamesConst[6],
         value: RoomNamesConst[6],
         label: RoomNamesConst[6],
     },
     {
-        roomType: RoomNamesConst[7],
+        room_type: RoomNamesConst[7],
         value: RoomNamesConst[7],
         label: RoomNamesConst[7],
     },
     {
-        roomType: RoomNamesConst[8],
+        room_type: RoomNamesConst[8],
         value: RoomNamesConst[8],
         label: RoomNamesConst[8],
     },
     {
-        roomType: RoomNamesConst[9],
+        room_type: RoomNamesConst[9],
         value: RoomNamesConst[9],
         label: RoomNamesConst[9],
     },
     {
-        roomType: RoomNamesConst[10],
+        room_type: RoomNamesConst[10],
         value: RoomNamesConst[10],
         label: RoomNamesConst[10],
     },

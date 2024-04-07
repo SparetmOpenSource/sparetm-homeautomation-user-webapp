@@ -8,8 +8,7 @@ const TextBlinkAnimation = ({
     size,
     height,
     weight,
-    opacity,
-    mode,
+    opacity
 }: any) => {
     const controls = useAnimationControls();
     const [isPlaying, setIsPlaying] = useState(false);
@@ -42,8 +41,7 @@ const TextBlinkAnimation = ({
                 fontSize: size,
                 lineHeight: height,
                 fontWeight: weight,
-                opacity: opacity,
-                mixBlendMode: mode,
+                opacity: opacity
             }}
         >
             {children}

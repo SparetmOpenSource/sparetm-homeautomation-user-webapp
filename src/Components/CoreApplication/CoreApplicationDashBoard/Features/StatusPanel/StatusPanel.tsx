@@ -2,10 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { IconContext } from 'react-icons';
 import './StatusPanel.css';
-import {
-    catchError,
-    changeWeatherIcon
-} from '../../../../../Utils/HelperFn';
+import { catchError, changeWeatherIcon } from '../../../../../Utils/HelperFn';
 import { getWeatherQuote } from '../../../../../Api.tsx/CoreAppApis';
 import { useReactQuery_Get } from '../../../../../Api.tsx/useReactQuery_Get';
 import LoadingFade from '../../../../Others/LoadingAnimation/LoadingFade';
@@ -15,7 +12,10 @@ import {
 } from '../../../../../Data/Constants';
 import WindowBackdropModel from '../../../../Others/BackdropModel/WindowBackdropModel/WindowBackdropModel';
 import ExpWeatherPanel from './ExpWeatherPanel/ExpWeatherPanel';
-import { getProfileId, getProfileName } from '../../../../../Utils/ProfileConfigHelperFn';
+import {
+    getProfileId,
+    getProfileName,
+} from '../../../../../Utils/ProfileConfigHelperFn';
 
 const StatusPanel = () => {
     /*************************************BACKDROP*************************************/
@@ -134,7 +134,7 @@ const StatusPanel = () => {
                                     width: '100%',
                                 }}
                             >
-                                <p style={{ color: '#D9EF82' }}>
+                                <p style={{ color: 'orangered' }}>
                                     {weather?.weather[0]?.main}
                                 </p>
                             </div>
@@ -204,7 +204,7 @@ const StatusPanel = () => {
                                 ~&nbsp;
                                 <b>
                                     {quote?.author
-                                        ? quote?.author
+                                        ? quote?.author?.split(',')[0]
                                         : '(Unknown)'}
                                 </b>
                             </p>

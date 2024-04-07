@@ -8,7 +8,7 @@ import { AiOutlineAppstoreAdd } from 'react-icons/ai';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { appLogOut } from '../Utils/ProfileConfigHelperFn';
 
-const ProfileConfig = () => {
+const ProfileConfig = (props: any) => {
     const navigate = useNavigate();
     const location = useLocation();
     const colorValue =
@@ -36,6 +36,7 @@ const ProfileConfig = () => {
             currentPath: location.pathname.replace('%20', ''),
         },
     ];
+
     return (
         <div className="profileConfig">
             <section>
@@ -47,7 +48,7 @@ const ProfileConfig = () => {
                                 background:
                                     item.currentPath === item.listPath ||
                                     item.currentPath.includes(item.listPath)
-                                        ? 'rgb(31, 33, 35, 0.5)'
+                                        ? 'rgb(11, 20, 22)'
                                         : '',
                             }}
                             key={item.id}
@@ -95,7 +96,7 @@ const ProfileConfig = () => {
                 </span>
             </section>
             <section>
-                <Outlet context={colorValue} />
+                <Outlet context={[colorValue, props.setBackgroundColor]} />
             </section>
         </div>
     );
