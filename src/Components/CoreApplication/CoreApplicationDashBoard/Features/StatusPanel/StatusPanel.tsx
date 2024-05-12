@@ -2,10 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { IconContext } from 'react-icons';
 import './StatusPanel.css';
-import {
-    catchError,
-    changeWeatherIcon
-} from '../../../../../Utils/HelperFn';
+import { catchError, changeWeatherIcon } from '../../../../../Utils/HelperFn';
 import { getWeatherQuote } from '../../../../../Api.tsx/CoreAppApis';
 import { useReactQuery_Get } from '../../../../../Api.tsx/useReactQuery_Get';
 import LoadingFade from '../../../../Others/LoadingAnimation/LoadingFade';
@@ -15,7 +12,11 @@ import {
 } from '../../../../../Data/Constants';
 import WindowBackdropModel from '../../../../Others/BackdropModel/WindowBackdropModel/WindowBackdropModel';
 import ExpWeatherPanel from './ExpWeatherPanel/ExpWeatherPanel';
-import { getProfileId, getProfileName } from '../../../../../Utils/ProfileConfigHelperFn';
+import {
+    getProfileId,
+    getProfileName,
+} from '../../../../../Utils/ProfileConfigHelperFn';
+import { GET_WEATHER_QUOTE_IN_STATUSPANELCLASS } from '../../../../../Data/QueryConstant';
 
 const StatusPanel = () => {
     /*************************************BACKDROP*************************************/
@@ -45,7 +46,7 @@ const StatusPanel = () => {
     };
 
     const { isLoading, data } = useReactQuery_Get(
-        'get_weather_quote',
+        GET_WEATHER_QUOTE_IN_STATUSPANELCLASS,
         weatherQuoteFn,
         on_Success,
         on_Error,
@@ -62,6 +63,7 @@ const StatusPanel = () => {
 
     const iconCode: string = data?.data?.body?.weatherData?.weather[0]?.icon;
     const weather: any = data?.data?.body?.weatherData;
+    const currentState: any = data?.data?.headers?.state[0];
     const quote: any = data?.data?.body?.quoteData;
     let icon = changeWeatherIcon(iconCode);
 
@@ -134,7 +136,7 @@ const StatusPanel = () => {
                                     width: '100%',
                                 }}
                             >
-                                <p style={{ color: '#D9EF82' }}>
+                                <p style={{ color: 'orangered' }}>
                                     {weather?.weather[0]?.main}
                                 </p>
                             </div>
@@ -204,7 +206,7 @@ const StatusPanel = () => {
                                 ~&nbsp;
                                 <b>
                                     {quote?.author
-                                        ? quote?.author
+                                        ? quote?.author?.split(',')[0]
                                         : '(Unknown)'}
                                 </b>
                             </p>
@@ -226,6 +228,7 @@ const StatusPanel = () => {
                         handleClose={closeWeather}
                     >
                         <ExpWeatherPanel
+                            state={currentState}
                             weather={weather}
                             iconCode={iconCode}
                             icon={icon}

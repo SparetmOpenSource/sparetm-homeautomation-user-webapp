@@ -41,10 +41,20 @@ const CoreApplicationDeviceRoom = React.lazy(
 );
 
 const TodoListWrapper = React.lazy(
-    () => import('./../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/TodoList/TodoListWrapper'),
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/TodoList/TodoListWrapper'
+        ),
 );
 
-export const GlobalRoutes = () => {
+const StatusList = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/StatusList/StatusList'
+        ),
+);
+
+export const GlobalRoutes = (props: any) => {
     return (
         <Suspense fallback={<LoadingFade />}>
             <Routes>
@@ -71,7 +81,11 @@ export const GlobalRoutes = () => {
                         path={RoutePath.Auth}
                         element={
                             <Suspense fallback={<LoadingFade />}>
-                                <SignInSignUp />
+                                <SignInSignUp
+                                    setBackgroundColor={
+                                        props.setBackgroundColor
+                                    }
+                                />
                             </Suspense>
                         }
                     />
@@ -87,7 +101,11 @@ export const GlobalRoutes = () => {
                         path={RoutePath.ProfileConfig}
                         element={
                             <Suspense fallback={<LoadingFade />}>
-                                <ProfilePage />
+                                <ProfilePage
+                                    setBackgroundColor={
+                                        props.setBackgroundColor
+                                    }
+                                />
                             </Suspense>
                         }
                     >
@@ -167,7 +185,7 @@ export const GlobalRoutes = () => {
                                 path={RoutePath.Dashboard_Device_Status}
                                 element={
                                     <Suspense fallback={<LoadingFade />}>
-                                        <h1>DEVICE STATUS</h1>
+                                        <h1><StatusList/></h1>
                                     </Suspense>
                                 }
                             />

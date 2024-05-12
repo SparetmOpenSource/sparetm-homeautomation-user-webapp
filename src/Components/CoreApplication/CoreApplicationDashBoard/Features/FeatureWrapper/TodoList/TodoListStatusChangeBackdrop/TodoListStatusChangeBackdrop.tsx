@@ -45,31 +45,34 @@ const TodoListStatusChangeBackdrop = ({
         let val: any = null;
         if (status === 'STATUS_NEW') {
             if (
-                (data.STATUS_INPROGRESS === true &&
-                    data.STATUS_COMPLETED === false) ||
-                (data.STATUS_INPROGRESS === false &&
-                    data.STATUS_COMPLETED === true)
+                (data?.STATUS_INPROGRESS === true &&
+                    data?.STATUS_COMPLETED === false) ||
+                (data?.STATUS_INPROGRESS === false &&
+                    data?.STATUS_COMPLETED === true)
             ) {
-                val = data.STATUS_INPROGRESS
+                val = data?.STATUS_INPROGRESS
                     ? 'STATUS_INPROGRESS'
                     : 'STATUS_COMPLETED';
             }
         }
         if (status === 'STATUS_INPROGRESS') {
             if (
-                (data.STATUS_NEW === true && data.STATUS_COMPLETED === false) ||
-                (data.STATUS_NEW === false && data.STATUS_COMPLETED === true)
+                (data?.STATUS_NEW === true &&
+                    data?.STATUS_COMPLETED === false) ||
+                (data?.STATUS_NEW === false && data?.STATUS_COMPLETED === true)
             ) {
-                val = data.STATUS_COMPLETED ? 'STATUS_COMPLETED' : 'STATUS_NEW';
+                val = data?.STATUS_COMPLETED
+                    ? 'STATUS_COMPLETED'
+                    : 'STATUS_NEW';
             }
         }
         if (status === 'STATUS_COMPLETED') {
             if (
-                (data.STATUS_NEW === true &&
-                    data.STATUS_INPROGRESS === false) ||
-                (data.STATUS_NEW === false && data.STATUS_INPROGRESS === true)
+                (data?.STATUS_NEW === true &&
+                    data?.STATUS_INPROGRESS === false) ||
+                (data?.STATUS_NEW === false && data?.STATUS_INPROGRESS === true)
             ) {
-                val = data.STATUS_NEW ? 'STATUS_NEW' : 'STATUS_INPROGRESS';
+                val = data?.STATUS_NEW ? 'STATUS_NEW' : 'STATUS_INPROGRESS';
             }
         }
         if (val !== null) {

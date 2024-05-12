@@ -5,8 +5,9 @@ import { weather_quote_constant } from '../Data/Constants';
 export const featureUrl = {
     get_weather_quote_1: '/mpa/api/v1/profiles/features?id=',
     get_weather_quote_2: `&data=weather&unit=metric&quotelimit=${weather_quote_constant.quote_char_limit}`,
-    get_todo_list_1: `/mpa/api/v1/profiles/features?id=`,
-    get_todo_list_2: `&data=todo`,
+    // get_todo_list_1: `/mpa/api/v1/profiles/features?id=`,
+    // get_todo_list_2: `&data=todo`,
+    get_todo_list: `/mpa/api/v1/profiles/features?id=%profileId%&data=todo`,
     del_todo_list: '/mpa/api/v1/profiles/features/todo?id=',
     add_todo_list: `/mpa/api/v1/profiles/features/todo?id=`,
     update_todo_list: `/mpa/api/v1/profiles/features/todo?id=`,
@@ -33,7 +34,8 @@ export const getWeatherQuote = async (profileId: any) => {
 /*************************Fetch todo list*******************************/
 export const getTodoList = async (profileId: any) => {
     return await api.get(
-        featureUrl.get_todo_list_1 + profileId + featureUrl.get_todo_list_2,
+        // featureUrl.get_todo_list_1 + profileId + featureUrl.get_todo_list_2,
+        featureUrl.get_todo_list.replace("%profileId%", profileId),  
         getHeaderConfig,
     );
 };

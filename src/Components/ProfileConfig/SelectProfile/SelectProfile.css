@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #07161B;
+    background-color:rgb(26, 40, 45);
     border-radius: inherit;
 }
 
@@ -32,7 +32,7 @@
     align-items: center;
     justify-content: center;
     height: 84.5%;
-    background-color: #07161B;
+    background-color: rgb(26, 40, 45);
     border-radius: inherit;
     /* padding-bottom: 2em; */
 }
@@ -84,7 +84,7 @@
     outline: 0;
     width: 70%;
     min-height: 4em;
-    background: #25292d;
+    background-color: rgb(11, 20, 22);
     padding-left: 1em;
     border-radius: 10px;
     color: lavender;

@@ -1,0 +1,10 @@
+.deviceStatusBar{
+        /* display: flex;
+            align-items: center;
+            justify-content: center; */
+            /* height: 40%; */
+            width: 100%;
+            border-radius: 0.5em;
+            color: lavender;
+            background-color: green;
+}

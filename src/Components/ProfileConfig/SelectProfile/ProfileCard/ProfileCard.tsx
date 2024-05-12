@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
 import './ProfileCard.css';
-// import { CgProfile } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
 import { openProfileOnClick } from '../../../../Utils/ProfileConfigHelperFn';
 

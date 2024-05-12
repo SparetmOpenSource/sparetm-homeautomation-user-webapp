@@ -9,8 +9,11 @@ import Switch from '../Components/Others/Switch/Switch';
 import { MdOutlineOnlinePrediction } from 'react-icons/md';
 import { HiOutlineStatusOffline } from 'react-icons/hi';
 import { setAppProfile } from '../Utils/ProfileConfigHelperFn';
+import { useLocation } from 'react-router-dom';
+import { RoutePath } from '../Data/Constants';
+import { SIGNIN_SIGNUP_COLOR } from '../Data/ColorConstant';
 
-const SignInSignUp = () => {
+const SignInSignUp = (props:any) => {
     const [openLoginForm, setOpenLoginForm]: any = useState(true);
     const sentence = openLoginForm
         ? 'Welcome Back!'.split('')
@@ -21,6 +24,16 @@ const SignInSignUp = () => {
     useEffect(() => {
         setAppProfile(profileStatus);
     }, [profileStatus]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location?.pathname === RoutePath.Auth) {
+            props.setBackgroundColor(SIGNIN_SIGNUP_COLOR.OUTER);
+        }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+   
 
     //useMountEffect(displayToastify('working on both offline and online', TOASTIFYCOLOR.DARK, TOASTIFYSTATE.INFO));
 

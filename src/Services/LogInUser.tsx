@@ -4,12 +4,25 @@ import {
     OFFLINETESTUSERNAMEKEY,
     RoutePath,
 } from '../Data/Constants';
-import { catchError } from '../Utils/HelperFn';
-import { APPPROFILE, OFFLINECRED } from '../Data/Enum';
+import { displayToastify } from '../Utils/HelperFn';
+import {
+    APPPROFILE,
+    OFFLINECRED,
+    TOASTIFYCOLOR,
+    TOASTIFYSTATE,
+} from '../Data/Enum';
 import { homeUrl } from '../Api.tsx/HomeApi';
-import { setAccessToken, setAppAdminUser } from '../Utils/ProfileConfigHelperFn';
+import {
+    setAccessToken,
+    setAppAdminUser,
+} from '../Utils/ProfileConfigHelperFn';
 
 const login = (response: any, navigate: any) => {
+    displayToastify(
+        `Signing In as ${response?.data?.body?.admin_name?.split('@')[0]}`,
+        TOASTIFYCOLOR.DARK,
+        TOASTIFYSTATE.SUCCESS,
+    );
     setAccessToken(response);
     setAppAdminUser(response);
     navigate(RoutePath.ProfileConfig);
@@ -25,11 +38,7 @@ export const LoginUser = async (data: any, navigate: any) => {
     try {
         let response = null;
         if (localStorage.getItem(APPPROFILEKEY) === APPPROFILE.STATUSON) {
-            response = await axios.post(
-                homeUrl.app_login,
-                data,
-                options,
-            );
+            response = await axios.post(homeUrl.app_login, data, options);
         } else {
             response = {
                 data: {
@@ -44,13 +53,11 @@ export const LoginUser = async (data: any, navigate: any) => {
         }
         login(response, navigate);
     } catch (error) {
-        catchError(error);
+        displayToastify(
+            'The user name or password are incorrect',
+            TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.ERROR,
+        );
+        //catchError(error);
     }
 };
-
-
-
- 
-
-
-

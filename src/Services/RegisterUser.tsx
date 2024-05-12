@@ -13,9 +13,9 @@ export const RegisterUser = async (url: any, data: any) => {
         .post(url, data, options)
         .then((response) => {
             displayToastify(
-                response,
+                response?.data?.statusCode,
                 TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.ERROR,
+                TOASTIFYSTATE.SUCCESS,
             );
         })
         .catch((error) => {
