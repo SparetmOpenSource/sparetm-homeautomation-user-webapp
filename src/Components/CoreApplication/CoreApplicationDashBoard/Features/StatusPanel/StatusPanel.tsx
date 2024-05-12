@@ -16,6 +16,7 @@ import {
     getProfileId,
     getProfileName,
 } from '../../../../../Utils/ProfileConfigHelperFn';
+import { GET_WEATHER_QUOTE_IN_STATUSPANELCLASS } from '../../../../../Data/QueryConstant';
 
 const StatusPanel = () => {
     /*************************************BACKDROP*************************************/
@@ -45,7 +46,7 @@ const StatusPanel = () => {
     };
 
     const { isLoading, data } = useReactQuery_Get(
-        'get_weather_quote',
+        GET_WEATHER_QUOTE_IN_STATUSPANELCLASS,
         weatherQuoteFn,
         on_Success,
         on_Error,
@@ -62,6 +63,7 @@ const StatusPanel = () => {
 
     const iconCode: string = data?.data?.body?.weatherData?.weather[0]?.icon;
     const weather: any = data?.data?.body?.weatherData;
+    const currentState: any = data?.data?.headers?.state[0];
     const quote: any = data?.data?.body?.quoteData;
     let icon = changeWeatherIcon(iconCode);
 
@@ -226,6 +228,7 @@ const StatusPanel = () => {
                         handleClose={closeWeather}
                     >
                         <ExpWeatherPanel
+                            state={currentState}
                             weather={weather}
                             iconCode={iconCode}
                             icon={icon}

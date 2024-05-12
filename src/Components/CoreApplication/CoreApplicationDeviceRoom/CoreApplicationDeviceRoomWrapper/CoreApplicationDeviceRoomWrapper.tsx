@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './CoreApplicationDeviceRoomWrapper.css';
@@ -17,6 +17,14 @@ import {
     getAppAdminUser,
     getProfileName,
 } from '../../../../Utils/ProfileConfigHelperFn';
+import { GET_DEVICE_LIST_IN_COREAPPLICATIONDEVICEROOMCLASS } from '../../../../Data/QueryConstant';
+import { deviceTypeArr } from '../../../../Data/Constants';
+import ApplianceDevice from '../Device/ApplianceDevice';
+import GadgetDevice from '../Device/GadgetDevice';
+import InformationBackdropModel from '../../../Others/BackdropModel/InformationBackdropModel/InformationBackdropModel';
+import AddColorToRgbModel from '../AddColorToRgbModel/AddColorToRgbModel';
+import AddDeviceBackdropModel from '../AddDeviceBackdropModel/AddDeviceBackdropModel';
+import DeviceInfoWrapper from '../DeviceInfo/DeviceInfoWrapper';
 
 const CoreApplicationDeviceRoomWrapper = ({
     setDeviceOn,
@@ -89,7 +97,7 @@ const CoreApplicationDeviceRoomWrapper = ({
     };
 
     const { isLoading, data } = useReactQuery_Get(
-        'get_device_list',
+        GET_DEVICE_LIST_IN_COREAPPLICATIONDEVICEROOMCLASS,
         deviceFn,
         on_Success,
         on_Error,
@@ -105,7 +113,9 @@ const CoreApplicationDeviceRoomWrapper = ({
     /*{----------------------------------------------------------------------------------------------------------}*/
 
     const refreshDeviceList = () => {
-        queryClient.invalidateQueries('get_device_list');
+        queryClient.invalidateQueries(
+            GET_DEVICE_LIST_IN_COREAPPLICATIONDEVICEROOMCLASS,
+        );
     };
 
     useEffect(() => {
@@ -189,8 +199,8 @@ const CoreApplicationDeviceRoomWrapper = ({
                             roomType.toLowerCase(),
                     ).length !== 0 && (
                         <section className="coreAppDeviceRoomWrapper_container_isLoaded_deviceFound">
-                            {/* {data?.data?.body?
-                                .filter(
+                            {data?.data?.body
+                                ?.filter(
                                     (el: any) =>
                                         el.roomType.toLowerCase() ===
                                             roomType.toLowerCase() &&
@@ -219,9 +229,9 @@ const CoreApplicationDeviceRoomWrapper = ({
                                             setCurrentSelectedDeviceId
                                         }
                                     />
-                                ))} */}
-                            {/* {data?.data?.body?
-                                .filter(
+                                ))}
+                            {data?.data?.body
+                                ?.filter(
                                     (el: any) =>
                                         el.roomType.toLowerCase() ===
                                             roomType.toLowerCase() &&
@@ -247,7 +257,7 @@ const CoreApplicationDeviceRoomWrapper = ({
                                             setCurrentSelectedDeviceId
                                         }
                                     />
-                                ))} */}
+                                ))}
                         </section>
                     )}
                 {!isLoading &&
@@ -287,7 +297,7 @@ const CoreApplicationDeviceRoomWrapper = ({
 
             {/***********************************BACKDROP*********************************/}
 
-            {/* <AnimatePresence
+            <AnimatePresence
                 initial={false}
                 exitBeforeEnter={true}
                 onExitComplete={() => null}
@@ -304,9 +314,9 @@ const CoreApplicationDeviceRoomWrapper = ({
                         />
                     </InformationBackdropModel>
                 )}
-            </AnimatePresence> */}
+            </AnimatePresence>
 
-            {/* <AnimatePresence
+            <AnimatePresence
                 initial={false}
                 exitBeforeEnter={true}
                 onExitComplete={() => null}
@@ -321,9 +331,9 @@ const CoreApplicationDeviceRoomWrapper = ({
                         />
                     </InformationBackdropModel>
                 )}
-            </AnimatePresence> */}
+            </AnimatePresence>
 
-            {/* <AnimatePresence
+            <AnimatePresence
                 initial={false}
                 exitBeforeEnter={true}
                 onExitComplete={() => null}
@@ -340,7 +350,7 @@ const CoreApplicationDeviceRoomWrapper = ({
                         />
                     </InformationBackdropModel>
                 )}
-            </AnimatePresence> */}
+            </AnimatePresence>
 
             {/***********************************BACKDROP*********************************/}
         </div>

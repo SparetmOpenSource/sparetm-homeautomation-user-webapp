@@ -25,7 +25,8 @@
     padding-right: 1em;
 }
 
-.schedular_tap:hover .schedular_tap_col_2 {
+.schedular_tap:hover .schedular_tap_col_2>:last-child,
+.schedular_tap:hover .schedular_tap_col_2>:first-child {
     transition: all 0.2s ease;
     background: rgb(98, 255, 0, 0.8);
 }
@@ -61,12 +62,29 @@
 
 .schedular_tap_col_2 {
     display: flex;
-    align-items: center;
     justify-content: space-around;
     width: 20%;
     height: 100%;
+}
+
+.schedular_tap_col_2>:first-child {
+    width: 21%;
+    height: 100%;
     background: rgb(98, 255, 0, 0.2);
-    border-radius: inherit;
+    border-radius: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.schedular_tap_col_2>:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 75%;
+    height: 100%;
+    background: rgb(98, 255, 0, 0.2);
+    border-radius: 0.5em;
     transition: all 0.5s ease;
     z-index: 100;
     cursor: pointer;

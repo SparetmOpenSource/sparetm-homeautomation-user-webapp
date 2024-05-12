@@ -8,9 +8,7 @@ import { SiConcourse } from 'react-icons/si';
 import { GiCeilingLight } from 'react-icons/gi';
 import { CgViewSplit } from 'react-icons/cg';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
-import {
-    NETWORKERRORKEY,
-} from '../Data/Constants';
+import { NETWORKERRORKEY } from '../Data/Constants';
 import {
     BsSunFill,
     BsCloudSunFill,
@@ -168,7 +166,6 @@ export const Spring = {
     damping: 30,
 };
 
-
 export const ConvertTheRange = (
     currentValue: any,
     in_min: any,
@@ -212,6 +209,16 @@ const RgbDeviceAnimation = [
 export const findAnimationBasedColor = (animationType: any) => {
     return RgbDeviceAnimation.filter((el: any) => el.value === animationType)[0]
         .color;
+};
+
+export const copyText = async (text: any) => {
+    try {
+        const toCopy = text;
+        await navigator.clipboard.writeText(toCopy);
+        toast.info('Code copied!');
+    } catch (err) {
+        toast.info('Failed to copy: ' + err);
+    }
 };
 
 // ----------------- notification color --------------------- //

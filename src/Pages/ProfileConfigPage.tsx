@@ -6,7 +6,11 @@ import { RoutePath } from '../Data/Constants';
 import { ImProfile } from 'react-icons/im';
 import { AiOutlineAppstoreAdd } from 'react-icons/ai';
 import { HiOutlineLogout } from 'react-icons/hi';
-import { appLogOut } from '../Utils/ProfileConfigHelperFn';
+import {
+    appLogOut,
+    profileLogOutWithoutNavigation,
+} from '../Utils/ProfileConfigHelperFn';
+import { useEffect } from 'react';
 
 const ProfileConfig = (props: any) => {
     const navigate = useNavigate();
@@ -36,6 +40,10 @@ const ProfileConfig = (props: any) => {
             currentPath: location.pathname.replace('%20', ''),
         },
     ];
+
+    useEffect(() => {
+        profileLogOutWithoutNavigation();
+    }, []);
 
     return (
         <div className="profileConfig">

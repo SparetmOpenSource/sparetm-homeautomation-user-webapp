@@ -64,6 +64,22 @@
     box-shadow: 2px 5px 2px 0px rgba(0, 0, 0, 0.75);
 }
 
+.coreApplicationDashBoard_notification>:first-child {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(206, 199, 191);
+    padding: 1.5rem;
+}
+
+.coreApplicationDashBoard_notification>:first-child span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
 .coreApplicationDashBoard_notification> :last-child {
     display: flex;
     align-items: center;

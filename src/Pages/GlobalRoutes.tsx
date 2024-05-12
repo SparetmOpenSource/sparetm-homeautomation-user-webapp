@@ -47,6 +47,13 @@ const TodoListWrapper = React.lazy(
         ),
 );
 
+const StatusList = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/StatusList/StatusList'
+        ),
+);
+
 export const GlobalRoutes = (props: any) => {
     return (
         <Suspense fallback={<LoadingFade />}>
@@ -178,7 +185,7 @@ export const GlobalRoutes = (props: any) => {
                                 path={RoutePath.Dashboard_Device_Status}
                                 element={
                                     <Suspense fallback={<LoadingFade />}>
-                                        <h1>DEVICE STATUS</h1>
+                                        <h1><StatusList/></h1>
                                     </Suspense>
                                 }
                             />

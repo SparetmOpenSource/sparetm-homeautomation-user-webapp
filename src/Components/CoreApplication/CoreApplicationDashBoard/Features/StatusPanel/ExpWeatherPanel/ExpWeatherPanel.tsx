@@ -33,7 +33,7 @@ const ExpWeatherPanel = (props: any) => {
                     </p>
                     <p>
                         <i>
-                            {props?.weather?.name},{' '}
+                            {props?.weather?.name}, {props?.state},{' '}
                             {props?.weather?.sys?.country}
                         </i>
                     </p>

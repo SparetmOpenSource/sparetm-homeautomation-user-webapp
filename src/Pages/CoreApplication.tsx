@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import {
-    displayToastify
-} from '../Utils/HelperFn';
+import { displayToastify } from '../Utils/HelperFn';
 import { useReactQuery_Get } from '../Api.tsx/useReactQuery_Get';
 import { getProfile } from '../Api.tsx/ProfileConfigApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import CoreApplicationNav from '../Components/CoreApplication/CoreApplicationNav/CoreApplicationNav';
 import { AnimatePresence } from 'framer-motion';
 import ConfirmationBackdropModel from '../Components/Others/BackdropModel/ConfirmationBackdropModel/ConfirmationBackdropModel';
-import { appLogOut, getProfileId, profileLogOut } from '../Utils/ProfileConfigHelperFn';
+import {
+    appLogOut,
+    getProfileId,
+    profileLogOutWithNavigation,
+} from '../Utils/ProfileConfigHelperFn';
+import { GET_PROFILE_IN_COREAPPLICATIONCLASS } from '../Data/QueryConstant';
 
 const CoreApplication = () => {
     //const appUser = getAppAdminUser();
@@ -37,8 +40,9 @@ const CoreApplication = () => {
         return getProfile(profileId);
     };
     const on_Success = (data: any) => {
-        setFirstRoomRoute(data?.data?.body?.room[0]?.roomType);
+        setFirstRoomRoute(data?.data?.body?.room[0]?.room_type);
     };
+    
     const on_Error = (error: any) => {
         displayToastify(
             error?.response?.data?.message,
@@ -47,8 +51,8 @@ const CoreApplication = () => {
         );
     };
 
-    const { data } = useReactQuery_Get(
-        'get_profile',
+    const { data: profileDetals } = useReactQuery_Get(
+        GET_PROFILE_IN_COREAPPLICATIONCLASS,
         profileFn,
         on_Success,
         on_Error,
@@ -60,6 +64,8 @@ const CoreApplication = () => {
         20000, // Cache time
         10000, // Stale Time
     );
+
+
 
     /*{----------------------------------------------------------------------------------------------------------}*/
 
@@ -111,7 +117,7 @@ const CoreApplication = () => {
                         borderRadius: '0.5em',
                     }}
                 >
-                    <Outlet context={data?.data?.body} />
+                    <Outlet context={profileDetals?.data?.body} />
                 </div>
             </section>
 
@@ -129,7 +135,9 @@ const CoreApplication = () => {
                         handleClose={closeAccount}
                         text="You want to switch profile, Are you sure?"
                         btn_text="Yes"
-                        setConfirmation={() => profileLogOut(navigate)}
+                        setConfirmation={() =>
+                            profileLogOutWithNavigation(navigate)
+                        }
                     />
                 )}
             </AnimatePresence>

@@ -3,6 +3,7 @@ import './Form.css';
 import Button from '../../Others/CustomButton/Button';
 import TextBlinkAnimation from '../../Others/TextBlinkAnimation/TextBlinkAnimation';
 import { displayToastify } from '../../../Utils/HelperFn';
+//import { BiSolidHide } from 'react-icons/bi';
 import {
     APPPROFILE,
     OFFLINECRED,
@@ -100,9 +101,9 @@ const LoginForm = () => {
                         },
                     })}
                 />
-                {logErrors.userName && (
+                {logErrors.email && (
                     <p className="form_error">
-                        {(logErrors.userName as any)?.message}
+                        {(logErrors.email as any)?.message}
                     </p>
                 )}
 

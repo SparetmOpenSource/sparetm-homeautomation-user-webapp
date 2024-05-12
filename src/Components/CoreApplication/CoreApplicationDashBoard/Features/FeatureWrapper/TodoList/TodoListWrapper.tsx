@@ -17,6 +17,7 @@ import TodoListBoxAddingBackdrop from './TodoListBoxAddingBackdrop/TodoListBoxAd
 import TodoListEditBackdrop from './TodoListEditBackdrop/TodoListEditBackdrop';
 import TodoListStatusChangeBackdrop from './TodoListStatusChangeBackdrop/TodoListStatusChangeBackdrop';
 import { getProfileId } from '../../../../../../Utils/ProfileConfigHelperFn';
+import { GET_TODO_LIST_IN_TODOLISTWRAPPERCLASS } from '../../../../../../Data/QueryConstant';
 
 const TodoListWrapper = () => {
     const profileId = getProfileId();
@@ -82,7 +83,7 @@ const TodoListWrapper = () => {
     };
 
     const { isLoading, data } = useReactQuery_Get(
-        'get_todo_list',
+        GET_TODO_LIST_IN_TODOLISTWRAPPERCLASS,
         todoFn,
         on_Success,
         on_Error,
@@ -123,14 +124,14 @@ const TodoListWrapper = () => {
             )}
 
             {!isLoading &&
-                data?.body?.map((el: any) => (
+                data?.data?.body?.map((el: any) => (
                     <TodoListBox
                         key={el.id}
                         subject={el.subject}
                         description={el.statement}
                         id={el.id}
                         status={el.status}
-                        updated={el.updated_at}
+                        updated={el.updatedAt}
                         targetedCompletion={el.targetedCompletion}
                         openDeleteTodo={openDeleteTodo}
                         openChangeStatus={() =>

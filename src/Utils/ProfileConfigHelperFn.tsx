@@ -11,10 +11,15 @@ import {
 } from '../Data/Constants';
 import { displayToastify } from './HelperFn';
 
-export const profileLogOut = (navigate: any) => {
+export const profileLogOutWithNavigation = (navigate: any) => {
     removeProfileId();
     removeProfileName();
     navigate(RoutePath.SelectProfileConfig);
+};
+
+export const profileLogOutWithoutNavigation = () => {
+    removeProfileId();
+    removeProfileName();
 };
 
 // Admin user

@@ -23,14 +23,14 @@ const FeatureWrapper = (props: any) => {
     const FeatureNavigationList = [
         {
             id: 1,
-            to: RoutePath?.Dashboard_Todo,
-            icon: <IoCalendarSharp />,
-        },
-        {
-            id: 2,
             to: RoutePath?.Dashboard_Device_Status,
             icon: <SiStatuspal />,
         },
+        {
+            id: 2,
+            to: RoutePath?.Dashboard_Todo,
+            icon: <IoCalendarSharp />,
+        }
     ];
 
     return (

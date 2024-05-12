@@ -1,4 +1,6 @@
 import axios from 'axios';
+// import { useQueryClient } from 'react-query';
+// const queryClient = useQueryClient();
 
 export const RootUrl = {
     gateway: 'http://localhost:8086',
@@ -23,3 +25,7 @@ export const postHeaderConfig = {
         'Content-Type': 'application/json',
     },
 };
+
+// export const refreshQuery = (id:any) => {
+//      queryClient.invalidateQueries(id);
+//  };
