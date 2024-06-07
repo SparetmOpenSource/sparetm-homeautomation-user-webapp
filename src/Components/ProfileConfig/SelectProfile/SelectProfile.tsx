@@ -1,5 +1,5 @@
 import './SelectProfile.css';
-import { Link, useLocation, useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { catchError } from '../../../Utils/HelperFn';
 import { getProfiles } from '../../../Api.tsx/ProfileConfigApis';
@@ -21,12 +21,9 @@ import { FaFaceSurprise } from 'react-icons/fa6';
 import { APPPROFILE } from '../../../Data/Enum';
 import jsonApiResponse from './../../../Data/SampleApiResponse.json';
 import { getAppAdminUser } from '../../../Utils/ProfileConfigHelperFn';
-import { useEffect } from 'react';
-import { PROFILE_COLOR } from '../../../Data/ColorConstant';
 
 const SelectProfile = () => {
-    const location = useLocation();
-    const [colorValue, setBackgroundColor]: any = useOutletContext();
+    const [colorValue]: any = useOutletContext();
     const appUser = getAppAdminUser();
     let dataArr: any[] = [];
 
@@ -71,12 +68,6 @@ const SelectProfile = () => {
     } else {
         dataArr = jsonApiResponse?.select_profile?.body;
     }
-
-    useEffect(() => {
-        if (location?.pathname === RoutePath.SelectProfileConfig) {
-            setBackgroundColor(PROFILE_COLOR.OUTER);
-        }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div

@@ -81,11 +81,7 @@ export const GlobalRoutes = (props: any) => {
                         path={RoutePath.Auth}
                         element={
                             <Suspense fallback={<LoadingFade />}>
-                                <SignInSignUp
-                                    setBackgroundColor={
-                                        props.setBackgroundColor
-                                    }
-                                />
+                                <SignInSignUp />
                             </Suspense>
                         }
                     />
@@ -101,11 +97,7 @@ export const GlobalRoutes = (props: any) => {
                         path={RoutePath.ProfileConfig}
                         element={
                             <Suspense fallback={<LoadingFade />}>
-                                <ProfilePage
-                                    setBackgroundColor={
-                                        props.setBackgroundColor
-                                    }
-                                />
+                                <ProfilePage />
                             </Suspense>
                         }
                     >
@@ -169,8 +161,16 @@ export const GlobalRoutes = (props: any) => {
                                 element={
                                     <Navigate
                                         replace
-                                        to={RoutePath.Dashboard_Todo}
+                                        to={RoutePath.Dashboard_Device_Status}
                                     />
+                                }
+                            />
+                            <Route
+                                path={RoutePath.Dashboard_Device_Status}
+                                element={
+                                    <Suspense fallback={<LoadingFade />}>
+                                        <StatusList />
+                                    </Suspense>
                                 }
                             />
                             <Route
@@ -181,20 +181,11 @@ export const GlobalRoutes = (props: any) => {
                                     </Suspense>
                                 }
                             />
-                            <Route
-                                path={RoutePath.Dashboard_Device_Status}
-                                element={
-                                    <Suspense fallback={<LoadingFade />}>
-                                        <h1><StatusList/></h1>
-                                    </Suspense>
-                                }
-                            />
                         </Route>
 
                         {/************************************************/}
                         {/*********************Device ROOM****************/}
                         {/************************************************/}
-
                         <Route
                             path={RoutePath.DeviceRoom}
                             element={

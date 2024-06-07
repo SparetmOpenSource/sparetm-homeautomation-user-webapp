@@ -8,3 +8,8 @@
     color: lavender;
     background-color: red;
 }
+
+.deviceStatus-routeIcon{
+    top:10px;
+    right:10px
+}

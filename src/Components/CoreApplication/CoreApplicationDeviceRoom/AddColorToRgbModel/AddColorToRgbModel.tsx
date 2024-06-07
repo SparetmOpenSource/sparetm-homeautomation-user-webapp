@@ -31,6 +31,10 @@ import {
 } from '../../../../Api.tsx/CoreAppApis';
 import ConfirmationBackdropModel from '../../../Others/BackdropModel/ConfirmationBackdropModel/ConfirmationBackdropModel';
 import { RgbaColorPicker } from 'react-colorful';
+import {
+    getAppAdminUser,
+    getProfileName,
+} from '../../../../Utils/ProfileConfigHelperFn';
 
 const AddColorToRgbModel = ({
     closeAddColorToRgbModel,
@@ -44,6 +48,8 @@ const AddColorToRgbModel = ({
     const close = () => {
         setModelOpen(false);
     };
+    const adminName = getAppAdminUser();
+    const profileName = getProfileName();
     const [color, setColor]: any = useState({});
     const [saveColorOption, setSaveColorOption]: any = useState(true);
     const [rgbAnimationOption, setRgbAnimationOption]: any = useState(false);
@@ -92,6 +98,8 @@ const AddColorToRgbModel = ({
     );
 
     const { mutate: deleteDevice } = useDeleteDevice(
+        adminName,
+        profileName,
         onError,
         closeAddColorToRgbModel,
     );

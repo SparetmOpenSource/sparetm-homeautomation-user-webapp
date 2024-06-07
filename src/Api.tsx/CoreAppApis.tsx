@@ -35,7 +35,7 @@ export const getWeatherQuote = async (profileId: any) => {
 export const getTodoList = async (profileId: any) => {
     return await api.get(
         // featureUrl.get_todo_list_1 + profileId + featureUrl.get_todo_list_2,
-        featureUrl.get_todo_list.replace("%profileId%", profileId),  
+        featureUrl.get_todo_list.replace('%profileId%', profileId),
         getHeaderConfig,
     );
 };
@@ -280,12 +280,17 @@ export const useDeleteDeviceStoreData = (deviceId: any, on_Error: any) => {
 
 /*************************Delete device*******************************/
 
-export const useDeleteDevice = (on_Error: any, closeDeleteDevice: any) => {
+export const useDeleteDevice = (
+    admin: any,
+    profileName: any,
+    on_Error: any,
+    closeDeleteDevice: any,
+) => {
     const queryClient = useQueryClient();
     return useMutation(
         (deviceId) => {
             return api.delete(
-                featureUrl.del_device + deviceId,
+                `${featureUrl.del_device}${deviceId}&admin=${admin}&profilename=${profileName}`,
                 postHeaderConfig,
             );
         },
