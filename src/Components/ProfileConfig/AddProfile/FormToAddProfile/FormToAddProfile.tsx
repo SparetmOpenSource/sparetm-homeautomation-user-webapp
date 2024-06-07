@@ -172,7 +172,6 @@ const FormToAddProfile = (props: any) => {
             { cityName: city },
             { room: room },
         );
-        console.log(data);
         if (localStorage.getItem('appProfile') === APPPROFILE.STATUSOFF) {
             displayToastify(
                 'You are using the app in offline mode. Please select the profile directly.',

@@ -75,7 +75,12 @@ const CoreApplicationDeviceRoomWrapper = ({
     const onError = (error: any) => {
         catchError(error);
     };
-    const { mutate } = useDeleteDevice(onError, closeInfoModel);
+    const { mutate } = useDeleteDevice(
+        adminName,
+        profileName,
+        onError,
+        closeInfoModel,
+    );
 
     /*************************/
 

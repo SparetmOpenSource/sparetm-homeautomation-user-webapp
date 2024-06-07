@@ -9,11 +9,8 @@ import Switch from '../Components/Others/Switch/Switch';
 import { MdOutlineOnlinePrediction } from 'react-icons/md';
 import { HiOutlineStatusOffline } from 'react-icons/hi';
 import { setAppProfile } from '../Utils/ProfileConfigHelperFn';
-import { useLocation } from 'react-router-dom';
-import { RoutePath } from '../Data/Constants';
-import { SIGNIN_SIGNUP_COLOR } from '../Data/ColorConstant';
 
-const SignInSignUp = (props:any) => {
+const SignInSignUp = () => {
     const [openLoginForm, setOpenLoginForm]: any = useState(true);
     const sentence = openLoginForm
         ? 'Welcome Back!'.split('')
@@ -24,16 +21,6 @@ const SignInSignUp = (props:any) => {
     useEffect(() => {
         setAppProfile(profileStatus);
     }, [profileStatus]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    const location = useLocation();
-
-    useEffect(() => {
-        if (location?.pathname === RoutePath.Auth) {
-            props.setBackgroundColor(SIGNIN_SIGNUP_COLOR.OUTER);
-        }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-   
 
     //useMountEffect(displayToastify('working on both offline and online', TOASTIFYCOLOR.DARK, TOASTIFYSTATE.INFO));
 
@@ -62,7 +49,7 @@ const SignInSignUp = (props:any) => {
                                 })}
                             </div>
                             <div>
-                                <p>
+                                {/* <p>
                                     {openLoginForm
                                         ? 'To Keep connected with us please'
                                         : 'Enter your personal details'}
@@ -71,6 +58,16 @@ const SignInSignUp = (props:any) => {
                                     {openLoginForm
                                         ? 'login with your personal info'
                                         : 'and start journey with us'}
+                                </p> */}
+                                <p>
+                                    {openLoginForm
+                                        ? 'Enter your personal details'
+                                        : 'Your very own digital home organiser to'}
+                                </p>
+                                <p>
+                                    {openLoginForm
+                                        ? 'and start journey with us'
+                                        : 'keep your space always special'}
                                 </p>
                             </div>
                             <div>

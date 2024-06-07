@@ -1,7 +1,7 @@
 export const LogInCredLength = {
     userName: {
         min: 2,
-        max: 24,
+        max: 240,
     },
     password: {
         min: 8,
@@ -17,5 +17,5 @@ export const RegistrationCredLength = {
     password: {
         min: 8,
         max: 16,
-    }
+    },
 };

@@ -73,6 +73,7 @@
 
 .addProfile_form> :first-child> :last-child span input {
     background-color: rgb(26, 40, 45);
+    color: lavender;
 }
 
 .css-13cymwt-control {

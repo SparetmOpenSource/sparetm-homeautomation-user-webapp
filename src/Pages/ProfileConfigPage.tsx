@@ -12,7 +12,7 @@ import {
 } from '../Utils/ProfileConfigHelperFn';
 import { useEffect } from 'react';
 
-const ProfileConfig = (props: any) => {
+const ProfileConfig = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const colorValue =
@@ -104,7 +104,7 @@ const ProfileConfig = (props: any) => {
                 </span>
             </section>
             <section>
-                <Outlet context={[colorValue, props.setBackgroundColor]} />
+                <Outlet context={[colorValue]} />
             </section>
         </div>
     );

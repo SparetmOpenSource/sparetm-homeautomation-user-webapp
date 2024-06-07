@@ -59,7 +59,7 @@ export const home_contact_social_list = [
     {
         id: 2,
         name: 'Instagram',
-        href: 'https://www.instagram.com/_sparetm/',
+        href: 'https://www.instagram.com/shubham_tales/',
     },
     {
         id: 3,

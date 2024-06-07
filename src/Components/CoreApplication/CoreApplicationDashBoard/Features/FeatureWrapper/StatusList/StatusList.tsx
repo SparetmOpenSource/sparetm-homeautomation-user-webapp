@@ -21,53 +21,60 @@ const StatusList = () => {
         {
             id: 'c1',
             icon: <TbCircleDashedNumber1 />,
-            description: '? devices running in Room ',
+            description: '%COUNT% devices running in %ROOM% ',
             count: 1,
             barStatus: '40%',
+            roomLabel: 'Bedroom',
         },
         {
             id: 'c2',
             icon: <TbCircleDashedNumber2 />,
-            description: '? devices running in Room ',
+            description: '%COUNT% devices running in %ROOM% ',
             count: 2,
             barStatus: '60%',
+            roomLabel: 'Dining Room',
         },
         {
             id: 'c3',
             icon: <TbCircleDashedNumber3 />,
-            description: '? devices running in Room ',
+            description: '%COUNT% devices running in %ROOM% ',
             count: 3,
             barStatus: '25%',
+            roomLabel: 'Drawing Room',
         },
         {
             id: 'c4',
             icon: <TbCircleDashedNumber4 />,
-            description: '? devices running in Room ',
+            description: '%COUNT% devices running in %ROOM%',
             count: 4,
             barStatus: '80%',
+            roomLabel: 'Kitchen',
         },
         {
             id: 'c5',
             icon: <TbCircleDashedNumber5 />,
-            description: '? devices running in Room ',
+            description: '%COUNT% devices running in %ROOM% ',
             count: 5,
             barStatus: '20%',
+            roomLabel: 'Living Room',
         },
         {
             id: 'c6',
             icon: <TbCircleDashedNumber6 />,
-            description: '? devices running in Room ',
+            description: '%COUNT% devices running in %ROOM% ',
             count: 6,
             barStatus: '45%',
+            roomLabel: 'Master Bedroom',
         },
     ];
 
     return (
-        <div className="wrapper">
-            <div className="container">
+        <div className="statusList-wrapper">
+            <div className="statusList-container">
                 {StatusNavigationList.map((item: any) => (
                     <span key={item?.id}>
                         <input
+                            className="statusList-input"
                             type="radio"
                             name="slide"
                             id={item?.id}
@@ -76,21 +83,27 @@ const StatusList = () => {
                             }
                         />
                         <label
-                            className="card"
+                            className="statusList-card"
                             onClick={() => onClickFn(item?.count)}
                         >
                             {statusVisibility !== item?.count && (
-                                <DeviceStatusBar barStatus={item?.barStatus} />
+                                <DeviceStatusBar
+                                    barStatus={item?.barStatus}
+                                    roomLabel={item?.roomLabel}
+                                />
                             )}
                             {statusVisibility === item?.count && (
-                                <DeviceStatus room={item?.id} />
+                                <DeviceStatus
+                                    room={item?.id}
+                                    roomLabel={item?.roomLabel}
+                                />
                             )}
                             {statusVisibility === item?.count && (
-                                <div className="row">
+                                <div className="statusList-row">
                                     <motion.div
                                         whileHover={{ scale: 1.2 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="icon"
+                                        className="statusList-icon"
                                     >
                                         <IconContext.Provider
                                             value={{
@@ -101,8 +114,16 @@ const StatusList = () => {
                                             {item?.icon}
                                         </IconContext.Provider>
                                     </motion.div>
-                                    <div className="description">
-                                        <p>{item?.description}</p>
+                                    <div className="statusList-description">
+                                        <p>
+                                            {item?.description
+                                                .replace(
+                                                    '%ROOM%',
+                                                    item?.roomLabel,
+                                                )
+                                                .replace('%COUNT%', item?.count)
+                                                .trim()}
+                                        </p>
                                     </div>
                                 </div>
                             )}

@@ -1,4 +1,4 @@
-import { useLocation, useOutletContext } from 'react-router-dom';
+import {useOutletContext } from 'react-router-dom';
 import { getCityCountryStateToken } from '../../../Api.tsx/ProfileConfigApis';
 import { useReactQuery_Get } from '../../../Api.tsx/useReactQuery_Get';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
@@ -6,14 +6,9 @@ import { displayToastify } from '../../../Utils/HelperFn';
 import LoadingFade from '../../Others/LoadingAnimation/LoadingFade';
 import './AddProfile.css';
 import FormToAddProfile from './FormToAddProfile/FormToAddProfile';
-import { useEffect } from 'react';
-import { PROFILE_COLOR } from '../../../Data/ColorConstant';
-import { RoutePath } from '../../../Data/Constants';
 
 const AddProfile = () => {
-    const location = useLocation();
-
-    const [colorValue, setBackgroundColor]: any = useOutletContext();
+    const [colorValue]: any = useOutletContext();
     const tokenFn = () => {
         return getCityCountryStateToken();
     };
@@ -41,12 +36,6 @@ const AddProfile = () => {
         300000, // Cache time
         0, // Stale Time
     );
-
-    useEffect(() => {
-        if (location?.pathname === RoutePath.AddProfileConfig) {
-            setBackgroundColor(PROFILE_COLOR.OUTER);
-        }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="addProfile">
