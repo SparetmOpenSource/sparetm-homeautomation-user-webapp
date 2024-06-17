@@ -16,7 +16,7 @@ const GadgetDevice = ({
     adminName,
     profileName,
     roomType,
-    mqttCredDetails,
+    // mqttCredDetails,
     openAddColorToRgbModel,
     setCurrentSelectedDeviceId,
 }: any) => {
@@ -72,13 +72,13 @@ const GadgetDevice = ({
         mutate({
             status: !isOn,
             statusDetail: `${backgroundColorValue[0]},${backgroundColorValue[1]},${backgroundColorValue[2]},${backgroundColorValue[3]},${animationType}`,
-            mqttPublisherId: mqttCredDetails?.mqttPublisherId,
-            mqttServerAddress:
-                mqttCredDetails?.mqttServerAddress +
-                ':' +
-                mqttCredDetails?.mqttServerPort,
-            brokerUserName: mqttCredDetails?.brokerUserName,
-            brokerPassword: mqttCredDetails?.brokerPassword,
+            // mqttPublisherId: mqttCredDetails?.mqttPublisherId,
+            // mqttServerAddress:
+            //     mqttCredDetails?.mqttServerAddress +
+            //     ':' +
+            //     mqttCredDetails?.mqttServerPort,
+            // brokerUserName: mqttCredDetails?.brokerUserName,
+            // brokerPassword: mqttCredDetails?.brokerPassword,
         } as any);
     };
 

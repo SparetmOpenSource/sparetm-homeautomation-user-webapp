@@ -6,6 +6,7 @@ import { GlobalRoutes } from './Pages/GlobalRoutes';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { HOME_COLOR } from './Data/ColorConstant';
+
 const queryClient = new QueryClient();
 
 function App() {

@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import './CoreApplicationDeviceRoomWrapper.css';
 import { FcPlus, FcRefresh } from 'react-icons/fc';
 import { IconContext } from 'react-icons';
-import { TbPremiumRights } from 'react-icons/tb';
+// import { TbPremiumRights } from 'react-icons/tb';
 import { useQueryClient } from 'react-query';
 import { catchError } from '../../../../Utils/HelperFn';
 import {
@@ -30,8 +30,8 @@ const CoreApplicationDeviceRoomWrapper = ({
     setDeviceOn,
     setDeviceOff,
     setTotalDevice,
-    mqttCredDetails,
-}: any) => {
+}: // mqttCredDetails,
+any) => {
     const location = useLocation();
     const adminName = getAppAdminUser();
     const profileName = getProfileName();
@@ -165,7 +165,7 @@ const CoreApplicationDeviceRoomWrapper = ({
                             <FcRefresh />
                         </IconContext.Provider>
                     </motion.div>
-                    <motion.div
+                    {/* <motion.div
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
                     >
@@ -177,7 +177,7 @@ const CoreApplicationDeviceRoomWrapper = ({
                         >
                             <TbPremiumRights />
                         </IconContext.Provider>
-                    </motion.div>
+                    </motion.div> */}
                     <motion.div
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
@@ -226,7 +226,7 @@ const CoreApplicationDeviceRoomWrapper = ({
                                         adminName={item.adminName}
                                         profileName={item.profileName}
                                         roomType={item.roomType}
-                                        mqttCredDetails={mqttCredDetails}
+                                        // mqttCredDetails={mqttCredDetails}
                                         openAddColorToRgbModel={
                                             openAddColorToRgbModel
                                         }
@@ -257,7 +257,7 @@ const CoreApplicationDeviceRoomWrapper = ({
                                         adminName={item.adminName}
                                         profileName={item.profileName}
                                         roomType={item.roomType}
-                                        mqttCredDetails={mqttCredDetails}
+                                        // mqttCredDetails={mqttCredDetails}
                                         setCurrentSelectedDeviceId={
                                             setCurrentSelectedDeviceId
                                         }
@@ -309,12 +309,11 @@ const CoreApplicationDeviceRoomWrapper = ({
             >
                 {infoModelOpen && (
                     <InformationBackdropModel
-                        backdropColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
+                        backgroundColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
                         handleClose={closeInfoModel}
                     >
                         <DeviceInfoWrapper
                             currentDevice={currentDevice}
-                            mqttCredDetails={mqttCredDetails}
                             deleteDevice={mutate}
                         />
                     </InformationBackdropModel>
@@ -328,7 +327,7 @@ const CoreApplicationDeviceRoomWrapper = ({
             >
                 {addDeviceModelOpen && (
                     <InformationBackdropModel
-                        backdropColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
+                        backgroundColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
                         handleClose={closeAddDeviceModel}
                     >
                         <AddDeviceBackdropModel
@@ -345,12 +344,12 @@ const CoreApplicationDeviceRoomWrapper = ({
             >
                 {addColorToRgbModelOpen && (
                     <InformationBackdropModel
-                        backdropColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
+                        backgroundColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
                         handleClose={closeAddColorToRgbModel}
                     >
                         <AddColorToRgbModel
                             closeAddColorToRgbModel={closeAddColorToRgbModel}
-                            mqttCredDetails={mqttCredDetails}
+                            // mqttCredDetails={mqttCredDetails}
                             currentDevice={currentDevice}
                         />
                     </InformationBackdropModel>

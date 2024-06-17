@@ -1,6 +1,6 @@
-.confirmationBackdropModel {
-    width: clamp(50%, 700px, 90%);
-    height: min(50%, 300px);
+.todoListStatusChangeBackdrop_model {
+    width: clamp(50%, 800px, 90%);
+    height: min(55%, 550px);
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,8 @@
     color: lavender;
 }
 
-.confirmation_modal_button {
+
+.todoListStatusChangeBackdrop_modal_button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -18,55 +19,73 @@
     top: 1rem;
     right: 1rem;
 }
-.backdropModel_btn_container {
+
+/* ------------------------ */
+
+.todoListStatusChangeBackdrop_progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     width: 80%;
-    height: 40%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
+    height: 30%;
+    border-bottom: 4px solid rgb(42, 46, 33);
 }
 
-/* ******************************** */
-
-.form_container1 {
-    width: 100%;
-    height: 100%;
+.todoListStatusChangeBackdrop_progress_selector {
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    padding: 2em;
-}
-
-.form_container1 > :first-child {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     width: 100%;
     height: 70%;
-    padding: 1em;
+    padding: 1rem;
 }
-.form_container1 > :first-child div {
+
+.todoListStatusChangeBackdrop_progress_selector>:first-child {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    width: 100%;
+    height: 65%;
+    padding: 1rem;
+}
+
+.todoListStatusChangeBackdrop_progress_selector>:last-child {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    height: 100%;
-    width: 30%;
-    border-radius: 0.5em;
-}
-.form_container1 > :first-child div input {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-bottom: 1em;
-}
-.form_container1 > :first-child div label {
-    margin-top: 1em;
-    font-size: 1.5rem;
-}
-.form_container1 > :last-child {
     width: 100%;
-    height: 30%;
+    height: 35%;
+    padding: 1rem;
+}
+
+.todoListStatusChangeBackdrop_progress_selector>:first-child div {
+    width: 25%;
+    height: 80%;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    color: black;
+    cursor: pointer;
+}
+
+.todoListStatusChangeBackdrop_progress_selector>:first-child div input {
+    width: 20%;
+    height: 20%;
+}
+
+/* ************************************ */
+
+.todoListStatusChangeBackdrop_progress_icon {
+    width: 10%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.todoListStatusChangeBackdrop_progress_separation {
+    width: 20%;
+    height: 2%;
 }

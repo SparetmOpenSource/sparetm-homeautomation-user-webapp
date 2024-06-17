@@ -11,6 +11,7 @@ export const featureUrl = {
     del_todo_list: '/mpa/api/v1/profiles/features/todo?id=',
     add_todo_list: `/mpa/api/v1/profiles/features/todo?id=`,
     update_todo_list: `/mpa/api/v1/profiles/features/todo?id=`,
+    get_active_device_list: `/mpa/api/v1/profiles/device/all?admin=`,
     add_device: `/mda/api/v1/devices?admin=`,
     get_all_devices: `/mda/api/v1/devices/all?admin=`,
     get_devices: `/mda/api/v1/devices?admin=`,
@@ -43,6 +44,15 @@ export const getTodoList = async (profileId: any) => {
 /*************************Delete todo list*******************************/
 export const delTodoList = async (todoId: any) => {
     return await api.get(featureUrl.del_todo_list + todoId);
+};
+
+export const getActiveDeviceList = async (appUser: any, profileName:any) => {
+    return await api.get(
+        featureUrl.get_active_device_list +
+            appUser +
+            `&profilename=${profileName}`,
+        getHeaderConfig,
+    );
 };
 
 export const useDeleteTodo = (on_Error: any, closeDeleteTodo: any) => {
@@ -230,6 +240,31 @@ export const useUpdateAllDeviceStatus = (
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('get_device_list');
+            },
+            onError: on_Error,
+        },
+    );
+};
+
+/*************************Update all device status*******************************/
+export const useUpdateAllDeviceStatusWidget = (
+    admin: any,
+    profileName: any,
+    roomType: any,
+    on_Error: any,
+) => {
+    const queryClient = useQueryClient();
+    return useMutation(
+        (data) => {
+            return api.patch(
+                `${featureUrl.update_all_device_status}${admin}&profilename=${profileName}&roomtype=${roomType}`,
+                data,
+                postHeaderConfig,
+            );
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('get_widget_device_status');
             },
             onError: on_Error,
         },

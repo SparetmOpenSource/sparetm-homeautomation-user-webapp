@@ -13,13 +13,17 @@ import LoadingFade from '../../../../../Others/LoadingAnimation/LoadingFade';
 import TodoListBox from './TodoListBox/TodoListBox';
 import ConfirmationBackdropModel from '../../../../../Others/BackdropModel/ConfirmationBackdropModel/ConfirmationBackdropModel';
 import WindowBackdropModel from '../../../../../Others/BackdropModel/WindowBackdropModel/WindowBackdropModel';
-import TodoListBoxAddingBackdrop from './TodoListBoxAddingBackdrop/TodoListBoxAddingBackdrop';
+//import TodoListBoxAddingBackdrop from './TodoListBoxAddingBackdrop/TodoListBoxAddingBackdrop';
 import TodoListEditBackdrop from './TodoListEditBackdrop/TodoListEditBackdrop';
-import TodoListStatusChangeBackdrop from './TodoListStatusChangeBackdrop/TodoListStatusChangeBackdrop';
 import { getProfileId } from '../../../../../../Utils/ProfileConfigHelperFn';
 import { GET_TODO_LIST_IN_TODOLISTWRAPPERCLASS } from '../../../../../../Data/QueryConstant';
+import TodoListBoxAddingBackdrop from './TodoListBoxAddingBackdrop/TodoListBoxAddingBackdrop';
+import TodoListStatusChangeBackdrop from './TodoListStatusChangeBackdrop/TodoListStatusChangeBackdrop';
+
+//import { useOutletContext } from 'react-router-dom';
 
 const TodoListWrapper = () => {
+    //const selectedData: any = useOutletContext();
     const profileId = getProfileId();
     const [openDeleteTodoModel, setOpenDeleteTodoModel]: any = useState(false);
     const [idToBeDeleted, setIdToBeDeleted]: any = useState();
@@ -151,7 +155,7 @@ const TodoListWrapper = () => {
                 {openDeleteTodoModel && (
                     <ConfirmationBackdropModel
                         backgroundColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
-                        foregroundColor="rgb(21, 26, 30)"
+                        foregroundColor="rgb(26,40,45)"
                         handleClose={closeDeleteTodo}
                         text="You want to delete this item, Are you sure?"
                         btn_text="Delete"
@@ -206,7 +210,7 @@ const TodoListWrapper = () => {
                     <TodoListStatusChangeBackdrop
                         handleClose={closeChangeStatus}
                         backgroundColor="linear-gradient(69.5deg, rgba(189, 73, 255, 0.5) 18.6%, rgb(254, 76, 227,0.5) 85.9%)"
-                        foregroundColor="rgb(21, 26, 30)"
+                        foregroundColor="rgb(26,40,45)"
                         status={statusToBeUpdated}
                         todoId={idToBeUpdatedStatus}
                     />

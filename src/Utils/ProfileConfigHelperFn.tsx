@@ -134,7 +134,12 @@ export const openProfileOnClick = (
     setProfileId(profileId);
     setProfileName(profileName);
     navigate(
-        RoutePath.CoreApplication + '/dashboard/' + RoutePath.Dashboard_Todo,
+        // RoutePath.CoreApplication + '/dashboard/' + RoutePath.Dashboard_Todo,
+        RoutePath.CoreApplication +
+            '/' +
+            RoutePath.Dashboard +
+            '/' +
+            RoutePath.Dashboard_Device_Status,
     );
     // navigate(RoutePath.Dashboard_Todo);
     //removeCityCountryStateToken();

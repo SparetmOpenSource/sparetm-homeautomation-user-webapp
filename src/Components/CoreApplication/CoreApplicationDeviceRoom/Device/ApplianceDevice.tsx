@@ -16,7 +16,7 @@ const ApplianceDevice = ({
     adminName,
     profileName,
     roomType,
-    mqttCredDetails,
+    // mqttCredDetails,
     setCurrentSelectedDeviceId,
 }: any) => {
     const [isOn, setIsOn] = useState(false);
@@ -50,13 +50,13 @@ const ApplianceDevice = ({
         mutate({
             status: !isOn,
             statusDetail: '',
-            mqttPublisherId: mqttCredDetails?.mqttPublisherId,
-            mqttServerAddress:
-                mqttCredDetails?.mqttServerAddress +
-                ':' +
-                mqttCredDetails?.mqttServerPort,
-            brokerUserName: mqttCredDetails?.brokerUserName,
-            brokerPassword: mqttCredDetails?.brokerPassword,
+            // mqttPublisherId: mqttCredDetails?.mqttPublisherId,
+            // mqttServerAddress:
+            //     mqttCredDetails?.mqttServerAddress +
+            //     ':' +
+            //     mqttCredDetails?.mqttServerPort,
+            // brokerUserName: mqttCredDetails?.brokerUserName,
+            // brokerPassword: mqttCredDetails?.brokerPassword,
         } as any);
     };
 

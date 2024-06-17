@@ -1,0 +1,42 @@
+.setupArduinoIde {
+    height: 100%;
+    padding: 1rem 2rem;
+    color: lavender;
+    overflow: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.setupArduinoIde::-webkit-scrollbar {
+    display: none;
+}
+
+.setupArduinoIde h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px;
+    color: lavender;
+}
+
+.setupArduinoIde p {
+    font-size: 24px;
+    color: lavender;
+}
+
+.setupArduinoIde_arduino_download a,
+.setupArduinoIde a {
+    text-decoration: none;
+    color: orange;
+    cursor: pointer;
+}
+
+.setupArduinoIde_arduino_download a:hover,
+.setupArduinoIde a:hover {
+    color: grey;
+}
+
+.setupArduinoIde ul li {
+    font-size: 18px;
+    line-height: 40px;
+}

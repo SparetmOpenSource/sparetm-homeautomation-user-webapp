@@ -7,20 +7,42 @@
 }
 
 .statusList-container {
-    height: 400px;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
+    padding: 1.5rem;
+}
+
+.statusList-notFound-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    padding: 5rem;
+}
+
+.statusList-notFound-message h1 {
+    color: red;
+}
+
+.statusList-notFound-message p {
+    color: lavender;
 }
 
 .statusList-container span {
     display: flex;
     flex-direction: row;
+    width: 100%;
+    height: 100%;
 }
 
 .statusList-card {
     width: 80px;
-    border-radius: .75rem;
+    border-radius: 0.75rem;
     background-size: cover;
     cursor: pointer;
     overflow: hidden;
@@ -32,6 +54,7 @@
     flex-direction: column;
     transition: .6s cubic-bezier(.28, -0.03, 0, .99);
     box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.8);
+    background-color: rgb(42, 46, 33);
 }
 
 .statusList-card>.statusList-row {
@@ -75,7 +98,6 @@
 
 .statusList-input {
     display: none;
-    background-color: yellow;
 }
 
 .statusList-input:checked+.statusList-card {
@@ -85,4 +107,38 @@
 .statusList-input:checked+.statusList-card .statusList-description {
     opacity: 1 !important;
     transform: translateY(0) !important;
+}
+
+.statusList-card-float-label {
+    width: 100%;
+    border-radius: 0.5em;
+    color: rgb(255, 165, 2);
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+}
+
+.statusList-card-float-label p {
+    font-size: 1.4rem;
+    padding: 7em;
+    transform: rotate(-90deg);
+    display: inline-block;
+}
+
+.statusList-card-float-label span {
+    position: absolute;
+    display: inline-block;
+    background-color: rgb(181, 212, 59, 0.4);
+    width: 100%;
+}
+
+.statusList-wrapper_isLoading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
 }

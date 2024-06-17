@@ -7,11 +7,11 @@ import { SpringSuspense } from '../../../../Data/Constants';
 
 const InformationBackdropModel = ({
     handleClose,
-    backdropColor,
+    backgroundColor,
     children,
 }: any) => {
     return (
-        <Backdrop onClick={handleClose} backdropColor={backdropColor}>
+        <Backdrop onClick={handleClose} backgroundColor={backgroundColor}>
             <motion.div
                 // drag
                 onClick={(e) => e.stopPropagation()}

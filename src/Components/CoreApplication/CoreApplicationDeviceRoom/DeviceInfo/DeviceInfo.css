@@ -25,7 +25,7 @@
 }
 
 .deviceInfo div > :last-child {
-    background: #25292d;
+    background-color: rgb(11, 20, 22);
     width: 70%;
     height: 100%;
     display: flex;

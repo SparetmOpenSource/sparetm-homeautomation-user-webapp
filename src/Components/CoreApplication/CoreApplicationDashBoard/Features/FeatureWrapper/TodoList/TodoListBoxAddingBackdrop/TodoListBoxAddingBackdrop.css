@@ -1,13 +1,4 @@
-.form {
-    height: 100%;
-    width: 100%;
-    border-radius: 0.6em;
-    padding: 1em 0.5em;
-    padding: 1em;
-    margin: 0 auto;
-}
-
-.form_container {
+.todoListBoxAddingBackdrop .form_container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,37 +11,36 @@
     flex-direction: column;
     border-radius: inherit;
     padding: 1.5em 0;
+
 }
 
-.form_container::-webkit-scrollbar {
+.todoListBoxAddingBackdrop .form_container::-webkit-scrollbar {
     display: none;
 }
 
 /* *************************************************** */
 
-.form_field {
+.todoListBoxAddingBackdrop .form_field {
     width: 60%;
     padding: 0.7em;
-    border-radius: inherit;
+    border-radius: 0.6em;
     font-size: 1rem;
     line-height: 24px;
+    margin: 2em 0;
     transition: 0.5s all ease;
-    margin: 1em 0;
-    border: 3px solid grey;
+    border: 4px solid grey;
     -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.form_field:focus {
+.todoListBoxAddingBackdrop .form_field:focus {
     outline-offset: 5px;
     border: 3px solid orange;
     transition: 0.5s all ease;
 }
 
-/* *************************************************************** */
-
-.form_error {
+.todoListBoxAddingBackdrop .form_error {
     color: red;
     background: rgb(255, 0, 0, 0.1);
     padding: 0.5em 1.5em 0.5em 1.5em;
@@ -59,50 +49,67 @@
     line-height: 21px;
 }
 
-.form_heading {
+/* =================================================================*/
+
+.todoListBoxAddingBackdrop {
+    height: 100%;
+    width: 100%;
+    border-radius: 0.6em;
+    padding: 1em 0.5em;
+    padding: 1em;
+    margin: 0 auto;
+    background-color: rgb(26, 40, 45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.todoListBoxAddingBackdrop>:first-child {
+    background-color: rgb(11, 20, 22);
+    height: 100%;
+    width: 50%;
+    border-radius: 0.6em 0 0 0.6em;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 100%;
-    height: 30%;
-    padding: 1em;
 }
 
-.form_heading p {
+.todoListBoxAddingBackdrop>:first-child>:first-child {
+    width: 100%;
+    height: 100%;
+}
+
+.todoListBoxAddingBackdrop>:last-child {
+    height: 100%;
+    width: 50%;
+    padding: 0.5em 3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.todoListBoxAddingBackdrop>:last-child>:first-child {
+    height: 25%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.todoListBoxAddingBackdrop>:last-child>:first-child p {
     font-size: 1rem;
-    line-height: 24px;
+    color: gray;
+    margin: 2rem 0;
 }
 
-/* ********************************* */
-
-.form_wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+.todoListBoxAddingBackdrop>:last-child>:last-child {
     height: 70%;
+    width: 100%;
+    background-color: rgb(42, 46, 33);
     padding: 1em;
-    border-radius: inherit;
-}
-.form_wrapper > :first-child {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 50%;
-    border-radius: inherit;
-}
-.form_wrapper > :last-child {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 50%;
-    background: #1f2123;
-    border-radius: inherit;
-    padding: 1em;
-    -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 0.6em;
 }

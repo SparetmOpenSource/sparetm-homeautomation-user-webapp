@@ -20,7 +20,7 @@ const CoreApplicationNav = (props: any) => {
     const SideNav_Upper_List = [
         {
             id: 1,
-            to: RoutePath.CoreApplication_Dashboard + '/todo',
+            to: RoutePath.CoreApplication_Dashboard + '/status',
             icon: <MdSpaceDashboard />,
             currentPath: location.pathname.replace('%20', ''),
             listPath: RoutePath.CoreApplication_Dashboard,
@@ -52,7 +52,7 @@ const CoreApplicationNav = (props: any) => {
         },
         {
             id: 2,
-            to: RoutePath.CoreApplication_Setting,
+            to: `${RoutePath.CoreApplication_Setting}/${RoutePath.Setting_Account}`,
             icon: <MdSettingsSuggest />,
             currentPath: location.pathname.replace('%20', ''),
             listPath: RoutePath.CoreApplication_Setting,

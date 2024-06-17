@@ -94,13 +94,13 @@ const AddDeviceBackdropModel = (props: any) => {
                 onSubmit={handleDeviceSubmit(onDeviceSubmit)}
                 className="addDeviceBackdropModel_form_container"
             >
-                <h1>Please enter your device name with type</h1>
+                <h1>Enter your device name and type</h1>
                 <input
                     type="text"
                     className="addDeviceBackdropModel_form_field"
                     placeholder="device name"
                     style={{
-                        background: '#1f2123',
+                        background: 'rgb(11,20,22)',
                         color: 'lavender',
                     }}
                     {...addDevice('showName', {
@@ -124,7 +124,7 @@ const AddDeviceBackdropModel = (props: any) => {
                     className="addDeviceBackdropModel_form_select"
                     closeMenuOnSelect={true}
                     components={animatedComponents}
-                    placeholder="Select type"
+                    placeholder="select type"
                     options={DeviceTypeConfig}
                     onChange={addDeviceType}
                     filterOption={createFilter(filterConfig)}
@@ -135,7 +135,7 @@ const AddDeviceBackdropModel = (props: any) => {
                     <Button
                         label="Submit"
                         textCol="black"
-                        backCol="#e2ff00"
+                        backCol="rgb(8,246,125)"
                         width="150px"
                     />
                 )}

@@ -30,7 +30,7 @@ const FeatureWrapper = (props: any) => {
             id: 2,
             to: RoutePath?.Dashboard_Todo,
             icon: <IoCalendarSharp />,
-        }
+        },
     ];
 
     return (
@@ -39,13 +39,13 @@ const FeatureWrapper = (props: any) => {
                 <div>
                     {currentPageLocation === todoPath ? (
                         <p>
-                            Manage your daily task list here{' '}
+                            Task assigned to you show up here{' '}
                             {props?.dateValue
-                                ? `( Date: ${props?.dateValue?.split('T')[0]} )`
+                                ? `( ${props?.dateValue?.split('T')[0]} )`
                                 : ''}
                         </p>
                     ) : currentPageLocation === statusPath ? (
-                        <p>Check current status of your device</p>
+                        <p>Check current room status</p>
                     ) : (
                         <p>Something went wrong</p>
                     )}

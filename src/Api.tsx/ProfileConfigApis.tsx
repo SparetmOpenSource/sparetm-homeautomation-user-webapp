@@ -1,5 +1,5 @@
 import { api, getHeaderConfig, postHeaderConfig } from './Axios';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 const GeoAuthToken =
     'wOhI3LUC6CzqTj8JATleIaFkReJH6qmmnasmDz_xFnSXdd9ZDS-tlNFPO_iHtj0V4e8';
@@ -27,6 +27,7 @@ const profileUrl = {
     get_all_profile: '/mpa/api/v1/profiles/all?admin=',
     get_profile: '/mpa/api/v1/profiles?id=',
     add_profile: '/mpa/api/v1/profiles?admin=',
+    add_mqtt: '/mpa/api/v1/profiles/mqtt/cred?admin=',
     get_mqtt_cred: '/mpa/api/v1/profiles/mqtt/cred?admin=',
 };
 
@@ -87,6 +88,26 @@ export const useAddProfiles = (
             );
         },
         { onSuccess: on_Success, onError: on_Error },
+    );
+};
+
+/************************* Add user profile in profile config page *******************************/
+export const useAddMqttCred = (appUser: any, on_Error: any) => {
+    const queryClient = useQueryClient();
+    return useMutation(
+        (data) => {
+            return api.post(
+                profileUrl.add_mqtt + appUser,
+                data,
+                postHeaderConfig,
+            );
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries('get_Mqtt_Cred');
+            },
+            onError: on_Error,
+        },
     );
 };
 

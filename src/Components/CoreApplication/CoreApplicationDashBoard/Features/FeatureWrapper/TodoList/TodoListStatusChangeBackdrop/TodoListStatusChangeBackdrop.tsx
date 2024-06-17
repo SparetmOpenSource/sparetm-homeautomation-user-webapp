@@ -1,14 +1,17 @@
 import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
-import { IconContext } from 'react-icons';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import './TodoListStatusChangeBackdrop.css';
-import { useUpdateTodo } from '../../../../../../../Api.tsx/CoreAppApis';
-import { SpringSuspense } from '../../../../../../../Data/Constants';
 import Backdrop from '../../../../../../Others/BackdropModel/Backdrop/Backdrop';
-import Button from '../../../../../../Others/CustomButton/Button';
+import './TodoListStatusChangeBackdrop.css';
+import { SpringSuspense } from '../../../../../../../Data/Constants';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { IconContext } from 'react-icons';
+import { WiMoonNew } from 'react-icons/wi';
+import { GrInProgress } from 'react-icons/gr';
+import { WiMoonAltNew } from 'react-icons/wi';
+import { useForm } from 'react-hook-form';
 import { displayToastify } from '../../../../../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../Data/Enum';
+import { useUpdateTodo } from '../../../../../../../Api.tsx/CoreAppApis';
+import Button from '../../../../../../Others/CustomButton/Button';
 
 const TodoListStatusChangeBackdrop = ({
     handleClose,
@@ -25,8 +28,6 @@ const TodoListStatusChangeBackdrop = ({
     } = useForm({
         mode: 'onBlur',
     });
-
-    /*********************CREATING PROFILE**********************/
 
     const onError = (error: any) => {
         displayToastify(
@@ -79,19 +80,19 @@ const TodoListStatusChangeBackdrop = ({
             mutate(Object.assign({ status: val }));
         } else {
             displayToastify(
-                'Invalid input',
+                'Please select any one option',
                 TOASTIFYCOLOR.LIGHT,
                 TOASTIFYSTATE.ERROR,
             );
         }
         reset();
     };
+
     return (
         <Backdrop onClick={handleClose} backgroundColor={backgroundColor}>
             <motion.div
-                drag
                 onClick={(e) => e.stopPropagation()}
-                className="confirmationBackdropModel"
+                className="todoListStatusChangeBackdrop_model"
                 variants={SpringSuspense}
                 initial="hidden"
                 animate="visible"
@@ -99,14 +100,81 @@ const TodoListStatusChangeBackdrop = ({
                 style={{ background: foregroundColor }}
             >
                 <ConfirmationModalButton onClick={handleClose} />
+                <div className="todoListStatusChangeBackdrop_progress">
+                    <span className="todoListStatusChangeBackdrop_progress_icon">
+                        <IconContext.Provider
+                            value={{
+                                size: '2em',
+                                color:
+                                    status === 'STATUS_NEW' ||
+                                    status === 'STATUS_INPROGRESS' ||
+                                    status === 'STATUS_COMPLETED'
+                                        ? 'rgb(59,228,137)'
+                                        : 'rgb(128, 128, 128, 0.3)',
+                            }}
+                        >
+                            <WiMoonNew />
+                        </IconContext.Provider>
+                    </span>
+                    <span
+                        className="todoListStatusChangeBackdrop_progress_separation"
+                        style={{
+                            backgroundColor:
+                                status === 'STATUS_INPROGRESS' ||
+                                status === 'STATUS_COMPLETED'
+                                    ? 'lavender'
+                                    : 'rgb(128, 128, 128, 0.3)',
+                        }}
+                    ></span>
+                    <span className="todoListStatusChangeBackdrop_progress_icon">
+                        <IconContext.Provider
+                            value={{
+                                size: '2em',
+                                color:
+                                    status === 'STATUS_INPROGRESS' ||
+                                    status === 'STATUS_COMPLETED'
+                                        ? 'rgb(59,228,137)'
+                                        : 'rgb(128, 128, 128, 0.3)',
+                            }}
+                        >
+                            <GrInProgress />
+                        </IconContext.Provider>
+                    </span>
+                    <span
+                        className="todoListStatusChangeBackdrop_progress_separation"
+                        style={{
+                            backgroundColor:
+                                status === 'STATUS_COMPLETED'
+                                    ? 'lavender'
+                                    : 'rgb(128, 128, 128, 0.3)',
+                        }}
+                    ></span>
+                    <span className="todoListStatusChangeBackdrop_progress_icon">
+                        <IconContext.Provider
+                            value={{
+                                size: '2em',
+                                color:
+                                    status === 'STATUS_COMPLETED'
+                                        ? 'rgb(59,228,137)'
+                                        : 'rgb(128, 128, 128, 0.3)',
+                            }}
+                        >
+                            <WiMoonAltNew />
+                        </IconContext.Provider>
+                    </span>
+                </div>
                 <form
                     onSubmit={handleTodoSubmit(onTodoSubmit)}
-                    className="form_container1"
+                    className="todoListStatusChangeBackdrop_progress_selector"
                 >
                     <section>
                         <div
                             style={{
-                                background: 'rgb(0,255,0,0.5)',
+                                background:
+                                    status === 'STATUS_NEW'
+                                        ? 'red'
+                                        : 'rgb(42,46,33)',
+                                color: 'lavender',
                                 border:
                                     status === 'STATUS_NEW'
                                         ? '3px solid white'
@@ -116,7 +184,6 @@ const TodoListStatusChangeBackdrop = ({
                             {!(status === 'STATUS_NEW') && (
                                 <input
                                     type="checkbox"
-                                    className="form_field1"
                                     style={{
                                         background: '#1f2123',
                                         color: 'lavender',
@@ -124,11 +191,15 @@ const TodoListStatusChangeBackdrop = ({
                                     {...todoRegister('STATUS_NEW')}
                                 />
                             )}
-                            <label>NEW</label>
+                            <label>New</label>
                         </div>
                         <div
                             style={{
-                                background: 'rgb(255, 69, 0,0.5)',
+                                background:
+                                    status === 'STATUS_INPROGRESS'
+                                        ? 'red'
+                                        : 'rgb(42,46,33)',
+                                color: 'lavender',
                                 border:
                                     status === 'STATUS_INPROGRESS'
                                         ? '3px solid white'
@@ -138,7 +209,6 @@ const TodoListStatusChangeBackdrop = ({
                             {!(status === 'STATUS_INPROGRESS') && (
                                 <input
                                     type="checkbox"
-                                    className="form_field1"
                                     style={{
                                         background: '#1f2123',
                                         color: 'lavender',
@@ -150,8 +220,11 @@ const TodoListStatusChangeBackdrop = ({
                         </div>
                         <div
                             style={{
-                                background: 'rgb(255, 255, 255, 0.5)',
-                                color: 'black',
+                                background:
+                                    status === 'STATUS_COMPLETED'
+                                        ? 'red'
+                                        : 'rgb(42,46,33)',
+                                color: 'lavender',
                                 border:
                                     status === 'STATUS_COMPLETED'
                                         ? '3px solid white'
@@ -161,7 +234,6 @@ const TodoListStatusChangeBackdrop = ({
                             {!(status === 'STATUS_COMPLETED') && (
                                 <input
                                     type="checkbox"
-                                    className="form_field1"
                                     style={{
                                         background: '#1f2123',
                                         color: 'lavender',
@@ -177,7 +249,7 @@ const TodoListStatusChangeBackdrop = ({
                             <Button
                                 label="Submit"
                                 textCol="black"
-                                backCol="#e2ff00"
+                                backCol="rgb(8,246,125)"
                                 width="150px"
                             />
                         )}
@@ -187,9 +259,10 @@ const TodoListStatusChangeBackdrop = ({
         </Backdrop>
     );
 };
+
 const ConfirmationModalButton = ({ onClick }: any) => (
     <motion.div
-        className="confirmation_modal_button"
+        className="todoListStatusChangeBackdrop_modal_button"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={onClick}
@@ -201,5 +274,4 @@ const ConfirmationModalButton = ({ onClick }: any) => (
         </IconContext.Provider>
     </motion.div>
 );
-
 export default TodoListStatusChangeBackdrop;

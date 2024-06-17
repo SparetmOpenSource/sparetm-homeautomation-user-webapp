@@ -46,8 +46,17 @@ export const RoutePath = {
     // Internal dashboard routes
     DeviceRoom: 'room/:type',
     Premium: 'premium',
+    // Setting routes
     Setting: 'setting',
+    Setting_Account: 'account',
+    Setting_Features: 'features',
+    // Connection routes
     Connection: 'connection',
+    GettingStartedDocs: 'docs/getting-started',
+    GettingStartedwithEsp8266Docs: 'docs/esp8266',
+    GettingStartedwithArduinoIdeDocs: 'docs/arduino',
+    Esp8266SpecificDeviceCodeDocs: 'docs/device',
+    CodeExamplesDocs: 'docs/code-examples',
 };
 
 export const home_contact_social_list = [

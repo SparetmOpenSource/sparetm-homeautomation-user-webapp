@@ -66,7 +66,7 @@ const TodoListEditBackdrop = ({
                         className="todo_edit_form_field"
                         placeholder="edit statement*"
                         style={{
-                            background: '#1f2123',
+                            background: 'rgb(11, 20, 22)',
                             color: 'lavender',
                         }}
                         {...edit('statement', {
@@ -90,7 +90,7 @@ const TodoListEditBackdrop = ({
                         <Button
                             label="Submit"
                             textCol="black"
-                            backCol="#e2ff00"
+                            backCol="rgb(8,246,125)"
                             width="150px"
                         />
                     )}

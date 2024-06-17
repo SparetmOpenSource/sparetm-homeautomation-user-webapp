@@ -109,11 +109,14 @@ const DeviceInfoWrapper = ({
             >
                 {modelOpen && (
                     <ConfirmationBackdropModel
-                        backdropColor="rgb(202, 231, 234, 0.2)"
+                        foregroundColor="rgb(26,40,45)"
+                        // backgroundColor="red"
                         handleClose={close}
                         text="You want to delete this device, Are you sure?"
                         btn_text="Yes"
-                        setConfirmation={() => deleteDevice(currentDevice?.deviceId)}
+                        setConfirmation={() =>
+                            deleteDevice(currentDevice?.deviceId)
+                        }
                     />
                 )}
             </AnimatePresence>
