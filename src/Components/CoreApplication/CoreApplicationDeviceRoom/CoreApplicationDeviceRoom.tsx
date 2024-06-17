@@ -7,19 +7,16 @@ import { useQueryClient } from 'react-query';
 import { useLocation, useOutletContext } from 'react-router-dom';
 import './CoreApplicationDeviceRoom.css';
 import { catchError, displayToastify } from '../../../Utils/HelperFn';
-import { getMqttCred } from '../../../Api.tsx/ProfileConfigApis';
-import { useReactQuery_Get } from '../../../Api.tsx/useReactQuery_Get';
+// import { getMqttCred } from '../../../Api.tsx/ProfileConfigApis';
+// import { useReactQuery_Get } from '../../../Api.tsx/useReactQuery_Get';
 import { useUpdateAllDeviceStatus } from '../../../Api.tsx/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
-import LoadingFade from '../../Others/LoadingAnimation/LoadingFade';
+// import LoadingFade from '../../Others/LoadingAnimation/LoadingFade';
 import {
     getAppAdminUser,
     getProfileName,
 } from '../../../Utils/ProfileConfigHelperFn';
-import {
-    GET_DEVICE_LIST_IN_COREAPPLICATIONDEVICEROOMCLASS,
-    GET_MQTT_CRED_IN_COREAPPLICATIONDEVICEROOMCLASS,
-} from '../../../Data/QueryConstant';
+import { GET_DEVICE_LIST_IN_COREAPPLICATIONDEVICEROOMCLASS } from '../../../Data/QueryConstant';
 import CustomButtonLink from '../../Others/CustomButton/CustomButtonLink';
 import CoreApplicationDeviceRoomWrapper from './CoreApplicationDeviceRoomWrapper/CoreApplicationDeviceRoomWrapper';
 
@@ -40,27 +37,27 @@ const CoreApplicationDeviceRoom = () => {
 
     /*{----------------------------------------------------------------------------------------------------------}*/
 
-    const mqttCredFn = () => {
-        return getMqttCred(adminName);
-    };
-    const on_MqttCred_Success = () => {};
-    const on_MqttCred_Error = (error: any) => {
-        catchError(error);
-    };
+    // const mqttCredFn = () => {
+    //     return getMqttCred(adminName);
+    // };
+    // const on_MqttCred_Success = () => {};
+    // const on_MqttCred_Error = (error: any) => {
+    //     catchError(error);
+    // };
 
-    const { isLoading, data: mqttCredData } = useReactQuery_Get(
-        GET_MQTT_CRED_IN_COREAPPLICATIONDEVICEROOMCLASS,
-        mqttCredFn,
-        on_MqttCred_Success,
-        on_MqttCred_Error,
-        true, // !fetch_On_Click_Status
-        true, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        0, // Stale Time
-    );
+    // const { isLoading, data: mqttCredData } = useReactQuery_Get(
+    //     GET_MQTT_CRED_IN_COREAPPLICATIONDEVICEROOMCLASS,
+    //     mqttCredFn,
+    //     on_MqttCred_Success,
+    //     on_MqttCred_Error,
+    //     true, // !fetch_On_Click_Status
+    //     true, // refetch_On_Mount
+    //     false, // refetch_On_Window_Focus
+    //     false, // refetch_Interval
+    //     false, // refetch_Interval_In_Background
+    //     300000, // Cache time
+    //     0, // Stale Time
+    // );
 
     /*{----------------------------------------------------------------------------------------------------------}*/
 
@@ -104,13 +101,6 @@ const CoreApplicationDeviceRoom = () => {
         mutate({
             status: !allDeviceStatus,
             statusDetail: ' ',
-            mqttPublisherId: mqttCredData?.data?.body?.mqttPublisherId,
-            mqttServerAddress:
-                mqttCredData?.data?.body?.mqttServerAddress +
-                ':' +
-                mqttCredData?.data?.body?.mqttServerPort,
-            brokerUserName: mqttCredData?.data?.body?.brokerUserName,
-            brokerPassword: mqttCredData?.data?.body?.brokerPassword,
         } as any);
         !allDeviceStatus
             ? displayToastify(
@@ -195,7 +185,7 @@ const CoreApplicationDeviceRoom = () => {
                         <IconContext.Provider
                             value={{
                                 size: '2em',
-                                color: 'red',
+                                color: 'rgb(207,81,81)',
                             }}
                         >
                             <MdPowerOff />
@@ -207,19 +197,25 @@ const CoreApplicationDeviceRoom = () => {
                 </div>
             </section>
             <section className="coreAppDeviceRoom_wrapper">
-                {isLoading && (
+                {/* {isLoading && (
                     <div className="coreAppDeviceRoom_wrapper_isLoading">
                         <LoadingFade />
                     </div>
-                )}
-                {!isLoading && (
+                )} */}
+                {/* {!isLoading && (
                     <CoreApplicationDeviceRoomWrapper
                         setDeviceOn={setDeviceOn}
                         setDeviceOff={setDeviceOff}
                         setTotalDevice={setTotalDevice}
                         mqttCredDetails={mqttCredData?.data?.body}
                     />
-                )}
+                )} */}
+                <CoreApplicationDeviceRoomWrapper
+                    setDeviceOn={setDeviceOn}
+                    setDeviceOff={setDeviceOff}
+                    setTotalDevice={setTotalDevice}
+                    // mqttCredDetails={mqttCredData?.data?.body}
+                />
             </section>
         </div>
     );

@@ -213,7 +213,6 @@ const FormToAddProfile = (props: any) => {
         <form
             className="addProfile_form"
             onSubmit={handleProSubmit(onProSubmit)}
-            
         >
             <section>
                 <div>
@@ -359,7 +358,7 @@ const FormToAddProfile = (props: any) => {
                             <Button
                                 label="Submit"
                                 textCol="black"
-                                backCol="#e2ff00"
+                                backCol="rgb(8,246,125)"
                                 width="150px"
                             />
                         )}

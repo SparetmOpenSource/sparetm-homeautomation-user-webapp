@@ -54,6 +54,61 @@ const StatusList = React.lazy(
         ),
 );
 
+const GettingStarted = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationConnection/GettingStarted/GettingStarted'
+        ),
+);
+
+const SetupArduinoIde = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationConnection/SetupArduinoIde/SetupArduinoIde'
+        ),
+);
+const ESP8266BasicSetup = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationConnection/ESP8266BasicSetup/ESP8266BasicSetup'
+        ),
+);
+
+const CoreApplicationConnection = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationConnection/CoreApplicationConnection'
+        ),
+);
+
+const SpecificDeviceCodes = React.lazy(
+    () =>
+        import(
+            '../Components/CoreApplication/CoreApplicationConnection/SpecificDevice/SpecificDeviceCodes'
+        ),
+);
+
+const ExampleCodes = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationConnection/ExampleCodes/ExampleCodes'
+        ),
+);
+
+const AccountSetting = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationSetting/AccountSetting/AccountSetting'
+        ),
+);
+
+const FeatureSetting = React.lazy(
+    () =>
+        import(
+            './../Components/CoreApplication/CoreApplicationSetting/FeatureSetting/FeatureSetting'
+        ),
+);
+
 export const GlobalRoutes = (props: any) => {
     return (
         <Suspense fallback={<LoadingFade />}>
@@ -215,7 +270,33 @@ export const GlobalRoutes = (props: any) => {
                                     <CoreApplicationSetting />
                                 </Suspense>
                             }
-                        />
+                        >
+                            <Route
+                                path={RoutePath.Setting}
+                                element={
+                                    <Navigate
+                                        replace
+                                        to={RoutePath.Setting_Account}
+                                    />
+                                }
+                            />
+                            <Route
+                                path={RoutePath.Setting_Account}
+                                element={
+                                    <Suspense fallback={<LoadingFade />}>
+                                        <AccountSetting/>
+                                    </Suspense>
+                                }
+                            />
+                            <Route
+                                path={RoutePath.Setting_Features}
+                                element={
+                                    <Suspense fallback={<LoadingFade />}>
+                                        <FeatureSetting/>
+                                    </Suspense>
+                                }
+                            />
+                        </Route>
                         {/************************************************/}
                         {/*********************CONNECTION*****************/}
                         {/************************************************/}
@@ -223,12 +304,11 @@ export const GlobalRoutes = (props: any) => {
                             path={RoutePath.Connection}
                             element={
                                 <Suspense fallback={<LoadingFade />}>
-                                    {/* <CoreAppConnection /> */}
-                                    <h1>CoreAppConnection</h1>
+                                    <CoreApplicationConnection />
                                 </Suspense>
                             }
                         >
-                            {/* <Route
+                            <Route
                                 path={RoutePath.Connection}
                                 element={
                                     <Navigate
@@ -236,16 +316,16 @@ export const GlobalRoutes = (props: any) => {
                                         to={RoutePath.GettingStartedDocs}
                                     />
                                 }
-                            /> */}
-                            {/* <Route
+                            />
+                            <Route
                                 path={RoutePath.GettingStartedDocs}
                                 element={
                                     <Suspense fallback={<LoadingFade />}>
                                         <GettingStarted />
                                     </Suspense>
                                 }
-                            /> */}
-                            {/* <Route
+                            />
+                            <Route
                                 path={
                                     RoutePath.GettingStartedwithArduinoIdeDocs
                                 }
@@ -254,31 +334,33 @@ export const GlobalRoutes = (props: any) => {
                                         <SetupArduinoIde />
                                     </Suspense>
                                 }
-                            /> */}
-                            {/* <Route
+                            />
+                            <Route
                                 path={RoutePath.GettingStartedwithEsp8266Docs}
                                 element={
                                     <Suspense fallback={<LoadingFade />}>
                                         <ESP8266BasicSetup />
                                     </Suspense>
                                 }
-                            /> */}
-                            {/* <Route
+                            />
+                            <Route
                                 path={RoutePath.Esp8266SpecificDeviceCodeDocs}
                                 element={
                                     <Suspense fallback={<LoadingFade />}>
-                                        <h1>esp8266 specific device code</h1>
+                                        <SpecificDeviceCodes />
+                                        {/* <h1>device code</h1> */}
                                     </Suspense>
                                 }
-                            /> */}
-                            {/* <Route
+                            />
+                            <Route
                                 path={RoutePath.CodeExamplesDocs}
                                 element={
                                     <Suspense fallback={<LoadingFade />}>
-                                        <h1>Code Examples</h1>
+                                        <ExampleCodes />
+                                        {/* <h1>code ex</h1> */}
                                     </Suspense>
                                 }
-                            /> */}
+                            />
                         </Route>
                     </Route>
                 </Route>

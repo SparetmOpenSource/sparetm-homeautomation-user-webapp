@@ -166,6 +166,10 @@ export const Spring = {
     damping: 30,
 };
 
+export const generateRandomInteger = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 export const ConvertTheRange = (
     currentValue: any,
     in_min: any,

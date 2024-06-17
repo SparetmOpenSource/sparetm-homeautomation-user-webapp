@@ -32,14 +32,14 @@ const ConfirmationBackdropModel = ({
                     <Button
                         label={btn_text}
                         textCol="black"
-                        backCol="#e2ff00"
+                        backCol="rgb(8,246,125)"
                         width="250px"
                         fn={setConfirmation}
                     />
                     <Button
                         label="Naah, Just Kidding"
                         textCol="black"
-                        backCol="#e2ff00"
+                        backCol="rgb(8,246,125)"
                         width="250px"
                         fn={handleClose}
                     />

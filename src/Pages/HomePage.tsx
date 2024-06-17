@@ -12,11 +12,42 @@ import HomePage from './../Assets/HomePage.svg';
 import HomeContact from './../Assets/HomeContact.svg';
 import HomeSteps from './../Assets/HomeSteps.svg';
 import HomeStory from './../Assets/HomeStory.svg';
+import HomeLanding from './../Assets/HomeLanding.svg';
+import HomeDot from './../Assets/HomeDot.svg';
+import { useActive } from '../Hooks/UseActive';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
+    const paragraphLandingRef: any = useRef(null);
     const paragraphStoryRef: any = useRef(null);
     const paragraphStepsRef: any = useRef(null);
     const paragraphContactRef: any = useRef(null);
+    const userActive = useActive(2000);
+
+    const tranVal = 0.2;
+
+    const MenuList = [
+        {
+            id: 1,
+            src: userActive ? HomeLanding : HomeDot,
+            ref: paragraphLandingRef,
+        },
+        {
+            id: 2,
+            src: userActive ? HomeStory : HomeDot,
+            ref: paragraphStoryRef,
+        },
+        {
+            id: 3,
+            src: userActive ? HomeSteps : HomeDot,
+            ref: paragraphStepsRef,
+        },
+        {
+            id: 4,
+            src: userActive ? HomeContact : HomeDot,
+            ref: paragraphContactRef,
+        },
+    ];
 
     useEffect(() => {
         const hiddenElements = document.querySelectorAll('.hidden-el');
@@ -27,36 +58,46 @@ const Home = () => {
 
     return (
         <div className="home">
-            <span className="home-opening_scroll_arrow">
-                <img
-                    className="home-opening_bounce_arrow"
-                    src={HomeStory}
-                    height="4%"
-                    width="4%"
-                    loading="lazy"
-                    alt="scroll_icon"
-                    onClick={() => doScroll(paragraphStoryRef)}
-                />
-                <img
-                    className="home-opening_bounce_arrow"
-                    src={HomeSteps}
-                    height="4%"
-                    width="4%"
-                    loading="lazy"
-                    alt="scroll_icon"
-                    onClick={() => doScroll(paragraphStepsRef)}
-                />
-                <img
-                    className="home-opening_bounce_arrow"
-                    src={HomeContact}
-                    height="4%"
-                    width="4%"
-                    loading="lazy"
-                    alt="scroll_icon"
-                    onClick={() => doScroll(paragraphContactRef)}
-                />
+            <span
+                className="home-opening_scroll_arrow"
+                style={{
+                    backgroundColor: userActive
+                        ? `rgb(34, 34, 34)`
+                        : `rgb(34, 34, 34, ${tranVal})`,
+                }}
+            >
+                {MenuList.map((item: any) => (
+                    <img
+                        className="home-opening_bounce_arrow"
+                        style={{
+                            backgroundColor: userActive
+                                ? `rgb(62, 62, 62)`
+                                : `rgb(62, 62, 62, ${tranVal})`,
+                        }}
+                        src={item?.src}
+                        height="4%"
+                        width="4%"
+                        loading="lazy"
+                        alt="scroll_icon"
+                        onClick={() => doScroll(item?.ref)}
+                    />
+                ))}
+                <Link
+                    to="/auth"
+                    className="home-opening_bounce_arrow_login"
+                    style={{
+                        color: userActive
+                            ? `rgb(230, 230, 250)`
+                            : `rgb(230, 230, 250, ${tranVal})`,
+                        backgroundColor: userActive
+                            ? `rgb(219,112,147)`
+                            : `rgb(219,112,147, ${tranVal})`,
+                    }}
+                >
+                    Login
+                </Link>
             </span>
-            <section className="home-opening">
+            <section className="home-opening" ref={paragraphLandingRef}>
                 <div className="home-opening-logo">
                     <GiCableStayedBridge />
                     &nbsp;&nbsp;{AppName}
@@ -192,7 +233,6 @@ const Home = () => {
                         </span>
                     </section>
                 </div>
-
                 <div>
                     <section>
                         {' '}
@@ -206,11 +246,6 @@ const Home = () => {
                                             TOASTIFYSTATE.INFO,
                                         )
                                     }
-                                    // onClick={() =>
-                                    //     openPrivacyModel
-                                    //         ? closePrivacy()
-                                    //         : openPrivacy()
-                                    // }
                                 >
                                     PRIVACY POLICY
                                 </p>
@@ -243,10 +278,6 @@ const Home = () => {
                                             TOASTIFYSTATE.INFO,
                                         )
                                     }
-                                    // style={{
-                                    //     color: 'lavender',
-                                    //     textDecoration: 'none',
-                                    // }}
                                 >
                                     ABOUT
                                 </p>
@@ -256,7 +287,7 @@ const Home = () => {
                     </section>
                     <section>
                         <p>
-                            COPYRIGHT &copy; 2023 OPENBRIDGE INC. <br />
+                            COPYRIGHT &copy; 2024 OPENBRIDGE INC. <br />
                             ALL RIGHT RESERVED.
                         </p>
                     </section>
