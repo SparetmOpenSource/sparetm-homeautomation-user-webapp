@@ -1,0 +1,83 @@
+.deviceRoom {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.deviceRoom>:first-child {
+    height: 100%;
+    min-width: 15%;
+    min-width: 250px;
+    border-top-left-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.deviceRoom>:last-child {
+    height: 100%;
+    width: 85%;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.deviceRoom-intro {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.deviceRoom-room-btn {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 0.5rem;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.deviceRoom-room-btn::-webkit-scrollbar {
+    display: none;
+}
+
+.deviceRoom-generic-btn {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+.deviceRoom-generic-btn div {
+    width: 32%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.deviceRoom-generic-btn div p {
+    margin: 0;
+    margin-top: 0.5rem;
+    padding: 0;
+}
+
+.deviceRoom_isLoading,
+.deviceRoom_error,
+deviceRoom_notfound {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* flex-direction: column; */
+    width: 100%;
+    height: 100%;
+}

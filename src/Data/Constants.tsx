@@ -9,8 +9,14 @@ import {
 export const RootUrl = {
     authMS: 'http://localhost:8085',
 };
+export const APPNAME = 'OpenBridge';
+export const TOKEN = 'token';
+export const PROFILE = 'profile';
+export const PROFILEID = 'profileId';
+export const ADMIN = 'admin';
+export const NETWORKERRORKEY = 'Network Error, please try again later';
+// --- //
 
-export const NETWORKERRORKEY = 'Network Error';
 export const APPTOKENKEY = 'appToken';
 export const APPPROFILEKEY = 'appProfile';
 export const OFFLINETESTUSERNAMEKEY = 'offlineTestUserName';
@@ -20,32 +26,36 @@ export const PROFILEIDKEY = 'profileId';
 export const PROFILENAMEKEY = 'profileName';
 export const NOTIFICATIONCOLORKEY = 'notificationColor';
 
-export const AppName = 'OpenBridge';
-//export const NotificationColor = 'rgb(46,52,56)'; //"#1F2123"; //  "#CEC7BF";
-
 export const RoutePath = {
-    // Home route
     Home: '/',
     About: '/about',
     Auth: '/auth',
-    // Profile route
+    // -------------- //
     ProfileConfig: '/profileconfig',
     AddProfileConfig: '/profileconfig/add',
     SelectProfileConfig: '/profileconfig/select',
-    // Core app route
+    // --------------- //
     CoreApplication: '/app',
-    CoreApplication_Dashboard: '/app/dashboard/segment',
-    CoreApplication_Room: '/app/room',
-    CoreApplication_Premium_Offer: '/app/premium',
-    CoreApplication_Docs: '/app/connection/docs',
-    CoreApplication_Setting: '/app/setting',
-    // Internal dashboard routes
     Dashboard: 'dashboard',
     Dashboard_Todo: 'segment/todo',
     Dashboard_Device_Status: 'segment/status',
+    Device_Status: '/status',
+    //--//
+    CoreApplication_Room: '/app/room',
+
+    ///-select below-///
+    CoreApplication_Dashboard: '/app/dashboard/segment',
+    CoreApplication_Play: '/app/play',
+    CoreApplication_Docs: '/app/connection/docs',
+    CoreApplication_Setting: '/app/setting',
+
+    // Core app route
+
+    // Internal dashboard routes
+
     // Internal dashboard routes
     DeviceRoom: 'room/:type',
-    Premium: 'premium',
+    Play: 'play',
     // Setting routes
     Setting: 'setting',
     Setting_Account: 'account',
@@ -84,7 +94,7 @@ export const useMountEffect = (fun: any, dep: any) => useEffect(fun, [dep]); // 
 // -------------------- core app constant ----------------------- //
 
 export const weather_quote_constant = {
-    fetch_delay_time: 1000000000, //15x60x1000 = 900000
+    fetch_delay_time: 300000, //15x60x1000 = 900000
     quote_char_limit: 70,
 };
 
@@ -104,6 +114,7 @@ export const ProfileConfigTypography = {
 };
 
 let RoomNamesConst: string[] = [
+    'Room',
     'Bathroom',
     'Bedroom',
     'Dining Room',
@@ -112,7 +123,6 @@ let RoomNamesConst: string[] = [
     'Kitchen',
     'Living Room',
     'Master Bedroom',
-    'Room',
     'Store Room',
     'Study Room',
 ];
@@ -176,21 +186,38 @@ export const ProfileConfigRoomNames = [
 ];
 
 export const SelectColorStyles = {
+    // menuList: (styles: any) => ({
+    //     ...styles,
+    //     background: '#272629',
+    //     color: 'lavender', //color after opening dropdown
+    // }),
+    // option: (styles: any, { isFocused, isSelected }: any) => ({
+    //     ...styles,
+    //     background: isFocused
+    //         ? 'rgb(194,231,255)'
+    //         : isSelected
+    //         ? '#9DE9F4'
+    //         : undefined,
+    //     color: isFocused ? 'black' : isSelected ? 'black' : undefined,
+    //     zIndex: 1,
+    // }),
+    // menu: (base: any) => ({
+    //     ...base,
+    //     zIndex: 100,
+    //     background: 'blue',
+    // }),
+
     menuList: (styles: any) => ({
         ...styles,
         background: '#272629',
         color: 'lavender', //color after opening dropdown
     }),
-    option: (styles: any, { isFocused, isSelected }: any) => ({
-        ...styles,
-        background: isFocused ? 'pink' : isSelected ? '#9DE9F4' : undefined,
-        color: isFocused ? 'black' : isSelected ? 'black' : undefined,
-        zIndex: 1,
-    }),
-    menu: (base: any) => ({
-        ...base,
-        zIndex: 100,
-        background: 'blue',
+
+    control: (baseStyles: any, state: any) => ({
+        ...baseStyles,
+        borderColor: state.isFocused ? 'orange' : 'grey',
+        backgroundColor: 'black',
+        color: 'yellow',
     }),
 };
 
@@ -220,6 +247,8 @@ export const SpringSuspense = {
 
 export const deviceTypeArr = ['gadget', 'appliance'];
 
+export const colorNotificationStatus = ['success', 'error'];
+
 export const ChangeBrightnessIcon = (brightness: any) => {
     let icon: any;
     if (brightness >= 0 && brightness < 20) {
@@ -235,3 +264,15 @@ export const ChangeBrightnessIcon = (brightness: any) => {
 };
 
 export const GadgetRgbDefaultColor = ['177', '216', '213', '0.9', 'regular'];
+
+export const LandscapeSizeL = ['min(90%, 800px)', 'clamp(50%, 1500px, 92%)'];
+export const LandscapeSizeM = ['min(60%, 600px)', 'clamp(60%, 700px, 90%)'];
+export const LandscapeSizeS = ['min(50%, 300px)', 'clamp(50%, 700px, 90%)'];
+export const HorizontalSize = ['min(90%, 1200px)', 'clamp(40%, 300px, 90%)'];
+export const FullScreenSize = ['100%', '100%'];
+
+export const socketUrlPostFix = '/api/v1/socket/data/update';
+export const toClientMqttSocketTopic = '/to/client/update/device/mqtt/data';
+export const toClientNotificationSocketTopic = '/to/client/update/notification/data';
+export const toServerSocketTopic = '/to/server/update/device/mqtt/data';
+

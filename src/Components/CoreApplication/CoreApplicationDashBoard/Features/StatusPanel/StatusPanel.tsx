@@ -17,6 +17,7 @@ import {
     getProfileName,
 } from '../../../../../Utils/ProfileConfigHelperFn';
 import { GET_WEATHER_QUOTE_IN_STATUSPANELCLASS } from '../../../../../Data/QueryConstant';
+import { useTheme } from '../../../../../Pages/ThemeProvider';
 
 const StatusPanel = () => {
     /*************************************BACKDROP*************************************/
@@ -32,17 +33,18 @@ const StatusPanel = () => {
     /*************************************BACKDROP*************************************/
     const profileId = getProfileId();
     const profileName = getProfileName();
+    const darkTheme: any = useTheme();
 
     /*{----------------------------------------------------------------------------------------------------------}*/
 
     const weatherQuoteFn = () => {
-        return getWeatherQuote(profileId);
+        return getWeatherQuote(profileId, darkTheme);
     };
     const on_Success = () => {
         //toast.success(`Refreshed weather & quote`);
     };
     const on_Error = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
 
     const { isLoading, data } = useReactQuery_Get(

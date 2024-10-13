@@ -9,7 +9,7 @@ import './CoreApplicationDeviceRoom.css';
 import { catchError, displayToastify } from '../../../Utils/HelperFn';
 // import { getMqttCred } from '../../../Api.tsx/ProfileConfigApis';
 // import { useReactQuery_Get } from '../../../Api.tsx/useReactQuery_Get';
-import { useUpdateAllDeviceStatus } from '../../../Api.tsx/CoreAppApis';
+import { featureUrl } from '../../../Api.tsx/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 // import LoadingFade from '../../Others/LoadingAnimation/LoadingFade';
 import {
@@ -19,10 +19,11 @@ import {
 import { GET_DEVICE_LIST_IN_COREAPPLICATIONDEVICEROOMCLASS } from '../../../Data/QueryConstant';
 import CustomButtonLink from '../../Others/CustomButton/CustomButtonLink';
 import CoreApplicationDeviceRoomWrapper from './CoreApplicationDeviceRoomWrapper/CoreApplicationDeviceRoomWrapper';
+import { useUpdateData } from '../../../Api.tsx/useReactQuery_Update';
 
 const CoreApplicationDeviceRoom = () => {
     const location = useLocation();
-    const profileName = getProfileName();
+    const profile = getProfileName();
     const roomType: any = location.pathname.split('/')[3].replace('%20', ' ');
     const data: any = useOutletContext();
     const [allDeviceStatus, setAllDeviceStatus]: any = useState(false);
@@ -33,7 +34,7 @@ const CoreApplicationDeviceRoom = () => {
     // const [deviceOff] = useState(0);
     // const [totalDevice] = useState(0);
     const queryClient = useQueryClient();
-    const adminName = getAppAdminUser();
+    const admin = getAppAdminUser();
 
     /*{----------------------------------------------------------------------------------------------------------}*/
 
@@ -63,15 +64,17 @@ const CoreApplicationDeviceRoom = () => {
 
     /*************************/
 
-    const onError = (error: any) => {
-        catchError(error);
+    const on_Error = (error: any) => {
+        // catchError(error);
+    };
+    const on_Success = (error: any) => {
+        // catchError(error);
     };
 
-    const { mutate } = useUpdateAllDeviceStatus(
-        adminName,
-        profileName,
-        roomType,
-        onError,
+    const { mutate } = useUpdateData(
+        `${featureUrl.update_all_device_status}${admin}&profilename=${profile}&roomtype=${roomType}`,
+        on_Success,
+        on_Error,
     );
 
     /*************************/
@@ -127,7 +130,7 @@ const CoreApplicationDeviceRoom = () => {
         <div className="coreAppDeviceRoom">
             <section className="coreAppDeviceRoom_nav">
                 <div>
-                    <span>{profileName}'s Home</span>
+                    <span>{profile}'s Home</span>
                 </div>
                 <div>
                     {data?.room?.map((el: any) => (

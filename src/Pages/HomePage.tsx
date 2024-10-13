@@ -3,7 +3,7 @@ import { GiCableStayedBridge } from 'react-icons/gi';
 import { VscSignIn } from 'react-icons/vsc';
 import { MdAddHomeWork } from 'react-icons/md';
 import { MdOutlineWifiProtectedSetup } from 'react-icons/md';
-import { AppName, home_contact_social_list } from '../Data/Constants';
+import { APPNAME, home_contact_social_list } from '../Data/Constants';
 import { displayToastify, doScroll, observer } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import ButtonLink from '../Components/Others/CustomButton/ButtonLink';
@@ -22,7 +22,7 @@ const Home = () => {
     const paragraphStoryRef: any = useRef(null);
     const paragraphStepsRef: any = useRef(null);
     const paragraphContactRef: any = useRef(null);
-    const userActive = useActive(2000);
+    const userActive = useActive(2000, true);
 
     const tranVal = 0.2;
 
@@ -100,7 +100,7 @@ const Home = () => {
             <section className="home-opening" ref={paragraphLandingRef}>
                 <div className="home-opening-logo">
                     <GiCableStayedBridge />
-                    &nbsp;&nbsp;{AppName}
+                    &nbsp;&nbsp;{APPNAME}
                 </div>
                 <h1>Build your home controller in just a few easy steps</h1>
                 <h2>
@@ -123,7 +123,7 @@ const Home = () => {
                 <div>
                     <section>
                         <h1 className="hidden-el">
-                            The story of {AppName} begins with trust.
+                            The story of {APPNAME} begins with trust.
                         </h1>
                     </section>
                     <section ref={paragraphStoryRef}>

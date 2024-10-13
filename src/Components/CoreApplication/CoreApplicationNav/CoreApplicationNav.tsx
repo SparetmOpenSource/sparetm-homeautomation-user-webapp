@@ -36,10 +36,10 @@ const CoreApplicationNav = (props: any) => {
         },
         {
             id: 3,
-            to: RoutePath.CoreApplication_Premium_Offer,
+            to: RoutePath.CoreApplication_Play,
             icon: <MdWorkspacePremium />,
             currentPath: location.pathname.replace('%20', ''),
-            listPath: RoutePath.CoreApplication_Premium_Offer,
+            listPath: RoutePath.CoreApplication_Play,
         },
     ];
     const SideNav_Lower_List = [

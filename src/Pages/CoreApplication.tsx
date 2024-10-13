@@ -12,7 +12,7 @@ import {
     getProfileId,
     profileLogOutWithNavigation,
 } from '../Utils/ProfileConfigHelperFn';
-import { GET_PROFILE_IN_COREAPPLICATIONCLASS } from '../Data/QueryConstant';
+import { GET_PROFILE_QUERY_ID } from '../Data/QueryConstant';
 import { useActive } from '../Hooks/UseActive';
 import FrameBackdropModel from '../Components/Others/PicFrame/FrameBackdropModel';
 import PicFrame from '../Components/Others/PicFrame/PicFrame';
@@ -30,7 +30,7 @@ const CoreApplication = () => {
         timeOut = '9007199254740991';
     }
 
-    const active = useActive(timeOut);
+    const [status] = useActive(timeOut, true);
 
     const profileId = getProfileId();
     const navigate = useNavigate();
@@ -53,7 +53,7 @@ const CoreApplication = () => {
         setAccountModelOpen(false);
     };
     const profileFn = () => {
-        return getProfile(profileId);
+        return getProfile(profileId,"");
     };
     const on_Success = (data: any) => {
         setFirstRoomRoute(data?.data?.body?.room[0]?.room_type);
@@ -68,7 +68,7 @@ const CoreApplication = () => {
     };
 
     const { data: profileDetals } = useReactQuery_Get(
-        GET_PROFILE_IN_COREAPPLICATIONCLASS,
+        GET_PROFILE_QUERY_ID,
         profileFn,
         on_Success,
         on_Error,
@@ -81,13 +81,13 @@ const CoreApplication = () => {
         10000, // Stale Time
     );
 
-    useEffect(() => {
-        if (!active) {
-            setOpenFrame(true);
-        } else {
-            setOpenFrame(false);
-        }
-    }, [active]); // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     if (!active) {
+    //         setOpenFrame(true);
+    //     } else {
+    //         setOpenFrame(false);
+    //     }
+    // }, [active]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setOpenFrame(false);

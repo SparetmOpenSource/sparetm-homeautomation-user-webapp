@@ -1,9 +1,7 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import { RoutePath } from '../Data/Constants';
-import { getAccessToken } from '../Utils/ProfileConfigHelperFn';
 
-const useAuth = () => {
-    const accessToken = getAccessToken();
+const useAuth = (accessToken: any) => {
     if (accessToken) {
         return true;
     } else {
@@ -12,7 +10,8 @@ const useAuth = () => {
 };
 
 const ProtectedRoute = () => {
-    const auth = useAuth();
+    const accessToken = localStorage.getItem('token');
+    const auth = useAuth(accessToken);
     return auth ? <Outlet /> : <Navigate to={RoutePath.Home} />;
 };
 

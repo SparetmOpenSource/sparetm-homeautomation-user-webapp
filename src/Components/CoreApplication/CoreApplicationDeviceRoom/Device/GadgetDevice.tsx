@@ -52,7 +52,7 @@ const GadgetDevice = ({
     /*************************/
 
     const onError = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
 
     const { mutate } = useUpdateDevice(

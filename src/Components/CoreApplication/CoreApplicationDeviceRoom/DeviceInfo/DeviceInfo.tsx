@@ -71,3 +71,4 @@ const DeviceInfo = ({ currentDevice, padding, open }: any) => {
 };
 
 export default DeviceInfo;
+

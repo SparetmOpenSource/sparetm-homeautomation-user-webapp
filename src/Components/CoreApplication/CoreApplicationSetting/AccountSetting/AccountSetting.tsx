@@ -3,16 +3,18 @@ import './AccountSetting.css';
 import Button from '../../../Others/CustomButton/Button';
 import { catchError } from '../../../../Utils/HelperFn';
 import {
-    getMqttCred,
+   
     useAddMqttCred,
 } from '../../../../Api.tsx/ProfileConfigApis';
 import { getAppAdminUser } from '../../../../Utils/ProfileConfigHelperFn';
-import { GET_MQTT_CRED_IN_COREAPPLICATIONDEVICEROOMCLASS } from '../../../../Data/QueryConstant';
+import { SELECT_MQTT_CRED_QUERY_ID } from '../../../../Data/QueryConstant';
 import { useReactQuery_Get } from '../../../../Api.tsx/useReactQuery_Get';
 import LoadingFade from '../../../Others/LoadingAnimation/LoadingFade';
+import { useTheme } from '../../../../Pages/ThemeProvider';
 
 const AccountSetting = () => {
     const appUser = getAppAdminUser();
+    const darkTheme: any = useTheme();
     const {
         register: mqttRegister,
         formState: { errors: mqttErrors },
@@ -28,31 +30,31 @@ const AccountSetting = () => {
     };
 
     const on_AddMqtt_Error = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
     const { mutate } = useAddMqttCred(appUser, on_AddMqtt_Error);
 
-    const mqttCredFn = () => {
-        return getMqttCred(appUser);
-    };
-    const on_MqttCred_Success = () => {};
-    const on_MqttCred_Error = (error: any) => {
-        catchError(error);
-    };
+    // const mqttCredFn = () => {
+    //     return getMqttCred(appUser, darkTheme);
+    // };
+    // const on_MqttCred_Success = () => {};
+    // const on_MqttCred_Error = (error: any) => {
+    //     // catchError(error);
+    // };
 
-    const { isLoading, data: mqttCredData } = useReactQuery_Get(
-        GET_MQTT_CRED_IN_COREAPPLICATIONDEVICEROOMCLASS,
-        mqttCredFn,
-        on_MqttCred_Success,
-        on_MqttCred_Error,
-        true, // !fetch_On_Click_Status
-        true, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        0, // Stale Time
-    );
+    // const { isLoading, data: mqttCredData } = useReactQuery_Get(
+    //     SELECT_MQTT_CRED_QUERY_ID,
+    //     mqttCredFn,
+    //     on_MqttCred_Success,
+    //     on_MqttCred_Error,
+    //     true, // !fetch_On_Click_Status
+    //     true, // refetch_On_Mount
+    //     false, // refetch_On_Window_Focus
+    //     false, // refetch_Interval
+    //     false, // refetch_Interval_In_Background
+    //     300000, // Cache time
+    //     0, // Stale Time
+    // );
 
     return (
         <div className="accountSetting">
@@ -182,21 +184,27 @@ const AccountSetting = () => {
                         </span>
                     </form>
                 </section>
-                {isLoading && (
+                {/* {isLoading && (
                     <section>
                         <LoadingFade />
                     </section>
-                )}
-                {!isLoading && (
+                )} */}
+                {/* {!isLoading && (
                     <section>
                         <h1>Saved Mqtt Data</h1>
-                        <p>{mqttCredData?.data?.body?.mqttPublisherId?.split("@")[0]}</p>
+                        <p>
+                            {
+                                mqttCredData?.data?.body?.mqttPublisherId?.split(
+                                    '@',
+                                )[0]
+                            }
+                        </p>
                         <p>{mqttCredData?.data?.body?.mqttServerAddress}</p>
                         <p>{mqttCredData?.data?.body?.mqttServerPort}</p>
                         <p>{mqttCredData?.data?.body?.brokerUserName}</p>
                         <p>{mqttCredData?.data?.body?.brokerPassword}</p>
                     </section>
-                )}
+                )} */}
             </div>
         </div>
     );

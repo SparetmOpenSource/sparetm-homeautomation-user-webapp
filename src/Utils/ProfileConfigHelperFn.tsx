@@ -10,6 +10,42 @@ import {
     RoutePath,
 } from '../Data/Constants';
 import { displayToastify } from './HelperFn';
+import {
+    addProfile,
+    addProfileId,
+    resetProfile,
+} from '../Features/User/UserSlice';
+
+// --new-- //
+export const openProfileOnClick = (
+    profileName: any,
+    profileId: any,
+    dispatch: any,
+    queryClient: any,
+    navigate: any,
+) => {
+    dispatch(resetProfile());
+    dispatch(addProfile(profileName));
+    dispatch(addProfileId(profileId));
+    queryClient.clear();
+    navigate(
+        RoutePath.CoreApplication +
+            '/' +
+            RoutePath.Dashboard +
+            '/' +
+            RoutePath.Dashboard_Device_Status,
+    );
+};
+export const logoutProfileOnClick = (
+    dispatch: any,
+    queryClient: any,
+    navigate: any,
+) => {
+    dispatch(resetProfile());
+    queryClient.clear();
+    navigate(RoutePath.SelectProfileConfig);
+};
+// --new-- //
 
 export const profileLogOutWithNavigation = (navigate: any) => {
     removeProfileId();
@@ -28,10 +64,10 @@ export const getAppAdminUser = () => {
     return adminUserName;
 };
 
-export const setAppAdminUser = (response: any) => {
-    const adminUserName = response?.data?.body?.admin_name;
-    localStorage.setItem(APPUSERKEY, adminUserName);
-};
+// export const setAppAdminUser = (response: any) => {
+//     const adminUserName = response?.data?.body?.admin_name;
+//     localStorage.setItem(APPUSERKEY, adminUserName);
+// };
 
 export const removeAppAdminUser = () => {
     localStorage.removeItem(APPUSERKEY);
@@ -67,14 +103,14 @@ export const removeProfileName = () => {
 
 // ----------------------- Set,Get,Remove JWT Token -------------------------//
 
-export const setAccessToken = (response: any) => {
-    const accessToken = response?.data?.body?.access_token;
-    localStorage.setItem(APPTOKENKEY, accessToken);
-};
-export const getAccessToken = () => {
-    const accessToken = localStorage.getItem(APPTOKENKEY);
-    return accessToken;
-};
+// export const setAccessToken = (response: any) => {
+//     const accessToken = response?.data?.body?.access_token;
+//     localStorage.setItem(APPTOKENKEY, accessToken);
+// };
+// export const getAccessToken = () => {
+//     const accessToken = localStorage.getItem(APPTOKENKEY);
+//     return accessToken;
+// };
 export const removeAccessToken = () => {
     localStorage.removeItem(APPTOKENKEY);
 };
@@ -117,33 +153,6 @@ export const getOfflineUser = () => {
 const removeOfflineUser = () => {
     localStorage.removeItem(OFFLINETESTUSERNAMEKEY);
     localStorage.removeItem(OFFLINETESTPASSWORDKEY);
-};
-
-export const openProfileOnClick = (
-    profileName: any,
-    profileId: any,
-    navigate: any,
-) => {
-    // if (displayToastify('Signing In', TOASTIFYCOLOR.DARK, TOASTIFYSTATE.INFO)) {
-    //   displayToastify(`Signing In as ${profileName}`, TOASTIFYCOLOR.DARK, TOASTIFYSTATE.INFO)
-    // } else {
-    removeProfileId();
-    removeProfileName();
-    // const queryClient = useQueryClient();
-    // queryClient.invalidateQueries();
-    setProfileId(profileId);
-    setProfileName(profileName);
-    navigate(
-        // RoutePath.CoreApplication + '/dashboard/' + RoutePath.Dashboard_Todo,
-        RoutePath.CoreApplication +
-            '/' +
-            RoutePath.Dashboard +
-            '/' +
-            RoutePath.Dashboard_Device_Status,
-    );
-    // navigate(RoutePath.Dashboard_Todo);
-    //removeCityCountryStateToken();
-    // }
 };
 
 // Logout

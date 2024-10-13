@@ -1,0 +1,172 @@
+.weather {
+    width: 42%;
+    height: 100%;
+    border-radius: 1.5rem;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.weather_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 1.5rem;
+}
+
+.weather_wrapper>:first-child {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+}
+
+.weather_wrapper>:first-child>:first-child {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather_wrapper>:first-child>:last-child {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.weather_wrapper>:first-child span p {
+    font-size: 1.5rem;
+    margin-left: 3rem;
+    font-weight: bolder;
+}
+
+.weather_wrapper>:last-child {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather_wrapper>:last-child h1 {
+    font-size: 2.5rem;
+}
+
+.weather_wrapper>:last-child p {
+    font-size: 1, 5rem;
+}
+
+.weather_wrapper>:last-child>:first-child {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-bottom-left-radius: 1.5rem;
+}
+
+.weather_wrapper>:last-child>:last-child {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-right-radius: 1.5rem;
+}
+
+
+.weather_error,
+.weather_isLoading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 1.5rem;
+
+}
+
+.weather_error span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* ***** */
+
+.weather-expand {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1.5rem;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.weather-expand>:nth-child(1) {
+    height: 20%;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-expand>:nth-child(1) span {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-expand>:nth-child(2) {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 10rem;
+}
+
+.weather-expand>:nth-child(3) {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 3rem;
+    font-weight: bolder;
+}
+
+.weather-expand>:nth-child(4) {
+    height: 20%;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.weather-expand>:nth-child(4) span {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

@@ -2,13 +2,10 @@ import { Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TbCircleDashed } from 'react-icons/tb';
 import { BsMusicPlayerFill } from 'react-icons/bs';
-import { FiMonitor } from 'react-icons/fi';
-import { RiSwitchFill } from 'react-icons/ri';
-import { SiConcourse } from 'react-icons/si';
 import { GiCeilingLight } from 'react-icons/gi';
-import { CgViewSplit } from 'react-icons/cg';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
-import { NETWORKERRORKEY } from '../Data/Constants';
+import { NETWORKERRORKEY, RoutePath } from '../Data/Constants';
+import { GiBoatPropeller } from 'react-icons/gi';
 import {
     BsSunFill,
     BsCloudSunFill,
@@ -19,13 +16,16 @@ import {
     BsFillCloudLightningRainFill,
     BsSnow2,
 } from 'react-icons/bs';
+import { TbAirConditioning } from 'react-icons/tb';
+import { SiSocketdotio } from 'react-icons/si';
+import { TbDeviceTvOld } from 'react-icons/tb';
 import { RiMistLine, RiMoonClearLine } from 'react-icons/ri';
 
 // -----------------------Toastify functions-----------------------//
 
 const toastProperty: any = (color: any) => {
     return {
-        position: 'top-right',
+        position: 'bottom-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -52,13 +52,13 @@ export const displayToastify: any = (message: any, color: any, status: any) => {
 
 // ---------------- Error inside catch -------------------- //
 
-export const catchError = (error: any) => {
+export const catchError = (error: any, darkTheme: any) => {
     let errorDetails = (error as any)?.response?.data?.message;
     if (typeof errorDetails === 'object' && errorDetails !== null) {
         Object.keys(errorDetails).forEach(function eachKey(key) {
             displayToastify(
                 errorDetails[key],
-                TOASTIFYCOLOR.LIGHT,
+                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
                 TOASTIFYSTATE.ERROR,
             );
         });
@@ -66,13 +66,13 @@ export const catchError = (error: any) => {
         if (errorDetails) {
             displayToastify(
                 errorDetails,
-                TOASTIFYCOLOR.LIGHT,
+                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
                 TOASTIFYSTATE.ERROR,
             );
         } else {
             displayToastify(
                 NETWORKERRORKEY,
-                TOASTIFYCOLOR.LIGHT,
+                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
                 TOASTIFYSTATE.ERROR,
             );
         }
@@ -139,16 +139,16 @@ export const changeDeviceIcon = (device: string) => {
             icon = <GiCeilingLight />;
             break;
         case 'FAN':
-            icon = <SiConcourse />;
+            icon = <GiBoatPropeller />;
             break;
         case 'SWITCH':
-            icon = <RiSwitchFill />;
+            icon = <SiSocketdotio />;
             break;
         case 'AC':
-            icon = <CgViewSplit />;
+            icon = <TbAirConditioning />;
             break;
         case 'TV':
-            icon = <FiMonitor />;
+            icon = <TbDeviceTvOld />;
             break;
         case 'MUSIC':
             icon = <BsMusicPlayerFill />;
@@ -170,7 +170,7 @@ export const generateRandomInteger = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const ConvertTheRange = (
+export const ConvertTheRangeToRound = (
     currentValue: any,
     in_min: any,
     in_max: any,
@@ -181,6 +181,19 @@ export const ConvertTheRange = (
         ((currentValue - in_min) * (out_max - out_min)) / (in_max - in_min) +
         out_min;
     return Math.round(result);
+};
+
+export const ConvertTheRange = (
+    currentValue: any,
+    in_min: any,
+    in_max: any,
+    out_min: any,
+    out_max: any,
+) => {
+    let result =
+        ((currentValue - in_min) * (out_max - out_min)) / (in_max - in_min) +
+        out_min;
+    return result;
 };
 
 const RgbDeviceAnimation = [
@@ -244,6 +257,13 @@ export const copyText = async (text: any) => {
 //     },
 // };
 
+export const logger = (file: string) => {
+    const flag: boolean = true;
+    if (flag) {
+        console.log(`Logging for ${file}...`);
+    }
+};
+
 export const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -262,16 +282,88 @@ export const doScroll = (paragraphRef: any) => {
     });
 };
 
-// ----------------- notification color --------------------- //
-
-// export const setNotificationColor = (color: string) => {
-//     localStorage.setItem(NOTIFICATIONCOLORKEY, color);
+// export const notificationBackground = (
+//     setCount: any,
+//     setColor: any,
+//     intervalRef: any,
+//     notificationModeStatus: any,
+// ) => {
+//     const notificationCol = notificationModeStatus
+//         ? dark_colors?.success
+//         : dark_colors?.error;
+//     const refId = setInterval(function () {
+//         setCount((cnt: any) => {
+//             return cnt + 1;
+//         });
+//         setColor((col: string) => {
+//             if (col === notificationCol) {
+//                 return 'black';
+//             } else {
+//                 return notificationCol;
+//             }
+//         });
+//     }, 180);
+//     intervalRef.current = refId;
 // };
 
-// export const getNotificationColor = (): string | number | undefined | null=> {
-//   return localStorage.getItem(NOTIFICATIONCOLORKEY);
+// export const notificationModeChanged = (
+//     notificationMode: any,
+//     setNotificationMode: any,
+//     setNotificationModeStatus: any,
+//     notificationModeStatus: boolean,
+// ) => {
+//     setNotificationMode(!notificationMode);
+//     setNotificationModeStatus(notificationModeStatus);
 // };
 
-// export const getNotificationColor = (): any => {
-//     return localStorage.getItem(NOTIFICATIONCOLORKEY);
-// };
+export const reloadPage = () => {
+    window.location.reload();
+};
+
+export const uriArray = [`${RoutePath.CoreApplication_Room}`]; //'/app/room'
+export const isSearchActive = (uriArray: any, uri: any) => {
+    return uriArray?.some((item: any) => item?.includes(uri));
+};
+
+export const getFormattedDate = () => {
+    const today = new Date();
+    const dayOfMonth = today.getDate();
+    function getOrdinalSuffix(day: any) {
+        if (day > 3 && day < 21) return 'th';
+        switch (day % 10) {
+            case 1:
+                return 'st';
+            case 2:
+                return 'nd';
+            case 3:
+                return 'rd';
+            default:
+                return 'th';
+        }
+    }
+    const monthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+    ];
+    const monthIndex = today.getMonth();
+    const monthName = monthNames[monthIndex];
+    const ordinalSuffix = getOrdinalSuffix(dayOfMonth);
+    const dateString = `${dayOfMonth}${ordinalSuffix} ${monthName}`;
+    return dateString;
+};
+
+export const invalidateQueries = (queryClient: any, queryKeys: any) => {
+    queryKeys.forEach((key: any) => {
+        queryClient.invalidateQueries(key);
+    });
+};

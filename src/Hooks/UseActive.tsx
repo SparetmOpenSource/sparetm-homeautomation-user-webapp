@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useActive(timeout: any) {
-    const [active, setActive]: any = useState(false);
+export function useActive(timeout: any, isActive: boolean) {
+    const [status, setStatus]: any = useState(false);
     const timer: any = useRef();
     const events = ['keypress', 'mousemove', 'touchmove', 'click', 'scroll'];
 
     useEffect(() => {
         const handleEvent = () => {
-            setActive(true);
+            setStatus(true);
             if (timer.current) {
                 window.clearTimeout(timer.current);
             }
             timer.current = window.setTimeout(() => {
-                setActive(false);
+                setStatus(false);
             }, timeout);
         };
 
@@ -25,5 +25,5 @@ export function useActive(timeout: any) {
             });
         };
     }, [timeout]); // eslint-disable-line react-hooks/exhaustive-deps
-    return active;
+    return [status, isActive];
 }

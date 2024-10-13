@@ -1,0 +1,95 @@
+.addDevice {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.addDevice_submitForm_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+.addDevice_submitForm_wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/*    margin-bottom: 0.5em;
+} */
+
+.addDevice_submitForm-heading {
+    width: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.addDevice_submitForm_field_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.addDevice_submitForm_field {
+    width: 100%;
+    padding: 1em;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    line-height: 24px;
+    transition: 0.1s all ease;
+    margin: 0;
+    border: 3px solid grey;
+}
+
+.addDevice_submitForm_field:focus {
+    outline-offset: 5px;
+    border: 3px solid orange;
+    transition: 0.5s all ease;
+}
+
+/* ******************************* */
+
+.addDevice_submitForm_error {
+    color: red;
+    background: rgb(255, 0, 0, 0.1);
+    padding: 0.7em 1.5em 0.7em 1.5em;
+    border-radius: 0.8em;
+    font-size: 0.87rem;
+    line-height: 21px;
+    margin-top: 2rem;
+}
+
+.addDevice_submitForm_select {
+    width: 100%;
+    margin: 0;
+}
+
+.css-13cymwt-control {
+    border: 3px solid grey !important;
+    background-color: rgb(255, 255, 255) !important;
+    border-radius: 0.5rem !important;
+}
+
+:focus-visible {
+    background-color: rgb(255, 255, 255) !important;
+    color: black !important;
+}
+
+.css-1u9des2-indicatorSeparator {
+    background-color: rgba(0, 0, 0, 0) !important;
+
+}

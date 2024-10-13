@@ -1,0 +1,119 @@
+.submitForm {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+}
+
+.submitForm_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+.submitForm_wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.submitForm_wrapper span {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+    margin-bottom: 0.5em;
+}
+
+.submitForm-heading {
+    width: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.submitForm_field_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.eyeIcon_button {
+    width: 4em;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    border: 3px solid grey;
+    border-radius: 0.5rem;
+}
+
+
+.submitForm_field {
+    width: 100%;
+    padding: 1em;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    line-height: 24px;
+    transition: 0.1s all ease;
+    margin: 0;
+    border: 3px solid grey;
+}
+
+.submitForm_field:focus {
+    outline-offset: 5px;
+    border: 3px solid orange;
+    transition: 0.5s all ease;
+}
+
+/* ******************************* */
+
+.submitForm_error {
+    color: red;
+    background: rgb(255, 0, 0, 0.1);
+    padding: 0.7em 1.5em 0.7em 1.5em;
+    border-radius: 0.8em;
+    font-size: 0.87rem;
+    line-height: 21px;
+    margin-top: 2rem;
+}
+
+.submitForm_select {
+    width: 100%;
+    margin: 0;
+}
+
+.css-13cymwt-control {
+    border: 3px solid grey !important;
+    background-color: rgb(255, 255, 255) !important;
+    border-radius: 0.5rem !important;
+}
+
+:focus-visible {
+    background-color: rgb(255, 255, 255) !important;
+    color: black !important;
+}
+
+.css-1u9des2-indicatorSeparator {
+    background-color: rgba(0, 0, 0, 0) !important;
+
+}
+
+.rearrangeForPassword {
+    width: 83% !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

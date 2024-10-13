@@ -39,7 +39,7 @@ const StatusList = () => {
     };
     const on_Success = () => {};
     const on_Error = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
 
     const { isLoading, data } = useReactQuery_Get(

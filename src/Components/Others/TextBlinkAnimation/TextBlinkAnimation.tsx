@@ -27,7 +27,7 @@ const TextBlinkAnimation = ({
         setIsPlaying(true);
     };
     return (
-        <motion.span
+        <motion.div
             animate={controls}
             onMouseOver={() => {
                 if (!isPlaying) {
@@ -45,7 +45,7 @@ const TextBlinkAnimation = ({
             }}
         >
             {children}
-        </motion.span>
+        </motion.div>
     );
 };
 

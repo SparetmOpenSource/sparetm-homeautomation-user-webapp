@@ -27,7 +27,7 @@ const TodoListEditBackdrop = ({
     /*********************CREATING PROFILE**********************/
 
     const onError = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
     const { mutate } = useUpdateTodo(todoId, onError, handleClose);
 

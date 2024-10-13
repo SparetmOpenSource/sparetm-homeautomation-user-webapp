@@ -22,7 +22,7 @@ const TodoListBoxAddingBackdrop = (props: any) => {
     });
 
     const onError = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
     const { mutate } = useAddTodo(profileId, onError, props.closeFn);
 

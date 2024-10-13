@@ -68,7 +68,7 @@ const TodoListWrapper = () => {
     /*************************/
 
     const onError = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
     const { mutate } = useDeleteTodo(onError, closeDeleteTodo);
 
@@ -83,7 +83,7 @@ const TodoListWrapper = () => {
         //toast.success(`Refreshed todo (${data?.data.body.length})`);
     };
     const on_Error = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
 
     const { isLoading, data } = useReactQuery_Get(

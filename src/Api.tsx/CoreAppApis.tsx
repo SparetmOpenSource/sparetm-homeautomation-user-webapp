@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { api, postHeaderConfig, getHeaderConfig } from './Axios';
 import { weather_quote_constant } from '../Data/Constants';
+import { catchError } from '../Utils/HelperFn';
 
 export const featureUrl = {
     get_weather_quote_1: '/mpa/api/v1/profiles/features?id=',
@@ -22,15 +23,79 @@ export const featureUrl = {
     delete_device_data_store: `/mda/api/v1/devices/data/remove?id=`,
 };
 
-/*************************Fetch weather and quotes*******************************/
-export const getWeatherQuote = async (profileId: any) => {
-    return await api.get(
-        featureUrl.get_weather_quote_1 +
-            profileId +
-            featureUrl.get_weather_quote_2,
-        getHeaderConfig,
-    );
+//NEW//
+
+export const getWeatherQuote = async (profileId: any, darkTheme: any) => {
+    try {
+        const response = await api.get(
+            featureUrl.get_weather_quote_1 +
+                profileId +
+                featureUrl.get_weather_quote_2,
+            getHeaderConfig,
+        );
+        return response;
+    } catch (error) {
+        //catchError(error, darkTheme);
+        throw new Error('Failed to fetch weather and quote');
+    }
 };
+
+export const getAllDevices = async (
+    admin: any,
+    profile: any,
+    darkTheme: any,
+) => {
+    try {
+        const response = await api.get(
+            `${featureUrl.get_all_devices}${admin}&profilename=${profile}`,
+            getHeaderConfig,
+        );
+        return response;
+    } catch (error) {
+        //catchError(error, darkTheme);
+        throw new Error('Failed to fetch device details');
+    }
+};
+
+// export const useUpdateData = (url: any, on_Success: any, on_Error: any) => {
+//     return useMutation(
+//         (data) => {
+//             return api.post(url, data, postHeaderConfig);
+//         },
+//         {
+//             onSuccess: on_Success,
+//             onError: on_Error,
+//         },
+//     );
+// };
+
+// export const useUpdateAllDeviceStatus = (
+//     admin: any,
+//     profile: any,
+//     roomType: any,
+//     on_Success: any,
+//     on_Error: any,
+// ) => {
+//     const queryClient = useQueryClient();
+//     return useMutation(
+//         (data) => {
+//             return api.patch(
+//                 `${featureUrl.update_all_device_status}${admin}&profilename=${profile}&roomtype=${roomType}`,
+//                 data,
+//                 postHeaderConfig,
+//             );
+//         },
+//         {
+//             // onSuccess: () => {
+//             //     queryClient.invalidateQueries('get_device_list');
+//             // },
+//             onSuccess: on_Success,
+//             onError: on_Error,
+//         },
+//     );
+// };
+
+/*************************Fetch weather and quotes*******************************/
 
 /*************************Fetch todo list*******************************/
 export const getTodoList = async (profileId: any) => {
@@ -46,7 +111,7 @@ export const delTodoList = async (todoId: any) => {
     return await api.get(featureUrl.del_todo_list + todoId);
 };
 
-export const getActiveDeviceList = async (appUser: any, profileName:any) => {
+export const getActiveDeviceList = async (appUser: any, profileName: any) => {
     return await api.get(
         featureUrl.get_active_device_list +
             appUser +
@@ -147,12 +212,6 @@ export const useAddDevice = (
 };
 
 /*************************Fetch Devices*******************************/
-export const getAllDevices = async (admin: any, profileName: any) => {
-    return await api.get(
-        `${featureUrl.get_all_devices}${admin}&profilename=${profileName}`,
-        getHeaderConfig,
-    );
-};
 
 export const getDevices = async (
     admin: any,
@@ -222,29 +281,29 @@ export const useUpdateDeviceStatus = (
 };
 
 /*************************Update all device status*******************************/
-export const useUpdateAllDeviceStatus = (
-    admin: any,
-    profileName: any,
-    roomType: any,
-    on_Error: any,
-) => {
-    const queryClient = useQueryClient();
-    return useMutation(
-        (data) => {
-            return api.patch(
-                `${featureUrl.update_all_device_status}${admin}&profilename=${profileName}&roomtype=${roomType}`,
-                data,
-                postHeaderConfig,
-            );
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('get_device_list');
-            },
-            onError: on_Error,
-        },
-    );
-};
+// export const useUpdateAllDeviceStatus = (
+//     admin: any,
+//     profileName: any,
+//     roomType: any,
+//     on_Error: any,
+// ) => {
+//     const queryClient = useQueryClient();
+//     return useMutation(
+//         (data) => {
+//             return api.patch(
+//                 `${featureUrl.update_all_device_status}${admin}&profilename=${profileName}&roomtype=${roomType}`,
+//                 data,
+//                 postHeaderConfig,
+//             );
+//         },
+//         {
+//             onSuccess: () => {
+//                 queryClient.invalidateQueries('get_device_list');
+//             },
+//             onError: on_Error,
+//         },
+//     );
+// };
 
 /*************************Update all device status*******************************/
 export const useUpdateAllDeviceStatusWidget = (

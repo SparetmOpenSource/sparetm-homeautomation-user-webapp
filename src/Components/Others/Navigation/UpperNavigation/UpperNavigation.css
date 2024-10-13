@@ -1,0 +1,49 @@
+.upper_navigation_user_option section span,
+.upper_navigation_user_option section,
+.upper_navigation_search,
+.upper_navigation,
+.upper_navigation_logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upper_navigation,
+.upper_navigation_user_option,
+.upper_navigation_logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.upper_navigation {
+    width: 100%;
+    justify-content: space-between;
+
+}
+
+.upper_navigation_search {
+    width: 75%;
+    height: 100%;
+}
+
+.upper_navigation_user_option {
+    width: 15%;
+    justify-content: space-around;
+}
+
+.upper_navigation_user_option section {
+    width: 20%;
+    height: 100%;
+}
+
+.upper_navigation_user_option section span {
+    width: 85%;
+    height: 85%;
+}
+
+.upper_navigation_logo {
+    width: 10%;
+    justify-content: flex-start;
+    padding-left: 2rem;
+}

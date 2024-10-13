@@ -25,6 +25,7 @@ import InformationBackdropModel from '../../../Others/BackdropModel/InformationB
 import AddColorToRgbModel from '../AddColorToRgbModel/AddColorToRgbModel';
 import AddDeviceBackdropModel from '../AddDeviceBackdropModel/AddDeviceBackdropModel';
 import DeviceInfoWrapper from '../DeviceInfo/DeviceInfoWrapper';
+import { useTheme } from '../../../../Pages/ThemeProvider';
 
 const CoreApplicationDeviceRoomWrapper = ({
     setDeviceOn,
@@ -36,6 +37,7 @@ any) => {
     const adminName = getAppAdminUser();
     const profileName = getProfileName();
     const queryClient = useQueryClient();
+    const darkTheme: any = useTheme();
     const roomType: any = location.pathname.split('/')[3].replace('%20', ' ');
 
     /*************************************BACKDROP*************************************/
@@ -73,7 +75,7 @@ any) => {
     /*************************/
 
     const onError = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
     const { mutate } = useDeleteDevice(
         adminName,
@@ -87,7 +89,7 @@ any) => {
     /*{----------------------------------------------------------------------------------------------------------}*/
 
     const deviceFn = () => {
-        return getAllDevices(adminName, profileName);
+        return getAllDevices(adminName, profileName, darkTheme);
     };
     const on_Success = (data: any) => {
         setTotalDevice(
@@ -98,7 +100,7 @@ any) => {
         );
     };
     const on_Error = (error: any) => {
-        catchError(error);
+        // catchError(error);
     };
 
     const { isLoading, data } = useReactQuery_Get(

@@ -1,0 +1,158 @@
+import { motion } from 'framer-motion';
+import './DeviceCard.css';
+import { useEffect, useState } from 'react';
+import { useBackDropOpen, useTheme } from '../../../../Pages/ThemeProvider';
+import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
+import { IconContext } from 'react-icons';
+import { PiPowerFill } from 'react-icons/pi';
+import { HiOutlineInformationCircle } from 'react-icons/hi2';
+import { changeDeviceIcon, displayToastify } from '../../../../Utils/HelperFn';
+import { LandscapeSizeM } from '../../../../Data/Constants';
+import ApplianceExpand from './ApplianceExpand';
+import { usePatchUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
+import { useAppSelector } from '../../../../Features/ReduxHooks';
+import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
+
+const Appliance = ({
+    statusValue,
+    deviceType,
+    roomType,
+    showName,
+    deviceName,
+    deviceTopic,
+    id,
+    createdAt,
+    updatedAt,
+}: any) => {
+    const [color, setColor] = useState<any>(light_colors);
+    const [status, setStatus] = useState<boolean>(false);
+    const darkTheme: any = useTheme();
+    const admin = useAppSelector((state: any) => state?.user?.admin);
+    const profile = useAppSelector((state: any) => state?.user?.profile);
+
+    const onSuccess = () => {};
+    const onError = (error: any) => {
+        displayToastify(
+            error?.message,
+            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.ERROR,
+        );
+    };
+    const { mutate } = usePatchUpdateData(
+        `${featureUrl.update_device}${admin}&profilename=${profile}&roomtype=${roomType}&id=${id}`,
+        onSuccess,
+        onError,
+    );
+
+    const changeStatus = () => {
+        setStatus((prev: boolean) => !prev);
+        mutate({
+            status: !status,
+            statusDetail: '',
+        } as any);
+    };
+
+    const {
+        toggleBackDropOpen,
+        setChildForCustomBackDrop,
+        setSizeForCustomBackDrop,
+    } = useBackDropOpen();
+
+    useEffect(() => {
+        setStatus(statusValue);
+    }, [statusValue]);
+
+    useEffect(() => {
+        darkTheme ? setColor(dark_colors) : setColor(light_colors);
+    }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    return (
+        <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 1.1 }}
+            className="device"
+            style={{
+                backgroundColor: color?.element,
+                border: status ? `2px solid ${color?.button}` : '',
+            }}
+        >
+            <section>
+                <span>
+                    <IconContext.Provider
+                        value={{
+                            size: '3em',
+                            color: status ? color?.button : 'gray',
+                        }}
+                    >
+                        {/* <LuLightbulb /> */}
+                        {changeDeviceIcon(
+                            deviceType.split('/')[1].toUpperCase(),
+                        )}
+                    </IconContext.Provider>
+                </span>
+                <motion.span
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 1.0 }}
+                    onClick={() => changeStatus()}
+                >
+                    <IconContext.Provider
+                        value={{
+                            size: '2.5em',
+                            color: status ? color?.success : 'gray',
+                        }}
+                    >
+                        <PiPowerFill />
+                    </IconContext.Provider>
+                </motion.span>
+            </section>
+            <section>
+                <span>
+                    <p style={{ color: status ? color?.text : 'gray' }}>
+                        {showName}
+                    </p>
+                    <p style={{ color: status ? color?.text : 'gray' }}>
+                        {deviceName}
+                    </p>
+                </span>
+                <motion.span
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 1.0 }}
+                    onClick={() => {
+                        toggleBackDropOpen();
+                        setChildForCustomBackDrop(
+                            <ApplianceExpand
+                                deviceTopic={deviceTopic}
+                                deviceType={deviceType}
+                                createdAt={createdAt}
+                                updatedAt={updatedAt}
+                                id={id}
+                                darkTheme={darkTheme}
+                                isRemoteActive={
+                                    deviceType.split('/')[1].toUpperCase() ===
+                                        'AC' ||
+                                    deviceType.split('/')[1].toUpperCase() ===
+                                        'FAN'
+                                        ? true
+                                        : false
+                                }
+                            />,
+                        );
+                        setSizeForCustomBackDrop(LandscapeSizeM);
+                    }}
+                >
+                    <IconContext.Provider
+                        value={{
+                            size: '1.5em',
+                            color: status ? color?.text : 'gray',
+                        }}
+                    >
+                        <HiOutlineInformationCircle />
+                    </IconContext.Provider>
+                </motion.span>
+            </section>
+        </motion.div>
+    );
+};
+
+export default Appliance;
