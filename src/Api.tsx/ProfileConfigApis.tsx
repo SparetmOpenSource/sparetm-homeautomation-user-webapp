@@ -27,7 +27,7 @@ export const profileUrl = {
     get_city: 'https://www.universal-tutorial.com/api/cities/',
     get_state: 'https://www.universal-tutorial.com/api/states/',
     get_all_profiles: '/mpa/api/v1/profiles/all?admin=',
-    get_all_device_instance_url: '/mpa/api/v1/profiles/websocket/url',
+    get_all_device_instance_url: '/mda/api/v1/devices/websocket/url',
     get_profile: '/mpa/api/v1/profiles?id=',
     add_profile: '/mpa/api/v1/profiles?admin=',
     add_mqtt: '/mpa/api/v1/profiles/mqtt/cred?admin=',
@@ -127,7 +127,7 @@ export const getWebSocketUrl = async () => {
         );
         return response;
     } catch (error) {
-        throw new Error('Failed to fetch websocket url');
+        throw new Error('Failed to fetch websocket server url');
     }
 };
 

@@ -25,36 +25,36 @@ const ProfileConfig = () => {
     const darkTheme: any = useTheme();
     const location = useLocation();
 
-    const tokenFn = () => {
-        return getCountryStateCityToken(darkTheme);
-    };
+    // const tokenFn = () => {
+    //     return getCountryStateCityToken(darkTheme);
+    // };
 
-    const on_Success = () => {};
-    const on_Error = (error: any) => {
-        displayToastify(
-            error?.message,
-            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-            TOASTIFYSTATE.ERROR,
-        );
-    };
+    // const on_Success = () => {};
+    // const on_Error = (error: any) => {
+    //     displayToastify(
+    //         error?.message,
+    //         !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+    //         TOASTIFYSTATE.ERROR,
+    //     );
+    // };
 
-    const {
-        isLoading,
-        isError,
-        data: token,
-    } = useReactQuery_Get(
-        SELECT_COUNTRY_STATE_CITY_TOKEN_QUERY_ID,
-        tokenFn,
-        on_Success,
-        on_Error,
-        true, // !fetch_On_Click_Status
-        true, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        0, // Stale Time
-    );
+    // const {
+    //     isLoading,
+    //     isError,
+    //     data: token,
+    // } = useReactQuery_Get(
+    //     SELECT_COUNTRY_STATE_CITY_TOKEN_QUERY_ID,
+    //     tokenFn,
+    //     on_Success,
+    //     on_Error,
+    //     true, // !fetch_On_Click_Status
+    //     true, // refetch_On_Mount
+    //     false, // refetch_On_Window_Focus
+    //     false, // refetch_Interval
+    //     false, // refetch_Interval_In_Background
+    //     300000, // Cache time
+    //     0, // Stale Time
+    // );
 
     const nav_upper_list_option = [
         {
@@ -107,7 +107,7 @@ const ProfileConfig = () => {
 
     return (
         <div className="profileConfig">
-            {isLoading && (
+            {/* {isLoading && (
                 <div className="profileConfig_isLoading">
                     <LoadingFade />
                 </div>
@@ -116,8 +116,9 @@ const ProfileConfig = () => {
                 <div className="select_profile_error">
                     <ErrorPage />
                 </div>
-            )}
-            {!isLoading && (
+            )} */}
+            {/* {!isLoading && !isError && ( */}
+            {true && (
                 <CommonSkin
                     side_nav_enable={true}
                     side_nav={
@@ -148,7 +149,8 @@ const ProfileConfig = () => {
                             }
                         />
                     }
-                    content={<Outlet context={token?.data?.auth_token} />}
+                    // content={<Outlet context={token?.data?.auth_token} />}
+                    content={<Outlet />}
                 />
             )}
         </div>

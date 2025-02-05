@@ -19,6 +19,3 @@ export const postHeaderConfig = {
     },
 };
 
-// export const refreshQuery = (id:any) => {
-//      queryClient.invalidateQueries(id);
-//  };

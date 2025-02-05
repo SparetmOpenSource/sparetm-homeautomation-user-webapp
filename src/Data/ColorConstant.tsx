@@ -16,13 +16,14 @@ export const dark_colors = {//done
 
 // ----- //
 
-export const light_colors = { // done
+export const light_colors = {
+    // done
     outer: 'rgb(255,255,255)',
     inner: 'rgb(239,242,245)',
     element: 'rgb(253,246,236)',
     button: 'rgb(68, 138, 255)',
     icon: 'gray',
-    icon_font: 'black',
+    icon_font: 'rgb(118, 123, 127)',
     text: 'black',
     hover: 'rgb(233,233,234)',
     success: 'rgb(105,188,52)',

@@ -16,7 +16,7 @@ import {
 } from '../../../../Data/Constants';
 import { SELECT_WEATHER_QUOTE_QUERY_ID } from '../../../../Data/QueryConstant';
 import { useAppSelector } from '../../../../Features/ReduxHooks';
-import { useColorNotification } from '../../../../App';
+// import { useColorNotification } from '../../../../App';
 import LoadingFade from '../../LoadingAnimation/LoadingFade';
 import { IconContext } from 'react-icons';
 import WidgetError from '../../WidgetError/WidgetError';
@@ -27,7 +27,7 @@ import Expand from './Expand';
 const Weather = () => {
     const [color, setColor] = useState<any>(light_colors);
     const profileId = useAppSelector((state: any) => state?.user?.profileId);
-    const handleColorNotificationChange = useColorNotification();
+    // const handleColorNotificationChange = useColorNotification();
     const darkTheme: any = useTheme();
 
     const weatherQuoteFn = () => {
@@ -35,11 +35,11 @@ const Weather = () => {
     };
 
     const on_Success = () => {
-        handleColorNotificationChange(colorNotificationStatus[0]);
+        // handleColorNotificationChange(colorNotificationStatus[0]);
     };
 
     const on_Error = (error: any) => {
-        handleColorNotificationChange(colorNotificationStatus[1]);
+        // handleColorNotificationChange(colorNotificationStatus[1]);
         catchError(error, darkTheme);
     };
 

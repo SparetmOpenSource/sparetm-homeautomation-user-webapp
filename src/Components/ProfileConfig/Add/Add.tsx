@@ -26,7 +26,7 @@ import {
     SELECT_COUNTRY_LIST_QUERY_ID,
     SELECT_STATE_LIST_QUERY_ID,
 } from '../../../Data/QueryConstant';
-import { useColorNotification } from '../../../App';
+// import { useColorNotification } from '../../../App';
 import { useUpdateData } from '../../../Api.tsx/useReactQuery_Update';
 
 const Add = () => {
@@ -47,7 +47,7 @@ const Add = () => {
     const countrySelectInputRef: any = useRef();
     const stateSelectInputRef: any = useRef();
     const citySelectInputRef: any = useRef();
-    const handleColorNotificationChange = useColorNotification();
+    // const handleColorNotificationChange = useColorNotification();
 
     const cityCountryState_headers = {
         headers: {
@@ -89,45 +89,45 @@ const Add = () => {
         return getCountryList(cityCountryState_headers, darkTheme);
     };
 
-    const { data: selectedCityList, refetch: fetchCity } = useReactQuery_Get(
-        SELECT_CITY_LIST_QUERY_ID,
-        cityFn,
-        on_City_Success,
-        on_City_Error,
-        false, // !fetch_On_Click_Status
-        false, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        0, // Stale Time
-    );
-    const { data: selectedStateList, refetch: fetchState } = useReactQuery_Get(
-        SELECT_STATE_LIST_QUERY_ID,
-        stateFn,
-        on_State_Success,
-        on_State_Error,
-        false, // !fetch_On_Click_Status
-        false, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        0, // Stale Time
-    );
-    const { data: selectedCountryList } = useReactQuery_Get(
-        SELECT_COUNTRY_LIST_QUERY_ID,
-        countryFn,
-        on_Country_Success,
-        on_Country_Error,
-        true, // !fetch_On_Click_Status
-        true, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        0, // Stale Time
-    );
+    // const { data: selectedCityList, refetch: fetchCity } = useReactQuery_Get(
+    //     SELECT_CITY_LIST_QUERY_ID,
+    //     cityFn,
+    //     on_City_Success,
+    //     on_City_Error,
+    //     false, // !fetch_On_Click_Status
+    //     false, // refetch_On_Mount
+    //     false, // refetch_On_Window_Focus
+    //     false, // refetch_Interval
+    //     false, // refetch_Interval_In_Background
+    //     300000, // Cache time
+    //     0, // Stale Time
+    // );
+    // const { data: selectedStateList, refetch: fetchState } = useReactQuery_Get(
+    //     SELECT_STATE_LIST_QUERY_ID,
+    //     stateFn,
+    //     on_State_Success,
+    //     on_State_Error,
+    //     false, // !fetch_On_Click_Status
+    //     false, // refetch_On_Mount
+    //     false, // refetch_On_Window_Focus
+    //     false, // refetch_Interval
+    //     false, // refetch_Interval_In_Background
+    //     300000, // Cache time
+    //     0, // Stale Time
+    // );
+    // const { data: selectedCountryList } = useReactQuery_Get(
+    //     SELECT_COUNTRY_LIST_QUERY_ID,
+    //     countryFn,
+    //     on_Country_Success,
+    //     on_Country_Error,
+    //     true, // !fetch_On_Click_Status
+    //     true, // refetch_On_Mount
+    //     false, // refetch_On_Window_Focus
+    //     false, // refetch_Interval
+    //     false, // refetch_Interval_In_Background
+    //     300000, // Cache time
+    //     0, // Stale Time
+    // );
 
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
@@ -154,7 +154,7 @@ const Add = () => {
     };
 
     const on_AddProfile_Success = () => {
-        handleColorNotificationChange(colorNotificationStatus[0]);
+        // handleColorNotificationChange(colorNotificationStatus[0]);
         displayToastify(
             `${successMessage.profile_added}`,
             TOASTIFYCOLOR.LIGHT,
@@ -163,7 +163,7 @@ const Add = () => {
         navigate(RoutePath.SelectProfileConfig);
     };
     const on_AddProfile_Error = (error: any) => {
-        handleColorNotificationChange(colorNotificationStatus[1]);
+        // handleColorNotificationChange(colorNotificationStatus[1]);
         catchError(error, darkTheme);
     };
 
@@ -233,13 +233,13 @@ const Add = () => {
 
     useEffect(() => {
         if (country !== undefined) {
-            fetchState();
+            // fetchState();
         }
     }, [country]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (state !== undefined) {
-            fetchCity();
+            // fetchCity();
         }
     }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -262,7 +262,7 @@ const Add = () => {
             label: 'select your country*',
             optionType: 'api',
             keyName: 'country_name',
-            option: selectedCountryList?.data,
+            // option: selectedCountryList?.data,
             onChangeFn: addCountryData,
             resetRef: countrySelectInputRef,
         },
@@ -273,7 +273,7 @@ const Add = () => {
             label: 'select your state*',
             optionType: 'api',
             keyName: 'state_name',
-            option: selectedStateList?.data,
+            // option: selectedStateList?.data,
             onChangeFn: addStateData,
             resetRef: stateSelectInputRef,
         },
@@ -284,7 +284,7 @@ const Add = () => {
             label: 'select your city*',
             optionType: 'api',
             keyName: 'city_name',
-            option: selectedCityList?.data,
+            // option: selectedCityList?.data,
             onChangeFn: addCityData,
             resetRef: citySelectInputRef,
         },

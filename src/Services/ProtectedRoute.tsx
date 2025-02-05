@@ -1,18 +1,17 @@
-import { Outlet, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { RoutePath } from '../Data/Constants';
 
 const useAuth = (accessToken: any) => {
-    if (accessToken) {
-        return true;
-    } else {
-        return false;
-    }
+    return !!accessToken;
 };
 
-const ProtectedRoute = () => {
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const accessToken = localStorage.getItem('token');
     const auth = useAuth(accessToken);
-    return auth ? <Outlet /> : <Navigate to={RoutePath.Home} />;
+    if (!auth) {
+        return <Navigate to={RoutePath.Home} />;
+    }
+    return <>{children}</>;
 };
 
 export default ProtectedRoute;

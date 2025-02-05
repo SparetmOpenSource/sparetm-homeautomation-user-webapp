@@ -9,10 +9,19 @@
 
 .noData h1 {
     font-size: 2rem;
+    margin-bottom: 0;
 }
 
 .noData p {
     font-size: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+}
+.noData span{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
 .noData span:hover {

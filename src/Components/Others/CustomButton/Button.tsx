@@ -14,6 +14,7 @@ const Button = (props: any) => {
                 margin: '1em 0',
                 padding: '0.5em 0',
                 width: props?.width,
+                height: props?.height ? props?.height : 'auto',
                 // background: status ? props?.backColOnDis : props?.backCol,
                 background: props?.backCol,
                 // color: status

@@ -19,3 +19,7 @@ export const SELECT_WEATHER_QUOTE_QUERY_ID = 'get_weather_quote';
 export const SELECT_DEVICE_SERVICE_URL_LIST_QUERY_ID =
     'get_device_service_url_list';
 export const SELECT_DEVICE_LIST_QUERY_ID = 'get_device_list';
+
+
+//-SPOTIFY-//
+export const GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID= "get_spotify_playback_state";

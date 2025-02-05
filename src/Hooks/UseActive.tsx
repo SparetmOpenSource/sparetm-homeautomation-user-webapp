@@ -15,7 +15,6 @@ export function useActive(timeout: any, isActive: boolean) {
                 setStatus(false);
             }, timeout);
         };
-
         events.forEach((event) => {
             document.addEventListener(event, handleEvent);
         });

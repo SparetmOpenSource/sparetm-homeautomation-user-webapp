@@ -1,0 +1,29 @@
+.select-form{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.select-form select{
+    width:80%;
+    padding: 1em !important;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    line-height: 24px;
+    transition: 0.1s all ease;
+    margin: 0;
+    border: 3px solid grey;
+    cursor:pointer;
+    margin-bottom: 2rem;
+}
+
+.select-form select:focus {
+    outline-offset: 5px;
+    border: 3px solid orange;
+    transition: 0.5s all ease;
+}
+
+.select-form select option[disabled] {
+    color: gray !important;
+}

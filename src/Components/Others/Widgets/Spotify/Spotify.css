@@ -1,9 +1,5 @@
 .spotify {
-    width: 42%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     border-radius: 1.5rem;
     padding: 0.5rem;
     -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -11,16 +7,37 @@
     box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.spotify>:first-child {
+.spotify_container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 1.5rem;
+}
+
+.spotify_container > :first-child {
     width: 40%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     border-radius: 1.5rem;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+    position: relative;
 }
+.spotify_song_image {
+    border-radius: 1.2rem;
+}
+/* .spotify_song_progress {
+    position: absolute;
+} */
 
-.spotify>:last-child {
+.spotify_container > :last-child {
     width: 60%;
     height: 100%;
     display: flex;
@@ -28,28 +45,35 @@
     justify-content: center;
 }
 
-.spotify>:last-child>:first-child {
+.spotify_container > :last-child > :first-child {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-around;
     flex-direction: column;
     width: 80%;
     height: 100%;
     padding-left: 2rem;
 }
 
-.spotify>:last-child>:first-child h1,
-.spotify>:last-child>:first-child p {
+.spotify_container > :last-child > :first-child h1,
+.spotify_container > :last-child > :first-child h2,
+.spotify_container > :last-child > :first-child p {
     padding: 0;
     margin: 0;
 }
+/* .spotify_container > :last-child > :first-child h1{
 
-.spotify>:last-child>:first-child h1 {
-    font-size: 2rem;
+background-color: aquamarine;
+} */
+.spotify_container > :last-child > :first-child p {
+    padding: 0.2rem;
 }
 
+.spotify_container > :last-child > :first-child h1 {
+    font-size: 1.5rem;
+}
 
-.spotify>:last-child>:last-child {
+.spotify_container > :last-child > :last-child {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -59,7 +83,7 @@
     padding: 0.5rem;
 }
 
-.spotify>:last-child>:last-child span {
+.spotify_container > :last-child > :last-child span {
     cursor: pointer;
 }
 

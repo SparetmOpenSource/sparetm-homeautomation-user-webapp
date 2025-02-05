@@ -6,12 +6,15 @@ import { useTheme } from '../../../Pages/ThemeProvider';
 import Button from '../../Others/CustomButton/Button';
 import { useAppSelector } from '../../../Features/ReduxHooks';
 import { RoutePath } from '../../../Data/Constants';
-import Spotify from '../../Others/Widgets/Spotify/Spotify';
+import Spotify from '../../Others/Widgets/Spotify/SpotifyLogIn';
 import { CiCircleChevLeft } from 'react-icons/ci';
 import { CiCircleChevRight } from 'react-icons/ci';
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
 import Weather from '../../Others/Widgets/Weather/Weather';
+import WidgetCarousel from '../../Others/Slide/WidgetCarousel/WidgetCarousel';
+import { RiCalendarTodoLine } from 'react-icons/ri';
+import { IoIosStats } from 'react-icons/io';
 
 const DashBoard = () => {
     const [color, setColor] = useState<any>(light_colors);
@@ -63,6 +66,7 @@ const DashBoard = () => {
     return (
         <div className="dashBoard">
             <section className="dashBoard-content">
+                {/*  */}
                 <span>
                     <div>
                         <h1 style={{ color: color?.text }}>
@@ -71,7 +75,35 @@ const DashBoard = () => {
                         </h1>
                     </div>
                     <div>
-                        <Button
+                        <motion.span
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => navigate(statusListPath)}
+                        >
+                            <IconContext.Provider
+                                value={{
+                                    size: '2.5em',
+                                    color: color?.button,
+                                }}
+                            >
+                                <IoIosStats />
+                            </IconContext.Provider>
+                        </motion.span>
+                        <motion.span
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => navigate(todoListPath)}
+                        >
+                            <IconContext.Provider
+                                value={{
+                                    size: '2.5em',
+                                    color: color?.button,
+                                }}
+                            >
+                                <RiCalendarTodoLine />
+                            </IconContext.Provider>
+                        </motion.span>
+                        {/* <Button
                             label="Status"
                             textCol={
                                 currentPath === statusListPath ||
@@ -90,8 +122,8 @@ const DashBoard = () => {
                                     ? color?.button
                                     : `${color?.button.split(')')[0]},0.3)`
                             }
-                        />
-                        <Button
+                        /> */}
+                        {/* <Button
                             label="Todo"
                             textCol={
                                 currentPath === todoListPath ||
@@ -110,42 +142,13 @@ const DashBoard = () => {
                                     ? color?.button
                                     : `${color?.button.split(')')[0]},0.3)`
                             }
-                        />
+                        /> */}
                     </div>
                 </span>
                 <span>
-                    <Spotify />
-                    <Weather />
-                    <div>
-                        <motion.span
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            // onClick={() => pausePlay()}
-                        >
-                            <IconContext.Provider
-                                value={{
-                                    size: '3em',
-                                    color: color?.text,
-                                }}
-                            >
-                                <CiCircleChevRight />
-                            </IconContext.Provider>
-                        </motion.span>
-                        <motion.span
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            //  onClick={() => pausePlay()}
-                        >
-                            <IconContext.Provider
-                                value={{
-                                    size: '3em',
-                                    color: color?.text,
-                                }}
-                            >
-                                <CiCircleChevLeft />
-                            </IconContext.Provider>
-                        </motion.span>
-                    </div>
+                    {/* <Spotify />
+                    <Weather /> */}
+                    <WidgetCarousel />
                 </span>
                 <span>
                     <Outlet />

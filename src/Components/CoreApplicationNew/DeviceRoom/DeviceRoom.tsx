@@ -31,9 +31,9 @@ const DeviceRoom = () => {
     const profileData = useAppSelector(
         (state: any) => state?.user?.profileData,
     );
-    const mqttUpdate = useAppSelector(
-        (state: any) => state?.device?.mqttUpdate,
-    );
+    // const mqttUpdate = useAppSelector(
+    //     (state: any) => state?.device?.mqttUpdate,
+    // );
     const admin = useAppSelector((state: any) => state?.user?.admin);
     const profile = useAppSelector((state: any) => state?.user?.profile);
     const roomType: any = location.pathname.split('/')[3].replace('%20', ' ');
@@ -149,18 +149,18 @@ const DeviceRoom = () => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    useEffect(() => {
-        if (
-            Object.keys(mqttUpdate).length !== 0 &&
-            (JSON.parse(mqttUpdate?.msg)?.message ===
-                'server-source-device-status-update' ||
-                JSON.parse(mqttUpdate?.msg)?.message ===
-                    'server-source-device-update')
-        ) {
-            invalidateQueries(queryClient, queryKeys);
-        }
-    }, [mqttUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
-    // && mqttUpdate?.headers?.status === 'OFF'
+    // useEffect(() => {
+    //     const update_type = mqttUpdate?.msg?.message?.split('/');
+    //     if (update_type !== undefined && update_type[4] === admin) {
+    //         invalidateQueries(queryClient, queryKeys);
+    //         displayToastify(
+    //             `Socket device (${update_type[3]})`,
+    //             !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+    //             TOASTIFYSTATE.INFO,
+    //         );
+    //     }
+    // }, [mqttUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
+
     return (
         <div className="deviceRoom">
             <section style={{ backgroundColor: color?.element }}>

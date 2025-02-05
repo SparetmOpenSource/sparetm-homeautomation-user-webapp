@@ -94,8 +94,12 @@ export const useMountEffect = (fun: any, dep: any) => useEffect(fun, [dep]); // 
 // -------------------- core app constant ----------------------- //
 
 export const weather_quote_constant = {
-    fetch_delay_time: 300000, //15x60x1000 = 900000
+    fetch_delay_time: 1800000, //1000 * 60 * 30 = 1800000
     quote_char_limit: 70,
+};
+
+export const spotify_refresh_playback_constant = {
+    fetch_delay_time: 3000, //1000 * 3 = 3000
 };
 
 export let Current_Date_Time = new Date().toLocaleDateString('en-us', {

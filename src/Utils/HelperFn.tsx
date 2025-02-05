@@ -6,6 +6,13 @@ import { GiCeilingLight } from 'react-icons/gi';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import { NETWORKERRORKEY, RoutePath } from '../Data/Constants';
 import { GiBoatPropeller } from 'react-icons/gi';
+import { GiWashingMachine } from 'react-icons/gi';
+import { TbMicrowave } from 'react-icons/tb';
+import { LuRefrigerator } from 'react-icons/lu';
+import { GiVacuumCleaner } from 'react-icons/gi';
+import { GiToaster } from 'react-icons/gi';
+import { PiHardDriveDuotone } from 'react-icons/pi';
+import { TbFreezeRow } from 'react-icons/tb';
 import {
     BsSunFill,
     BsCloudSunFill,
@@ -129,6 +136,102 @@ export const changeWeatherIcon = (iconCode: string) => {
     return icon;
 };
 
+export const appliance = [
+    {
+        label: 'Light',
+        value: 'appliance/light',
+        remote: false,
+    },
+    {
+        label: 'Fan',
+        value: 'appliance/fan',
+        remote: true,
+    },
+    {
+        label: 'Switch',
+        value: 'appliance/switch',
+        remote: false,
+    },
+    {
+        label: 'Television',
+        value: 'appliance/tv',
+        remote: true,
+    },
+    {
+        label: 'Air Conditioner',
+        value: 'appliance/ac',
+        remote: true,
+    },
+    {
+        label: 'Music',
+        value: 'appliance/music',
+        remote: false,
+    },
+    // {
+    //   label: "Freezer",
+    //   value: "appliance/freezer",
+    //   remote: false,
+    // },
+    // {
+    //   label: "Dishwasher",
+    //   value: "appliance/dishwasher",
+    //   remote: false,
+    // },
+    // {
+    //   label: "Dryer",
+    //   value: "appliance/dryer",
+    //   remote: false,
+    // },
+    // {
+    //   label: "Heater",
+    //   value: "appliance/heater",
+    //   remote: false,
+    // },
+    // {
+    //   label: "Mixer",
+    //   value: "appliance/mixer",
+    //   remote: false,
+    // },
+    {
+        label: 'Toaster',
+        value: 'appliance/toaster',
+        remote: false,
+    },
+    // {
+    //   label: "Water Purifier",
+    //   value: "appliance/waterPurifier",
+    //   remote: false,
+    // },
+    {
+        label: 'Vacuum Cleaner',
+        value: 'appliance/vacuumCleaner',
+        remote: false,
+    },
+    {
+        label: 'Refrigerator',
+        value: 'appliance/refrigerator',
+        remote: false,
+    },
+    {
+        label: 'Microwave',
+        value: 'appliance/microwave',
+        remote: false,
+    },
+    {
+        label: 'Washing Machine',
+        value: 'appliance/washingMachine',
+        remote: false,
+    },
+];
+
+export const gadget = [
+    {
+        label: 'RGB',
+        value: 'gadget/rgb',
+        remote: false,
+    },
+];
+
 export const changeDeviceIcon = (device: string) => {
     let icon: any;
     switch (device) {
@@ -152,6 +255,24 @@ export const changeDeviceIcon = (device: string) => {
             break;
         case 'MUSIC':
             icon = <BsMusicPlayerFill />;
+            break;
+        // case 'FREEZER':
+        //     icon = <TbFreezeRow/>;
+        //     break;
+        case 'TOASTER':
+            icon = <GiToaster />;
+            break;
+        case 'VACUUMCLEANER':
+            icon = <GiVacuumCleaner />;
+            break;
+        case 'REFRIGERATOR':
+            icon = <LuRefrigerator />;
+            break;
+        case 'MICROWAVE':
+            icon = <TbMicrowave />;
+            break;
+        case 'WASHINGMACHINE':
+            icon = <GiWashingMachine />;
             break;
         default:
             icon = '';
@@ -320,6 +441,10 @@ export const reloadPage = () => {
     window.location.reload();
 };
 
+export const navigateTo = (navigate: any, to: any) => {
+    navigate(to);
+};
+
 export const uriArray = [`${RoutePath.CoreApplication_Room}`]; //'/app/room'
 export const isSearchActive = (uriArray: any, uri: any) => {
     return uriArray?.some((item: any) => item?.includes(uri));
@@ -367,3 +492,37 @@ export const invalidateQueries = (queryClient: any, queryKeys: any) => {
         queryClient.invalidateQueries(key);
     });
 };
+
+export const executeLinkInNewTab = (url: string, darkTheme: any) => {
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        displayToastify(
+            'URL is not provided or invalid',
+            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.ERROR,
+        );
+    }
+};
+
+export const generateRandomString = (length: any) => {
+    const bytes = new Uint8Array(length);
+    window.crypto.getRandomValues(bytes); // or `crypto.randomBytes(16)` in Node.js
+    return Array.from(
+        bytes,
+        (byte, index) =>
+            index === 0
+                ? (byte % 9) + 1 // First digit: 1-9 (byte % 9 → 0-8, +1 → 1-9)
+                : byte % 10, // Remaining digits: 0-9
+    ).join('');
+};
+
+export const trimTo8Chars = (str: string, lng:number) => {
+    if (str?.length <= lng) return str; // No trimming needed
+    return str?.slice(0, lng) + '...'; // Trim to 8 chars and add ellipsis
+};
+
+export function convertMsToMinutes(progress_ms: number): number {
+    const minutes = progress_ms / 1000 / 60;
+    return minutes;
+}

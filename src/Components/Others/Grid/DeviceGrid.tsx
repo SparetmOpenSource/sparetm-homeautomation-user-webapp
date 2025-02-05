@@ -5,10 +5,18 @@ import './Grid.css';
 import RgbGadget from './DeviceCard/RgbGadget';
 import NoData from '../NoData/NoData';
 import { useAppSelector } from '../../../Features/ReduxHooks';
-import { MdOutlineAddHomeWork } from 'react-icons/md';
+// import { MdOutlineAddHomeWork } from 'react-icons/md';
+// import { IconContext } from 'react-icons';
+// import { useEffect, useState } from 'react';
+// import { useTheme } from '../../../Pages/ThemeProvider';
+// import { dark_colors, light_colors } from '../../../Data/ColorConstant';
+import { PiDevicesDuotone } from "react-icons/pi";
 
 const DeviceGrid = () => {
     const location = useLocation();
+    // const [color, setColor] = useState<any>(light_colors);
+    // const darkTheme: any = useTheme();
+
     const deviceData = useAppSelector(
         (state: any) => state?.device?.deviceData,
     );
@@ -17,6 +25,10 @@ const DeviceGrid = () => {
     const roomType: any = location?.pathname
         ?.split('/')[3]
         ?.replace('%20', ' ');
+
+    // useEffect(() => {
+    //     darkTheme ? setColor(dark_colors) : setColor(light_colors);
+    // }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="grid-device">
@@ -27,10 +39,11 @@ const DeviceGrid = () => {
                 <section className="grid-device-data-not-available">
                     <NoData
                         item="device"
-                        message1="click on "
-                        onClickMessage={<MdOutlineAddHomeWork />}
-                        message2=" to add device"
-                        // fn={ }
+                        message1="click"
+                        onClickMessage={<PiDevicesDuotone/>}
+                        message2="to add device"
+                        fn={()=>onClick()}
+                        
                     />
                 </section>
             )}

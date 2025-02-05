@@ -25,9 +25,6 @@
     display: none;
 }
 
-/*    margin-bottom: 0.5em;
-} */
-
 .addDevice_submitForm-heading {
     width: auto !important;
     display: flex;
@@ -38,20 +35,21 @@
 
 .addDevice_submitForm_field_wrapper {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
 .addDevice_submitForm_field {
-    width: 100%;
+    width: 80%;
     padding: 1em;
     border-radius: 0.5rem;
     font-size: 1rem;
     line-height: 24px;
     transition: 0.1s all ease;
     margin: 0;
+    margin-bottom: 2rem;
     border: 3px solid grey;
 }
 
@@ -71,25 +69,4 @@
     font-size: 0.87rem;
     line-height: 21px;
     margin-top: 2rem;
-}
-
-.addDevice_submitForm_select {
-    width: 100%;
-    margin: 0;
-}
-
-.css-13cymwt-control {
-    border: 3px solid grey !important;
-    background-color: rgb(255, 255, 255) !important;
-    border-radius: 0.5rem !important;
-}
-
-:focus-visible {
-    background-color: rgb(255, 255, 255) !important;
-    color: black !important;
-}
-
-.css-1u9des2-indicatorSeparator {
-    background-color: rgba(0, 0, 0, 0) !important;
-
 }

@@ -3,6 +3,7 @@ import './NoData.css';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { useTheme } from '../../../Pages/ThemeProvider';
 import Error from './../../../Assets/Error.svg';
+import { CgSpaceBetween } from 'react-icons/cg';
 // import { useNavigate } from 'react-router-dom';
 
 const NoData = ({ item, fn, message1, onClickMessage, message2 }: any) => {
@@ -26,17 +27,17 @@ const NoData = ({ item, fn, message1, onClickMessage, message2 }: any) => {
             <h1 style={{ color: color?.icon }}>No {item} found!</h1>
             <p style={{ color: color?.icon }}>
                 {/* May be go{' '} */}
-                {message1}
+                {message1}{' '}
                 <span
-                    style={{ color: color?.button }}
+                    style={{ color: color?.button, display:'flex'}}
                     // onClick={() => navigate(-1)}
                     onClick={() => fn()}
                 >
                     {/* back */}
                     {onClickMessage}
-                </span>{' '}
+                </span>
                 {/* and try different keyword */}
-                {message2}
+                {' '}{message2}
             </p>
         </div>
     );

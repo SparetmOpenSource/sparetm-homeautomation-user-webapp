@@ -5,7 +5,6 @@ const initialState = {
     mqttUpdate: {},
     mqttNotification: {},
     deviceData: {},
-    mqttInstanceUrl: [],
     currentDevice: {},
 };
 
@@ -25,12 +24,6 @@ const deviceSlice = createSlice({
         },
         removeMqttNotification: (state) => {
             state.mqttNotification = {};
-        },
-        addMqttInstanceUrl: (state, action: PayloadAction<any>) => {
-            state.mqttInstanceUrl = action.payload;
-        },
-        removeMqttInstanceUrl: (state) => {
-            state.mqttInstanceUrl = [];
         },
         addDeviceData: (state, action: PayloadAction<any>) => {
             state.deviceData = action.payload;
@@ -52,8 +45,6 @@ export const {
     removeMqttUpdate,
     addMqttNotification,
     removeMqttNotification,
-    addMqttInstanceUrl,
-    removeMqttInstanceUrl,
     addDeviceData,
     removeDeviceData,
     addCurrentDevice,
