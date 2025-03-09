@@ -1,0 +1,76 @@
+.spotify-library-cover-wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    gap: 3.5rem;
+    padding: 2em;
+    grid-template-columns: repeat(auto-fit, 160px);
+    grid-template-rows: max-content;
+    overflow: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.spotify-library-cover-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.spotify-library-cover {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 160px;
+    height: 180px;
+    padding: 0.2em;
+    border-radius: 0.6em;
+    cursor: pointer;
+    -webkit-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    position: relative;
+}
+
+.spotify-library-cover > :first-child {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.4em;
+}
+
+.spotify-library-cover > :last-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 80%;
+    height: 45px;
+    position: absolute;
+    margin-bottom: 0.5rem;
+    border-radius: 0.3em;
+    padding: 0.5rem;
+}
+
+.spotify-library-cover > :last-child > :first-child {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spotify-library-cover > :last-child > :first-child h4,
+.spotify-library-cover > :last-child > :first-child p {
+    margin: 0;
+    padding: 0;
+}
+
+.spotify-library-cover > :last-child > :last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spotify-library-cover-img {
+    border-radius: 0.4rem;
+}

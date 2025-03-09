@@ -411,10 +411,6 @@
    
 }
 
-/* .home-opening_bounce_arrow_login {
-    text-decoration: none !important;
-} */
-
 @keyframes bounce {
 
     0%,
@@ -433,5 +429,3 @@
         transform: translateY(-12px);
     }
 }
-
-/* ******************** */

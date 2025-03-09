@@ -99,16 +99,28 @@ export const weather_quote_constant = {
 };
 
 export const spotify_refresh_playback_constant = {
-    fetch_delay_time: 3000, //1000 * 3 = 3000
+    play_back_fetch_delay_time: 3000, //1000 * 3 = 3000
+    queue_fetch_delay_time: 4000, //1000 * 3 = 3000
 };
 
-export let Current_Date_Time = new Date().toLocaleDateString('en-us', {
+// export let Current_Date_Time = new Date().toLocaleDateString('en-us', {
+//     weekday: 'long',
+//     year: 'numeric',
+//     month: 'short',
+//     day: 'numeric',
+// });
+
+export const Current_Date_Time = new Date().toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
     weekday: 'long',
     year: 'numeric',
     month: 'short',
     day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
 });
-
 // ----------------- profile config constant ------------------ //
 
 export const ProfileConfigTypography = {
@@ -277,6 +289,15 @@ export const FullScreenSize = ['100%', '100%'];
 
 export const socketUrlPostFix = '/api/v1/socket/data/update';
 export const toClientMqttSocketTopic = '/to/client/update/device/mqtt/data';
-export const toClientNotificationSocketTopic = '/to/client/update/notification/data';
+export const toClientNotificationSocketTopic =
+    '/to/client/update/notification/data';
 export const toServerSocketTopic = '/to/server/update/device/mqtt/data';
+
+
+export const spotifyToken = 'spotify_access_token';
+export const spotifyRefreshToken = 'spotify_refresh_token';
+export const spotifyCodeVerifier = 'code_verifier';
+export const spotifyTokenFetched = 'has_fetched_spotify_access_token';
+export const spotifyTokenFetchedTime = 'has_fetched_spotify_access_token_time';
+
 

@@ -1,131 +1,3 @@
-// import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-// import {
-//     ToggleDarkThemeContext,
-//     ThemeContext,
-//     ToggleBackDropContext,
-// } from '../Hooks/UseContext';
-// import { ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-// import { AnimatePresence } from 'framer-motion';
-// import WindowDrop from '../Components/Others/BackDrop/WindowDrop/WindowDrop';
-// import { FullScreenSize } from '../Data/Constants';
-// import { useActive } from '../Hooks/UseActive';
-// import PicFrame from '../Components/Others/PicFrame/PicFrame';
-// import { dark_colors, light_colors } from '../Data/ColorConstant';
-
-// export function useTheme() {
-//     return useContext(ThemeContext);
-// }
-
-// export function useThemeUpdate() {
-//     return useContext(ToggleDarkThemeContext);
-// }
-
-// export function useBackDropOpen() {
-//     return useContext(ToggleBackDropContext);
-// }
-
-// export function ThemeProvider({ children }: any) {
-//     const [darkTheme, setDarkTheme] = useState<any>(false);
-//     const [status, isActive] = useActive(2000, false);
-//     const [openBackDrop, setOpenBackDrop] = useState(false);
-//     const [openCustomBackDrop, setOpenCustomBackDrop] = useState(false);
-//     const [childForCustomBackDrop, setChildForCustomBackDrop] = useState<any>();
-//     const [sizeForCustomBackDrop, setSizeForCustomBackDrop] = useState<any>();
-//     const [themeColor, setThemeColor] = useState<any>(light_colors);
-
-//     const toggleTheme = useCallback(() => {
-//         localStorage.setItem('darkTheme', `${!darkTheme}`);
-//         setDarkTheme((p: boolean) => !p);
-//     }, [darkTheme]);
-
-//     const toggleBackDropOpen = () => {
-//         setOpenCustomBackDrop(true);
-//     };
-
-//     const toggleBackDropClose = () => {
-//         setOpenCustomBackDrop(false);
-//     };
-
-//     useEffect(() => {
-//         if (localStorage.getItem('darkTheme') === 'true') {
-//             setDarkTheme(true);
-//         } else {
-//             setDarkTheme(false);
-//         }
-//     }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-//     useEffect(() => {
-//         isActive
-//             ? status
-//                 ? setOpenBackDrop(false)
-//                 : setOpenBackDrop(true)
-//             : setOpenBackDrop(false);
-//     }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
-
-//     useEffect(() => {
-//         darkTheme ? setThemeColor(dark_colors) : setThemeColor(light_colors);
-//     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
-//     const backDropObj = useMemo(
-//         () => ({
-//             toggleBackDropOpen,
-//             toggleBackDropClose,
-//             setChildForCustomBackDrop,
-//             setSizeForCustomBackDrop,
-//         }),
-//         [],
-//     );
-
-//     return (
-//         <ToggleBackDropContext.Provider value={backDropObj}>
-//             <ThemeContext.Provider value={darkTheme}>
-//                 <ToggleDarkThemeContext.Provider value={toggleTheme}>
-//                     {children}
-//                 </ToggleDarkThemeContext.Provider>
-//             </ThemeContext.Provider>
-//             <ToastContainer />
-
-//             {/* ********** */}
-
-//             <AnimatePresence
-//                 initial={false}
-//                 exitBeforeEnter={true}
-//                 onExitComplete={() => null}
-//             >
-//                 {openBackDrop && (
-//                     <WindowDrop
-//                         background={themeColor?.button.replace(`)`, `,0.3)`)}
-//                         showButton={false}
-//                         size={FullScreenSize}
-//                         drag={false}
-//                     >
-//                         <PicFrame />
-//                     </WindowDrop>
-//                 )}
-//             </AnimatePresence>
-
-//             <AnimatePresence
-//                 initial={false}
-//                 exitBeforeEnter={true}
-//                 onExitComplete={() => null}
-//             >
-//                 {openCustomBackDrop && (
-//                     <WindowDrop
-//                         background={themeColor?.button.replace(`)`, `,0.3)`)}
-//                         showButton={true}
-//                         handleClose={toggleBackDropClose}
-//                         darkTheme={darkTheme}
-//                         size={sizeForCustomBackDrop}
-//                         drag={false}
-//                     >
-//                         {childForCustomBackDrop}
-//                     </WindowDrop>
-//                 )}
-//             </AnimatePresence>
-//         </ToggleBackDropContext.Provider>
-//     );
-// }
-
 import {
     useCallback,
     useContext,
@@ -248,11 +120,10 @@ const useBackDrop = (themeColors: any) => {
         sizeForCustomBackDrop,
         backDropActions,
         background:
-            themeColors.button?.replace(')', ',0.3)') || 'rgba(0,0,0,0.3)',
+            themeColors.button?.replace(')', ',0.3)') || 'rgba(0,0,0,0.3)', // backdrop background
     };
 };
 
-// Component implementation
 export function ThemeProvider({ children }: ThemeProviderProps) {
     const { darkTheme, toggleTheme, themeColors } = useThemeManagement();
     const {
@@ -273,7 +144,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
             </ThemeContext.Provider>
             <ToastContainer />
 
-            <BackDropWrapper isOpen={openBackDrop} background={background}>
+            <BackDropWrapper
+                isOpen={openBackDrop}
+                background={background}
+                darkTheme={darkTheme}
+            >
                 <PicFrame />
             </BackDropWrapper>
 
@@ -283,6 +158,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
                 showButton
                 size={sizeForCustomBackDrop}
                 handleClose={backDropActions.toggleBackDropClose}
+                darkTheme={darkTheme}
             >
                 {childForCustomBackDrop}
             </BackDropWrapper>
@@ -290,7 +166,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     );
 }
 
-// Reusable Backdrop component
 const BackDropWrapper = ({
     isOpen,
     children,
@@ -298,6 +173,7 @@ const BackDropWrapper = ({
     showButton = false,
     size = FullScreenSize,
     handleClose,
+    darkTheme,
 }: {
     isOpen: boolean;
     children: ReactNode;
@@ -305,6 +181,7 @@ const BackDropWrapper = ({
     showButton?: boolean;
     size?: any;
     handleClose?: () => void;
+    darkTheme: any;
 }) => (
     <AnimatePresence
         initial={false}
@@ -316,6 +193,7 @@ const BackDropWrapper = ({
                 background={background}
                 showButton={showButton}
                 handleClose={handleClose}
+                darkTheme={darkTheme}
                 size={size}
                 drag={false}
             >

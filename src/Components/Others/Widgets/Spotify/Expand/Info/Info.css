@@ -1,0 +1,86 @@
+.spotify-info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.spotify-info-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.spotify-info-wrapper > :first-child {
+    width: 100%;
+    height: 59%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.spotify-info-wrapper > :last-child {
+    width: 100%;
+    height: 39%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding-bottom: 0.5rem;
+    padding-left: 2rem;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.spotify-info-wrapper > :last-child span {
+    margin-bottom: 0.5rem;
+    width: 60%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spotify-info-wrapper > :last-child div {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 1rem;
+}
+
+.spotify-info-wrapper > :last-child::-webkit-scrollbar {
+    display: none;
+}
+
+/* ******************* */
+
+.spotify-info-wrapper > :first-child > :nth-child(2) {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.spotify-info-wrapper > :first-child > :nth-child(3) p {
+    padding: 0;
+    margin: 0;
+}
+
+/* ********** */
+
+.spotify-info-isLoading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.2rem;
+}
+

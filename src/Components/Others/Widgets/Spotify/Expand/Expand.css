@@ -1,0 +1,115 @@
+.spotify-expand {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 1.5rem;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    padding: 0.5rem;
+}
+
+.spotify-expand-content {
+    display: flex;
+    width: 100%;
+    height: 89%;
+    border-radius: 1rem;
+}
+
+.spotify-expand-nav {
+    display: flex;
+    width: 100%;
+    height: 10%;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 1rem;
+    /* -webkit-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75); */
+}
+
+.spotify-expand-nav span {
+    cursor: pointer;
+}
+
+/* **************** */
+
+.spotify-expand-error,
+.spotify-expand-isLoading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 1.5rem;
+}
+
+/* .weather_error span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+} */
+
+/* *********************** */
+
+.spotify_song_template_image {
+    border-radius: 0.3rem;
+}
+
+.spotify-song-template {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+    cursor: pointer;
+}
+
+.spotify-song-template > :first-child p,
+.spotify-song-template > :first-child div p,
+.spotify-song-template > :first-child div h1 {
+    padding: 0;
+    margin: 0;
+}
+
+.spotify-song-template > :first-child p {
+    width: 30px;
+}
+.spotify-song-template > :first-child div h1,
+.spotify-song-template > :first-child div p {
+    width: 200px;
+}
+
+.spotify-song-template > :last-child p,
+.spotify-song-template > :last-child h1 {
+    padding: 0;
+    margin: 0;
+}
+.spotify-song-template > :first-child {
+    width: 55%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.spotify-song-template > :last-child {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-right: 1rem;
+}

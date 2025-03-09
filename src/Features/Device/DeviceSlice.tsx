@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // initial state
 const initialState = {
-    mqttUpdate: {},
-    mqttNotification: {},
+    // mqttUpdate: {},
+    // mqttNotification: {},
     deviceData: {},
     currentDevice: {},
 };
@@ -13,18 +13,18 @@ const deviceSlice = createSlice({
     name: 'device',
     initialState,
     reducers: {
-        addMqttUpdate: (state, action: PayloadAction<any>) => {
-            state.mqttUpdate = action.payload;
-        },
-        removeMqttUpdate: (state) => {
-            state.mqttUpdate = {};
-        },
-        addMqttNotification: (state, action: PayloadAction<any>) => {
-            state.mqttNotification = action.payload;
-        },
-        removeMqttNotification: (state) => {
-            state.mqttNotification = {};
-        },
+        // addMqttUpdate: (state, action: PayloadAction<any>) => {
+        //     state.mqttUpdate = action.payload;
+        // },
+        // removeMqttUpdate: (state) => {
+        //     state.mqttUpdate = {};
+        // },
+        // addMqttNotification: (state, action: PayloadAction<any>) => {
+        //     state.mqttNotification = action.payload;
+        // },
+        // removeMqttNotification: (state) => {
+        //     state.mqttNotification = {};
+        // },
         addDeviceData: (state, action: PayloadAction<any>) => {
             state.deviceData = action.payload;
         },
@@ -41,10 +41,10 @@ const deviceSlice = createSlice({
 });
 
 export const {
-    addMqttUpdate,
-    removeMqttUpdate,
-    addMqttNotification,
-    removeMqttNotification,
+    // addMqttUpdate,
+    // removeMqttUpdate,
+    // addMqttNotification,
+    // removeMqttNotification,
     addDeviceData,
     removeDeviceData,
     addCurrentDevice,

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { api, postHeaderConfig, getHeaderConfig } from './Axios';
+import { api, getHeaderConfig, updateHeaderConfig } from './Axios';
 import { weather_quote_constant } from '../Data/Constants';
 import { catchError } from '../Utils/HelperFn';
 
@@ -21,6 +21,8 @@ export const featureUrl = {
     update_all_device_status: `/mda/api/v1/devices/all/status?admin=`,
     update_device_data_store: `/mda/api/v1/devices/data?id=`,
     delete_device_data_store: `/mda/api/v1/devices/data/remove?id=`,
+    spotify_base_url: `/mpa/api/v1/profiles/spotify`,
+    spotify_current_user_url:`https://api.spotify.com/v1/me`,
 };
 
 //NEW//
@@ -126,7 +128,7 @@ export const useDeleteTodo = (on_Error: any, closeDeleteTodo: any) => {
         (todoId) => {
             return api.delete(
                 featureUrl.del_todo_list + todoId,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -148,7 +150,7 @@ export const useAddTodo = (profileId: any, on_Error: any, closeFn: any) => {
             return api.post(
                 featureUrl.add_todo_list + profileId,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -170,7 +172,7 @@ export const useUpdateTodo = (todoId: any, on_Error: any, handleClose: any) => {
             return api.patch(
                 featureUrl.update_todo_list + todoId,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -197,7 +199,7 @@ export const useAddDevice = (
             return api.post(
                 `${featureUrl.add_device}${admin}&profilename=${profileName}`,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -240,7 +242,7 @@ export const useUpdateDevice = (
             return api.patch(
                 `${featureUrl.update_device}${admin}&profilename=${profileName}&roomtype=${roomType}&id=${id}`,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -268,7 +270,7 @@ export const useUpdateDeviceStatus = (
             return api.patch(
                 `${featureUrl.update_device}${admin}&profilename=${profileName}&roomtype=${roomType}&id=${id}`,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -318,7 +320,7 @@ export const useUpdateAllDeviceStatusWidget = (
             return api.patch(
                 `${featureUrl.update_all_device_status}${admin}&profilename=${profileName}&roomtype=${roomType}`,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -339,7 +341,7 @@ export const useUpdateDeviceStoreData = (deviceId: any, on_Error: any) => {
             return api.patch(
                 featureUrl.update_device_data_store + deviceId,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -360,7 +362,7 @@ export const useDeleteDeviceStoreData = (deviceId: any, on_Error: any) => {
             return api.patch(
                 featureUrl.delete_device_data_store + deviceId,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -385,7 +387,7 @@ export const useDeleteDevice = (
         (deviceId) => {
             return api.delete(
                 `${featureUrl.del_device}${deviceId}&admin=${admin}&profilename=${profileName}`,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {

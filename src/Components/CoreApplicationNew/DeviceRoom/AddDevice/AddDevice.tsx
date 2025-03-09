@@ -5,15 +5,21 @@ import { useForm } from 'react-hook-form';
 import Button from '../../../Others/CustomButton/Button';
 import Select from '../../../Others/Select/Select';
 import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
-import { catchError, displayToastify, invalidateQueries } from '../../../../Utils/HelperFn';
+import {
+    catchError,
+    displayToastify,
+    invalidateQueries,
+} from '../../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
-import { useUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
+// import { useUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import { useAppSelector } from '../../../../Features/ReduxHooks';
 import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../Data/QueryConstant';
 import { useQueryClient } from 'react-query';
+import { usePostUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
+import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 
-const AddDevice = ({ darkTheme, roomType, toggleBackDropClose}: any) => {
-   const queryClient = useQueryClient();
+const AddDevice = ({ darkTheme, roomType, toggleBackDropClose }: any) => {
+    const queryClient = useQueryClient();
     const [color, setColor] = useState<any>(light_colors);
     const [type, setType] = useState<any>();
     const heading = 'Enter your device name and type';
@@ -32,7 +38,7 @@ const AddDevice = ({ darkTheme, roomType, toggleBackDropClose}: any) => {
     const on_Success = () => {
         toggleBackDropClose();
         displayToastify(
-            "Device added",
+            'Device added',
             !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
             TOASTIFYSTATE.SUCCESS,
         );
@@ -45,24 +51,21 @@ const AddDevice = ({ darkTheme, roomType, toggleBackDropClose}: any) => {
         catchError(error, darkTheme);
     };
 
-    const { mutate } = useUpdateData(
+    const { mutate } = usePostUpdateData(
         `${featureUrl?.add_device}${admin}&profilename=${profile}`,
+        updateHeaderConfig,
         on_Success,
         on_Error,
     );
 
     const onSubmitForm = (data: any) => {
-        if(type !== "null"){
-            Object.assign(
-                data,
-                { deviceType: type},
-                { roomType: roomType},
-            );
-            mutate(data)
-        }else{
+        if (type !== 'null') {
+            Object.assign(data, { deviceType: type }, { roomType: roomType });
+            mutate(data);
+        } else {
             toggleBackDropClose();
             displayToastify(
-                "Type missing!",
+                'Type missing!',
                 !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
                 TOASTIFYSTATE.ERROR,
             );
@@ -113,16 +116,16 @@ const AddDevice = ({ darkTheme, roomType, toggleBackDropClose}: any) => {
                         </p>
                     )}
                 </section>
-                <Select darkTheme={darkTheme} setType={setType}/>
+                <Select darkTheme={darkTheme} setType={setType} />
                 <Button
-                            label="Add"
-                            textCol={color?.button}
-                            backCol={color?.element}
-                            backColOnDis={color?.element}
-                            width="150px"
-                            status={false}
-                            border={color?.button}
-                        />
+                    label="Add"
+                    textCol={color?.button}
+                    backCol={color?.element}
+                    backColOnDis={color?.element}
+                    width="150px"
+                    status={false}
+                    border={color?.button}
+                />
             </form>
         </div>
     );

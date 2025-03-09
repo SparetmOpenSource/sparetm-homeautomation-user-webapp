@@ -4,7 +4,15 @@ import { TbCircleDashed } from 'react-icons/tb';
 import { BsMusicPlayerFill } from 'react-icons/bs';
 import { GiCeilingLight } from 'react-icons/gi';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
-import { NETWORKERRORKEY, RoutePath } from '../Data/Constants';
+import {
+    NETWORKERRORKEY,
+    RoutePath,
+    spotifyCodeVerifier,
+    spotifyRefreshToken,
+    spotifyToken,
+    spotifyTokenFetched,
+    spotifyTokenFetchedTime,
+} from '../Data/Constants';
 import { GiBoatPropeller } from 'react-icons/gi';
 import { GiWashingMachine } from 'react-icons/gi';
 import { TbMicrowave } from 'react-icons/tb';
@@ -441,6 +449,36 @@ export const reloadPage = () => {
     window.location.reload();
 };
 
+export const defaultOnSuccess = () => {};
+export const defaultOnError = () => {};
+
+export function getOffsetAndLimit(
+    pageNumber: number,
+    recordsPerPage: number = 10,
+): { offset: number; limit: number } {
+    if (pageNumber < 1) {
+        throw new Error('Page number must be greater than or equal to 1.');
+    }
+    if (recordsPerPage < 1) {
+        throw new Error('Records per page must be greater than or equal to 1.');
+    }
+    const offset = (pageNumber - 1) * recordsPerPage;
+    const limit = recordsPerPage;
+    return { offset, limit };
+}
+
+export const resetSpotify = () => {
+    localStorage.removeItem(spotifyToken);
+    localStorage.removeItem(spotifyRefreshToken);
+    sessionStorage.removeItem(spotifyCodeVerifier);
+    localStorage.removeItem(spotifyTokenFetched);
+    localStorage.removeItem(spotifyTokenFetchedTime);
+};
+
+export const spotifyLogout = () => {
+    resetSpotify();
+};
+
 export const navigateTo = (navigate: any, to: any) => {
     navigate(to);
 };
@@ -496,6 +534,7 @@ export const invalidateQueries = (queryClient: any, queryKeys: any) => {
 export const executeLinkInNewTab = (url: string, darkTheme: any) => {
     if (url) {
         window.open(url, '_blank');
+        // window.open(url, '_self');
     } else {
         displayToastify(
             'URL is not provided or invalid',
@@ -505,19 +544,38 @@ export const executeLinkInNewTab = (url: string, darkTheme: any) => {
     }
 };
 
-export const generateRandomString = (length: any) => {
-    const bytes = new Uint8Array(length);
-    window.crypto.getRandomValues(bytes); // or `crypto.randomBytes(16)` in Node.js
-    return Array.from(
-        bytes,
-        (byte, index) =>
-            index === 0
-                ? (byte % 9) + 1 // First digit: 1-9 (byte % 9 → 0-8, +1 → 1-9)
-                : byte % 10, // Remaining digits: 0-9
-    ).join('');
+export const generateCodeChallenge = async () => {
+    const generateRandomString = (length: number) => {
+        const possible =
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const values = crypto.getRandomValues(new Uint8Array(length));
+        return values.reduce(
+            (acc, x) => acc + possible[x % possible.length],
+            '',
+        );
+    };
+
+    const sha256 = async (plain: string) => {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(plain);
+        return window.crypto.subtle.digest('SHA-256', data);
+    };
+
+    const base64encode = (input: ArrayBuffer) => {
+        return btoa(String.fromCharCode(...new Uint8Array(input)))
+            .replace(/=/g, '')
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_');
+    };
+
+    const codeVerifier = generateRandomString(64);
+    const hashed = await sha256(codeVerifier);
+    const codeChallenge = base64encode(hashed);
+
+    return { codeVerifier, codeChallenge };
 };
 
-export const trimTo8Chars = (str: string, lng:number) => {
+export const trimTo8Chars = (str: string, lng: number) => {
     if (str?.length <= lng) return str; // No trimming needed
     return str?.slice(0, lng) + '...'; // Trim to 8 chars and add ellipsis
 };
@@ -526,3 +584,12 @@ export function convertMsToMinutes(progress_ms: number): number {
     const minutes = progress_ms / 1000 / 60;
     return minutes;
 }
+
+export const formatTime = (time: any) => {
+    if (!time) return '0:00';
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60)
+        .toString()
+        .padStart(2, '0');
+    return `${minutes}:${seconds}`;
+};

@@ -13,6 +13,8 @@ import { useReactQuery_Get } from '../../../Api.tsx/useReactQuery_Get';
 import { catchError, displayToastify } from '../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 import {
+    cityCountryState_headers,
+    CountryStateCityApiKey,
     getCityList,
     getCountryList,
     getStateList,
@@ -26,8 +28,10 @@ import {
     SELECT_COUNTRY_LIST_QUERY_ID,
     SELECT_STATE_LIST_QUERY_ID,
 } from '../../../Data/QueryConstant';
+import { updateHeaderConfig } from '../../../Api.tsx/Axios';
+import { usePostUpdateData } from '../../../Api.tsx/useReactQuery_Update';
 // import { useColorNotification } from '../../../App';
-import { useUpdateData } from '../../../Api.tsx/useReactQuery_Update';
+// import { useUpdateData } from '../../../Api.tsx/useReactQuery_Update';
 
 const Add = () => {
     const roomCount = 6;
@@ -49,12 +53,6 @@ const Add = () => {
     const citySelectInputRef: any = useRef();
     // const handleColorNotificationChange = useColorNotification();
 
-    const cityCountryState_headers = {
-        headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${tokenData}`,
-        },
-    };
     const on_City_Error = (error: any) => {
         displayToastify(
             error?.message,
@@ -78,15 +76,12 @@ const Add = () => {
     };
     const on_City_Success = () => {};
     const on_State_Success = () => {};
-    const on_Country_Success = () => {};
+
     const cityFn = () => {
         return getCityList(cityCountryState_headers, state, darkTheme);
     };
     const stateFn = () => {
         return getStateList(cityCountryState_headers, country, darkTheme);
-    };
-    const countryFn = () => {
-        return getCountryList(cityCountryState_headers, darkTheme);
     };
 
     // const { data: selectedCityList, refetch: fetchCity } = useReactQuery_Get(
@@ -115,19 +110,6 @@ const Add = () => {
     //     300000, // Cache time
     //     0, // Stale Time
     // );
-    // const { data: selectedCountryList } = useReactQuery_Get(
-    //     SELECT_COUNTRY_LIST_QUERY_ID,
-    //     countryFn,
-    //     on_Country_Success,
-    //     on_Country_Error,
-    //     true, // !fetch_On_Click_Status
-    //     true, // refetch_On_Mount
-    //     false, // refetch_On_Window_Focus
-    //     false, // refetch_Interval
-    //     false, // refetch_Interval_In_Background
-    //     300000, // Cache time
-    //     0, // Stale Time
-    // );
 
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
@@ -138,7 +120,8 @@ const Add = () => {
     };
 
     var addCityData = (el: any) => {
-        setCity(el?.city_name);
+        //setCity(el?.name);
+        console.log('city name::' + el?.name);
     };
     var addStateData = (el: any) => {
         setState(el?.state_name);
@@ -167,8 +150,9 @@ const Add = () => {
         catchError(error, darkTheme);
     };
 
-    const { mutate } = useUpdateData(
+    const { mutate } = usePostUpdateData(
         `${profileUrl.add_profile} ${admin}`,
+        updateHeaderConfig,
         on_AddProfile_Success,
         on_AddProfile_Error,
     );
@@ -237,15 +221,15 @@ const Add = () => {
         }
     }, [country]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    useEffect(() => {
-        if (state !== undefined) {
-            // fetchCity();
-        }
-    }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     if (state !== undefined) {
+    //         fetchCity();
+    //     }
+    // }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const selectorList: Record<string, any> = [
         {
-            id: 3,
+            id: 1,
             formFormat: 'Selection',
             isMulti: true,
             label: 'select room type*',
@@ -256,18 +240,18 @@ const Add = () => {
             resetRef: roomSelectInputRef,
         },
         {
-            id: 4,
+            id: 2,
             formFormat: 'Selection',
             isMulti: false,
             label: 'select your country*',
             optionType: 'api',
             keyName: 'country_name',
-            // option: selectedCountryList?.data,
+            option: {},
             onChangeFn: addCountryData,
             resetRef: countrySelectInputRef,
         },
         {
-            id: 5,
+            id: 3,
             formFormat: 'Selection',
             isMulti: false,
             label: 'select your state*',
@@ -278,7 +262,7 @@ const Add = () => {
             resetRef: stateSelectInputRef,
         },
         {
-            id: 6,
+            id: 4,
             formFormat: 'Selection',
             isMulti: false,
             label: 'select your city*',

@@ -1,34 +1,81 @@
 import './Spotify.css';
 import { IconContext } from 'react-icons';
 import { FaSpotify } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { useTheme } from '../../../../Pages/ThemeProvider';
 import { motion } from 'framer-motion';
 import Button from '../../CustomButton/Button';
-import { executeLinkInNewTab } from '../../../../Utils/HelperFn';
-import { loginEndpointForSpotify } from '../../../../Api.tsx/Spotify/Api';
 import { SpotifyActive } from './SpotifyActive';
+import { profileUrl } from '../../../../Api.tsx/ProfileConfigApis';
+import { handleLogin } from '../../../../Api.tsx/Spotify/Api';
+import {
+    Current_Date_Time,
+    spotifyCodeVerifier,
+    spotifyRefreshToken,
+    spotifyToken,
+    spotifyTokenFetched,
+    spotifyTokenFetchedTime,
+} from '../../../../Data/Constants';
+import { usePostUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
+import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 
-const Spotify = () => {
-    const [token, setToken] = useState<any>('');
+const Spotify = ({ handleRefresh }: any) => {
     const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
+    const hasFetched = useRef(false);
 
-    useEffect(() => {
-        const token = window.localStorage.getItem('spotify_token');
-        const hash = window.location.hash;
-        window.location.hash = '';
-        if (!token && hash) {
-            const _token = hash.split('&')[0].split('=')[1];
-            if (_token) {
-                window.localStorage.setItem('spotify_token', _token);
-                setToken(_token);
-            }
-        } else if (token) {
-            setToken(token);
+    const on_success = (data: any) => {
+        if (
+            data?.data?.body?.access_token !== undefined &&
+            data?.data?.body?.refresh_token !== undefined
+        ) {
+            localStorage.setItem(spotifyToken, data?.data?.body?.access_token);
+            localStorage.setItem(
+                spotifyRefreshToken,
+                data?.data?.body?.refresh_token,
+            );
+            localStorage.setItem(spotifyTokenFetched, 'true');
+            localStorage.setItem(
+                spotifyTokenFetchedTime,
+                `${Current_Date_Time}`,
+            );
+            handleRefresh();
         }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    };
+
+    const on_error = () => {};
+
+    const { mutate: callForAccessToken } = usePostUpdateData(
+        `${profileUrl.get_spotify_access_token}`,
+        updateHeaderConfig,
+        on_success,
+        on_error,
+    );
+
+    const { mutate: callForAccessTokenByRefreshToken } = usePostUpdateData(
+        `${profileUrl.get_spotify_refresh_access_token}`,
+        updateHeaderConfig,
+        on_success,
+        on_error,
+    );
+
+    console.log('spotify re-render');
+
+    // prevent this to run over handleRefresh();
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        // Check if the data has already been fetched by checking localStorage
+        const hasFetchedSpotifyData = localStorage.getItem(spotifyTokenFetched);
+
+        if (code && !hasFetched.current && !hasFetchedSpotifyData) {
+            const codeVerifier = sessionStorage.getItem(spotifyCodeVerifier);
+            callForAccessToken({ code, codeVerifier });
+            hasFetched.current = true;
+        }
+    }, [callForAccessToken]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
@@ -39,7 +86,7 @@ const Spotify = () => {
             className="spotify"
             style={{ backgroundColor: color?.element }}
         >
-            {!token && (
+            {!localStorage.getItem(spotifyToken) && (
                 <div
                     style={{
                         display: 'flex',
@@ -48,7 +95,7 @@ const Spotify = () => {
                         width: '100%',
                         height: '100%',
                         backgroundColor: color?.outer,
-                        borderRadius: '1.5rem',
+                        borderRadius: '1rem',
                     }}
                 >
                     <span
@@ -79,22 +126,25 @@ const Spotify = () => {
                         </p>
                     </span>
                     <Button
-                        label="Login"
+                        label="Login with Spotify"
                         textCol={color?.text}
-                        backCol={color?.button}
-                        width="150px"
-                        fn={() =>
-                            executeLinkInNewTab(
-                                loginEndpointForSpotify,
-                                darkTheme,
-                            )
-                        }
+                        backCol={`${color?.button.split(')')[0]},0.6)`}
+                        width="200px"
+                        fn={() => handleLogin()}
                         status={false}
                         border={color?.element}
                     />
                 </div>
             )}
-            {token && <SpotifyActive darkTheme={darkTheme} token={token} />}
+            {localStorage.getItem(spotifyToken) && (
+                <SpotifyActive
+                    handleRefresh={handleRefresh}
+                    darkTheme={darkTheme}
+                    callForAccessTokenByRefreshToken={
+                        callForAccessTokenByRefreshToken
+                    }
+                />
+            )}
         </motion.div>
     );
 };

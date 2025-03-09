@@ -17,9 +17,8 @@ import {
     SelectProfile,
     Setting,
     SignInSignUp,
-} from './GlobalRoutesPagesNew';
+} from './GlobalRoutePages';
 
-// Route Configuration
 const routes = [
     {
         path: RoutePath.Home,
@@ -158,13 +157,13 @@ const routes = [
 ];
 
 const renderRoutes = (routes: any) => {
-    return routes.map((route: any, index: any) => {
+    return routes.map((route: any) => {
         const { path, element, children, isPublic } = route;
         const RouteElement = isPublic ? PublicRoute : ProtectedRoute;
 
         return (
             <Route
-                key={index}
+                key={path}
                 path={path}
                 element={<RouteElement>{element}</RouteElement>}
             >
@@ -174,7 +173,7 @@ const renderRoutes = (routes: any) => {
     });
 };
 
-export const GlobalRoutesNew = () => {
+export const GlobalRoutes = () => {
     return (
         <Suspense fallback={<LoadingFade />}>
             <Routes>{renderRoutes(routes)}</Routes>

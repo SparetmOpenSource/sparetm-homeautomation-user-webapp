@@ -6,6 +6,15 @@ import { useTheme } from '../../../../Pages/ThemeProvider';
 import makeAnimated from 'react-select/animated';
 import Select, { createFilter } from 'react-select';
 import TextBlinkAnimation from '../../../Others/TextBlinkAnimation/TextBlinkAnimation';
+import { useReactQuery_Get } from '../../../../Api.tsx/useReactQuery_Get';
+import { SELECT_COUNTRY_LIST_QUERY_ID } from '../../../../Data/QueryConstant';
+import {
+    cityCountryState_headers,
+    CountryStateCityApiKey,
+    getCountryList,
+} from '../../../../Api.tsx/ProfileConfigApis';
+import { displayToastify } from '../../../../Utils/HelperFn';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 
 const Selector = ({ heading, list, btnLabel, submit, setFormChange }: any) => {
     const [color, setColor] = useState<any>(light_colors);
@@ -62,6 +71,35 @@ const Selector = ({ heading, list, btnLabel, submit, setFormChange }: any) => {
         }),
     };
 
+    const countryFn = () => {
+        return getCountryList(cityCountryState_headers, darkTheme);
+    };
+
+    const on_Country_Success = (data:any) => {
+        console.log(data);
+    };
+    const on_Country_Error = (error: any) => {
+        displayToastify(
+            error?.message,
+            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.ERROR,
+        );
+    };
+
+    const { data: countryList } = useReactQuery_Get(
+        SELECT_COUNTRY_LIST_QUERY_ID,
+        countryFn,
+        on_Country_Success,
+        on_Country_Error,
+        true, // !fetch_On_Click_Status
+        true, // refetch_On_Mount
+        false, // refetch_On_Window_Focus
+        false, // refetch_Interval
+        false, // refetch_Interval_In_Background
+        300000, // Cache time
+        0, // Stale Time
+    );
+
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -114,7 +152,7 @@ const Selector = ({ heading, list, btnLabel, submit, setFormChange }: any) => {
                         placeholder={list[1]?.label}
                         getOptionLabel={(e) => (e as any)?.[list[1]?.keyName]}
                         getOptionValue={(e) => (e as any)?.[list[1]?.keyName]}
-                        options={list[1]?.option}
+                        options={countryList?.data}
                         onChange={list[1]?.onChangeFn}
                         filterOption={createFilter(filterConfig)}
                         styles={SelectStyles}

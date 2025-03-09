@@ -11,7 +11,8 @@ import { useTheme } from '../../../../Pages/ThemeProvider';
 
 function WidgetCarousel() {
     const [color, setColor] = useState<any>(light_colors);
-    // const [refreshWidget, setRefreshWidget] = useState<number>(0);
+    const [refreshWidget, setRefreshWidget] = useState<boolean>(false);
+    //const [keyProp, setKeyProp] = useState(0);
     const darkTheme: any = useTheme();
     const listRef = useRef<HTMLUListElement | null>(null);
     const itemRef = useRef<HTMLLIElement | null>(null);
@@ -26,10 +27,16 @@ function WidgetCarousel() {
             });
         }
     };
+
+    const handleRefresh = () => {
+        // Update the state to trigger a re-render
+        setRefreshWidget((prevKey) => !prevKey);
+    };
+
     const WidgetList = [
         {
             id: 1,
-            el: <Spotify />,
+            el: <Spotify key={refreshWidget} handleRefresh={handleRefresh} />,
             ref: { itemRef },
         },
         {
@@ -43,6 +50,7 @@ function WidgetCarousel() {
             ref: {},
         },
     ];
+
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps

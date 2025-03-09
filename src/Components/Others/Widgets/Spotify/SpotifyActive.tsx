@@ -1,32 +1,31 @@
 import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { RiNeteaseCloudMusicLine } from 'react-icons/ri';
-import {
-    catchError,
-    convertMsToMinutes,
-    displayToastify,
-    trimTo8Chars,
-} from '../../../../Utils/HelperFn';
+import { catchError, trimTo8Chars } from '../../../../Utils/HelperFn';
 import { motion } from 'framer-motion';
-import Expand from './Expand';
+import Expand from './Expand/Expand';
 import {
     HorizontalSize,
     spotify_refresh_playback_constant,
 } from '../../../../Data/Constants';
 import { FaSpotify } from 'react-icons/fa';
-import { IoPauseCircleOutline, IoPlayCircleOutline } from 'react-icons/io5';
 import { useBackDropOpen } from '../../../../Pages/ThemeProvider';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { getPlaybackState } from '../../../../Api.tsx/Spotify/Api';
 import { useReactQuery_Get } from '../../../../Api.tsx/useReactQuery_Get';
 import { GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID } from '../../../../Data/QueryConstant';
-import { VscRefresh } from 'react-icons/vsc';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import './Spotify.css';
+import AudioProgressBar from '../../Slide/AudioProgressBar/AudioProgressBar';
 
-export const SpotifyActive = ({ darkTheme, token }: any) => {
+export const SpotifyActive = ({
+    handleRefresh,
+    darkTheme,
+    // token,
+    callForAccessTokenByRefreshToken,
+}: any) => {
     const [play, setPlay] = useState<boolean>(false);
-    const [currentPlayingSong, setCurrentPlayingSong] = useState<string>('');
+    // const [currentPlayingSong, setCurrentPlayingSong] = useState<string>('');
+    const [progress, setProgress] = useState(0);
     // const [playBackStatus, setPlayBackStatus] = useState<boolean>(false);
     const [color, setColor] = useState<any>(light_colors);
     const [refreshOnClick, setRefreshOnClick] = useState<boolean>(true);
@@ -49,6 +48,7 @@ export const SpotifyActive = ({ darkTheme, token }: any) => {
 
     const {
         toggleBackDropOpen,
+        // toggleBackDropClose,
         setChildForCustomBackDrop,
         setSizeForCustomBackDrop,
     } = useBackDropOpen();
@@ -59,35 +59,42 @@ export const SpotifyActive = ({ darkTheme, token }: any) => {
 
     useEffect(() => {
         setPlay((prev) => !prev);
-    }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const playbackStateFn = () => {
-        return getPlaybackState(token);
+        const token = localStorage.getItem('spotify_access_token');
+        return getPlaybackState(
+            darkTheme,
+            callForAccessTokenByRefreshToken,
+            token,
+        );
     };
 
-    const refreshStateFn = () => {
-        if (!refreshOnClick) {
-            // if (!refreshOnClick && autoTrigger) {
-            displayToastify(
-                `Refresh dissabled`,
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.INFO,
-            );
-        } else {
-            displayToastify(
-                `Refreshed`,
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.INFO,
-            );
-        }
-        // setPlayBackStatus(refreshOnClick);
-    };
+    // const refreshStateFn = () => {
+    //     handleRefresh();
+    //     // if (!refreshOnClick) {
+    //     //     // if (!refreshOnClick && autoTrigger) {
+    //     //     displayToastify(
+    //     //         `Refresh dissabled`,
+    //     //         darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
+    //     //         TOASTIFYSTATE.INFO,
+    //     //     );
+    //     // } else {
+    //     //     displayToastify(
+    //     //         `Refreshed`,
+    //     //         darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
+    //     //         TOASTIFYSTATE.INFO,
+    //     //     );
+    //     // }
+    //     // setPlayBackStatus(refreshOnClick);
+    // };
 
     const on_Success = (data: any) => {
-        setCurrentPlayingSong(data?.item?.name);
-        console.log(data);
+        // setCurrentPlayingSong(data?.body?.item?.name);
+        //console.log(data);
         // setPlayBackStatus(false);
         setPlay(data?.is_playing);
+        console.log('not expand');
     };
 
     const on_Error = (error: any) => {
@@ -115,21 +122,35 @@ export const SpotifyActive = ({ darkTheme, token }: any) => {
         true, //playBackStatus, //true, // !fetch_On_Click_Status
         true, // refetch_On_Mount
         false, // refetch_On_Window_Focus
-        spotify_refresh_playback_constant.fetch_delay_time, //false, // refetch_Interval
+        spotify_refresh_playback_constant.play_back_fetch_delay_time, //false, // refetch_Interval
         false, // refetch_Interval_In_Background
         300000, // Cache time
         0, // Stale Time
     );
 
+    useEffect(() => {
+        setProgress(data?.body?.progress_ms);
+    }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         setProgress((prev) =>
+    //             Math.min(prev + 1000, data?.body?.item?.duration_ms),
+    //         ); // Simulate progress update every second
+    //     }, 1000);
+
+    //     return () => clearInterval(interval); // Cleanup on unmount
+    // }, []);
+
     return (
         <div className="spotify_container">
             <motion.span
-                whileHover={{ scale: 0.95 }}
-                whileTap={{ scale: 0.85 }}
-                onClick={() => refreshStateFn()}
+                // whileHover={{ scale: 0.95 }}
+                // whileTap={{ scale: 0.85 }}
+                // onClick={() => refreshStateFn()}
                 style={{ backgroundColor: color?.outer }}
             >
-                {data === undefined && (
+                {(data === null || data === undefined) && (
                     <IconContext.Provider
                         value={{
                             size: '6em',
@@ -139,10 +160,10 @@ export const SpotifyActive = ({ darkTheme, token }: any) => {
                         <RiNeteaseCloudMusicLine />
                     </IconContext.Provider>
                 )}
-                {data !== undefined && (
+                {data !== null && data !== undefined && (
                     <img
                         className="spotify_song_image"
-                        src={data?.item?.album?.images[0]?.url}
+                        src={data?.body?.item?.album?.images[0]?.url}
                         height="95%"
                         width="95%"
                         loading="lazy"
@@ -152,65 +173,59 @@ export const SpotifyActive = ({ darkTheme, token }: any) => {
             </motion.span>
             <span>
                 <div>
-                    {data !== undefined && (
+                    {data !== null && data !== undefined && (
                         <section>
                             <h1 style={{ color: color?.text }}>
-                                {trimTo8Chars(currentPlayingSong, 10)}
+                                {/* {trimTo8Chars(currentPlayingSong, 10)} */}
+                                {trimTo8Chars(data?.body?.item?.name, 10)}
                             </h1>
                             <p style={{ color: color?.icon_font }}>
                                 {trimTo8Chars(
-                                    data?.item?.album?.artists[0]?.name,
+                                    data?.body?.item?.album?.artists[0]?.name,
                                     12,
                                 )}
                             </p>
-                            {data !== undefined && (
-                                <p
-                                    // className="spotify_song_progress"
+                            <p
+                                style={{
+                                    color: color?.success,
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                album:
+                                <span
                                     style={{
-                                        color: color?.button,
+                                        color: color?.icon_font,
                                     }}
                                 >
-                                    {convertMsToMinutes(
-                                        data?.progress_ms,
-                                    ).toFixed(2)}
-                                    <span
-                                        style={{
-                                            color: color?.success,
-                                            fontWeight: 'bold',
-                                        }}
-                                    >
-                                        {' '}
-                                        /{' '}
-                                    </span>
-                                    {convertMsToMinutes(
-                                        data?.item?.duration_ms,
-                                    ).toFixed(2)}
-                                </p>
-                            )}
+                                    {' '}
+                                    {trimTo8Chars(
+                                        data?.body?.item?.album?.name,
+                                        12,
+                                    )}
+                                </span>
+                            </p>
                         </section>
                     )}
-                    {data === undefined && (
+                    {(data === null || data === undefined) && (
                         <p
                             style={{
                                 color: color?.error,
                             }}
                         >
-                            No playback device found !
+                            {data === null
+                                ? 'No playback device found !'
+                                : 'An unexpected error occurred !'}
                         </p>
                     )}
-                    {data !== undefined && (
+                    {data !== null && data !== undefined && (
                         <section>
-                            <h2
-                                style={{
-                                    marginTop: '1.5rem',
-                                    fontSize: '1rem',
-                                    color: color?.success,
-                                }}
-                            >
-                                Next
-                            </h2>
-                            <h1 style={{ color: color?.text }}>God's Plan</h1>
-                            {/* <p style={{ color: color?.icon_font }}>Drake</p> */}
+                            <AudioProgressBar
+                                totalTimeMs={data?.body?.item?.duration_ms}
+                                progressTimeMs={progress}
+                                onSeek={(newTime: any) => setProgress(newTime)}
+                                currentPlaybackData={data}
+                                darkTheme={darkTheme}
+                            />
                         </section>
                     )}
                 </div>
@@ -221,7 +236,14 @@ export const SpotifyActive = ({ darkTheme, token }: any) => {
                         onClick={() => {
                             toggleBackDropOpen();
                             setChildForCustomBackDrop(
-                                <Expand darkTheme={darkTheme} />,
+                                <Expand
+                                    callForAccessTokenByRefreshToken={
+                                        callForAccessTokenByRefreshToken
+                                    }
+                                    darkTheme={darkTheme}
+                                    handleRefresh={handleRefresh}
+                                    // toggleBackDropClose={toggleBackDropClose}
+                                />,
                             );
                             setSizeForCustomBackDrop(HorizontalSize);
                         }}
@@ -235,7 +257,7 @@ export const SpotifyActive = ({ darkTheme, token }: any) => {
                             <FaSpotify />
                         </IconContext.Provider>
                     </motion.span>
-                    <motion.span
+                    {/* <motion.span
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => pausePlay()}
@@ -252,7 +274,7 @@ export const SpotifyActive = ({ darkTheme, token }: any) => {
                                 <IoPlayCircleOutline />
                             )}
                         </IconContext.Provider>
-                    </motion.span>
+                    </motion.span> */}
                 </div>
             </span>
         </div>

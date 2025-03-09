@@ -1,37 +1,35 @@
-import { colorNotificationStatus } from '../Data/Constants';
 import { catchError } from '../Utils/HelperFn';
-import { api, getHeaderConfig, postHeaderConfig } from './Axios';
+import { api, getHeaderConfig, updateHeaderConfig} from './Axios';
 import { useMutation, useQueryClient } from 'react-query';
-
-const GeoAuthToken =
-    'wOhI3LUC6CzqTj8JATleIaFkReJH6qmmnasmDz_xFnSXdd9ZDS-tlNFPO_iHtj0V4e8';
-const AuthEmail = 'sksinghss1998@gmail.com';
-
-const cityCountryState_token_headers = {
-    headers: {
-        Accept: 'application/json',
-        'api-token': GeoAuthToken,
-        'user-email': AuthEmail,
-    },
-};
 
 export const successMessage = {
     profile_added:
         'Your profile successfully added. Redirecting to select profile section',
 };
 
+export const CountryStateCityApiKey =
+    'bEltb0FxY3dhajRDa3NxS1JMcUpMZ3ZDemV3emtBdzdIcm1Fa292bg==';
+    
+export const cityCountryState_headers = {
+    headers: {
+        Accept: 'application/json',
+        'X-CSCAPI-KEY': CountryStateCityApiKey,
+    },
+};
+
 export const profileUrl = {
-    get_countryStateCityAccessToken:
-        'https://www.universal-tutorial.com/api/getaccesstoken',
-    get_country: 'https://www.universal-tutorial.com/api/countries/',
-    get_city: 'https://www.universal-tutorial.com/api/cities/',
-    get_state: 'https://www.universal-tutorial.com/api/states/',
+    get_country: 'https://api.countrystatecity.in/v1/countries',
+    get_city:
+        'https://api.countrystatecity.in/v1/countries/%cntry%/states/%stat%/cities ',
+    get_state: 'https://api.countrystatecity.in/v1/countries/%cntry%/states',
     get_all_profiles: '/mpa/api/v1/profiles/all?admin=',
     get_all_device_instance_url: '/mda/api/v1/devices/websocket/url',
     get_profile: '/mpa/api/v1/profiles?id=',
     add_profile: '/mpa/api/v1/profiles?admin=',
     add_mqtt: '/mpa/api/v1/profiles/mqtt/cred?admin=',
     get_mqtt_cred: '/mpa/api/v1/profiles/mqtt/cred?admin=',
+    get_spotify_access_token: '/mpa/api/v1/profiles/spotify/token',
+    get_spotify_refresh_access_token: '/mpa/api/v1/profiles/spotify/token/refresh',
 };
 
 /// new ///
@@ -46,19 +44,6 @@ export const getProfiles = async (appUser: any, darkTheme: any) => {
     } catch (error) {
         catchError(error, darkTheme);
         throw new Error('Failed to fetch user profile');
-    }
-};
-
-export const getCountryStateCityToken = async (darkTheme: any) => {
-    try {
-        const response = await api.get(
-            profileUrl.get_countryStateCityAccessToken,
-            cityCountryState_token_headers,
-        );
-        return response;
-    } catch (error) {
-        catchError(error, darkTheme);
-        throw new Error('Failed to fetch country, state, and city token');
     }
 };
 
@@ -186,7 +171,7 @@ export const useAddMqttCred = (appUser: any, on_Error: any) => {
             return api.post(
                 profileUrl.add_mqtt + appUser,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {

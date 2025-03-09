@@ -12,10 +12,16 @@ export const getHeaderConfig = {
     },
 };
 
-export const postHeaderConfig = {
+export const updateHeaderConfig = {
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
     },
 };
 
+export const getMergedHeaders = (token: any) => {
+    return {
+        ...updateHeaderConfig.headers,
+        Authorization: `Bearer ${token}`,
+    };
+};

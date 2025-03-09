@@ -2,10 +2,10 @@ import React from 'react';
 
 // -------------------- Core Application Components -------------------- //
 const CoreApplication = React.lazy(
-    () => import('./../CoreApplication/CoreApplication'),
+    () => import('../CoreApplication/CoreApplication'),
 );
 const DashBoard = React.lazy(
-    () => import('./../../Components/CoreApplicationNew/DashBoard/DashBoard'),
+    () => import('../../Components/CoreApplicationNew/DashBoard/DashBoard'),
 );
 const Play = React.lazy(
     () => import('../../Components/CoreApplicationNew/Play/Play'),
@@ -14,23 +14,23 @@ const Setting = React.lazy(
     () => import('../../Components/CoreApplicationNew/Setting/Setting'),
 );
 const DeviceRoom = React.lazy(
-    () => import('./../../Components/CoreApplicationNew/DeviceRoom/DeviceRoom'),
+    () => import('../../Components/CoreApplicationNew/DeviceRoom/DeviceRoom'),
 );
 const Connection = React.lazy(
-    () => import('./../../Components/CoreApplicationNew/Connection/Connection'),
+    () => import('../../Components/CoreApplicationNew/Connection/Connection'),
 );
 
 // -------------------- Dashboard Features -------------------- //
 const TodoListWrapper = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/TodoList/TodoListWrapper'
+            '../../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/TodoList/TodoListWrapper'
         ),
 );
 const StatusList = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/StatusList/StatusList'
+            '../../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/StatusList/StatusList'
         ),
 );
 
@@ -38,19 +38,19 @@ const StatusList = React.lazy(
 const GettingStarted = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplication/CoreApplicationConnection/GettingStarted/GettingStarted'
+            '../../Components/CoreApplication/CoreApplicationConnection/GettingStarted/GettingStarted'
         ),
 );
 const SetupArduinoIde = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplication/CoreApplicationConnection/SetupArduinoIde/SetupArduinoIde'
+            '../../Components/CoreApplication/CoreApplicationConnection/SetupArduinoIde/SetupArduinoIde'
         ),
 );
 const ESP8266BasicSetup = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplication/CoreApplicationConnection/ESP8266BasicSetup/ESP8266BasicSetup'
+            '../../Components/CoreApplication/CoreApplicationConnection/ESP8266BasicSetup/ESP8266BasicSetup'
         ),
 );
 const SpecificDeviceCodes = React.lazy(
@@ -62,7 +62,7 @@ const SpecificDeviceCodes = React.lazy(
 const ExampleCodes = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplication/CoreApplicationConnection/ExampleCodes/ExampleCodes'
+            '../../Components/CoreApplication/CoreApplicationConnection/ExampleCodes/ExampleCodes'
         ),
 );
 
@@ -70,33 +70,31 @@ const ExampleCodes = React.lazy(
 const AccountSetting = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplication/CoreApplicationSetting/AccountSetting/AccountSetting'
+            '../../Components/CoreApplication/CoreApplicationSetting/AccountSetting/AccountSetting'
         ),
 );
 const FeatureSetting = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplication/CoreApplicationSetting/FeatureSetting/FeatureSetting'
+            '../../Components/CoreApplication/CoreApplicationSetting/FeatureSetting/FeatureSetting'
         ),
 );
 
 // -------------------- Profile Components -------------------- //
-const ProfilePage = React.lazy(
-    () => import('./../ProfileConfig/ProfileConfig'),
-);
+const ProfilePage = React.lazy(() => import('../ProfileConfig/ProfileConfig'));
 const AddProfile = React.lazy(
-    () => import('./../../Components/ProfileConfig/Add/Add'),
+    () => import('../../Components/ProfileConfig/Add/Add'),
 );
 const SelectProfile = React.lazy(
-    () => import('./../../Components/ProfileConfig/Select/Select'),
+    () => import('../../Components/ProfileConfig/Select/Select'),
 );
 
 // -------------------- Authentication Components -------------------- //
-const Home = React.lazy(() => import('./../Home/Home'));
-const SignInSignUp = React.lazy(() => import('./../SignUp/SignUp'));
+const Home = React.lazy(() => import('../Home/Home'));
+const SignInSignUp = React.lazy(() => import('../SignUp/SignUp'));
 
 // -------------------- Miscellaneous Components -------------------- //
-const NotFound = React.lazy(() => import('./../NotFound/NotFound'));
+const NotFound = React.lazy(() => import('../NotFound/NotFound'));
 
 // Export all components
 export {

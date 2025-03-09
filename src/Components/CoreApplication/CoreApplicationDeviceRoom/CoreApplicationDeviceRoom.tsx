@@ -19,7 +19,9 @@ import {
 import { GET_DEVICE_LIST_IN_COREAPPLICATIONDEVICEROOMCLASS } from '../../../Data/QueryConstant';
 import CustomButtonLink from '../../Others/CustomButton/CustomButtonLink';
 import CoreApplicationDeviceRoomWrapper from './CoreApplicationDeviceRoomWrapper/CoreApplicationDeviceRoomWrapper';
-import { useUpdateData } from '../../../Api.tsx/useReactQuery_Update';
+import { usePostUpdateData } from '../../../Api.tsx/useReactQuery_Update';
+import { updateHeaderConfig } from '../../../Api.tsx/Axios';
+// import { useUpdateData } from '../../../Api.tsx/useReactQuery_Update';
 
 const CoreApplicationDeviceRoom = () => {
     const location = useLocation();
@@ -71,8 +73,9 @@ const CoreApplicationDeviceRoom = () => {
         // catchError(error);
     };
 
-    const { mutate } = useUpdateData(
+    const { mutate } = usePostUpdateData(
         `${featureUrl.update_all_device_status}${admin}&profilename=${profile}&roomtype=${roomType}`,
+        updateHeaderConfig,
         on_Success,
         on_Error,
     );
