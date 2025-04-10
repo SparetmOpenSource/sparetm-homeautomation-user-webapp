@@ -7,6 +7,8 @@ interface PaginationProps {
     itemsPerPage: number;
     onPageChange: (page: number) => void;
     darkTheme: any;
+    resetTriggerForSection: any;
+    resetTriggerForPlaylistSongs: any;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -14,10 +16,16 @@ const Pagination: React.FC<PaginationProps> = ({
     itemsPerPage,
     onPageChange,
     darkTheme,
+    resetTriggerForSection,
+    resetTriggerForPlaylistSongs,
 }) => {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const [currentPage, setCurrentPage] = useState(1);
     const [color, setColor] = useState<any>(light_colors);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [resetTriggerForSection, resetTriggerForPlaylistSongs]);
 
     const handlePageChange = (page: number) => {
         if (page < 1 || page > totalPages) return;

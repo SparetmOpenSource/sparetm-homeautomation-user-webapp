@@ -1,0 +1,74 @@
+.submitSelectorForm {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+}
+
+.submitSelectorForm-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+.submitSelectorForm-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.submitSelectorForm-heading {
+    width: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    align-items: center;
+}
+
+.submitSelectorForm-subHeading {
+    margin-bottom: 1rem;
+}
+
+.submitSelectorForm-field-wrapper {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+
+.submitSelectorForm-field {
+    width: 100%;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    line-height: 24px;
+    transition: 0.1s all ease;
+    margin: 0;
+    border: 3px solid grey;
+    padding: 0.7rem;
+    margin-bottom: 2em;
+}
+
+.submitSelectorForm-field:focus {
+    outline-offset: 5px;
+    border: 3px solid orange;
+    transition: 0.5s all ease;
+}
+
+/* ******************************* */
+
+.submitSelectorForm-button {
+    width: 50%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

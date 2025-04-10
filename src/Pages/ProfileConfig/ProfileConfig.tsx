@@ -55,12 +55,14 @@ const ProfileConfig = () => {
         },
     ];
 
-    const {
-        toggleBackDropOpen,
-        toggleBackDropClose,
-        setChildForCustomBackDrop,
-        setSizeForCustomBackDrop,
-    } = useBackDropOpen();
+    // const {
+    //     toggleBackDropOpen,
+    //     toggleBackDropClose,
+    //     setChildForCustomBackDrop,
+    //     setSizeForCustomBackDrop,
+    // } = useBackDropOpen();
+
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
 
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
@@ -77,8 +79,8 @@ const ProfileConfig = () => {
                         logoutBtnHeading="Oh no! You are leaving. Are you sure?"
                         toggleBackDropOpen={toggleBackDropOpen}
                         toggleBackDropClose={toggleBackDropClose}
-                        setChildForCustomBackDrop={setChildForCustomBackDrop}
-                        setSizeForCustomBackDrop={setSizeForCustomBackDrop}
+                        // setChildForCustomBackDrop={setChildForCustomBackDrop}
+                        // setSizeForCustomBackDrop={setSizeForCustomBackDrop}
                     />
                 }
                 upper_nav_enable={true}

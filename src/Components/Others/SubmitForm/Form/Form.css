@@ -4,11 +4,12 @@
     padding: 2rem;
 }
 
-.submitForm_wrapper {
+.submitForm-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     flex-direction: column;
     overflow: auto;
     -ms-overflow-style: none;
@@ -17,11 +18,11 @@
     padding: 2rem;
 }
 
-.submitForm_wrapper::-webkit-scrollbar {
+.submitForm-wrapper::-webkit-scrollbar {
     display: none;
 }
 
-.submitForm_wrapper span {
+.submitForm-wrapper span {
     width: 90%;
     display: flex;
     align-items: center;
@@ -37,18 +38,14 @@
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-}
-
-.submitForm_field_wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
 }
 
-.eyeIcon_button {
+.submitForm-subHeading {
+    margin-bottom: 3rem;
+}
+
+.submitForm-eyeIcon-button {
     width: 4em;
     height: 4rem;
     display: flex;
@@ -60,8 +57,16 @@
     border-radius: 0.5rem;
 }
 
+.submitForm-field-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
 
-.submitForm_field {
+.submitForm-field {
     width: 100%;
     padding: 1em;
     border-radius: 0.5rem;
@@ -72,7 +77,7 @@
     border: 3px solid grey;
 }
 
-.submitForm_field:focus {
+.submitForm-field:focus {
     outline-offset: 5px;
     border: 3px solid orange;
     transition: 0.5s all ease;
@@ -80,7 +85,7 @@
 
 /* ******************************* */
 
-.submitForm_error {
+.submitForm-error {
     color: red;
     background: rgb(255, 0, 0, 0.1);
     padding: 0.7em 1.5em 0.7em 1.5em;
@@ -90,28 +95,7 @@
     margin-top: 2rem;
 }
 
-.submitForm_select {
-    width: 100%;
-    margin: 0;
-}
-
-.css-13cymwt-control {
-    border: 3px solid grey !important;
-    background-color: rgb(255, 255, 255) !important;
-    border-radius: 0.5rem !important;
-}
-
-:focus-visible {
-    background-color: rgb(255, 255, 255) !important;
-    color: black !important;
-}
-
-.css-1u9des2-indicatorSeparator {
-    background-color: rgba(0, 0, 0, 0) !important;
-
-}
-
-.rearrangeForPassword {
+.submitForm-rearrangeForPassword {
     width: 83% !important;
     display: flex;
     align-items: center;

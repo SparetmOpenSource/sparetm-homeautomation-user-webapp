@@ -22,10 +22,15 @@
     height: 7.7%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
-    
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding-left: 2rem;
+    padding-right: 2rem;
+
     /* padding-left: 1rem;
     padding-right: 1rem;
 
@@ -39,9 +44,9 @@
     scrollbar-width: none; */
 }
 
-/* .spotify-library > :nth-child(3)::-webkit-scrollbar {
+.spotify-library > :nth-child(3)::-webkit-scrollbar {
     display: none;
-} */
+}
 
 /* ************** */
 
@@ -56,7 +61,6 @@
     margin-left: 2rem;
     cursor: pointer;
 }
-
 
 .spotify-library-isLoading {
     width: 100%;

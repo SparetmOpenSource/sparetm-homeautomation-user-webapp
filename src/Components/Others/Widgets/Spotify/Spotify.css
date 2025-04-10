@@ -7,6 +7,39 @@
     box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
+.spotify-login-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+}
+
+.spotify-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100px;
+    width: 100px;
+}
+
+.spotify-label {
+    font-weight: bold;
+}
+
+.spotify-isLoading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.2rem;
+}
+
+/* ************************** */
+
 .spotify_container {
     height: 100%;
     display: flex;
@@ -23,7 +56,6 @@
     justify-content: center;
     flex-direction: column;
     border-radius: 1rem;
-    cursor: pointer;
     overflow: hidden;
     -webkit-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
@@ -37,7 +69,15 @@
     position: absolute;
 } */
 
-.spotify_container > :last-child {
+/* .spotify_container > :nth-child(2) {
+    background-color: aqua;
+    width: 65%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+} */
+.spotify_container_playing_song {
     width: 65%;
     height: 100%;
     display: flex;
@@ -45,7 +85,30 @@
     justify-content: center;
 }
 
-.spotify_container > :last-child > :first-child {
+.spotify_container_playing_ad,
+.spotify_container_playing_unknown,
+.spotify_container_no_data {
+    width: 65%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.spotify_container_playing_ad h1 {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+.spotify_container_playing_ad p {
+    margin: 0;
+    padding: 0;
+}
+
+.spotify_container_playing_song > :first-child {
     display: flex;
     align-items: flex-start;
     justify-content: space-around;
@@ -55,9 +118,9 @@
     padding-left: 2rem;
 }
 
-.spotify_container > :last-child > :first-child h1,
-.spotify_container > :last-child > :first-child h2,
-.spotify_container > :last-child > :first-child p {
+.spotify_container_playing_song > :first-child h1,
+.spotify_container_playing_song > :first-child h2,
+.spotify_container_playing_song > :first-child p {
     padding: 0;
     margin: 0;
 }
@@ -65,15 +128,15 @@
 
 background-color: aquamarine;
 } */
-.spotify_container > :last-child > :first-child p {
+.spotify_container_playing_song > :first-child p {
     padding: 0.2rem;
 }
 
-.spotify_container > :last-child > :first-child h1 {
+.spotify_container_playing_song > :first-child h1 {
     font-size: 1.5rem;
 }
 
-.spotify_container > :last-child > :last-child {
+.spotify_container_playing_song > :last-child {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,9 +145,6 @@ background-color: aquamarine;
     padding: 0.5rem;
 }
 
-.spotify_container > :last-child > :last-child span {
+.spotify_container_playing_song > :last-child span {
     cursor: pointer;
 }
-
-/* ******* */
-

@@ -11,7 +11,8 @@ import { useTheme } from '../../../../Pages/ThemeProvider';
 
 function WidgetCarousel() {
     const [color, setColor] = useState<any>(light_colors);
-    const [refreshWidget, setRefreshWidget] = useState<boolean>(false);
+    const [refreshWidget, setRefreshWidget] = useState<any>(false);
+
     //const [keyProp, setKeyProp] = useState(0);
     const darkTheme: any = useTheme();
     const listRef = useRef<HTMLUListElement | null>(null);
@@ -29,8 +30,7 @@ function WidgetCarousel() {
     };
 
     const handleRefresh = () => {
-        // Update the state to trigger a re-render
-        setRefreshWidget((prevKey) => !prevKey);
+        setRefreshWidget((prevKey: any) => !prevKey);
     };
 
     const WidgetList = [
@@ -73,7 +73,7 @@ function WidgetCarousel() {
                 >
                     <IconContext.Provider
                         value={{
-                            size: '3em',
+                            size: '2.5em',
                             color: color?.button,
                         }}
                     >
@@ -87,7 +87,7 @@ function WidgetCarousel() {
                 >
                     <IconContext.Provider
                         value={{
-                            size: '3em',
+                            size: '2.5em',
                             color: color?.button,
                         }}
                     >

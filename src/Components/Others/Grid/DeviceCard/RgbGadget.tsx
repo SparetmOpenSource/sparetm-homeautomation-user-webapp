@@ -10,7 +10,7 @@ import { MdBrightness5 } from 'react-icons/md';
 import { MdBrightness4 } from 'react-icons/md';
 import { MdBrightness6 } from 'react-icons/md';
 import { MdBrightness7 } from 'react-icons/md';
-import { LandscapeSizeM } from '../../../../Data/Constants';
+import { LandscapeSizeM, RGB_GADGET_EXPAND } from '../../../../Data/Constants';
 import RgbGadgetExpand from './RgbGadgetExpand';
 import { GadgetRgbDefaultColor } from '../../../../Data/DeviceRoomConstant';
 import {
@@ -21,6 +21,7 @@ import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
 import { usePatchUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import { useAppSelector } from '../../../../Features/ReduxHooks';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
+import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 
 const RgbGadget = ({
     statusDetail,
@@ -53,12 +54,7 @@ const RgbGadget = ({
               GadgetRgbDefaultColor[3],
           ];
 
-    const {
-        toggleBackDropOpen,
-        toggleBackDropClose,
-        setChildForCustomBackDrop,
-        setSizeForCustomBackDrop,
-    } = useBackDropOpen();
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
 
     const onSuccess = () => {};
     const onError = (error: any) => {
@@ -70,6 +66,7 @@ const RgbGadget = ({
     };
     const { mutate } = usePatchUpdateData(
         `${featureUrl.update_device}${admin}&profilename=${profile}&roomtype=${roomType}&id=${id}`,
+        updateHeaderConfig,
         onSuccess,
         onError,
     );
@@ -170,23 +167,45 @@ const RgbGadget = ({
                 <motion.span
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 1.0 }}
+                    // onClick={() => {
+                    //     toggleBackDropOpen();
+                    //     setChildForCustomBackDrop(
+                    //         <RgbGadgetExpand
+                    //             darkTheme={darkTheme}
+                    //             defaultBrightness={brightness}
+                    //             background={background}
+                    //             roomType={roomType}
+                    //             id={id}
+                    //             backDropClose={toggleBackDropClose}
+                    //             deviceTopic={deviceTopic}
+                    //             deviceType={deviceType}
+                    //             createdAt={createdAt}
+                    //             updatedAt={updatedAt}
+                    //         />,
+                    //     );
+                    //     setSizeForCustomBackDrop(LandscapeSizeM);
+                    // }}
                     onClick={() => {
-                        toggleBackDropOpen();
-                        setChildForCustomBackDrop(
+                        const backdropId = `${RGB_GADGET_EXPAND}_${id}`; // Unique ID for this backdrop
+
+                        toggleBackDropOpen(
+                            backdropId,
                             <RgbGadgetExpand
                                 darkTheme={darkTheme}
                                 defaultBrightness={brightness}
                                 background={background}
                                 roomType={roomType}
                                 id={id}
-                                backDropClose={toggleBackDropClose}
+                                backDropClose={() =>
+                                    toggleBackDropClose(backdropId)
+                                }
                                 deviceTopic={deviceTopic}
                                 deviceType={deviceType}
                                 createdAt={createdAt}
                                 updatedAt={updatedAt}
                             />,
+                            LandscapeSizeM,
                         );
-                        setSizeForCustomBackDrop(LandscapeSizeM);
                     }}
                 >
                     <IconContext.Provider

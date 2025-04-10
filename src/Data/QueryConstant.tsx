@@ -30,3 +30,6 @@ export const GET_SPOTIFY_ALL_ALBUM_STATE_QUERY_ID =
     'get_spotify_all_album_state';
 export const GET_SPOTIFY_ALL_PLAYLIST_STATE_QUERY_ID =
     'get_spotify_all_playlist_state';
+    export const GET_SPOTIFY_PLAYLIST_SONG_STATE_QUERY_ID =
+    'get_spotify_playlist_song_state';
+

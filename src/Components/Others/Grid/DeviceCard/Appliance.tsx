@@ -7,12 +7,13 @@ import { IconContext } from 'react-icons';
 import { PiPowerFill } from 'react-icons/pi';
 import { HiOutlineInformationCircle } from 'react-icons/hi2';
 import { changeDeviceIcon, displayToastify } from '../../../../Utils/HelperFn';
-import { LandscapeSizeM } from '../../../../Data/Constants';
+import { APPLIANCE_EXPAND, LandscapeSizeM } from '../../../../Data/Constants';
 import ApplianceExpand from './ApplianceExpand';
 import { usePatchUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import { useAppSelector } from '../../../../Features/ReduxHooks';
 import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
+import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 
 const Appliance = ({
     statusValue,
@@ -41,6 +42,7 @@ const Appliance = ({
     };
     const { mutate } = usePatchUpdateData(
         `${featureUrl.update_device}${admin}&profilename=${profile}&roomtype=${roomType}&id=${id}`,
+        updateHeaderConfig,
         onSuccess,
         onError,
     );
@@ -53,11 +55,7 @@ const Appliance = ({
         } as any);
     };
 
-    const {
-        toggleBackDropOpen,
-        setChildForCustomBackDrop,
-        setSizeForCustomBackDrop,
-    } = useBackDropOpen();
+    const { toggleBackDropOpen } = useBackDropOpen();
 
     useEffect(() => {
         setStatus(statusValue);
@@ -118,9 +116,33 @@ const Appliance = ({
                 <motion.span
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 1.0 }}
+                    // onClick={() => {
+                    //     toggleBackDropOpen();
+                    //     setChildForCustomBackDrop(
+                    //         <ApplianceExpand
+                    //             deviceTopic={deviceTopic}
+                    //             deviceType={deviceType}
+                    //             createdAt={createdAt}
+                    //             updatedAt={updatedAt}
+                    //             id={id}
+                    //             darkTheme={darkTheme}
+                    //             isRemoteActive={
+                    //                 deviceType.split('/')[1].toUpperCase() ===
+                    //                     'AC' ||
+                    //                 deviceType.split('/')[1].toUpperCase() ===
+                    //                     'FAN'
+                    //                     ? true
+                    //                     : false
+                    //             }
+                    //         />,
+                    //     );
+                    //     setSizeForCustomBackDrop(LandscapeSizeM);
+                    // }}
                     onClick={() => {
-                        toggleBackDropOpen();
-                        setChildForCustomBackDrop(
+                        const backdropId = APPLIANCE_EXPAND; // Unique ID for this backdrop
+
+                        toggleBackDropOpen(
+                            backdropId,
                             <ApplianceExpand
                                 deviceTopic={deviceTopic}
                                 deviceType={deviceType}
@@ -128,17 +150,12 @@ const Appliance = ({
                                 updatedAt={updatedAt}
                                 id={id}
                                 darkTheme={darkTheme}
-                                isRemoteActive={
-                                    deviceType.split('/')[1].toUpperCase() ===
-                                        'AC' ||
-                                    deviceType.split('/')[1].toUpperCase() ===
-                                        'FAN'
-                                        ? true
-                                        : false
-                                }
+                                isRemoteActive={['AC', 'FAN'].includes(
+                                    deviceType.split('/')[1].toUpperCase(),
+                                )}
                             />,
+                            LandscapeSizeM,
                         );
-                        setSizeForCustomBackDrop(LandscapeSizeM);
                     }}
                 >
                     <IconContext.Provider

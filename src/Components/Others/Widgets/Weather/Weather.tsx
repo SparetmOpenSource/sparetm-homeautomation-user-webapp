@@ -12,6 +12,7 @@ import { useReactQuery_Get } from '../../../../Api.tsx/useReactQuery_Get';
 import {
     colorNotificationStatus,
     HorizontalSize,
+    WEATHER_EXPAND,
     weather_quote_constant,
 } from '../../../../Data/Constants';
 import { SELECT_WEATHER_QUOTE_QUERY_ID } from '../../../../Data/QueryConstant';
@@ -67,11 +68,7 @@ const Weather = () => {
 
     const queryKeys = [SELECT_WEATHER_QUOTE_QUERY_ID];
 
-    const {
-        toggleBackDropOpen,
-        setChildForCustomBackDrop,
-        setSizeForCustomBackDrop,
-    } = useBackDropOpen();
+    const { toggleBackDropOpen } = useBackDropOpen();
 
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
@@ -115,16 +112,29 @@ const Weather = () => {
                         <motion.span
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}
+                            // onClick={() => {
+                            //     toggleBackDropOpen();
+                            //     setChildForCustomBackDrop(
+                            //         <Expand
+                            //             weather={weather}
+                            //             state={state}
+                            //             darkTheme={darkTheme}
+                            //         />,
+                            //     );
+                            //     setSizeForCustomBackDrop(HorizontalSize);
+                            // }}
                             onClick={() => {
-                                toggleBackDropOpen();
-                                setChildForCustomBackDrop(
+                                const backdropId = WEATHER_EXPAND; // Unique ID for this backdrop
+
+                                toggleBackDropOpen(
+                                    backdropId,
                                     <Expand
                                         weather={weather}
                                         state={state}
                                         darkTheme={darkTheme}
                                     />,
+                                    HorizontalSize,
                                 );
-                                setSizeForCustomBackDrop(HorizontalSize);
                             }}
                         >
                             <IconContext.Provider

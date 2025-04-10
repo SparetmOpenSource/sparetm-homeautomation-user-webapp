@@ -19,9 +19,16 @@ export const updateHeaderConfig = {
     },
 };
 
-export const getMergedHeaders = (token: any) => {
+export const getMergedHeadersForSpotify = (token: any) => {
     return {
         ...updateHeaderConfig.headers,
         Authorization: `Bearer ${token}`,
+    };
+};
+
+export const getMergedHeadersForLocation = (apiKey: any) => {
+    return {
+        ...getHeaderConfig.headers,
+        'X-CSCAPI-KEY': apiKey,
     };
 };

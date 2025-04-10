@@ -1,4 +1,8 @@
-import { spotifyCodeVerifier, spotifyRefreshToken } from '../../Data/Constants';
+import {
+    spotifyAccountType,
+    spotifyCodeVerifier,
+    spotifyRefreshToken,
+} from '../../Data/Constants';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
 import {
     displayToastify,
@@ -14,6 +18,7 @@ export const apiScope = [
     'user-read-playback-state',
     'user-modify-playback-state',
     'user-read-currently-playing',
+    'user-library-modify',
 ];
 
 const auth_uri: string = 'https://accounts.spotify.com/authorize';
@@ -21,7 +26,7 @@ const redirect_uri: string =
     'http://localhost:3000/app/dashboard/segment/status';
 const client_id: string = 'ad37eacb72aa4f8891ccda3c0782b86a';
 const scope: string =
-    'user-library-read playlist-read-private user-read-playback-state user-modify-playback-state user-read-currently-playing user-read-email user-read-private';
+    'user-library-modify user-library-read playlist-read-private user-read-playback-state user-modify-playback-state user-read-currently-playing user-read-email user-read-private';
 
 export const handleLogin = async () => {
     resetSpotify();
@@ -54,29 +59,20 @@ export const getPlaybackState = async (
                 },
             },
         );
-
-        // Handle 204 No Content (no active device/playback)
-        if (
-            response?.data?.statusCodeValue === 200 &&
-            response?.data?.body === null
-        ) {
-            return response?.data?.body;
+        if (response?.status === 204) {
+            return null;
         }
-
-        // Handle unauthorized access, token expired
-        if (response?.data?.statusCodeValue === 401) {
-            displayToastify(
-                response?.data?.body?.message,
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.INFO,
-            );
+        return response?.data;
+    } catch (error: any) {
+        if (error?.response?.status === 401) {
             const token = localStorage.getItem(spotifyRefreshToken);
-            callForAccessTokenByRefreshToken({ token });
-            return undefined;
+            if (token) {
+                localStorage.removeItem(spotifyAccountType);
+                const token = localStorage.getItem(spotifyRefreshToken);
+                callForAccessTokenByRefreshToken({ token });
+                // return undefined;
+            }
         }
-
-        return response.data;
-    } catch (error: any) {
         throw new Error(
             `Failed to fetch playback state: ${
                 error.response?.data?.error?.message || error.message
@@ -85,38 +81,16 @@ export const getPlaybackState = async (
     }
 };
 
-export const getProfileState = async (
-    darkTheme: any,
-    // callForAccessTokenByRefreshToken: any,
-    token: any,
-) => {
+export const getProfileState = async (token: any) => {
     try {
-        const response = await api.get(featureUrl.spotify_current_user_url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
+        const response = await api.get(
+            featureUrl.spotify_base_url + '?data=profile',
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             },
-        });
-
-        // Handle 204 No Content (no active device/playback)
-        if (
-            response?.data?.statusCodeValue === 200 &&
-            response?.data?.body === null
-        ) {
-            return response?.data?.body;
-        }
-
-        // Handle unauthorized access, token expired
-        if (response?.data?.statusCodeValue === 401) {
-            displayToastify(
-                response?.data?.body?.message,
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.INFO,
-            );
-            // const token = localStorage.getItem('spotify_refresh_token');
-            // callForAccessTokenByRefreshToken({ token });
-            return undefined;
-        }
-
+        );
         return response.data;
     } catch (error: any) {
         throw new Error(
@@ -127,11 +101,7 @@ export const getProfileState = async (
     }
 };
 
-export const getDeviceState = async (
-    darkTheme: any,
-    // callForAccessTokenByRefreshToken: any,
-    token: any,
-) => {
+export const getDeviceState = async (token: any) => {
     try {
         const response = await api.get(
             featureUrl.spotify_base_url + '?data=devices',
@@ -141,27 +111,6 @@ export const getDeviceState = async (
                 },
             },
         );
-
-        // Handle 204 No Content (no active device/playback)
-        if (
-            response?.data?.statusCodeValue === 200 &&
-            response?.data?.body === null
-        ) {
-            return response?.data?.body;
-        }
-
-        // Handle unauthorized access, token expired
-        if (response?.data?.statusCodeValue === 401) {
-            displayToastify(
-                response?.data?.body?.message,
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.INFO,
-            );
-            // const token = localStorage.getItem('spotify_refresh_token');
-            // callForAccessTokenByRefreshToken({ token });
-            return undefined;
-        }
-
         return response.data;
     } catch (error: any) {
         throw new Error(
@@ -172,7 +121,7 @@ export const getDeviceState = async (
     }
 };
 
-export const getQueueState = async (darkTheme: any, token: any) => {
+export const getQueueState = async (token: any) => {
     try {
         const response = await api.get(
             featureUrl.spotify_base_url + '?data=queue',
@@ -182,25 +131,6 @@ export const getQueueState = async (darkTheme: any, token: any) => {
                 },
             },
         );
-
-        // Handle 204 No Content (no active device/playback)
-        if (
-            response?.data?.statusCodeValue === 200 &&
-            response?.data?.body === null
-        ) {
-            return response?.data?.body;
-        }
-
-        // Handle unauthorized access, token expired
-        if (response?.data?.statusCodeValue === 401) {
-            displayToastify(
-                response?.data?.body?.message,
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.INFO,
-            );
-            return undefined;
-        }
-
         return response.data;
     } catch (error: any) {
         throw new Error(
@@ -211,12 +141,33 @@ export const getQueueState = async (darkTheme: any, token: any) => {
     }
 };
 
-export const getAllAlbumState = async (
-    darkTheme: any,
+export const getPlaylistSongState = async (
+    playlistId: string,
     token: any,
     limit: any,
     offset: any,
 ) => {
+    try {
+        const response = await api.get(
+            featureUrl.spotify_base_url +
+                `?data=playlistsong&playlistId=${playlistId}&limit=${limit}&offset=${offset}&market=IN`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    } catch (error: any) {
+        throw new Error(
+            `Failed to fetch playback state: ${
+                error.response?.data?.error?.message || error.message
+            }`,
+        );
+    }
+};
+
+export const getAllAlbumState = async (token: any, limit: any, offset: any) => {
     try {
         const response = await api.get(
             featureUrl.spotify_base_url +
@@ -227,25 +178,6 @@ export const getAllAlbumState = async (
                 },
             },
         );
-
-        // Handle 204 No Content (no active device/playback)
-        if (
-            response?.data?.statusCodeValue === 200 &&
-            response?.data?.body === null
-        ) {
-            return response?.data?.body;
-        }
-
-        // Handle unauthorized access, token expired
-        if (response?.data?.statusCodeValue === 401) {
-            displayToastify(
-                response?.data?.body?.message,
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.INFO,
-            );
-            return undefined;
-        }
-
         return response.data;
     } catch (error: any) {
         throw new Error(
@@ -257,7 +189,6 @@ export const getAllAlbumState = async (
 };
 
 export const getAllPlaylistState = async (
-    darkTheme: any,
     token: any,
     limit: any,
     offset: any,
@@ -272,25 +203,6 @@ export const getAllPlaylistState = async (
                 },
             },
         );
-
-        // Handle 204 No Content (no active device/playback)
-        if (
-            response?.data?.statusCodeValue === 200 &&
-            response?.data?.body === null
-        ) {
-            return response?.data?.body;
-        }
-
-        // Handle unauthorized access, token expired
-        if (response?.data?.statusCodeValue === 401) {
-            displayToastify(
-                response?.data?.body?.message,
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.INFO,
-            );
-            return undefined;
-        }
-
         return response.data;
     } catch (error: any) {
         throw new Error(

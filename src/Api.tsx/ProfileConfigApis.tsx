@@ -1,5 +1,5 @@
 import { catchError } from '../Utils/HelperFn';
-import { api, getHeaderConfig, updateHeaderConfig} from './Axios';
+import { api, getHeaderConfig, updateHeaderConfig } from './Axios';
 import { useMutation, useQueryClient } from 'react-query';
 
 export const successMessage = {
@@ -9,7 +9,7 @@ export const successMessage = {
 
 export const CountryStateCityApiKey =
     'bEltb0FxY3dhajRDa3NxS1JMcUpMZ3ZDemV3emtBdzdIcm1Fa292bg==';
-    
+
 export const cityCountryState_headers = {
     headers: {
         Accept: 'application/json',
@@ -18,10 +18,10 @@ export const cityCountryState_headers = {
 };
 
 export const profileUrl = {
-    get_country: 'https://api.countrystatecity.in/v1/countries',
-    get_city:
-        'https://api.countrystatecity.in/v1/countries/%cntry%/states/%stat%/cities ',
-    get_state: 'https://api.countrystatecity.in/v1/countries/%cntry%/states',
+    get_location: '/mpa/api/v1/profiles/location',
+    // get_city:
+    //     'https://api.countrystatecity.in/v1/countries/%cntry%/states/%stat%/cities ',
+    // get_state: 'https://api.countrystatecity.in/v1/countries/%cntry%/states',
     get_all_profiles: '/mpa/api/v1/profiles/all?admin=',
     get_all_device_instance_url: '/mda/api/v1/devices/websocket/url',
     get_profile: '/mpa/api/v1/profiles?id=',
@@ -54,7 +54,7 @@ export const getStateList = async (
 ) => {
     try {
         const response = await api.get(
-            profileUrl.get_state + country,
+            profileUrl.get_location + `?data=state&cnt_iso2=${country}`,
             headerOptions,
         );
         return response;
@@ -66,12 +66,13 @@ export const getStateList = async (
 
 export const getCityList = async (
     headerOptions: any,
+    country: any,
     state: any,
     darkTheme: any,
 ) => {
     try {
         const response = await api.get(
-            profileUrl.get_city + state,
+            profileUrl.get_location + `?data=city&cnt_iso2=${country}&st_iso2=${state}`,
             headerOptions,
         );
         return response;
@@ -83,7 +84,7 @@ export const getCityList = async (
 
 export const getCountryList = async (headerOptions: any, darkTheme: any) => {
     try {
-        const response = await api.get(profileUrl.get_country, headerOptions);
+        const response = await api.get(profileUrl.get_location + `?data=country`, headerOptions);
         return response;
     } catch (error) {
         catchError(error, darkTheme);

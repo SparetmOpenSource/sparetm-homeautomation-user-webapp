@@ -22,7 +22,7 @@ export const featureUrl = {
     update_device_data_store: `/mda/api/v1/devices/data?id=`,
     delete_device_data_store: `/mda/api/v1/devices/data/remove?id=`,
     spotify_base_url: `/mpa/api/v1/profiles/spotify`,
-    spotify_current_user_url:`https://api.spotify.com/v1/me`,
+    // spotify_current_user_url:`https://api.spotify.com/v1/me`,
 };
 
 //NEW//

@@ -18,7 +18,6 @@ export const usePostUpdateData = (
     );
 };
 
-
 export const usePutUpdateData = (
     url: string,
     updateHeaderConfig: any,
@@ -36,9 +35,9 @@ export const usePutUpdateData = (
     );
 };
 
-
 export const usePatchUpdateData = (
     url: string,
+    updateHeaderConfig: any,
     on_Success: any,
     on_Error: any,
 ) => {
@@ -53,8 +52,12 @@ export const usePatchUpdateData = (
     );
 };
 
-
-export const useDeleteData = (url: string, on_Success: any, on_Error: any) => {
+export const useDeleteData = (
+    url: string,
+    updateHeaderConfig: any,
+    on_Success: any,
+    on_Error: any,
+) => {
     return useMutation(
         (id: any) => {
             return api.delete(url.replace('%id%', id), updateHeaderConfig);
@@ -65,7 +68,6 @@ export const useDeleteData = (url: string, on_Success: any, on_Error: any) => {
         },
     );
 };
-
 
 /////////
 

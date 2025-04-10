@@ -130,76 +130,38 @@ export const ProfileConfigTypography = {
 };
 
 let RoomNamesConst: string[] = [
-    'Room',
-    'Bathroom',
     'Bedroom',
-    'Dining Room',
-    'Drawing Room',
-    'Hall',
-    'Kitchen',
-    'Living Room',
     'Master Bedroom',
-    'Store Room',
+    'Living Room',
+    'Kitchen',
+    'Bathroom',
+    'Dining Room',
+    'Hall',
+    'Drawing Room',
+    'Guest Room',
     'Study Room',
+    'Home Office',
+    'Store Room',
+    'Utility Room',
+    'Basement',
+    'Game Room',
+    'Library',
+    'Music Room',
+    'Room-1',
+    'Room-2',
+    'Room-3',
+    'Room-4',
+    'Room-5',
+    'Room-6',
 ];
 
-export const ProfileConfigRoomNames = [
-    {
-        room_type: RoomNamesConst[0],
-        value: RoomNamesConst[0],
-        label: RoomNamesConst[0],
-    },
-    {
-        room_type: RoomNamesConst[1],
-        value: RoomNamesConst[1],
-        label: RoomNamesConst[1],
-    },
-    {
-        room_type: RoomNamesConst[2],
-        value: RoomNamesConst[2],
-        label: RoomNamesConst[2],
-    },
-    {
-        room_type: RoomNamesConst[3],
-        value: RoomNamesConst[3],
-        label: RoomNamesConst[3],
-    },
-    {
-        room_type: RoomNamesConst[4],
-        value: RoomNamesConst[4],
-        label: RoomNamesConst[4],
-    },
-    {
-        room_type: RoomNamesConst[5],
-        value: RoomNamesConst[5],
-        label: RoomNamesConst[5],
-    },
-    {
-        room_type: RoomNamesConst[6],
-        value: RoomNamesConst[6],
-        label: RoomNamesConst[6],
-    },
-    {
-        room_type: RoomNamesConst[7],
-        value: RoomNamesConst[7],
-        label: RoomNamesConst[7],
-    },
-    {
-        room_type: RoomNamesConst[8],
-        value: RoomNamesConst[8],
-        label: RoomNamesConst[8],
-    },
-    {
-        room_type: RoomNamesConst[9],
-        value: RoomNamesConst[9],
-        label: RoomNamesConst[9],
-    },
-    {
-        room_type: RoomNamesConst[10],
-        value: RoomNamesConst[10],
-        label: RoomNamesConst[10],
-    },
-];
+export const ProfileConfigRoomNames = RoomNamesConst.map((roomName) => ({
+    room_type: roomName,
+    value: roomName,
+    label: roomName,
+}));
+
+export const NONPREMIUMROOMCOUNT = 6;
 
 export const SelectColorStyles = {
     // menuList: (styles: any) => ({
@@ -293,11 +255,42 @@ export const toClientNotificationSocketTopic =
     '/to/client/update/notification/data';
 export const toServerSocketTopic = '/to/server/update/device/mqtt/data';
 
-
 export const spotifyToken = 'spotify_access_token';
+export const spotifyAccountType = 'spotify_account_type';
 export const spotifyRefreshToken = 'spotify_refresh_token';
 export const spotifyCodeVerifier = 'code_verifier';
 export const spotifyTokenFetched = 'has_fetched_spotify_access_token';
 export const spotifyTokenFetchedTime = 'has_fetched_spotify_access_token_time';
+export const spotifyNonPremiumWarning =
+    'This feature is only available for spotify premium members.';
+export const spotifyNoPlayableDeviceWarning =
+    'Oops! No active Spotify device is playing music right now.';
+export const spotifyAlbumAddition = 'Added album to your collection.';
+export const spotifyQueueAddition = 'Added track to your queue.';
 
+export const ITEMPERPAGE = 20;
 
+// backdropIds
+
+export const SIDE_NAV_CONFIRMATION_FOR_PROFILE_CHANGE =
+    'sideNavigation-confirmationModal-for-profile-change';
+export const SIDE_NAV_CONFIRMATION_FOR_LOGOUT_PROFILE =
+    'sideNavigation-confirmationModal-for-logout-profile';
+export const CORE_APP_ADD_DEVICE = 'coreApplication-addDevice';
+export const WEATHER_EXPAND = 'weather-expandModal';
+export const SPOTIFY_ACTIVE_EXPAND = 'spotifyActive-expandModal';
+export const SPOTIFY_EXPAND_ALBUM_DELETE_CONFIRMATION =
+    'spotifyExpand-deleteAlbumConfirmation';
+export const SPOTIFY_EXPAND_LOGOUT_CONFIRMATION =
+    'spotifyExpand-logoutConfirmation';
+export const SPOTIFY_EXPAND_ADD_ALBUM_CONFIRMATION =
+    'spotifyExpand-addAlbumConfirmation';
+export const SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION =
+    'spotifyExpand-addTrackToQueueConfirmation';
+export const RGB_GADGET_APPLIANCE_EXPAND = 'rgbGadget-applianceExpand';
+export const RGB_GADGET_EXPAND = 'rgbGadgetExpand';
+export const DEVICE_CARD_DELETE_DEVICE_CONFIRMATION =
+    'deviceCard-deleteDeviceConfirmation';
+export const APPLIANCE_EXPAND = 'applianceExpand';
+
+export const DELETING_TODOLIST = 'deleteToDo';

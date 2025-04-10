@@ -18,6 +18,7 @@ import {
     Setting,
     SignInSignUp,
 } from './GlobalRoutePages';
+import Todo from '../../Components/CoreApplicationNew/DashBoard/Todo/Todo';
 
 const routes = [
     {
@@ -76,11 +77,11 @@ const routes = [
                     },
                     {
                         path: RoutePath.Dashboard_Device_Status,
-                        element: <h1>Status</h1>,
+                        element: <h1>status</h1>,
                     },
                     {
                         path: RoutePath.Dashboard_Todo,
-                        element: <h1>Todo</h1>,
+                        element: <Todo />,
                     },
                 ],
             },

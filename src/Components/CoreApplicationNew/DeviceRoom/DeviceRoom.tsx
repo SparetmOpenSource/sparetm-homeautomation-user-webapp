@@ -265,7 +265,11 @@ const DeviceRoom = () => {
                 )}
                 {!isLoading && isError && (
                     <div className="deviceRoom_error">
-                        <Error />
+                        <Error
+                            enableBtn={true}
+                            navigate={navigate}
+                            darkTheme={darkTheme}
+                        />
                     </div>
                 )}
                 {!isLoading && !isError && <DeviceGrid />}

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, memo } from 'react';
-import { useLocation, Outlet } from 'react-router-dom';
+import { useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 import { MdLightMode } from 'react-icons/md';
 import { CiDark } from 'react-icons/ci';
@@ -7,7 +7,11 @@ import { GrHomeRounded, GrAppsRounded } from 'react-icons/gr';
 import { IoGameControllerOutline, IoSettingsOutline } from 'react-icons/io5';
 import { VscDebugDisconnect, VscRefresh } from 'react-icons/vsc';
 import { PiDevicesDuotone } from 'react-icons/pi';
-import { LandscapeSizeM, RoutePath } from '../../Data/Constants';
+import {
+    CORE_APP_ADD_DEVICE,
+    LandscapeSizeM,
+    RoutePath,
+} from '../../Data/Constants';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
 import { useBackDropOpen, useTheme, useThemeUpdate } from '../ThemeProvider';
@@ -49,6 +53,7 @@ interface NavOption {
 
 const CoreApplication = memo(() => {
     const location = useLocation();
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const queryClient = useQueryClient();
     const darkTheme = useTheme();
@@ -68,12 +73,14 @@ const CoreApplication = memo(() => {
         [darkTheme],
     );
 
-    const {
-        toggleBackDropOpen,
-        toggleBackDropClose,
-        setChildForCustomBackDrop,
-        setSizeForCustomBackDrop,
-    } = useBackDropOpen();
+    // const {
+    //     toggleBackDropOpen,
+    //     toggleBackDropClose,
+    //     setChildForCustomBackDrop,
+    //     setSizeForCustomBackDrop,
+    // } = useBackDropOpen();
+
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
 
     const { isLoading, isError } = useReactQuery_Get(
         GET_PROFILE_QUERY_ID,
@@ -133,24 +140,38 @@ const CoreApplication = memo(() => {
         [currentPath],
     );
 
+    // const addDevice = useCallback(() => {
+    //     toggleBackDropOpen();
+    //     setChildForCustomBackDrop(
+    //         <AddDevice
+    //             darkTheme={darkTheme}
+    //             roomType={roomType || ''}
+    //             toggleBackDropClose={toggleBackDropClose}
+    //         />,
+    //     );
+    //     setSizeForCustomBackDrop(LandscapeSizeM);
+    // }, [
+    //     darkTheme,
+    //     roomType,
+    //     toggleBackDropClose,
+    //     toggleBackDropOpen,
+    //     setChildForCustomBackDrop,
+    //     setSizeForCustomBackDrop,
+    // ]);
+
     const addDevice = useCallback(() => {
-        toggleBackDropOpen();
-        setChildForCustomBackDrop(
+        const backdropId = CORE_APP_ADD_DEVICE; // Unique ID for this backdrop
+
+        toggleBackDropOpen(
+            backdropId,
             <AddDevice
                 darkTheme={darkTheme}
                 roomType={roomType || ''}
-                toggleBackDropClose={toggleBackDropClose}
+                toggleBackDropClose={() => toggleBackDropClose(backdropId)}
             />,
+            LandscapeSizeM,
         );
-        setSizeForCustomBackDrop(LandscapeSizeM);
-    }, [
-        darkTheme,
-        roomType,
-        toggleBackDropClose,
-        toggleBackDropOpen,
-        setChildForCustomBackDrop,
-        setSizeForCustomBackDrop,
-    ]);
+    }, [darkTheme, roomType, toggleBackDropClose, toggleBackDropOpen]);
 
     const navUpperList = useMemo<NavItem[]>(
         () => [
@@ -252,12 +273,16 @@ const CoreApplication = memo(() => {
     if (isError) {
         return (
             <div className="coreApplication_error">
-                <Error />
+                <Error
+                    enableBtn={true}
+                    navigate={navigate}
+                    darkTheme={darkTheme}
+                />
             </div>
         );
     }
 
-    console.log("Loading core application");
+    console.log('Loading core application');
 
     return (
         <div className="coreApplication">
@@ -274,8 +299,8 @@ const CoreApplication = memo(() => {
                         logoutBtnHeading="Oh no! You are leaving. Are you sure?"
                         toggleBackDropOpen={toggleBackDropOpen}
                         toggleBackDropClose={toggleBackDropClose}
-                        setChildForCustomBackDrop={setChildForCustomBackDrop}
-                        setSizeForCustomBackDrop={setSizeForCustomBackDrop}
+                        // setChildForCustomBackDrop={setChildForCustomBackDrop}
+                        // setSizeForCustomBackDrop={setSizeForCustomBackDrop}
                     />
                 }
                 upper_nav_enable={true}

@@ -15,6 +15,7 @@ import Weather from '../../Others/Widgets/Weather/Weather';
 import WidgetCarousel from '../../Others/Slide/WidgetCarousel/WidgetCarousel';
 import { RiCalendarTodoLine } from 'react-icons/ri';
 import { IoIosStats } from 'react-icons/io';
+import { BsActivity } from 'react-icons/bs';
 
 const DashBoard = () => {
     const [color, setColor] = useState<any>(light_colors);
@@ -82,12 +83,13 @@ const DashBoard = () => {
                         >
                             <IconContext.Provider
                                 value={{
-                                    size: '2.5em',
+                                    size: '2em',
                                     color: color?.button,
                                 }}
                             >
-                                <IoIosStats />
+                                <BsActivity />
                             </IconContext.Provider>
+                            <p style={{ color: color?.text }}>status</p>
                         </motion.span>
                         <motion.span
                             whileHover={{ scale: 1.2 }}
@@ -96,58 +98,17 @@ const DashBoard = () => {
                         >
                             <IconContext.Provider
                                 value={{
-                                    size: '2.5em',
+                                    size: '2em',
                                     color: color?.button,
                                 }}
                             >
                                 <RiCalendarTodoLine />
                             </IconContext.Provider>
+                            <p style={{ color: color?.text }}>todo</p>
                         </motion.span>
-                        {/* <Button
-                            label="Status"
-                            textCol={
-                                currentPath === statusListPath ||
-                                currentPath?.includes(statusListPath)
-                                    ? color?.button
-                                    : `${color?.button.split(')')[0]},0.3)`
-                            }
-                            backCol={color?.inner}
-                            backColOnDis={color?.element}
-                            width="150px"
-                            fn={() => navigate(statusListPath)}
-                            status={false}
-                            border={
-                                currentPath === statusListPath ||
-                                currentPath?.includes(statusListPath)
-                                    ? color?.button
-                                    : `${color?.button.split(')')[0]},0.3)`
-                            }
-                        /> */}
-                        {/* <Button
-                            label="Todo"
-                            textCol={
-                                currentPath === todoListPath ||
-                                currentPath?.includes(todoListPath)
-                                    ? color?.button
-                                    : `${color?.button.split(')')[0]},0.3)`
-                            }
-                            backCol={color?.inner}
-                            backColOnDis={color?.inner}
-                            width="150px"
-                            fn={() => navigate(todoListPath)}
-                            status={false}
-                            border={
-                                currentPath === todoListPath ||
-                                currentPath?.includes(todoListPath)
-                                    ? color?.button
-                                    : `${color?.button.split(')')[0]},0.3)`
-                            }
-                        /> */}
                     </div>
                 </span>
                 <span>
-                    {/* <Spotify />
-                    <Weather /> */}
                     <WidgetCarousel />
                 </span>
                 <span>

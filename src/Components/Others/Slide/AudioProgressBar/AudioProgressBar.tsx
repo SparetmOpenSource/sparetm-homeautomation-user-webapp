@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
 import './AudioProgressBar.css';
-import { formatTime } from '../../../../Utils/HelperFn';
+import {
+    catchError,
+    displayToastify,
+    formatTime,
+} from '../../../../Utils/HelperFn';
 import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
-import { getMergedHeaders } from '../../../../Api.tsx/Axios';
+import { getMergedHeadersForSpotify } from '../../../../Api.tsx/Axios';
 import { usePostUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
+import {
+    spotifyAccountType,
+    spotifyNonPremiumWarning,
+} from '../../../../Data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 
 const AudioProgressBar = ({
     totalTimeMs,
@@ -17,19 +26,22 @@ const AudioProgressBar = ({
     const [currentTime, setCurrentTime] = useState(progressTimeMs / 1000);
     const [isSeeking, setIsSeeking] = useState(false);
     const [color, setColor] = useState<any>(light_colors);
+    const spotifyAcntType = localStorage.getItem(spotifyAccountType);
 
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const on_success_for_seek = (data: any) => {
-        // console.log(data);
+    const on_success_for_seek = () => {};
+
+    const on_error_for_seek = (error: any) => {
+        catchError(error, darkTheme);
     };
 
-    const on_error_for_seek = (error: any) => {};
-
     const updateHeaderConfig = {
-        headers: getMergedHeaders(localStorage.getItem('spotify_access_token')),
+        headers: getMergedHeadersForSpotify(
+            localStorage.getItem('spotify_access_token'),
+        ),
     };
 
     const { mutate: seekPosition } = usePostUpdateData(
@@ -46,19 +58,29 @@ const AudioProgressBar = ({
     }, [progressTimeMs, isSeeking]);
 
     const handleSeek = (e: any) => {
-        setIsSeeking(true);
-        setCurrentTime(e.target.value);
+        if (spotifyAcntType === 'premium') {
+            setIsSeeking(true);
+            setCurrentTime(e.target.value);
+        }
     };
 
     const handleSeekEnd = (e: any) => {
-        const seekTime = parseFloat(e.target.value) * 1000; // Convert back to ms
-        setCurrentTime(seekTime / 1000);
-        onSeek(seekTime); // Notify parent component about the seek
-        seekPosition({
-            position_ms: seekTime,
-            device_ids: [`${currentPlaybackData?.body?.device?.id}`],
-        });
-        setIsSeeking(false);
+        if (spotifyAcntType === 'premium') {
+            const seekTime = parseFloat(e.target.value) * 1000; // Convert back to ms
+            setCurrentTime(seekTime / 1000);
+            onSeek(seekTime); // Notify parent component about the seek
+            seekPosition({
+                position_ms: seekTime,
+                device_ids: [`${currentPlaybackData?.body?.device?.id}`],
+            });
+            setIsSeeking(false);
+        } else {
+            displayToastify(
+                spotifyNonPremiumWarning,
+                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
+                TOASTIFYSTATE.WARN,
+            );
+        }
     };
 
     return (
@@ -79,9 +101,7 @@ const AudioProgressBar = ({
                 onMouseUp={handleSeekEnd}
                 onTouchEnd={handleSeekEnd}
                 className="progress-bar"
-                // style={{
-                //     backgroundColor: color?.button,
-                // }}
+                disabled={false}
             />
             <span className="time-label">{formatTime(totalTimeSec)}</span>
         </div>

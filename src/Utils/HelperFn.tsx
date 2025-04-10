@@ -7,7 +7,10 @@ import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import {
     NETWORKERRORKEY,
     RoutePath,
+    spotifyAccountType,
     spotifyCodeVerifier,
+    spotifyNonPremiumWarning,
+    spotifyNoPlayableDeviceWarning,
     spotifyRefreshToken,
     spotifyToken,
     spotifyTokenFetched,
@@ -39,6 +42,12 @@ import { RiMistLine, RiMoonClearLine } from 'react-icons/ri';
 // -----------------------Toastify functions-----------------------//
 
 const toastProperty: any = (color: any) => {
+    // 'top-left';
+    // 'top-right'; // (Default)
+    // 'top-center';
+    // 'bottom-left';
+    // 'bottom-right';
+    // 'bottom-center';
     return {
         position: 'bottom-right',
         autoClose: 5000,
@@ -68,6 +77,14 @@ export const displayToastify: any = (message: any, color: any, status: any) => {
 // ---------------- Error inside catch -------------------- //
 
 export const catchError = (error: any, darkTheme: any) => {
+    const nonPremiumErrorsForSpotify = [
+        'Forbidden.',
+        'Player command failed: Premium required',
+    ];
+    const noPlayableDeviceErrorsForSpotify = [
+        'Device not found',
+        'Id not found',
+    ];
     let errorDetails = (error as any)?.response?.data?.message;
     if (typeof errorDetails === 'object' && errorDetails !== null) {
         Object.keys(errorDetails).forEach(function eachKey(key) {
@@ -79,8 +96,27 @@ export const catchError = (error: any, darkTheme: any) => {
         });
     } else {
         if (errorDetails) {
+            const isNonPremiumError = nonPremiumErrorsForSpotify.some((err) =>
+                errorDetails?.toLowerCase().includes(err.toLowerCase()),
+            );
+
+            const isNoPlayableDeviceError =
+                noPlayableDeviceErrorsForSpotify.some((err) =>
+                    errorDetails?.toLowerCase().includes(err.toLowerCase()),
+                );
+
+            let messageToShow;
+
+            if (isNonPremiumError) {
+                messageToShow = spotifyNonPremiumWarning;
+            } else if (isNoPlayableDeviceError) {
+                messageToShow = spotifyNoPlayableDeviceWarning;
+            } else {
+                messageToShow = errorDetails;
+            }
+
             displayToastify(
-                errorDetails,
+                messageToShow,
                 !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
                 TOASTIFYSTATE.ERROR,
             );
@@ -454,7 +490,7 @@ export const defaultOnError = () => {};
 
 export function getOffsetAndLimit(
     pageNumber: number,
-    recordsPerPage: number = 10,
+    recordsPerPage: number,
 ): { offset: number; limit: number } {
     if (pageNumber < 1) {
         throw new Error('Page number must be greater than or equal to 1.');
@@ -473,6 +509,7 @@ export const resetSpotify = () => {
     sessionStorage.removeItem(spotifyCodeVerifier);
     localStorage.removeItem(spotifyTokenFetched);
     localStorage.removeItem(spotifyTokenFetchedTime);
+    localStorage.removeItem(spotifyAccountType);
 };
 
 export const spotifyLogout = () => {

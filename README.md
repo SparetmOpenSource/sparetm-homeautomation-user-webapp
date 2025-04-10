@@ -199,18 +199,13 @@ const darkTheme = useContext(ThemeContext);
                             Add profile
         </button>
 
+// <CalenderFrame setNewDate={setDateValue} />
+// const [dataValue, setDataValue]: any = useState();
 
+const queryClient = useQueryClient();
+const queryKeys = [SELECT_WEATHER_QUOTE_QUERY_ID];
+onClick={() => invalidateQueries(queryClient, queryKeys)}
 
- // <CalenderFrame setNewDate={setDateValue} />
- //   const [dataValue, setDataValue]: any = useState();
-
-
- const queryClient = useQueryClient();
-  const queryKeys = [SELECT_WEATHER_QUOTE_QUERY_ID];
-   onClick={() => invalidateQueries(queryClient, queryKeys)}
-
-
-   
     // console.log(mqttCred?.data?.body);
     // let deviceData = [...Array(20)];
 
@@ -218,3 +213,34 @@ const darkTheme = useContext(ThemeContext);
     `${color?.button.split(')')[0]},0.2)`
 
     if (Object.keys(notificationData).length !== 0) {}
+
+    -----------------------------------------------------
+
+    const {
+    toggleBackDropOpen,
+    toggleBackDropClose,
+
+} = useBackDropOpen();
+
+//--//
+
+onClick={() => {
+const backdropId = "confirmationModal"; // Unique ID for this backdrop
+
+    props?.toggleBackDropOpen(
+        backdropId,
+        <Confirmation
+            darkTheme={darkTheme}
+            heading={props?.profileBtnHeading}
+            btnOkFn={() => {
+                props?.toggleBackDropClose(backdropId);
+                logoutProfileOnClick(dispatch, queryClient, navigate);
+            }}
+            btnCancelFn={() => props?.toggleBackDropClose(backdropId)}
+            btnOkLabel={props?.profileBtnOkLabel}
+            btnCancelLabel="Cancel"
+        />,
+        LandscapeSizeS
+    );
+
+}}

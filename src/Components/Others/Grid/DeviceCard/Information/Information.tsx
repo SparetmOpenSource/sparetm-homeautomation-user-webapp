@@ -22,7 +22,11 @@ import { useQueryClient } from 'react-query';
 import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../../Data/QueryConstant';
 import { useBackDropOpen } from '../../../../../Pages/ThemeProvider';
 import Confirmation from '../../../BackDrop/Confirmation/Confirmation';
-import { LandscapeSizeS } from '../../../../../Data/Constants';
+import {
+    DEVICE_CARD_DELETE_DEVICE_CONFIRMATION,
+    LandscapeSizeS,
+} from '../../../../../Data/Constants';
+import { updateHeaderConfig } from '../../../../../Api.tsx/Axios';
 // import { VscSymbolColor } from 'react-icons/vsc';
 // import RgbGadgetExpand from '../RgbGadgetExpand';
 
@@ -52,12 +56,7 @@ const Information = ({
         }
     };
 
-    const {
-        toggleBackDropOpen,
-        toggleBackDropClose,
-        setChildForCustomBackDrop,
-        setSizeForCustomBackDrop,
-    } = useBackDropOpen();
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
 
     const onSuccess = () => {
         invalidateQueries(queryClient, queryKeys);
@@ -71,6 +70,7 @@ const Information = ({
     };
     const { mutate } = useDeleteData(
         `${featureUrl.del_device}%id%&admin=${admin}&profilename=${profile}`,
+        updateHeaderConfig,
         onSuccess,
         onError,
     );
@@ -251,26 +251,48 @@ const Information = ({
                             whileHover={{ scale: 0.95 }}
                             whileTap={{ scale: 0.9 }}
                             // onClick={() => handleDelete()}
+                            // onClick={() => {
+                            //     toggleBackDropOpen();
+                            //     setChildForCustomBackDrop(
+                            //         <Confirmation
+                            //             darkTheme={darkTheme}
+                            //             heading={
+                            //                 'You want to delete this device, Are you sure?'
+                            //             }
+                            //             btnOkFn={() => {
+                            //                 toggleBackDropClose();
+                            //                 handleDelete();
+                            //             }}
+                            //             btnCancelFn={() =>
+                            //                 toggleBackDropClose()
+                            //             }
+                            //             btnOkLabel="Yes"
+                            //             btnCancelLabel="Cancel"
+                            //         />,
+                            //     );
+                            //     setSizeForCustomBackDrop(LandscapeSizeS);
+                            // }}
                             onClick={() => {
-                                toggleBackDropOpen();
-                                setChildForCustomBackDrop(
+                                const backdropId =
+                                    DEVICE_CARD_DELETE_DEVICE_CONFIRMATION; // Unique ID for this backdrop
+
+                                toggleBackDropOpen(
+                                    backdropId,
                                     <Confirmation
                                         darkTheme={darkTheme}
-                                        heading={
-                                            'You want to delete this device, Are you sure?'
-                                        }
+                                        heading="You want to delete this device, Are you sure?"
                                         btnOkFn={() => {
-                                            toggleBackDropClose();
+                                            toggleBackDropClose(backdropId);
                                             handleDelete();
                                         }}
                                         btnCancelFn={() =>
-                                            toggleBackDropClose()
+                                            toggleBackDropClose(backdropId)
                                         }
                                         btnOkLabel="Yes"
                                         btnCancelLabel="Cancel"
                                     />,
+                                    LandscapeSizeS,
                                 );
-                                setSizeForCustomBackDrop(LandscapeSizeS);
                             }}
                             style={{
                                 backgroundColor: 'rgb(142,38,34)',

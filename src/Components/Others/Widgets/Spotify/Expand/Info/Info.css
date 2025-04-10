@@ -35,16 +35,6 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
-.spotify-info-wrapper > :last-child span {
-    margin-bottom: 0.5rem;
-    width: 60%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
 .spotify-info-wrapper > :last-child div {
     width: 100%;
@@ -84,3 +74,35 @@
     border-radius: 1.2rem;
 }
 
+.spotify-info-wrapper-device-list {
+    margin-bottom: 0.5rem;
+    width: 60%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.spotify-info-wrapper > :last-child > :first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.spotify-info-wrapper > :last-child > :first-child > :first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%;
+}
+
+.spotify-info-wrapper-refresh {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

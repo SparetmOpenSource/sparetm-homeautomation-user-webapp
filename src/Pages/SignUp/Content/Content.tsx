@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useTheme } from '../../ThemeProvider';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { BiSolidQuoteLeft, BiSolidQuoteRight } from 'react-icons/bi';
-import SubmitForm from '../../../Components/Others/SubmitForm/SubmitForm';
 import SmilingW from './../../../Assets/SmilingW.svg';
 import SmilingM from './../../../Assets/SmilingM.svg';
 import './Content.css';
 import { useCounter } from '../../../Hooks/useCounter';
+import Form from '../../../Components/Others/SubmitForm/Form/Form';
 
 const Content = ({
     formList,
@@ -37,7 +37,7 @@ const Content = ({
                         <img
                             src={
                                 SignUpText?.testimonial[count]?.sex ===
-                                SignUpText?.male
+                                    SignUpText?.male
                                     ? SmilingM
                                     : SmilingW
                             }
@@ -85,15 +85,14 @@ const Content = ({
                 </div>
             </section>
             <section>
-                <SubmitForm
-                    heading={
-                        showSignIn ? SignUpText?.signIn : SignUpText?.signUp
-                    }
-                    typeChange={handleTypeChange}
-                    type={showSignIn}
-                    list={formList}
-                    setInputData={handleInputData}
+                <Form
+                    heading={showSignIn ? SignUpText?.signIn : SignUpText?.signUp}
+                    subHeading={showSignIn ? "We are really happy to see you again!" : "Let’s Automate Your World, Submit Now!"}
+                    formData={handleInputData}
+                    formList={formList}
                     btnLabel="submit"
+                    switchForm={handleTypeChange}
+                    typeFlag={showSignIn}
                 />
             </section>
         </section>
@@ -101,3 +100,4 @@ const Content = ({
 };
 
 export default Content;
+/// {Form = ({ heading, subHeading, formData, formList, switchForm, typeFlag, btnLabel }: any)}

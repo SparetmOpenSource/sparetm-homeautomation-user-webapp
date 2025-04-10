@@ -18,6 +18,7 @@ import { useAppSelector } from '../../../../Features/ReduxHooks';
 import {
     GadgetRgbDefaultColor,
     LandscapeSizeM,
+    RGB_GADGET_APPLIANCE_EXPAND,
 } from '../../../../Data/Constants';
 import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../Data/QueryConstant';
 import { useQueryClient } from 'react-query';
@@ -29,6 +30,7 @@ import { VscSymbolColor } from 'react-icons/vsc';
 import { HiOutlineInformationCircle } from 'react-icons/hi2';
 import { useBackDropOpen } from '../../../../Pages/ThemeProvider';
 import ApplianceExpand from './ApplianceExpand';
+import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 
 const RgbGadgetExpand = ({
     darkTheme,
@@ -69,14 +71,15 @@ const RgbGadgetExpand = ({
     };
     const { mutate } = usePatchUpdateData(
         `${featureUrl.update_device}${admin}&profilename=${profile}&roomtype=${roomType}&id=${id}`,
+        updateHeaderConfig,
         onSuccess,
         onError,
     );
 
     const {
         toggleBackDropOpen,
-        setChildForCustomBackDrop,
-        setSizeForCustomBackDrop,
+        // setChildForCustomBackDrop,
+        // setSizeForCustomBackDrop,
     } = useBackDropOpen();
 
     const handleMenuChangeForCurrent = () => {
@@ -161,9 +164,35 @@ const RgbGadgetExpand = ({
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 1.0 }}
                             style={{ cursor: 'pointer' }}
+                            // onClick={() => {
+                            //     toggleBackDropOpen();
+                            //     setChildForCustomBackDrop(
+                            //         <ApplianceExpand
+                            //             deviceTopic={deviceTopic}
+                            //             deviceType={deviceType}
+                            //             createdAt={createdAt}
+                            //             updatedAt={updatedAt}
+                            //             id={id}
+                            //             darkTheme={darkTheme}
+                            //             isRemoteActive={
+                            //                 deviceType
+                            //                     .split('/')[1]
+                            //                     .toUpperCase() === 'AC' ||
+                            //                 deviceType
+                            //                     .split('/')[1]
+                            //                     .toUpperCase() === 'FAN'
+                            //                     ? true
+                            //                     : false
+                            //             }
+                            //         />,
+                            //     );
+                            //     setSizeForCustomBackDrop(LandscapeSizeM);
+                            // }}
                             onClick={() => {
-                                toggleBackDropOpen();
-                                setChildForCustomBackDrop(
+                                const backdropId = `${RGB_GADGET_APPLIANCE_EXPAND}_${id}`; // Unique ID for this backdrop
+
+                                toggleBackDropOpen(
+                                    backdropId,
                                     <ApplianceExpand
                                         deviceTopic={deviceTopic}
                                         deviceType={deviceType}
@@ -171,19 +200,14 @@ const RgbGadgetExpand = ({
                                         updatedAt={updatedAt}
                                         id={id}
                                         darkTheme={darkTheme}
-                                        isRemoteActive={
+                                        isRemoteActive={['AC', 'FAN'].includes(
                                             deviceType
                                                 .split('/')[1]
-                                                .toUpperCase() === 'AC' ||
-                                            deviceType
-                                                .split('/')[1]
-                                                .toUpperCase() === 'FAN'
-                                                ? true
-                                                : false
-                                        }
+                                                .toUpperCase(),
+                                        )}
                                     />,
+                                    LandscapeSizeM,
                                 );
-                                setSizeForCustomBackDrop(LandscapeSizeM);
                             }}
                         >
                             <IconContext.Provider

@@ -6,7 +6,12 @@ import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { useEffect, useState } from 'react';
 import { useTheme } from '../../../../Pages/ThemeProvider';
 import { useAppDispatch } from '../../../../Features/ReduxHooks';
-import { LandscapeSizeS, RoutePath } from '../../../../Data/Constants';
+import {
+    LandscapeSizeS,
+    RoutePath,
+    SIDE_NAV_CONFIRMATION_FOR_LOGOUT_PROFILE,
+    SIDE_NAV_CONFIRMATION_FOR_PROFILE_CHANGE,
+} from '../../../../Data/Constants';
 import { resetApp } from '../../../../Features/User/UserSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
@@ -97,14 +102,40 @@ const SideNavigation = (props: any) => {
                         whileTap={{
                             scale: 0.95,
                         }}
+                        // onClick={() => {
+                        //     props?.toggleBackDropOpen();
+                        //     props?.setChildForCustomBackDrop(
+                        //         <Confirmation
+                        //             darkTheme={darkTheme}
+                        //             heading={props?.profileBtnHeading}
+                        //             btnOkFn={() => {
+                        //                 props?.toggleBackDropClose();
+                        //                 logoutProfileOnClick(
+                        //                     dispatch,
+                        //                     queryClient,
+                        //                     navigate,
+                        //                 );
+                        //             }}
+                        //             btnCancelFn={() =>
+                        //                 props?.toggleBackDropClose()
+                        //             }
+                        //             btnOkLabel={props?.profileBtnOkLabel}
+                        //             btnCancelLabel="Cancel"
+                        //         />,
+                        //     );
+                        //     props?.setSizeForCustomBackDrop(LandscapeSizeS);
+                        // }}
                         onClick={() => {
-                            props?.toggleBackDropOpen();
-                            props?.setChildForCustomBackDrop(
+                            const backdropId =
+                                SIDE_NAV_CONFIRMATION_FOR_PROFILE_CHANGE;
+
+                            props?.toggleBackDropOpen(
+                                backdropId,
                                 <Confirmation
                                     darkTheme={darkTheme}
                                     heading={props?.profileBtnHeading}
                                     btnOkFn={() => {
-                                        props?.toggleBackDropClose();
+                                        props?.toggleBackDropClose(backdropId);
                                         logoutProfileOnClick(
                                             dispatch,
                                             queryClient,
@@ -112,13 +143,13 @@ const SideNavigation = (props: any) => {
                                         );
                                     }}
                                     btnCancelFn={() =>
-                                        props?.toggleBackDropClose()
+                                        props?.toggleBackDropClose(backdropId)
                                     }
                                     btnOkLabel={props?.profileBtnOkLabel}
                                     btnCancelLabel="Cancel"
                                 />,
+                                LandscapeSizeS,
                             );
-                            props?.setSizeForCustomBackDrop(LandscapeSizeS);
                         }}
                     >
                         <IconContext.Provider
@@ -199,24 +230,48 @@ const SideNavigation = (props: any) => {
                     whileTap={{
                         scale: 0.95,
                     }}
+                    // onClick={() => {
+                    //     props?.toggleBackDropOpen();
+                    //     props?.setChildForCustomBackDrop(
+                    //         <Confirmation
+                    //             darkTheme={darkTheme}
+                    //             heading={props?.logoutBtnHeading}
+                    //             btnOkFn={() => {
+                    //                 props?.toggleBackDropClose();
+                    //                 dispatch(resetApp());
+                    //                 queryClient.clear();
+                    //                 navigate(RoutePath.Home);
+                    //             }}
+                    //             btnCancelFn={() => props?.toggleBackDropClose()}
+                    //             btnOkLabel={props?.logoutBtnOkLabel}
+                    //             btnCancelLabel="Cancel"
+                    //         />,
+                    //     );
+                    //     props?.setSizeForCustomBackDrop(LandscapeSizeS);
+                    // }}
                     onClick={() => {
-                        props?.toggleBackDropOpen();
-                        props?.setChildForCustomBackDrop(
+                        const backdropId =
+                            SIDE_NAV_CONFIRMATION_FOR_LOGOUT_PROFILE; // Unique ID for this backdrop
+
+                        props?.toggleBackDropOpen(
+                            backdropId,
                             <Confirmation
                                 darkTheme={darkTheme}
                                 heading={props?.logoutBtnHeading}
                                 btnOkFn={() => {
-                                    props?.toggleBackDropClose();
+                                    props?.toggleBackDropClose(backdropId);
                                     dispatch(resetApp());
                                     queryClient.clear();
                                     navigate(RoutePath.Home);
                                 }}
-                                btnCancelFn={() => props?.toggleBackDropClose()}
+                                btnCancelFn={() =>
+                                    props?.toggleBackDropClose(backdropId)
+                                }
                                 btnOkLabel={props?.logoutBtnOkLabel}
                                 btnCancelLabel="Cancel"
                             />,
+                            LandscapeSizeS,
                         );
-                        props?.setSizeForCustomBackDrop(LandscapeSizeS);
                     }}
                 >
                     <IconContext.Provider

@@ -60,7 +60,11 @@ const Select = () => {
             )}
             {!isLoading && isError && (
                 <div className="select_profile_error">
-                    <Error />
+                    <Error
+                        enableBtn={true}
+                        navigate={navigate}
+                        darkTheme={darkTheme}
+                    />
                 </div>
             )}
             {!isLoading && !isError && option?.data?.body?.length !== 0 && (
