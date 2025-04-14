@@ -336,18 +336,19 @@ export const SpotifyActive = ({
                     {renderPlaybackIcon()}
                 </IconContext.Provider>
             </span>
-
-            {data && playbackType === 'unknown' && (
-                <span className="spotify_container_playing_unknown">
-                    <h1 style={{ color: color?.icon }}>
-                        Something went wrong...
-                    </h1>
-                    <p style={{ color: color?.icon }}>
-                        Please check your device for more details.
-                    </p>
-                </span>
-            )}
-
+            {data &&
+                (playbackType === 'unknown' || playbackType === 'episode') && (
+                    <span className="spotify_container_playing_unknown">
+                        <h1 style={{ color: color?.icon }}>
+                            Something went wrong...
+                        </h1>
+                        <p style={{ color: color?.icon }}>
+                            {playbackType === 'unknown'
+                                ? 'Please check your device for more details.'
+                                : 'Episode playback not supported.'}
+                        </p>
+                    </span>
+                )}
             {data && playbackType === 'ad' && (
                 <span className="spotify_container_playing_ad">
                     <h1 style={{ color: color?.icon }}>
@@ -359,84 +360,81 @@ export const SpotifyActive = ({
                 </span>
             )}
 
-            {playbackType !== 'unknown' && playbackType !== 'ad' && (
-                <span className="spotify_container_playing_song">
-                    {data && (
-                        <div>
-                            <section>
-                                <h1 style={{ color: color?.text }}>
-                                    {trimTo8Chars(data?.body?.item?.name, 10)}
-                                </h1>
-                                <p style={{ color: color?.icon_font }}>
+            <span className="spotify_container_playing_song">
+                {data && playbackType === 'track' && (
+                    <div>
+                        <section>
+                            <h1 style={{ color: color?.text }}>
+                                {trimTo8Chars(data?.body?.item?.name, 10)}
+                            </h1>
+                            <p style={{ color: color?.icon_font }}>
+                                {trimTo8Chars(
+                                    data?.body?.item?.album?.artists[0]?.name,
+                                    12,
+                                )}
+                            </p>
+                            <p
+                                style={{
+                                    color: color?.success,
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                album:{' '}
+                                <span style={{ color: color?.icon_font }}>
                                     {trimTo8Chars(
-                                        data?.body?.item?.album?.artists[0]
-                                            ?.name,
+                                        data?.body?.item?.album?.name,
                                         12,
                                     )}
-                                </p>
-                                <p
-                                    style={{
-                                        color: color?.success,
-                                        fontWeight: 'bold',
-                                    }}
-                                >
-                                    album:{' '}
-                                    <span style={{ color: color?.icon_font }}>
-                                        {trimTo8Chars(
-                                            data?.body?.item?.album?.name,
-                                            12,
-                                        )}
-                                    </span>
-                                </p>
-                            </section>
-                            <section>
-                                <AudioProgressBar
-                                    totalTimeMs={data?.body?.item?.duration_ms}
-                                    progressTimeMs={progress}
-                                    onSeek={setProgress}
-                                    currentPlaybackData={data}
-                                    darkTheme={darkTheme}
-                                />
-                            </section>
-                        </div>
-                    )}
-                    {!data && (
-                        <div>
-                            <h1 style={{ color: color?.icon }}>
-                                No playback device found !
-                            </h1>
-                            <p style={{ color: color?.icon }}>
-                                Play something on Spotify app to continue.
+                                </span>
                             </p>
-                        </div>
-                    )}
-                    <div>
-                        <motion.span
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            onClick={() =>
-                                toggleBackDropOpen(
-                                    SPOTIFY_ACTIVE_EXPAND,
-                                    <Expand
-                                        handleRefresh={handleRefresh}
-                                        darkTheme={darkTheme}
-                                        callForAccessTokenByRefreshToken={
-                                            callForAccessTokenByRefreshToken
-                                        }
-                                    />,
-                                    HorizontalSize,
-                                )
-                            }
-                        >
-                            <IconContext.Provider
-                                value={{ size: '2em', color: color?.success }}
-                            >
-                                <FaSpotify />
-                            </IconContext.Provider>
-                        </motion.span>
+                        </section>
+                        <section>
+                            <AudioProgressBar
+                                totalTimeMs={data?.body?.item?.duration_ms}
+                                progressTimeMs={progress}
+                                onSeek={setProgress}
+                                currentPlaybackData={data}
+                                darkTheme={darkTheme}
+                            />
+                        </section>
                     </div>
-                </span>
-            )}
+                )}
+                {!data && (
+                    <div>
+                        <h1 style={{ color: color?.icon }}>
+                            No playback device found !
+                        </h1>
+                        <p style={{ color: color?.icon }}>
+                            Play something on Spotify app to continue.
+                        </p>
+                    </div>
+                )}
+                <div>
+                    <motion.span
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() =>
+                            toggleBackDropOpen(
+                                SPOTIFY_ACTIVE_EXPAND,
+                                <Expand
+                                    handleRefresh={handleRefresh}
+                                    darkTheme={darkTheme}
+                                    callForAccessTokenByRefreshToken={
+                                        callForAccessTokenByRefreshToken
+                                    }
+                                />,
+                                HorizontalSize,
+                            )
+                        }
+                    >
+                        <IconContext.Provider
+                            value={{ size: '2em', color: color?.success }}
+                        >
+                            <FaSpotify />
+                        </IconContext.Provider>
+                    </motion.span>
+                </div>
+            </span>
         </div>
     );
 };

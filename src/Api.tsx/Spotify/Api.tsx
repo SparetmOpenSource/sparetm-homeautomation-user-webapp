@@ -3,23 +3,18 @@ import {
     spotifyCodeVerifier,
     spotifyRefreshToken,
 } from '../../Data/Constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
-import {
-    displayToastify,
-    generateCodeChallenge,
-    resetSpotify,
-} from '../../Utils/HelperFn';
+import { generateCodeChallenge, resetSpotify } from '../../Utils/HelperFn';
 import { api } from '../Axios';
 import { featureUrl } from '../CoreAppApis';
 
-export const apiScope = [
-    'user-library-read',
-    'playlist-read-private',
-    'user-read-playback-state',
-    'user-modify-playback-state',
-    'user-read-currently-playing',
-    'user-library-modify',
-];
+// export const apiScope = [
+//     'user-library-read',
+//     'playlist-read-private',
+//     'user-read-playback-state',
+//     'user-modify-playback-state',
+//     'user-read-currently-playing',
+//     'user-library-modify',
+// ];
 
 const auth_uri: string = 'https://accounts.spotify.com/authorize';
 const redirect_uri: string =
@@ -67,7 +62,7 @@ export const getPlaybackState = async (
         if (error?.response?.status === 401) {
             const token = localStorage.getItem(spotifyRefreshToken);
             if (token) {
-                localStorage.removeItem(spotifyAccountType);
+                // localStorage.removeItem(spotifyAccountType);
                 const token = localStorage.getItem(spotifyRefreshToken);
                 callForAccessTokenByRefreshToken({ token });
                 // return undefined;

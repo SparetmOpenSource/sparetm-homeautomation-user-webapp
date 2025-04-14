@@ -26,9 +26,6 @@
     justify-content: space-evenly;
     align-items: center;
     border-radius: 1rem;
-    /* -webkit-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75); */
 }
 
 .spotify-expand-nav span {
@@ -48,13 +45,6 @@
     border-radius: 1.5rem;
 }
 
-/* .weather_error span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-} */
-
 /* *********************** */
 
 .spotify_song_template_image {
@@ -70,7 +60,6 @@
     justify-content: space-between;
     margin-top: 0.4rem;
     margin-bottom: 0.4rem;
-    font-size: 1rem;
 }
 
 .spotify-song-template > :first-child p,
@@ -81,18 +70,31 @@
 }
 
 .spotify-song-template > :first-child p {
+    font-size: 1rem;
     width: 30px;
 }
 .spotify-song-template > :first-child div h1,
 .spotify-song-template > :first-child div p {
     width: 200px;
+    font-size: 1rem;
+    padding: 0.1rem;
 }
 
-.spotify-song-template > :last-child p,
-.spotify-song-template > :last-child h1 {
+.spotify-song-template > :last-child p {
     padding: 0;
     margin: 0;
+    font-size: 1rem;
+    width: 50px;
+    text-align: center;
 }
+
+.spotify-song-template > :first-child div h1 {
+    font-size: 1rem;
+}
+.spotify-song-template > :first-child div p {
+    font-size: 0.8rem;
+}
+
 .spotify-song-template > :first-child {
     width: 60%;
     height: 100%;

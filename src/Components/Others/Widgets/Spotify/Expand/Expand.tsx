@@ -126,21 +126,21 @@
 //         ),
 //     };
 
-//     const { mutate: next } = usePostUpdateData(
-//         featureUrl.spotify_base_url +
-//             `?data=next&id=${currentPlaybackData?.body?.device?.id}`,
-//         updateHeaderConfig,
-//         on_success_for_change,
-//         on_error_for_change,
-//     );
+// const { mutate: next } = usePostUpdateData(
+//     featureUrl.spotify_base_url +
+//         `?data=next&id=${currentPlaybackData?.body?.device?.id}`,
+//     updateHeaderConfig,
+//     on_success_for_change,
+//     on_error_for_change,
+// );
 
-//     const { mutate: previous } = usePostUpdateData(
-//         featureUrl.spotify_base_url +
-//             `?data=previous&id=${currentPlaybackData?.body?.device?.id}`,
-//         updateHeaderConfig,
-//         on_success_for_change,
-//         on_error_for_change,
-//     );
+// const { mutate: previous } = usePostUpdateData(
+//     featureUrl.spotify_base_url +
+//         `?data=previous&id=${currentPlaybackData?.body?.device?.id}`,
+//     updateHeaderConfig,
+//     on_success_for_change,
+//     on_error_for_change,
+// );
 
 //     const queryKeys = [GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID];
 
@@ -288,7 +288,6 @@ const Expand = ({
         setChangeSection(index);
     };
 
-    // Get current playback state
     const playbackStateFn = () => {
         const token = localStorage.getItem('spotify_access_token');
         return getPlaybackState(
@@ -324,7 +323,6 @@ const Expand = ({
         0,
     );
 
-    // Navigation button click handlers
     const updateHeaderConfig = {
         headers: getMergedHeadersForSpotify(
             localStorage.getItem('spotify_access_token'),

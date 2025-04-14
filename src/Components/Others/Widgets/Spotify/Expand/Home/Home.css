@@ -43,7 +43,8 @@
 
 /* *******info******* */
 
-.spotify-expand-content-home-song-widget-playing {
+.spotify-expand-content-home-song-widget-playing,
+.spotify-expand-content-home-song-widget-no-data {
     border-radius: 1rem;
     width: 69%;
     height: 100%;
@@ -51,6 +52,11 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.spotify-expand-content-home-song-widget-no-data {
+    align-items: flex-start;
+    padding: 1.5rem;
 }
 
 .spotify-expand-content-home-song-widget-playing section {
