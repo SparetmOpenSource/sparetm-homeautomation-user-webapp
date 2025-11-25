@@ -4,7 +4,7 @@ import { AiOutlineLogout } from 'react-icons/ai';
 import { motion } from 'framer-motion';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { useEffect, useState } from 'react';
-import { useTheme } from '../../../../Pages/ThemeProvider';
+import { useBackDropOpen, useTheme } from '../../../../Pages/ThemeProvider';
 import { useAppDispatch } from '../../../../Features/ReduxHooks';
 import {
     LandscapeSizeS,
@@ -19,8 +19,13 @@ import { logoutProfileOnClick } from '../../../../Utils/ProfileConfigHelperFn';
 import Confirmation from '../../BackDrop/Confirmation/Confirmation';
 import { useQueryClient } from 'react-query';
 
-const SideNavigation = (props: any) => {
+const SideNavigation = ({
+    upper_nav_option,
+    lower_nav_option,
+    profile_logout_enable,
+}: any) => {
     const [color, setColor] = useState<any>(light_colors);
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
     const darkTheme: any = useTheme();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -30,14 +35,12 @@ const SideNavigation = (props: any) => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const sidenav_upper_list = props?.upper_list ? props?.upper_list : [];
-    const sidenav_lower_list = props?.lower_list ? props?.lower_list : [];
-
     return (
-        <section className="side_navigation">
+        <section className="side-navigation">
             <div>
-                {sidenav_upper_list?.length !== 0 &&
-                    sidenav_upper_list?.map((item: any) => (
+                {upper_nav_option &&
+                    upper_nav_option?.length !== 0 &&
+                    upper_nav_option?.map((item: any) => (
                         <Link to={item?.to} key={item?.id}>
                             <motion.span
                                 style={{
@@ -92,7 +95,7 @@ const SideNavigation = (props: any) => {
                             </motion.span>
                         </Link>
                     ))}
-                {props?.profileLogOut && (
+                {profile_logout_enable && (
                     <motion.span
                         style={{ backgroundColor: color?.outer }}
                         initial={{ scale: 1 }}
@@ -102,40 +105,17 @@ const SideNavigation = (props: any) => {
                         whileTap={{
                             scale: 0.95,
                         }}
-                        // onClick={() => {
-                        //     props?.toggleBackDropOpen();
-                        //     props?.setChildForCustomBackDrop(
-                        //         <Confirmation
-                        //             darkTheme={darkTheme}
-                        //             heading={props?.profileBtnHeading}
-                        //             btnOkFn={() => {
-                        //                 props?.toggleBackDropClose();
-                        //                 logoutProfileOnClick(
-                        //                     dispatch,
-                        //                     queryClient,
-                        //                     navigate,
-                        //                 );
-                        //             }}
-                        //             btnCancelFn={() =>
-                        //                 props?.toggleBackDropClose()
-                        //             }
-                        //             btnOkLabel={props?.profileBtnOkLabel}
-                        //             btnCancelLabel="Cancel"
-                        //         />,
-                        //     );
-                        //     props?.setSizeForCustomBackDrop(LandscapeSizeS);
-                        // }}
                         onClick={() => {
                             const backdropId =
                                 SIDE_NAV_CONFIRMATION_FOR_PROFILE_CHANGE;
 
-                            props?.toggleBackDropOpen(
+                            toggleBackDropOpen(
                                 backdropId,
                                 <Confirmation
                                     darkTheme={darkTheme}
-                                    heading={props?.profileBtnHeading}
+                                    heading="You want to switch profile, Are you sure?"
                                     btnOkFn={() => {
-                                        props?.toggleBackDropClose(backdropId);
+                                        toggleBackDropClose(backdropId);
                                         logoutProfileOnClick(
                                             dispatch,
                                             queryClient,
@@ -143,9 +123,9 @@ const SideNavigation = (props: any) => {
                                         );
                                     }}
                                     btnCancelFn={() =>
-                                        props?.toggleBackDropClose(backdropId)
+                                        toggleBackDropClose(backdropId)
                                     }
-                                    btnOkLabel={props?.profileBtnOkLabel}
+                                    btnOkLabel="Yes"
                                     btnCancelLabel="Cancel"
                                 />,
                                 LandscapeSizeS,
@@ -165,8 +145,9 @@ const SideNavigation = (props: any) => {
                 )}
             </div>
             <div>
-                {sidenav_lower_list?.length !== 0 &&
-                    sidenav_lower_list?.map((item: any) => (
+                {lower_nav_option &&
+                    lower_nav_option?.length !== 0 &&
+                    lower_nav_option?.map((item: any) => (
                         <Link to={item?.to} key={item?.id}>
                             <motion.span
                                 style={{
@@ -230,44 +211,25 @@ const SideNavigation = (props: any) => {
                     whileTap={{
                         scale: 0.95,
                     }}
-                    // onClick={() => {
-                    //     props?.toggleBackDropOpen();
-                    //     props?.setChildForCustomBackDrop(
-                    //         <Confirmation
-                    //             darkTheme={darkTheme}
-                    //             heading={props?.logoutBtnHeading}
-                    //             btnOkFn={() => {
-                    //                 props?.toggleBackDropClose();
-                    //                 dispatch(resetApp());
-                    //                 queryClient.clear();
-                    //                 navigate(RoutePath.Home);
-                    //             }}
-                    //             btnCancelFn={() => props?.toggleBackDropClose()}
-                    //             btnOkLabel={props?.logoutBtnOkLabel}
-                    //             btnCancelLabel="Cancel"
-                    //         />,
-                    //     );
-                    //     props?.setSizeForCustomBackDrop(LandscapeSizeS);
-                    // }}
                     onClick={() => {
                         const backdropId =
-                            SIDE_NAV_CONFIRMATION_FOR_LOGOUT_PROFILE; // Unique ID for this backdrop
+                            SIDE_NAV_CONFIRMATION_FOR_LOGOUT_PROFILE;
 
-                        props?.toggleBackDropOpen(
+                        toggleBackDropOpen(
                             backdropId,
                             <Confirmation
                                 darkTheme={darkTheme}
-                                heading={props?.logoutBtnHeading}
+                                heading="Oh no! You are leaving. Are you sure?"
                                 btnOkFn={() => {
-                                    props?.toggleBackDropClose(backdropId);
+                                    toggleBackDropClose(backdropId);
                                     dispatch(resetApp());
                                     queryClient.clear();
                                     navigate(RoutePath.Home);
                                 }}
                                 btnCancelFn={() =>
-                                    props?.toggleBackDropClose(backdropId)
+                                    toggleBackDropClose(backdropId)
                                 }
-                                btnOkLabel={props?.logoutBtnOkLabel}
+                                btnOkLabel="Yes, Log me out"
                                 btnCancelLabel="Cancel"
                             />,
                             LandscapeSizeS,

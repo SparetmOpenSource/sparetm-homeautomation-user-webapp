@@ -122,11 +122,9 @@ import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
 import { getMergedHeadersForSpotify } from '../../../../Api.tsx/Axios';
 import { usePostUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
-import {
-    spotifyAccountType,
-    spotifyNonPremiumWarning,
-} from '../../../../Data/Constants';
+import { spotifyNonPremiumWarning } from '../../../../Data/Constants';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
+import { useAppSelector } from '../../../../Features/ReduxHooks';
 
 type AudioProgressBarProps = {
     totalTimeMs: number;
@@ -146,10 +144,8 @@ const AudioProgressBar = ({
     const totalTimeSec = totalTimeMs / 1000;
     const [currentTime, setCurrentTime] = useState(progressTimeMs / 1000);
     const [isSeeking, setIsSeeking] = useState(false);
-    const spotifyAcntType = useMemo(
-        () => localStorage.getItem(spotifyAccountType),
-        [],
-    );
+    const spotifyAcntType = useAppSelector((state) => state.spotify.accountType);
+    const accessToken = useAppSelector((state) => state.spotify.accessToken);
     const color = useMemo(
         () => (darkTheme ? dark_colors : light_colors),
         [darkTheme],
@@ -165,11 +161,9 @@ const AudioProgressBar = ({
     // Update seek API call config
     const updateHeaderConfig = useMemo(
         () => ({
-            headers: getMergedHeadersForSpotify(
-                localStorage.getItem('spotify_access_token'),
-            ),
+            headers: getMergedHeadersForSpotify(accessToken),
         }),
-        [],
+        [accessToken],
     );
 
     const onSuccessSeek = () => {};

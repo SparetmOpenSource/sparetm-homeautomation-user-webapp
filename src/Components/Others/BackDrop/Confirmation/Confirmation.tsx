@@ -18,14 +18,16 @@ const Confirmation = ({
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div className="confirmation">
+        <div className="confirmation"  style={{ backgroundColor: color?.inner}}>
             <section
-                style={{ backgroundColor: color?.inner, color: color?.text }}
+                style={{ color: color?.text }}
+                // style={{ backgroundColor: 'green', color: color?.text }}
             >
                 <h1>{heading}</h1>
             </section>
             <section
                 style={{ backgroundColor: color?.outer, color: color?.text }}
+                // style={{ backgroundColor: 'red', color: color?.text }}
             >
                 <span>
                     <Button

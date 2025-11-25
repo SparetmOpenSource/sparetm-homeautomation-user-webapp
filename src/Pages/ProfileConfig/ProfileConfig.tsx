@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import CommonSkin from '../../Components/Others/UiSkin/CommonSkin/CommonSkin';
+import CommonSkin from '../../Components/Others/UiSkin/CommonNavSkin/CommonNavSkin';
 import './ProfileConfig.css';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
-import { useBackDropOpen, useTheme, useThemeUpdate } from '../ThemeProvider';
+import { useTheme, useThemeUpdate } from '../ThemeProvider';
 import { MdLightMode } from 'react-icons/md';
 import { CiDark } from 'react-icons/ci';
 import UpperNavigation from '../../Components/Others/Navigation/UpperNavigation/UpperNavigation';
@@ -17,7 +17,7 @@ const ProfileConfig = () => {
     const darkTheme: any = useTheme();
     const location = useLocation();
 
-    const nav_upper_list_option = [
+    const upper_nav_option = [
         {
             id: 1,
             icon: <></>,
@@ -36,7 +36,7 @@ const ProfileConfig = () => {
         },
     ];
 
-    const nav_upper_list = [
+    const side_upper_nav_option = [
         {
             id: 1,
             to: RoutePath.AddProfileConfig,
@@ -55,15 +55,6 @@ const ProfileConfig = () => {
         },
     ];
 
-    // const {
-    //     toggleBackDropOpen,
-    //     toggleBackDropClose,
-    //     setChildForCustomBackDrop,
-    //     setSizeForCustomBackDrop,
-    // } = useBackDropOpen();
-
-    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
-
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -71,31 +62,13 @@ const ProfileConfig = () => {
     return (
         <div className="profileConfig">
             <CommonSkin
+                upper_nav_enable={true}
+                upper_nav={<UpperNavigation nav_option={upper_nav_option} />}
                 side_nav_enable={true}
                 side_nav={
                     <SideNavigation
-                        upper_list={nav_upper_list}
-                        logoutBtnOkLabel="Yes, Log me out"
-                        logoutBtnHeading="Oh no! You are leaving. Are you sure?"
-                        toggleBackDropOpen={toggleBackDropOpen}
-                        toggleBackDropClose={toggleBackDropClose}
-                        // setChildForCustomBackDrop={setChildForCustomBackDrop}
-                        // setSizeForCustomBackDrop={setSizeForCustomBackDrop}
-                    />
-                }
-                upper_nav_enable={true}
-                upper_nav={
-                    <UpperNavigation
-                        upper_nav_option={nav_upper_list_option}
-                        IsSearchEnable={
-                            nav_upper_list[1].currentPath ===
-                                nav_upper_list[1].listPath ||
-                            nav_upper_list[1].currentPath?.includes(
-                                nav_upper_list[1].listPath,
-                            )
-                                ? true
-                                : false
-                        }
+                        upper_nav_option={side_upper_nav_option}
+                        profile_logout_enable={false}
                     />
                 }
                 content={<Outlet />}
@@ -103,4 +76,5 @@ const ProfileConfig = () => {
         </div>
     );
 };
+
 export default ProfileConfig;

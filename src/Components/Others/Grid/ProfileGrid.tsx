@@ -24,7 +24,7 @@ const ProfileGrid = (props: any) => {
     ];
 
     return (
-        <div className="grid-profile">
+        <div className="profile-grid">
             {props?.data?.map((el: any) => (
                 <ProfileCard
                     key={el.profileId}

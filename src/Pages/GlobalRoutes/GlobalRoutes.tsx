@@ -5,13 +5,16 @@ import PublicRoute from '../../Services/PublicRoute';
 import ProtectedRoute from '../../Services/ProtectedRoute';
 import { RoutePath } from '../../Data/Constants';
 import {
+    About,
     AddProfile,
+    ArduinoIde,
+    Chat,
     Connection,
     CoreApplication,
     DashBoard,
     DeviceRoom,
-    Home,
     NotFound,
+    Overview,
     Play,
     ProfilePage,
     SelectProfile,
@@ -19,16 +22,17 @@ import {
     SignInSignUp,
 } from './GlobalRoutePages';
 import Todo from '../../Components/CoreApplicationNew/DashBoard/Todo/Todo';
+import HomeWithLoader from '../Home/HomeWithLoader/HomeWithLoader';
 
 const routes = [
     {
         path: RoutePath.Home,
-        element: <Home />,
+        element: <HomeWithLoader />,
         isPublic: true,
     },
     {
         path: RoutePath.About,
-        element: <h1>About screen</h1>,
+        element: <About />,
         isPublic: true,
     },
     {
@@ -90,6 +94,10 @@ const routes = [
                 element: <DeviceRoom />,
             },
             {
+                path: RoutePath.Chat,
+                element: <Chat />,
+            },
+            {
                 path: RoutePath.Play,
                 element: <Play />,
             },
@@ -128,15 +136,15 @@ const routes = [
                     },
                     {
                         path: RoutePath.GettingStartedDocs,
-                        element: <h1>Getting started !</h1>,
+                        element: <Overview />,
                     },
                     {
                         path: RoutePath.GettingStartedwithArduinoIdeDocs,
-                        element: <h1>Arduino id docs !</h1>,
+                        element: <ArduinoIde />,
                     },
                     {
-                        path: RoutePath.GettingStartedwithEsp8266Docs,
-                        element: <h1>Esp8266 basic !</h1>,
+                        path: RoutePath.GettingStartedwithEsp8266Esp32Docs,
+                        element: <h1>Esp8266/esp32 basic !</h1>,
                     },
                     {
                         path: RoutePath.Esp8266SpecificDeviceCodeDocs,
@@ -145,6 +153,10 @@ const routes = [
                     {
                         path: RoutePath.CodeExamplesDocs,
                         element: <h1>Code examples !</h1>,
+                    },
+                    {
+                        path: RoutePath.HardwareConnection,
+                        element: <h1>Hardware connection !</h1>,
                     },
                 ],
             },

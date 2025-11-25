@@ -1,8 +1,40 @@
 import './PicFrame.css';
-//import Frame from './../../../Assets/Frame.png';
 import Pooh from './../../../Assets/Pooh.jpg';
+// import { useWindowSize } from '../../../Hooks/useWindowSize';
+// import PlantSimulatorAnimated from './PlantSimulator/Animation/AnimatedPlantProps';
+// import { useMemo, useState } from 'react';
 
 const PicFrame = () => {
+    //    const { height } = useWindowSize();
+    //     const [lineLn] = useState(() => {
+    //         const h = height;
+    //         return h <= 800 ? 150 : h >= 950 ? 195 : 0;
+    //     });
+    //     const [angleLF] = useState(25);
+    //     const [angleRT] = useState(25);
+    //     const [branchWD] = useState(20);
+
+    //     const plantSimulator = useMemo(
+    //         () => (
+    //             <PlantSimulatorAnimated
+    //                 initial={{
+    //                     branchWD,
+    //                     lineLn,
+    //                     angleLF,
+    //                     angleRT,
+    //                     branchColor: 'grey',
+    //                     leafColor1: 'palevioletred',
+    //                     leafColor2: 'palevioletred',
+    //                     backgroundColor: 'rgba(250, 235, 215, 0.7)', // `${color?.button.split(')')[0]},0.1)`
+    //                 }}
+    //                 animateKey="angleLF"
+    //                 amplitude={3}
+    //                 speed={1}
+    //             />
+    //         ),
+    //         [branchWD, lineLn, angleLF, angleRT],
+    //     );
+
     return (
         <div className="picFrame">
             <section className="picFrame_firstBorder">
@@ -16,6 +48,7 @@ const PicFrame = () => {
                             loading="lazy"
                             alt="home_icon"
                         />
+                        {/* {plantSimulator} */}
                     </section>
                 </section>
             </section>

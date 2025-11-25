@@ -14,6 +14,8 @@ const storedDarkMode = JSON.parse(localStorage.getItem('darkMode'));
 
 localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
 
+const admin = useAppSelector((state: any) => state?.user?.admin);
+
 onClick={() =>
 notificationModeChanged(
 notificationMode,
@@ -244,3 +246,59 @@ const backdropId = "confirmationModal"; // Unique ID for this backdrop
     );
 
 }}
+
+line-height: 1.5; /_ 16px × 1.5 = 24px between lines _/
+
+---
+
+const dispatch = useAppDispatch();
+const profileData = useAppSelector(
+(state: any) => state?.user?.profileData,
+);
+dispatch(addDeviceData(data?.data));
+
+       const MyComponent = () => {
+
+const didMount = useRef(false);
+
+useEffect(() => {
+if (!didMount.current) {
+console.log("Mounted once, even in StrictMode");
+didMount.current = true;
+}
+}, []);
+
+---
+
+    // setTotalDevices(
+        //     data?.data?.body?.filter(
+        //         (el: any) =>
+        //             el.roomType?.toLowerCase() === roomType?.toLowerCase(),
+        //     ).length,
+        // );
+
+
+    font-weight: lighter !important;
+    margin-bottom: 1.5rem;
+    font-size: 26px;
+
+
+    --------
+
+    const dispatch = useAppDispatch();
+    const darkTheme = useTheme();
+    const color = useMemo(
+        () => (darkTheme ? dark_colors : light_colors),
+        [darkTheme],
+    );
+    onClick={() =>
+        handleClickForBlinkNotification(color, 'WARNING', dispatch)
+    }
+
+   handleClickForBlinkNotification(
+  color,
+  error?.response?.data?.status === 500 ? 'ERROR' : 'WARNING',
+  dispatch
+);
+
+

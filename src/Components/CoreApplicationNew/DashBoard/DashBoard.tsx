@@ -3,62 +3,24 @@ import './DashBoard.css';
 import { useEffect, useState } from 'react';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { useTheme } from '../../../Pages/ThemeProvider';
-import Button from '../../Others/CustomButton/Button';
 import { useAppSelector } from '../../../Features/ReduxHooks';
 import { RoutePath } from '../../../Data/Constants';
-import Spotify from '../../Others/Widgets/Spotify/SpotifyLogIn';
-import { CiCircleChevLeft } from 'react-icons/ci';
-import { CiCircleChevRight } from 'react-icons/ci';
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
-import Weather from '../../Others/Widgets/Weather/Weather';
 import WidgetCarousel from '../../Others/Slide/WidgetCarousel/WidgetCarousel';
 import { RiCalendarTodoLine } from 'react-icons/ri';
-import { IoIosStats } from 'react-icons/io';
 import { BsActivity } from 'react-icons/bs';
 
 const DashBoard = () => {
     const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
     const navigate = useNavigate();
-    const location = useLocation();
     const profile = useAppSelector((state: any) => state?.user?.profile);
-    const currentPath = location.pathname;
     const statusListPath = RoutePath?.Dashboard_Device_Status;
     const todoListPath = RoutePath?.Dashboard_Todo;
-
-    // const ddt = [
-    //     {
-    //         id: 'haskell',
-    //         label: 'haskell',
-    //         value: 480,
-    //         color: 'hsl(252, 70%, 50%)',
-    //     },
-    //     {
-    //         id: 'lisp',
-    //         label: 'lisp',
-    //         value: 166,
-    //         color: 'hsl(263, 70%, 50%)',
-    //     },
-    //     {
-    //         id: 'ruby',
-    //         label: 'ruby',
-    //         value: 360,
-    //         color: 'hsl(13, 70%, 50%)',
-    //     },
-    //     {
-    //         id: 'javascript',
-    //         label: 'javascript',
-    //         value: 464,
-    //         color: 'hsl(191, 70%, 50%)',
-    //     },
-    //     {
-    //         id: 'php',
-    //         label: 'php',
-    //         value: 8,
-    //         color: 'rgb(0,0,0)',
-    //     },
-    // ];
+    const location = useLocation();
+    const { pathname } = location;
+    const currentPath = pathname.replace('%20', '');
 
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
@@ -67,8 +29,7 @@ const DashBoard = () => {
     return (
         <div className="dashBoard">
             <section className="dashBoard-content">
-                {/*  */}
-                <span>
+                <span className="dashBoard-content-heading">
                     <div>
                         <h1 style={{ color: color?.text }}>
                             Hi, {profile} <br /> Check your <br />
@@ -77,41 +38,73 @@ const DashBoard = () => {
                     </div>
                     <div>
                         <motion.span
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
                             onClick={() => navigate(statusListPath)}
                         >
                             <IconContext.Provider
                                 value={{
                                     size: '2em',
-                                    color: color?.button,
+                                    color:
+                                        currentPath ===
+                                        RoutePath.CoreApplication_Dashboard +
+                                            RoutePath.Device_Status
+                                            ? color?.button
+                                            : color?.icon,
                                 }}
                             >
                                 <BsActivity />
                             </IconContext.Provider>
-                            <p style={{ color: color?.text }}>status</p>
+                            <p
+                                style={{
+                                    color:
+                                        currentPath ===
+                                        RoutePath.CoreApplication_Dashboard +
+                                            RoutePath.Device_Status
+                                            ? color?.text
+                                            : color?.icon,
+                                }}
+                            >
+                                status
+                            </p>
                         </motion.span>
                         <motion.span
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
                             onClick={() => navigate(todoListPath)}
                         >
                             <IconContext.Provider
                                 value={{
                                     size: '2em',
-                                    color: color?.button,
+                                    color:
+                                        currentPath ===
+                                        RoutePath.CoreApplication_Dashboard +
+                                            RoutePath.Device_Todo
+                                            ? color?.button
+                                            : color?.icon,
                                 }}
                             >
                                 <RiCalendarTodoLine />
                             </IconContext.Provider>
-                            <p style={{ color: color?.text }}>todo</p>
+                            <p
+                                style={{
+                                    color:
+                                        currentPath ===
+                                        RoutePath.CoreApplication_Dashboard +
+                                            RoutePath.Device_Todo
+                                            ? color?.text
+                                            : color?.icon,
+                                }}
+                            >
+                                todo
+                            </p>
                         </motion.span>
                     </div>
                 </span>
-                <span>
+                <span className="dashBoard-content-widget">
                     <WidgetCarousel />
                 </span>
-                <span>
+                <span className="dashBoard-content-status">
                     <Outlet />
                 </span>
             </section>
@@ -121,7 +114,7 @@ const DashBoard = () => {
                         backgroundColor: `${color?.button.split(')')[0]},0.5)`,
                     }}
                 >
-                    {/* <Pie data={ddt} fontColor={color} /> */}
+                    yoyo
                 </span>
             </section>
         </div>

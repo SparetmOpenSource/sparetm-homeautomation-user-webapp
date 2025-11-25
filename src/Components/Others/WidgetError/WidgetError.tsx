@@ -46,30 +46,30 @@
 // refactor code -----------------------------
 import './WidgetError.css';
 import { LuServerOff } from 'react-icons/lu';
-import { useMemo, useCallback } from 'react';
+import { useMemo } from 'react';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
-import { useTheme } from '../../../Pages/ThemeProvider';
+// import { useTheme } from '../../../Pages/ThemeProvider';
 import { motion } from 'framer-motion';
-import { useQueryClient } from 'react-query';
-import { invalidateQueries } from '../../../Utils/HelperFn';
+// import { useQueryClient } from 'react-query';
+// import { invalidateQueries } from '../../../Utils/HelperFn';
 import { IconContext } from 'react-icons';
 
-type WidgetErrorProps = {
-    queryKeys: string | string[];
-};
+// type WidgetErrorProps = {
+//     queryKeys: string | string[];
+// };
 
 const getThemeColors = (isDark: boolean) =>
     isDark ? dark_colors : light_colors;
 
-const WidgetError = ({ queryKeys }: WidgetErrorProps) => {
-    const isDarkTheme = useTheme();
-    const queryClient = useQueryClient();
+const WidgetError = ({ darkTheme }: any) => {
+    // const isDarkTheme = useTheme();
+    // const queryClient = useQueryClient();
 
-    const color = useMemo(() => getThemeColors(isDarkTheme), [isDarkTheme]);
+    const color = useMemo(() => getThemeColors(darkTheme), [darkTheme]);
 
-    const handleReload = useCallback(() => {
-        invalidateQueries(queryClient, queryKeys);
-    }, [queryClient, queryKeys]);
+    // const handleReload = useCallback(() => {
+    //     invalidateQueries(queryClient, queryKeys);
+    // }, [queryClient, queryKeys]);
 
     return (
         <div className="widgetError">
@@ -82,13 +82,13 @@ const WidgetError = ({ queryKeys }: WidgetErrorProps) => {
 
                 <p style={{ color: color.text }}>server down (weather)</p>
 
-                <p
+                {/* <p
                     className="widgetError-reload"
                     onClick={handleReload}
                     style={{ color: color.text }}
                 >
                     click to reload
-                </p>
+                </p> */}
             </motion.span>
         </div>
     );

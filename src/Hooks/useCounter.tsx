@@ -1,35 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
 
-/**
- * Custom hook that runs a counter `n` times at `m` millisecond intervals and restarts the count.
- * @param {number} n - Number of times to run the counter before resetting.
- * @param {number} m - Interval in milliseconds between each execution.
- */
-export function useCounter(n: number, m: number) {
-    const [count, setCount] = useState(0); // Current execution count
-    const intervalRef = useRef<NodeJS.Timeout | null>(null); // Ref to store interval ID
+// **********************used in signIn/signUp page*********************** //
+export function useCounter(loop_len: number, interval: number) {
+    const [count, setCount] = useState(0); 
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        if (n <= 0 || m <= 0) {
-            // If `n` or `m` is invalid, do not set the interval
+        if (loop_len <= 0 || interval <= 0) {
             return;
         }
 
-        // Function to increment the counter
         const runCounter = () => {
-            setCount((prevCount) => (prevCount + 1) % n); // Reset count to 0 after reaching `n`
+            setCount((prevCount) => (prevCount + 1) % loop_len);
         };
 
-        // Set the interval
-        intervalRef.current = setInterval(runCounter, m);
+        intervalRef.current = setInterval(runCounter, interval);
 
-        // Cleanup function to clear the interval
         return () => {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current);
             }
         };
-    }, [n, m]); // Effect dependencies
+
+    }, [loop_len, interval]);
 
     return { count };
 }

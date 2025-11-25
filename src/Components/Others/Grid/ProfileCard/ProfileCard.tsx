@@ -9,7 +9,13 @@ import { useTheme } from '../../../../Pages/ThemeProvider';
 import { useAppDispatch } from '../../../../Features/ReduxHooks';
 import { useQueryClient } from 'react-query';
 
-const ProfileCard = (props: any) => {
+const ProfileCard = ({
+    profileId,
+    profileName,
+    roomCount,
+    deviceCount,
+    face,
+}: any) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const queryClient = useQueryClient();
@@ -36,38 +42,38 @@ const ProfileCard = (props: any) => {
             whileTap={{ scale: 1.0 }}
             className="profileCard"
             onClick={() => {
-                handleClick(props?.profileId, props?.profileName);
+                handleClick(profileId, profileName);
             }}
             style={{ backgroundColor: color?.border }}
         >
-            <div className="profileCard_container">
-                <span className="profileCard_container_icon">
+            <div className="profileCard-container">
+                <span className="profileCard-container-icon">
                     <IconContext.Provider
                         value={{ size: '3em', color: color?.button }}
                     >
-                        <span>{props?.face}</span>
+                        <span>{face}</span>
                     </IconContext.Provider>
                 </span>
                 <section
-                    className="profileCard_container_row_1"
+                    className="profileCard-container-row-1"
                     style={{ backgroundColor: color?.outer }}
                 ></section>
                 <section
-                    className="profileCard_container_row_2"
+                    className="profileCard-container-row-2"
                     style={{ backgroundColor: color?.inner }}
                 >
-                    <span className="profileCard_container_row_2_name">
+                    <span className="profileCard-container-row-2-name">
                         <p style={{ fontSize: '16px', color: color?.text }}>
-                            {props?.profileName}
+                            {profileName}
                         </p>
                     </span>
                     <span
-                        className="profileCard_container_row_2_info"
+                        className="profileCard-container-row-2-info"
                         style={{ borderTop: `1px solid ${color?.button}` }}
                     >
                         <span>
                             <p style={{ fontSize: '13px', color: color?.text }}>
-                                {props?.roomCount}
+                                {roomCount}
                             </p>
                             <p style={{ fontSize: '10px', color: color?.text }}>
                                 Rooms
@@ -75,7 +81,7 @@ const ProfileCard = (props: any) => {
                         </span>
                         <span>
                             <p style={{ fontSize: '13px', color: color?.text }}>
-                                {props?.deviceCount}
+                                {deviceCount}
                             </p>
                             <p style={{ fontSize: '10px', color: color?.text }}>
                                 Device

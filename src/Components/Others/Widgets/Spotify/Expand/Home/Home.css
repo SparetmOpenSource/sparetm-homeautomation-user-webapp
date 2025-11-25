@@ -6,7 +6,7 @@
     justify-content: space-between;
     flex-direction: column;
 }
-.spotify-expand-content-home-song-widget {
+.spotify-expand-content-home-widget {
     width: 100%;
     height: 30%;
     border-radius: 1rem;
@@ -15,94 +15,16 @@
     justify-content: space-between;
 }
 
-.spotify-expand-content-home-song-wrapper {
+.spotify-expand-content-home-wrapper {
     width: 100%;
     height: 69%;
     border-radius: 1rem;
     padding: 0.5rem;
 }
 
-/* ********pic******* */
-
-.spotify-expand-content-home-spotify-img {
-    border-radius: 0.8rem;
-}
-
-.spotify-expand-content-home-song-widget > :first-child {
-    border-radius: 1rem;
-    width: 30%;
-    height: 100%;
-}
-.spotify-expand-content-home-song-widget > :first-child span {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* *******info******* */
-
-.spotify-expand-content-home-song-widget-playing,
-.spotify-expand-content-home-song-widget-no-data {
-    border-radius: 1rem;
-    width: 69%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.spotify-expand-content-home-song-widget-no-data {
-    align-items: flex-start;
-    padding: 1.5rem;
-}
-
-.spotify-expand-content-home-song-widget-playing section {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-.spotify-expand-content-home-song-widget-playing > :first-child {
-    height: 40%;
-    padding-top: 0.5rem;
-}
-.spotify-expand-content-home-song-widget-playing > :last-child {
-    height: 60%;
-}
-
-.spotify-expand-content-home-song-widget-playing > :first-child h1,
-.spotify-expand-content-home-song-widget-playing > :first-child p {
-    margin: 0;
-    padding: 0;
-}
-.spotify-expand-content-home-song-widget-playing > :first-child h1 {
-    font-size: 1rem;
-}
-.spotify-expand-content-home-song-widget-playing > :first-child p {
-    padding: 0.5rem;
-}
-
-/* *********** */
-
-.spotify-expand-content-home-song-widget-playing > :last-child {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.spotify-expand-content-home-song-widget-playing > :last-child div {
-    width: 70%;
-    display: flex;
-    justify-content: space-around;
-}
-
 /* ********* */
 
-.spotify-expand-content-home-song-wrapper > :first-child {
+.spotify-expand-content-home-wrapper-header {
     width: 100%;
     height: 10%;
     display: flex;
@@ -111,7 +33,7 @@
     border-bottom: 1px solid black;
 }
 
-.spotify-expand-content-home-song-wrapper > :first-child > :first-child {
+.spotify-expand-content-home-wrapper-header > :first-child {
     height: 100%;
     width: 70%;
     display: flex;
@@ -120,11 +42,7 @@
     padding-left: 2rem;
 }
 
-.spotify-expand-content-home-song-wrapper > :first-child > :first-child span {
-    margin-left: 1rem;
-}
-
-.spotify-expand-content-home-song-wrapper > :first-child > :last-child {
+.spotify-expand-content-home-wrapper-header > :last-child {
     height: 100%;
     width: 30%;
     display: flex;
@@ -132,13 +50,14 @@
     justify-content: center;
 }
 
-.spotify-expand-content-home-add-to-album {
+.spotify-expand-content-home-wrapper-header-add-to-album {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 1rem;
 }
 
-.spotify-expand-content-home-song-wrapper > :last-child {
+.spotify-expand-content-home-wrapper-song {
     width: 100%;
     height: 90%;
     padding-top: 0.5rem;
@@ -151,13 +70,20 @@
     scrollbar-width: none;
 }
 
-.spotify-expand-content-home-song-wrapper > :last-child::-webkit-scrollbar {
+.spotify-expand-content-home-wrapper-song::-webkit-scrollbar {
     display: none;
 }
 
-/* ******** */
+.spotify-expand-content-home-wrapper-song-isLoading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.2rem;
+}
 
-.spotify-song-template-empty {
+.spotify-expand-content-home-wrapper-song-empty {
     width: 100%;
     height: 100%;
     border-radius: 0.5rem;
@@ -166,41 +92,11 @@
     justify-content: center;
 }
 
-.spotify-song-template-isLoading {
+.spotify-expand-content-home-wrapper-song-isError {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 1.2rem;
-}
-
-.spotify-song-template-isError {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 1.2rem;
-}
-
-.spotify-expand-content-home-song-widget-ad {
-    width: 65%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 1rem;
-}
-
-.spotify-expand-content-home-song-widget-ad h1 {
-    margin: 0;
-    padding: 0;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-}
-.spotify-expand-content-home-song-widget-ad p {
-    margin: 0;
-    padding: 0;
 }

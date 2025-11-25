@@ -1,89 +1,3 @@
-// import './Cover.css';
-// import Card from './Card';
-// import { featureUrl } from '../../../../../../../Api.tsx/CoreAppApis';
-// import { useDeleteData } from '../../../../../../../Api.tsx/useReactQuery_Update';
-// import {
-//     catchError,
-//     invalidateQueries,
-// } from '../../../../../../../Utils/HelperFn';
-// import { useQueryClient } from 'react-query';
-// import { getMergedHeadersForSpotify } from '../../../../../../../Api.tsx/Axios';
-
-// const Cover = ({
-//     listData,
-//     type,
-//     darkTheme,
-//     handleOnClickCover,
-//     selectedLibraryUri,
-//     albumIdQueryIdToBeRefreshed,
-// }: any) => {
-//     const queryClient = useQueryClient();
-
-//     const on_removing_from_album_success = () => {
-//         let queryArray: any = [];
-//         queryArray.push(albumIdQueryIdToBeRefreshed);
-//         invalidateQueries(queryClient, queryArray);
-//     };
-
-//     const on_error = (error: any) => {
-//         catchError(error, darkTheme);
-//     };
-
-//     const updateHeaderConfig = {
-//         headers: getMergedHeadersForSpotify(
-//             localStorage.getItem('spotify_access_token'),
-//         ),
-//     };
-
-//     const { mutate: deleteFromAlbumList } = useDeleteData(
-//         featureUrl.spotify_base_url + `?data=deletefromalbumlist&id=%id%`,
-//         updateHeaderConfig,
-//         on_removing_from_album_success,
-//         on_error,
-//     );
-
-//     return (
-//         <div className="spotify-library-cover-wrapper">
-//             {type === 1 &&
-//                 listData?.body?.items?.map((items: any) => (
-//                     <Card
-// key={items?.id}
-// id={items?.album?.id}
-// img={items?.images[0]?.url}
-// name={items?.name}
-// artist={items?.owner?.display_name}
-// darkTheme={darkTheme}
-// fn={() => handleOnClickCover(items?.id, items?.uri)}
-// libraryUri={items?.uri}
-// selectedLibraryUri={selectedLibraryUri}
-// type={1}
-// triggerDeletion={deleteFromAlbumList}
-// docId={items?.id}
-//                     />
-//                 ))}
-//             {type === 2 &&
-//                 listData?.body?.items?.map((items: any, index: any) => (
-//                     <Card
-// key={items?.album?.id}
-// id={index}
-// img={items?.album?.images[0]?.url}
-// name={items?.album?.name}
-// artist={items?.album?.artists[0]?.name}
-// darkTheme={darkTheme}
-// fn={handleOnClickCover}
-// libraryUri={items?.album?.uri}
-// selectedLibraryUri={selectedLibraryUri}
-// type={2}
-// triggerDeletion={deleteFromAlbumList}
-// docId={items?.album?.id}
-//                     />
-//                 ))}
-//         </div>
-//     );
-// };
-
-// export default Cover;
-
 // refactor code -----------------------------
 import './Cover.css';
 import Card from './Card';
@@ -96,6 +10,7 @@ import {
 import { useQueryClient } from 'react-query';
 import { getMergedHeadersForSpotify } from '../../../../../../../Api.tsx/Axios';
 import { useMemo } from 'react';
+import { useAppSelector } from '../../../../../../../Features/ReduxHooks';
 
 interface CoverProps {
     listData: {
@@ -119,6 +34,7 @@ const Cover = ({
     albumIdQueryIdToBeRefreshed,
 }: CoverProps) => {
     const queryClient = useQueryClient();
+    const accessToken = useAppSelector((state) => state.spotify.accessToken);
 
     const onSuccess = () => {
         invalidateQueries(queryClient, [albumIdQueryIdToBeRefreshed]);
@@ -129,9 +45,7 @@ const Cover = ({
     };
 
     const updateHeaderConfig = {
-        headers: getMergedHeadersForSpotify(
-            localStorage.getItem('spotify_access_token'),
-        ),
+        headers: getMergedHeadersForSpotify(accessToken),
     };
 
     const { mutate: deleteFromAlbumList } = useDeleteData(

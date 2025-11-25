@@ -1,0 +1,49 @@
+.todo-list {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.3rem;
+    margin-bottom: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.todo-list-msg {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 1.5rem;
+}
+.todo-list-msg h1,
+.todo-list-msg p {
+    margin: 0;
+    padding: 0;
+}
+.todo-list-msg h1 {
+    font-size: 1.2rem;
+    padding: 0.12rem;
+    padding-left: 0;
+}
+.todo-list-msg p {
+    font-size: 0.9rem;
+    padding: 0.12rem;
+    padding-left: 0;
+}
+.todo-list-edit {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.todo-list-edit span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

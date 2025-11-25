@@ -10,14 +10,12 @@ import {
 import { getWeatherQuote } from '../../../../Api.tsx/CoreAppApis';
 import { useReactQuery_Get } from '../../../../Api.tsx/useReactQuery_Get';
 import {
-    colorNotificationStatus,
     HorizontalSize,
     WEATHER_EXPAND,
     weather_quote_constant,
 } from '../../../../Data/Constants';
 import { SELECT_WEATHER_QUOTE_QUERY_ID } from '../../../../Data/QueryConstant';
 import { useAppSelector } from '../../../../Features/ReduxHooks';
-// import { useColorNotification } from '../../../../App';
 import LoadingFade from '../../LoadingAnimation/LoadingFade';
 import { IconContext } from 'react-icons';
 import WidgetError from '../../WidgetError/WidgetError';
@@ -28,19 +26,15 @@ import Expand from './Expand';
 const Weather = () => {
     const [color, setColor] = useState<any>(light_colors);
     const profileId = useAppSelector((state: any) => state?.user?.profileId);
-    // const handleColorNotificationChange = useColorNotification();
     const darkTheme: any = useTheme();
 
     const weatherQuoteFn = () => {
         return getWeatherQuote(profileId, darkTheme);
     };
 
-    const on_Success = () => {
-        // handleColorNotificationChange(colorNotificationStatus[0]);
-    };
+    const on_Success = () => {};
 
     const on_Error = (error: any) => {
-        // handleColorNotificationChange(colorNotificationStatus[1]);
         catchError(error, darkTheme);
     };
 
@@ -65,9 +59,6 @@ const Weather = () => {
     const state: any = data?.data?.headers?.state[0];
     // const quote: any = data?.data?.body?.quoteData;
     let icon = changeWeatherIcon(iconCode);
-
-    const queryKeys = [SELECT_WEATHER_QUOTE_QUERY_ID];
-
     const { toggleBackDropOpen } = useBackDropOpen();
 
     useEffect(() => {
@@ -83,7 +74,7 @@ const Weather = () => {
             )}
             {!isLoading && isError && (
                 <div className="weather_error">
-                    <WidgetError queryKeys={queryKeys} />
+                    <WidgetError darkTheme={darkTheme} />
                 </div>
             )}
             {!isLoading && !isError && (
@@ -112,19 +103,8 @@ const Weather = () => {
                         <motion.span
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}
-                            // onClick={() => {
-                            //     toggleBackDropOpen();
-                            //     setChildForCustomBackDrop(
-                            //         <Expand
-                            //             weather={weather}
-                            //             state={state}
-                            //             darkTheme={darkTheme}
-                            //         />,
-                            //     );
-                            //     setSizeForCustomBackDrop(HorizontalSize);
-                            // }}
                             onClick={() => {
-                                const backdropId = WEATHER_EXPAND; // Unique ID for this backdrop
+                                const backdropId = WEATHER_EXPAND;
 
                                 toggleBackDropOpen(
                                     backdropId,

@@ -1,49 +1,56 @@
-.upper_navigation_user_option section span,
-.upper_navigation_user_option section,
-.upper_navigation_search,
-.upper_navigation,
-.upper_navigation_logo {
+.upper-navigation-user-btn section span,
+.upper-navigation-user-btn section,
+.upper-navigation-search,
+.upper-navigation,
+.upper-navigation-logo {
     display: flex;
     align-items: center;
+}
+
+.upper-navigation,
+.upper-navigation-user-btn,
+.upper-navigation-logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.upper-navigation {
+    width: 100%;
+    justify-content: space-between;
     justify-content: center;
 }
 
-.upper_navigation,
-.upper_navigation_user_option,
-.upper_navigation_logo {
+.upper-navigation-search {
+    width: 50%;
     height: 100%;
-    display: flex;
-    align-items: center;
+    justify-content: center;
 }
 
-.upper_navigation {
-    width: 100%;
-    justify-content: space-between;
-
+.upper-navigation-user-btn {
+    width: 25%;
+    justify-content: flex-end;
 }
 
-.upper_navigation_search {
-    width: 75%;
-    height: 100%;
-}
-
-.upper_navigation_user_option {
+.upper-navigation-user-btn section {
     width: 15%;
-    justify-content: space-around;
-}
-
-.upper_navigation_user_option section {
-    width: 20%;
     height: 100%;
+    justify-content: center;
+    margin-right: 0.5rem;
 }
 
-.upper_navigation_user_option section span {
+.upper-navigation-user-btn section span {
     width: 85%;
     height: 85%;
+    justify-content: center;
 }
 
-.upper_navigation_logo {
-    width: 10%;
+.upper-navigation-logo {
+    width: 25%;
     justify-content: flex-start;
     padding-left: 2rem;
+}
+
+.upper-navigation-logo p {
+    font-size: 16px;
 }

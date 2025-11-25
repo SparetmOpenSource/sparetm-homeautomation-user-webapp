@@ -1,30 +1,13 @@
-import { Bounce, toast } from 'react-toastify';
+import { Bounce, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TbCircleDashed } from 'react-icons/tb';
-import { BsMusicPlayerFill } from 'react-icons/bs';
-import { GiCeilingLight } from 'react-icons/gi';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import {
-    NETWORKERRORKEY,
-    RoutePath,
-    spotifyAccountType,
-    spotifyCodeVerifier,
-    spotifyNonPremiumWarning,
-    spotifyNoPlayableDeviceWarning,
-    spotifyRefreshToken,
-    spotifyToken,
-    spotifyTokenFetched,
-    spotifyTokenFetchedTime,
-} from '../Data/Constants';
-import { GiBoatPropeller } from 'react-icons/gi';
-import { GiWashingMachine } from 'react-icons/gi';
-import { TbMicrowave } from 'react-icons/tb';
-import { LuRefrigerator } from 'react-icons/lu';
-import { GiVacuumCleaner } from 'react-icons/gi';
-import { GiToaster } from 'react-icons/gi';
-import { PiHardDriveDuotone } from 'react-icons/pi';
-import { TbFreezeRow } from 'react-icons/tb';
+    TbMicrowave,
+    TbAirConditioning,
+    TbDeviceTvOld,
+    TbFreezeRow,
+} from 'react-icons/tb';
 import {
+    BsMusicPlayerFill,
     BsSunFill,
     BsCloudSunFill,
     BsCloudFill,
@@ -34,20 +17,35 @@ import {
     BsFillCloudLightningRainFill,
     BsSnow2,
 } from 'react-icons/bs';
-import { TbAirConditioning } from 'react-icons/tb';
-import { SiSocketdotio } from 'react-icons/si';
-import { TbDeviceTvOld } from 'react-icons/tb';
+import {
+    GiCeilingLight,
+    GiBoatPropeller,
+    GiWashingMachine,
+} from 'react-icons/gi';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
+import {
+    BACKGROUND_BLINK_SETTING,
+    NETWORKERRORKEY,
+    RoutePath,
+    // spotifyAccountType,
+    spotifyCodeVerifier,
+    spotifyNonPremiumWarning,
+    spotifyNoPlayableDeviceWarning,
+    // spotifyRefreshToken,
+    // spotifyToken,
+    // spotifyTokenFetched,
+    // spotifyTokenFetchedTime,
+    spotifyUserNotRegisteredWarning,
+} from '../Data/Constants';
+import { LuRefrigerator } from 'react-icons/lu';
+import { SiSocketdotio, SiNano } from 'react-icons/si';
 import { RiMistLine, RiMoonClearLine } from 'react-icons/ri';
+import { BiSolidWasher } from 'react-icons/bi';
+import { setBlinkColor, triggerBlink } from '../Features/Blink/BlinkSlice';
 
 // -----------------------Toastify functions-----------------------//
 
 const toastProperty: any = (color: any) => {
-    // 'top-left';
-    // 'top-right'; // (Default)
-    // 'top-center';
-    // 'bottom-left';
-    // 'bottom-right';
-    // 'bottom-center';
     return {
         position: 'bottom-right',
         autoClose: 5000,
@@ -58,6 +56,7 @@ const toastProperty: any = (color: any) => {
         progress: undefined,
         theme: color, // light, dark, colored
         transition: Bounce,
+        zIndex: 20000,
     };
 };
 
@@ -74,6 +73,36 @@ export const displayToastify: any = (message: any, color: any, status: any) => {
     }
 };
 
+export const ToastifyContainer = () => (
+    <ToastContainer style={{ zIndex: 20000 }} />
+);
+
+// -------------------------------------------------------- //
+
+export const handleClickForBlinkNotification = (
+    color: any,
+    status: string,
+    dispatch: any,
+) => {
+    const stored = localStorage.getItem(BACKGROUND_BLINK_SETTING);
+    const settings = stored ? JSON.parse(stored) : {};
+
+    const isEnabled = settings[status] ?? true;
+
+    if (!isEnabled) return;
+
+    const colorMap: Record<string, string> = {
+        SUCCESS: color?.success,
+        ERROR: color?.error,
+        WARNING: color?.warning,
+        INFO: color?.info,
+    };
+
+    const blinkColor = colorMap[status] || 'gray';
+    dispatch(setBlinkColor(blinkColor));
+    dispatch(triggerBlink());
+};
+
 // ---------------- Error inside catch -------------------- //
 
 export const catchError = (error: any, darkTheme: any) => {
@@ -85,6 +114,9 @@ export const catchError = (error: any, darkTheme: any) => {
         'Device not found',
         'Id not found',
     ];
+
+    const userNotRegisteredErrorsForSpotify = ['Access forbidden'];
+
     let errorDetails = (error as any)?.response?.data?.message;
     if (typeof errorDetails === 'object' && errorDetails !== null) {
         Object.keys(errorDetails).forEach(function eachKey(key) {
@@ -100,6 +132,11 @@ export const catchError = (error: any, darkTheme: any) => {
                 errorDetails?.toLowerCase().includes(err.toLowerCase()),
             );
 
+            const isUserRegisteredError =
+                userNotRegisteredErrorsForSpotify.some((err) =>
+                    errorDetails?.toLowerCase().includes(err.toLowerCase()),
+                );
+
             const isNoPlayableDeviceError =
                 noPlayableDeviceErrorsForSpotify.some((err) =>
                     errorDetails?.toLowerCase().includes(err.toLowerCase()),
@@ -109,6 +146,8 @@ export const catchError = (error: any, darkTheme: any) => {
 
             if (isNonPremiumError) {
                 messageToShow = spotifyNonPremiumWarning;
+            } else if (isUserRegisteredError) {
+                messageToShow = spotifyUserNotRegisteredWarning;
             } else if (isNoPlayableDeviceError) {
                 messageToShow = spotifyNoPlayableDeviceWarning;
             } else {
@@ -182,45 +221,77 @@ export const changeWeatherIcon = (iconCode: string) => {
 
 export const appliance = [
     {
+        id: 1,
+        label: 'RGB',
+        value: 'gadget/rgb',
+        remote: false,
+    },
+    {
+        id: 2,
         label: 'Light',
         value: 'appliance/light',
         remote: false,
     },
     {
+        id: 3,
         label: 'Fan',
         value: 'appliance/fan',
         remote: true,
     },
     {
+        id: 4,
         label: 'Switch',
         value: 'appliance/switch',
         remote: false,
     },
     {
+        id: 5,
         label: 'Television',
-        value: 'appliance/tv',
+        value: 'appliance/television',
         remote: true,
     },
     {
+        id: 6,
         label: 'Air Conditioner',
-        value: 'appliance/ac',
+        value: 'appliance/airConditioner',
         remote: true,
     },
     {
+        id: 7,
         label: 'Music',
         value: 'appliance/music',
         remote: false,
     },
-    // {
-    //   label: "Freezer",
-    //   value: "appliance/freezer",
-    //   remote: false,
-    // },
-    // {
-    //   label: "Dishwasher",
-    //   value: "appliance/dishwasher",
-    //   remote: false,
-    // },
+    {
+        id: 8,
+        label: 'Freezer',
+        value: 'appliance/freezer',
+        remote: false,
+    },
+    {
+        id: 9,
+        label: 'Dishwasher',
+        value: 'appliance/dishwasher',
+        remote: false,
+    },
+    {
+        id: 10,
+        label: 'Refrigerator',
+        value: 'appliance/refrigerator',
+        remote: false,
+    },
+    {
+        id: 11,
+        label: 'Microwave',
+        value: 'appliance/microwave',
+        remote: false,
+    },
+    {
+        id: 12,
+        label: 'Washing Machine',
+        value: 'appliance/washingMachine',
+        remote: false,
+    },
     // {
     //   label: "Dryer",
     //   value: "appliance/dryer",
@@ -236,36 +307,21 @@ export const appliance = [
     //   value: "appliance/mixer",
     //   remote: false,
     // },
-    {
-        label: 'Toaster',
-        value: 'appliance/toaster',
-        remote: false,
-    },
+    // {
+    //     label: 'Toaster',
+    //     value: 'appliance/toaster',
+    //     remote: false,
+    // },
     // {
     //   label: "Water Purifier",
     //   value: "appliance/waterPurifier",
     //   remote: false,
     // },
-    {
-        label: 'Vacuum Cleaner',
-        value: 'appliance/vacuumCleaner',
-        remote: false,
-    },
-    {
-        label: 'Refrigerator',
-        value: 'appliance/refrigerator',
-        remote: false,
-    },
-    {
-        label: 'Microwave',
-        value: 'appliance/microwave',
-        remote: false,
-    },
-    {
-        label: 'Washing Machine',
-        value: 'appliance/washingMachine',
-        remote: false,
-    },
+    // {
+    //     label: 'Vacuum Cleaner',
+    //     value: 'appliance/vacuumCleaner',
+    //     remote: false,
+    // },
 ];
 
 export const gadget = [
@@ -280,7 +336,7 @@ export const changeDeviceIcon = (device: string) => {
     let icon: any;
     switch (device) {
         case 'RGB':
-            icon = <TbCircleDashed />;
+            icon = <SiNano />;
             break;
         case 'LIGHT':
             icon = <GiCeilingLight />;
@@ -291,23 +347,17 @@ export const changeDeviceIcon = (device: string) => {
         case 'SWITCH':
             icon = <SiSocketdotio />;
             break;
-        case 'AC':
+        case 'AIRCONDITIONER':
             icon = <TbAirConditioning />;
             break;
-        case 'TV':
+        case 'TELEVISION':
             icon = <TbDeviceTvOld />;
             break;
         case 'MUSIC':
             icon = <BsMusicPlayerFill />;
             break;
-        // case 'FREEZER':
-        //     icon = <TbFreezeRow/>;
-        //     break;
-        case 'TOASTER':
-            icon = <GiToaster />;
-            break;
-        case 'VACUUMCLEANER':
-            icon = <GiVacuumCleaner />;
+        case 'FREEZER':
+            icon = <TbFreezeRow />;
             break;
         case 'REFRIGERATOR':
             icon = <LuRefrigerator />;
@@ -317,6 +367,9 @@ export const changeDeviceIcon = (device: string) => {
             break;
         case 'WASHINGMACHINE':
             icon = <GiWashingMachine />;
+            break;
+        case 'DISHWASHER':
+            icon = <BiSolidWasher />;
             break;
         default:
             icon = '';
@@ -336,11 +389,11 @@ export const generateRandomInteger = (min: number, max: number) => {
 };
 
 export const ConvertTheRangeToRound = (
-    currentValue: any,
-    in_min: any,
-    in_max: any,
-    out_min: any,
-    out_max: any,
+    currentValue: number,
+    in_min: number,
+    in_max: number,
+    out_min: number,
+    out_max: number,
 ) => {
     let result =
         ((currentValue - in_min) * (out_max - out_min)) / (in_max - in_min) +
@@ -349,11 +402,11 @@ export const ConvertTheRangeToRound = (
 };
 
 export const ConvertTheRange = (
-    currentValue: any,
-    in_min: any,
-    in_max: any,
-    out_min: any,
-    out_max: any,
+    currentValue: number,
+    in_min: number,
+    in_max: number,
+    out_min: number,
+    out_max: number,
 ) => {
     let result =
         ((currentValue - in_min) * (out_max - out_min)) / (in_max - in_min) +
@@ -423,9 +476,9 @@ export const copyText = async (text: any) => {
 // };
 
 export const logger = (file: string) => {
-    const flag: boolean = true;
-    if (flag) {
-        console.log(`Logging for ${file}...`);
+    const enable_logging: boolean = true;
+    if (enable_logging) {
+        console.log(`Logging for ${file}`);
     }
 };
 
@@ -503,26 +556,29 @@ export function getOffsetAndLimit(
     return { offset, limit };
 }
 
-export const resetSpotify = () => {
-    localStorage.removeItem(spotifyToken);
-    localStorage.removeItem(spotifyRefreshToken);
+export const resetSpotify = (dispatch: any) => {
+    // Dispatch Redux action to reset Spotify state
+    // The Store subscription will handle localStorage cleanup
+    dispatch({ type: 'spotify/resetSpotify' });
+    // Still need to clear sessionStorage for code verifier
     sessionStorage.removeItem(spotifyCodeVerifier);
-    localStorage.removeItem(spotifyTokenFetched);
-    localStorage.removeItem(spotifyTokenFetchedTime);
-    localStorage.removeItem(spotifyAccountType);
 };
 
-export const spotifyLogout = () => {
-    resetSpotify();
+export const spotifyLogout = (dispatch: any) => {
+    resetSpotify(dispatch);
 };
 
 export const navigateTo = (navigate: any, to: any) => {
     navigate(to);
 };
 
-export const uriArray = [`${RoutePath.CoreApplication_Room}`]; //'/app/room'
+// ******************* To enable search option in different pages, add uri **********************//
+export const uriArray = [
+    RoutePath.CoreApplication_Room,
+    RoutePath.SelectProfileConfig,
+];
 export const isSearchActive = (uriArray: any, uri: any) => {
-    return uriArray?.some((item: any) => item?.includes(uri));
+    return uriArray?.some((item: any) => uri?.includes(item));
 };
 
 export const getFormattedDate = () => {
@@ -571,7 +627,6 @@ export const invalidateQueries = (queryClient: any, queryKeys: any) => {
 export const executeLinkInNewTab = (url: string, darkTheme: any) => {
     if (url) {
         window.open(url, '_blank');
-        // window.open(url, '_self');
     } else {
         displayToastify(
             'URL is not provided or invalid',
@@ -612,7 +667,7 @@ export const generateCodeChallenge = async () => {
     return { codeVerifier, codeChallenge };
 };
 
-export const trimTo8Chars = (str: string, lng: number) => {
+export const trimToNChars = (str: string, lng: number) => {
     if (str?.length <= lng) return str; // No trimming needed
     return str?.slice(0, lng) + '...'; // Trim to 8 chars and add ellipsis
 };

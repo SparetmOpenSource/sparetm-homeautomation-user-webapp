@@ -3,10 +3,13 @@ import OptionPage from '../../Others/UiSkin/OptionPage/OptionPage';
 import { useLocation } from 'react-router-dom';
 import { RoutePath } from '../../../Data/Constants';
 import { GrOverview } from 'react-icons/gr';
-import { MdDisplaySettings } from 'react-icons/md';
-import { MdOutlineSettingsRemote } from 'react-icons/md';
-import { MdOutlineDeviceHub } from 'react-icons/md';
 import { RiPsychotherapyLine } from 'react-icons/ri';
+import {
+    MdDisplaySettings,
+    MdOutlineDeviceHub,
+    MdOutlineSettingsRemote,
+} from 'react-icons/md';
+import { IoHardwareChip } from 'react-icons/io5';
 
 const Connection = () => {
     const location = useLocation();
@@ -29,11 +32,11 @@ const Connection = () => {
         },
         {
             id: 3,
-            to: RoutePath.GettingStartedwithEsp8266Docs,
+            to: RoutePath.GettingStartedwithEsp8266Esp32Docs,
             icon: <MdOutlineSettingsRemote />,
             currentPath: location.pathname,
-            listPath: RoutePath.GettingStartedwithEsp8266Docs,
-            label: 'ESP8266 Basic Setup',
+            listPath: RoutePath.GettingStartedwithEsp8266Esp32Docs,
+            label: 'ESP Basic Setup',
         },
         {
             id: 4,
@@ -51,11 +54,19 @@ const Connection = () => {
             listPath: RoutePath.CodeExamplesDocs,
             label: 'Other Code Examples',
         },
+        {
+            id: 6,
+            to: RoutePath.HardwareConnection,
+            icon: <IoHardwareChip />,
+            currentPath: location.pathname,
+            listPath: RoutePath.HardwareConnection,
+            label: 'Hardware Connection',
+        },
     ];
 
     return (
         <div className="connection">
-            <OptionPage menuType="Connections" menuList={menuList} />
+            <OptionPage menuType="Connect" menuList={menuList} />
         </div>
     );
 };

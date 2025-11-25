@@ -1,16 +1,51 @@
-import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from './Pages/ThemeProvider';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GlobalRoutes } from './Pages/GlobalRoutes/GlobalRoutes';
+import { gsap } from 'gsap';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import './App.css';
+import useBlink from './Hooks/useBlink';
+import { useAppDispatch, useAppSelector } from './Features/ReduxHooks';
+import { resetBlink } from './Features/Blink/BlinkSlice';
+import { BACKGROUND_BLINK_SETTING } from './Data/Constants';
+import useLocalStorage from './Hooks/UseLocalStorage';
+
+gsap.registerPlugin(MotionPathPlugin);
 
 function App() {
-    const [backgroundColor] = useState<string>('black');
+    const [backgroundColor, setBackgroundColor] = useState<string>('black');
+    const blinkTrigger = useAppSelector((state) => state.blink.trigger);
+    const blinkColor = useAppSelector((state) => state.blink.color);
+    const { startBlink } = useBlink(200, blinkColor, setBackgroundColor, 2);
+    const dispatch = useAppDispatch();
+    const [, setBackgroundBlinkSettings] = useLocalStorage(BACKGROUND_BLINK_SETTING, {
+            SUCCESS: true,
+            ERROR: true,
+            WARNING: false,
+            INFO: false,
+        });
+
+    useEffect(() => {
+        setBackgroundBlinkSettings({
+            SUCCESS: true,
+            ERROR: true,
+            WARNING: false,
+            INFO: false,
+        });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        if (blinkTrigger) {
+            startBlink();
+            dispatch(resetBlink());
+        }
+    }, [blinkTrigger, startBlink, dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <ThemeProvider>
             <div
-                className="App"
+                className="app"
                 style={{
                     background: backgroundColor,
                 }}

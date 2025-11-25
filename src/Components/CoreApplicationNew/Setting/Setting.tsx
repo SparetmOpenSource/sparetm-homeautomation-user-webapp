@@ -26,7 +26,7 @@ const Setting = () => {
     ];
     return (
         <div className="setting">
-            <OptionPage menuType="Settings" menuList={menuList} />
+            <OptionPage menuType="Setting" menuList={menuList} />
         </div>
     );
 };

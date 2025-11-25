@@ -2,7 +2,12 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import './Device.css';
-import { ConvertTheRange, Spring, catchError, findAnimationBasedColor } from '../../../../Utils/HelperFn';
+import {
+    ConvertTheRangeToRound,
+    Spring,
+    catchError,
+    findAnimationBasedColor,
+} from '../../../../Utils/HelperFn';
 import { useUpdateDevice } from '../../../../Api.tsx/CoreAppApis';
 import { IoIosColorPalette } from 'react-icons/io';
 import { ChangeBrightnessIcon, GadgetRgbDefaultColor } from '../../../../Data/Constants';
@@ -36,7 +41,7 @@ const GadgetDevice = ({
               GadgetRgbDefaultColor[3],
           ];
 
-    const brightness = ConvertTheRange(
+    const brightness = ConvertTheRangeToRound(
         parseFloat(backgroundColorValue[3]),
         0,
         1,

@@ -19,10 +19,11 @@ import { BsPalette2 } from 'react-icons/bs';
 import { BiCheck } from 'react-icons/bi';
 import {
     GadgetRgbDefaultColor,
+    GadgetRgbDefaultPattern,
     RgbDeviceAnimation,
 } from '../../../../Data/DeviceRoomConstant';
 import DeviceInfo from '../DeviceInfo/DeviceInfo';
-import { ConvertTheRange } from '../../../../Utils/HelperFn';
+import { ConvertTheRangeToRound } from '../../../../Utils/HelperFn';
 import {
     useDeleteDevice,
     useDeleteDeviceStoreData,
@@ -56,7 +57,13 @@ const AddColorToRgbModel = ({
     const [deviceInfoOption, setDeviceInfoOption]: any = useState(false);
     const [otherColorOption, setOtherColorOption]: any = useState(false);
 
-    const brightness = ConvertTheRange(parseFloat(color?.a), 0, 1, 0, 100);
+    const brightness = ConvertTheRangeToRound(
+        parseFloat(color?.a),
+        0,
+        1,
+        0,
+        100,
+    );
 
     let deviceDataStoreArray = [];
     if (currentDevice?.deviceDataStore !== null) {
@@ -115,7 +122,7 @@ const AddColorToRgbModel = ({
 
         mutate({
             status: true,
-            statusDetail: `${r},${g},${b},${a},${GadgetRgbDefaultColor[4]}`,
+            statusDetail: `${r},${g},${b},${a},${GadgetRgbDefaultPattern}`,
             mqttPublisherId: mqttCredDetails?.mqttPublisherId,
             mqttServerAddress:
                 mqttCredDetails?.mqttServerAddress +
@@ -161,7 +168,7 @@ const AddColorToRgbModel = ({
     const setColorToDevice = () => {
         mutate({
             status: true,
-            statusDetail: `${color?.r},${color?.g},${color?.b},${color?.a},${GadgetRgbDefaultColor[4]}`,
+            statusDetail: `${color?.r},${color?.g},${color?.b},${color?.a},${GadgetRgbDefaultPattern}`,
             mqttPublisherId: mqttCredDetails?.mqttPublisherId,
             mqttServerAddress:
                 mqttCredDetails?.mqttServerAddress +
@@ -182,7 +189,7 @@ const AddColorToRgbModel = ({
             GadgetRgbDefaultColor[1],
             GadgetRgbDefaultColor[2],
             GadgetRgbDefaultColor[3],
-            GadgetRgbDefaultColor[4],
+            GadgetRgbDefaultPattern,
         ];
         if (currentDevice?.statusDetail !== null) {
             currentRgbColor = currentDevice?.statusDetail.split(',');

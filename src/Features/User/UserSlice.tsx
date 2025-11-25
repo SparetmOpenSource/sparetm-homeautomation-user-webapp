@@ -1,12 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ADMIN, PROFILE, PROFILEID, TOKEN } from '../../Data/Constants';
 
+// Helper to safely get from localStorage and convert null to empty string
+const getStorageValue = (key: string): string => {
+    const value = localStorage.getItem(key);
+    // Return empty string if null, undefined, or the string "null"
+    return (value === null || value === 'null') ? '' : value;
+};
+
+// State interface
+interface UserState {
+    admin: string;
+    profile: string;
+    token: string;
+    profileId: string;
+    profileData: any;
+}
+
 // initial state
-const initialState = {
-    admin: localStorage.getItem(ADMIN),
-    profile: localStorage.getItem(PROFILE),
-    token: localStorage.getItem(TOKEN),
-    profileId: localStorage.getItem(PROFILEID),
+const initialState: UserState = {
+    admin: getStorageValue(`${ADMIN}_global`),
+    profile: getStorageValue(`${PROFILE}_global`),
+    token: getStorageValue(`${TOKEN}_global`),
+    profileId: getStorageValue(`${PROFILEID}_global`),
     profileData: {},
 };
 
@@ -15,50 +31,37 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        addAdmin: (state, action: PayloadAction<any>) => {
-            localStorage.setItem(ADMIN, action.payload);
+        addAdmin: (state, action: PayloadAction<string>) => {
             state.admin = action.payload;
         },
         removeAdmin: (state) => {
-            localStorage.removeItem(ADMIN);
             state.admin = '';
         },
-        addProfile: (state, action: PayloadAction<any>) => {
-            localStorage.setItem(PROFILE, action.payload);
+        addProfile: (state, action: PayloadAction<string>) => {
             state.profile = action.payload;
         },
         removeProfile: (state) => {
-            localStorage.removeItem(PROFILE);
             state.profile = '';
         },
-        addToken: (state, action: PayloadAction<any>) => {
-            localStorage.setItem(TOKEN, action.payload);
-            state.profile = action.payload;
+        addToken: (state, action: PayloadAction<string>) => {
+            state.token = action.payload;
         },
         removeToken: (state) => {
-            localStorage.removeItem(TOKEN);
-            state.profile = '';
+            state.token = '';
         },
-        addProfileId: (state, action: PayloadAction<any>) => {
-            localStorage.setItem(PROFILEID, action.payload);
+        addProfileId: (state, action: PayloadAction<string>) => {
             state.profileId = action.payload;
         },
         removeProfileId: (state) => {
-            localStorage.removeItem(PROFILEID);
             state.profileId = '';
         },
         resetApp: (state) => {
-            localStorage.removeItem(ADMIN);
-            localStorage.removeItem(PROFILE);
-            localStorage.removeItem(TOKEN);
-            localStorage.removeItem(PROFILEID);
             state.admin = '';
             state.profile = '';
+            state.token = '';
             state.profileId = '';
         },
         resetProfile: (state) => {
-            localStorage.removeItem(PROFILE);
-            localStorage.removeItem(PROFILEID);
             state.profile = '';
             state.profileId = '';
         },

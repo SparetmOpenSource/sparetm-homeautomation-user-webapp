@@ -1,0 +1,56 @@
+.overview {
+    height: 100%;
+    padding: 1rem 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Helvetica, Arial, sans-serif;
+}
+
+.overview h1 {
+    font-size: 32px;
+    line-height: 48px;
+    font-weight: 700;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.overview p {
+    font-size: 24px;
+    line-height: 36px;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.overview-info {
+    width: 100%;
+    border-radius: 1rem;
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    -webkit-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.75);
+}
+
+.overview-info ul li {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 100;
+    padding: 0.25rem;
+    margin: 0;
+}
+
+.overview-info h2 {
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+}
+
+.overview a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.overview a:hover {
+    text-decoration: underline;
+}

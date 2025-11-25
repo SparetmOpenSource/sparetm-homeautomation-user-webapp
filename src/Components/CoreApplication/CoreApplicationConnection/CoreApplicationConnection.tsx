@@ -21,9 +21,9 @@ const CoreApplicationConnection = () => {
         },
         {
             id: 3,
-            to: RoutePath.GettingStartedwithEsp8266Docs,
+            to: RoutePath.GettingStartedwithEsp8266Esp32Docs,
             currentPath: location.pathname,
-            listPath: RoutePath.GettingStartedwithEsp8266Docs,
+            listPath: RoutePath.GettingStartedwithEsp8266Esp32Docs,
             label: 'ESP8266 Basic Setup',
         },
         {

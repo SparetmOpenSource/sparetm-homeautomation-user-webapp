@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
-import './CommonSkin.css';
+import './CommonNavSkin.css';
 import { useTheme } from '../../../../Pages/ThemeProvider';
 
-const CommonSkin = ({
-    upper_nav,
+const CommonNavSkin = ({
     upper_nav_enable,
-    side_nav,
+    upper_nav,
     side_nav_enable,
+    side_nav,
     content,
 }: any) => {
     const [color, setColor] = useState<any>(light_colors);
@@ -18,18 +18,23 @@ const CommonSkin = ({
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div className="common_skin" style={{ backgroundColor: color?.outer }}>
+        <div
+            className="common-nav-skin"
+            style={{ backgroundColor: color?.outer }}
+        >
             {upper_nav_enable && (
-                <section className="common_skin_upper_nav">{upper_nav}</section>
+                <section className="common-nav-skin-upper-nav">
+                    {upper_nav}
+                </section>
             )}
-            <section className="common_skin_content">
+            <section className="common-nav-skin-content">
                 {side_nav_enable && (
-                    <section className="common_skin_content_side_nav">
+                    <section className="common-nav-skin-content-side-nav">
                         {side_nav}
                     </section>
                 )}
                 <section
-                    className="common_skin_content_data"
+                    className="common-nav-skin-content-data"
                     style={{
                         backgroundColor: color?.inner,
                         borderTopLeftRadius: side_nav_enable ? '0.5rem' : '',
@@ -42,4 +47,4 @@ const CommonSkin = ({
         </div>
     );
 };
-export default CommonSkin;
+export default CommonNavSkin;

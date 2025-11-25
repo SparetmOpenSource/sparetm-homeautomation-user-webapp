@@ -1,5 +1,5 @@
 export const SignUpText = {
-    heading: 'What Our Customer Say',
+    // heading: 'What Our Customer Say',
     testimonial: [
         {
             sex: 'male',
@@ -30,9 +30,9 @@ export const SignUpText = {
             designation: 'software engineer',
         },
     ],
-    signIn: 'Sign In!',
-    signUp: 'Sign Up!',
-    male: 'male',
-    female: 'female',
-    testimonial_img_placeholder: 'testimonial_img',
+    // signIn: 'Sign In!',
+    // signUp: 'Sign Up!',
+    // male: 'male',
+    // female: 'female',
+    // testimonial_img_placeholder: 'testimonial_img',
 };

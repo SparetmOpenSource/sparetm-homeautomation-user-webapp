@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { api, getHeaderConfig, updateHeaderConfig } from './Axios';
 import { weather_quote_constant } from '../Data/Constants';
-import { catchError } from '../Utils/HelperFn';
 
 export const featureUrl = {
     get_weather_quote_1: '/mpa/api/v1/profiles/features?id=',
@@ -16,11 +15,11 @@ export const featureUrl = {
     add_device: `/mda/api/v1/devices?admin=`,
     get_all_devices: `/mda/api/v1/devices/all?admin=`,
     get_devices: `/mda/api/v1/devices?admin=`,
-    update_device: `/mda/api/v1/devices?admin=`,
+    update_device: `/mda/api/v1/devices?id=`,
     del_device: `/mda/api/v1/devices?id=`,
-    update_all_device_status: `/mda/api/v1/devices/all/status?admin=`,
+    update_all_device_status: `/mda/api/v1/devices/all?admin=`,
     update_device_data_store: `/mda/api/v1/devices/data?id=`,
-    delete_device_data_store: `/mda/api/v1/devices/data/remove?id=`,
+    remove_device_data_store: `/mda/api/v1/devices/data/remove?id=`,
     spotify_base_url: `/mpa/api/v1/profiles/spotify`,
     // spotify_current_user_url:`https://api.spotify.com/v1/me`,
 };
@@ -360,7 +359,7 @@ export const useDeleteDeviceStoreData = (deviceId: any, on_Error: any) => {
     return useMutation(
         (data) => {
             return api.patch(
-                featureUrl.delete_device_data_store + deviceId,
+                featureUrl.remove_device_data_store + deviceId,
                 data,
                 updateHeaderConfig,
             );

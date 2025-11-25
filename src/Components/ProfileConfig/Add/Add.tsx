@@ -22,9 +22,12 @@ import {
     SELECT_CITY_LIST_QUERY_ID,
     SELECT_STATE_LIST_QUERY_ID,
 } from '../../../Data/QueryConstant';
-import { getMergedHeadersForLocation, updateHeaderConfig } from '../../../Api.tsx/Axios';
+import {
+    getMergedHeadersForLocation,
+    updateHeaderConfig,
+} from '../../../Api.tsx/Axios';
 import { usePostUpdateData } from '../../../Api.tsx/useReactQuery_Update';
-import Building from "./../../../Assets/Building.svg";
+import Building from './../../../Asset/desktop.webp';
 import Form from '../../Others/SubmitForm/Form/Form';
 import Selector from '../../Others/SubmitForm/Selector/Selector';
 
@@ -89,11 +92,13 @@ const Add = () => {
         );
     };
 
-    const on_City_Success = () => { };
-    const on_State_Success = () => { };
+    const on_City_Success = () => {};
+    const on_State_Success = () => {};
 
     const getHeaderConfig = {
-        headers: getMergedHeadersForLocation('bEltb0FxY3dhajRDa3NxS1JMcUpMZ3ZDemV3emtBdzdIcm1Fa292bg==')
+        headers: getMergedHeadersForLocation(
+            'bEltb0FxY3dhajRDa3NxS1JMcUpMZ3ZDemV3emtBdzdIcm1Fa292bg==',
+        ),
     };
 
     const cityFn = () => {
@@ -133,7 +138,6 @@ const Add = () => {
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
-
 
     const on_AddProfile_Success = () => {
         displayToastify(
@@ -264,7 +268,7 @@ const Add = () => {
             keyName: 'profileName',
             minLength: 3,
             maxLength: 36,
-            regex: undefined
+            regex: undefined,
         },
         {
             id: 2,
@@ -273,7 +277,7 @@ const Add = () => {
             keyName: 'mobileNumber',
             minLength: 6,
             maxLength: 12,
-            regex: /^\d{10}(\d{2})?$/
+            regex: /^\d{10}(\d{2})?$/,
         },
     ];
 
@@ -287,7 +291,8 @@ const Add = () => {
                     width="80%"
                     loading="lazy"
                     alt="song_image"
-                /></section>
+                />
+            </section>
             <section style={{ backgroundColor: color?.inner }}>
                 {!formChange && (
                     <Form
@@ -297,7 +302,6 @@ const Add = () => {
                         formList={formList}
                         btnLabel="go ahead"
                     />
-
                 )}
                 {formChange && (
                     <Selector

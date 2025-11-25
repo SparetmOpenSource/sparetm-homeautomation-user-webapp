@@ -1,82 +1,23 @@
-// import './Songs.css';
-// import SongTemplate from '../../SongTemplate';
-
-// const Songs = ({
-//     type,
-//     data,
-//     songData,
-//     contextUri,
-//     startPlayingFn,
-//     darkTheme,
-//     fnToAddTrackToQueue,
-// }: any) => {
-//     return (
-//         <div className="spotify-library-songs">
-//             {type === 1 &&
-//                 songData
-//                     ?.filter((item: any, index: number, self: any) => {
-//                         return (
-//                             self.findIndex(
-//                                 (i: any) => i?.track?.id === item?.track?.id,
-//                             ) === index
-//                         );
-//                     })
-//                     ?.map((item: any, index: number) => (
-//                         <SongTemplate
-//                             key={item?.track?.id}
-//                             contextUri={contextUri}
-//                             startPlayingFn={startPlayingFn}
-//                             trackUri={item?.track?.uri}
-//                             darkTheme={darkTheme}
-//                             index={index}
-//                             // imgUrl={item?.album?.images[0]?.url}
-//                             imgType="icon"
-//                             name={item?.track?.name}
-//                             artist={item?.track?.artists[0]?.name}
-//                             durationMs={item?.track?.duration_ms}
-//                             data={data}
-//                             id={item?.track?.id}
-//                             fnToAddTrackToQueue={fnToAddTrackToQueue}
-//                             showAddToQueue={true}
-//                         />
-//                     ))}
-//             {type === 2 &&
-//                 songData
-//                     ?.filter((item: any, index: number, self: any) => {
-//                         return (
-//                             self.findIndex((i: any) => i.id === item.id) ===
-//                             index
-//                         );
-//                     })
-//                     ?.map((item: any, index: number) => (
-//                         <SongTemplate
-//                             key={item?.id}
-//                             contextUri={contextUri}
-//                             startPlayingFn={startPlayingFn}
-//                             trackUri={item?.uri}
-//                             darkTheme={darkTheme}
-//                             index={index}
-//                             // imgUrl={item?.album?.images[0]?.url}
-//                             imgType="icon"
-//                             name={item?.name}
-//                             artist={item?.artists[0]?.name}
-//                             durationMs={item?.duration_ms}
-//                             data={data}
-//                             id={item?.id}
-//                             fnToAddTrackToQueue={fnToAddTrackToQueue}
-//                             showAddToQueue={true}
-//                         />
-//                     ))}
-//         </div>
-//     );
-// };
-
-// export default Songs;
-
 // refactor code -----------------------------
 import './Songs.css';
 import SongTemplate from '../../SongTemplate';
 import { memo, useMemo } from 'react';
+import { useBackDropOpen } from '../../../../../../../Pages/ThemeProvider';
+import {
+    catchError,
+    displayToastify,
+} from '../../../../../../../Utils/HelperFn';
+import {
+    LandscapeSizeS,
+    SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION,
+    spotifyQueueAddition,
+} from '../../../../../../../Data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../Data/Enum';
+import { getMergedHeadersForSpotify } from '../../../../../../../Api.tsx/Axios';
+import { usePostUpdateData } from '../../../../../../../Api.tsx/useReactQuery_Update';
+import { featureUrl } from '../../../../../../../Api.tsx/CoreAppApis';
+import Confirmation from '../../../../../BackDrop/Confirmation/Confirmation';
+import { useAppSelector } from '../../../../../../../Features/ReduxHooks';
 
 interface Artist {
     name: string;
@@ -106,7 +47,6 @@ interface SongsProps {
     contextUri: string;
     startPlayingFn: (uri: string, data: any, contextUri: string) => void;
     darkTheme: boolean;
-    fnToAddTrackToQueue: (track: any) => void;
 }
 
 const Songs = ({
@@ -116,8 +56,9 @@ const Songs = ({
     contextUri,
     startPlayingFn,
     darkTheme,
-    fnToAddTrackToQueue,
 }: SongsProps) => {
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
+    const accessToken = useAppSelector((state) => state.spotify.accessToken);
     const getUniqueSongs = useMemo(() => {
         if (!songData) return [];
 
@@ -131,6 +72,55 @@ const Songs = ({
             );
         });
     }, [type, songData]);
+
+    const on_add_to_queue_success = () => {
+        displayToastify(
+            spotifyQueueAddition,
+            darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
+            TOASTIFYSTATE.SUCCESS,
+        );
+        toggleBackDropClose(SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION);
+    };
+
+    const on_error = (error: any) => {
+        catchError(error, darkTheme);
+    };
+
+    const updateHeaderConfig = {
+        headers: getMergedHeadersForSpotify(accessToken),
+    };
+
+    const { mutate: addToQueue } = usePostUpdateData(
+        featureUrl.spotify_base_url + `?data=addtoqueue`,
+        updateHeaderConfig,
+        on_add_to_queue_success,
+        on_error,
+    );
+
+    const addTrackToQueue = (
+        deviceId: string | undefined,
+        trackUri: string | undefined,
+    ) => {
+        const backdropId = SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION;
+        toggleBackDropOpen(
+            backdropId,
+            <Confirmation
+                darkTheme={darkTheme}
+                heading="Would you like to add this track to your queue?"
+                btnOkFn={() => {
+                    addToQueue({
+                        id: deviceId,
+                        track_uri: trackUri,
+                    });
+                    toggleBackDropClose(backdropId);
+                }}
+                btnCancelFn={() => toggleBackDropClose(backdropId)}
+                btnOkLabel="Yes, add"
+                btnCancelLabel="Cancel"
+            />,
+            LandscapeSizeS,
+        );
+    };
 
     const renderSongItem = (item: SongItem, index: number) => {
         const isType1 = type === 1;
@@ -152,7 +142,9 @@ const Songs = ({
                 durationMs={track.duration_ms}
                 data={data}
                 id={track.id}
-                fnToAddTrackToQueue={fnToAddTrackToQueue}
+                fnToAddTrackToQueue={() =>
+                    addTrackToQueue(data?.body?.device?.id, track?.uri)
+                }
                 showAddToQueue={true}
             />
         );

@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import Information from './Information/Information';
+import { useAppSelector } from '../../../../Features/ReduxHooks';
 
 const ApplianceExpand = ({
-    deviceTopic,
-    deviceType,
-    createdAt,
-    updatedAt,
     id,
     darkTheme,
-    isRemoteActive,
+    applianceExpandBackdropId,
+    rgbGadgetExpandBackdropId,
+    currentDeviceStatus,
 }: any) => {
+    const currentDevice = useAppSelector(
+        (state: any) =>
+            state?.device?.deviceData?.body?.find(
+                (device: any) => device.deviceId === id,
+            ) ?? null,
+    );
+
     const [color, setColor] = useState<any>(light_colors);
 
     useEffect(() => {
@@ -24,13 +30,18 @@ const ApplianceExpand = ({
         >
             <section>
                 <Information
-                    deviceTopic={deviceTopic}
-                    deviceType={deviceType}
-                    createdAt={createdAt}
-                    updatedAt={updatedAt}
                     id={id}
+                    deviceType={currentDevice?.deviceType}
+                    deviceTopic={currentDevice?.deviceTopic}
+                    createdAt={currentDevice?.createdAt}
+                    updatedAt={currentDevice?.updatedAt}
+                    isRemoteActive={['ac', 'fan'].includes(
+                        currentDevice?.deviceType.split('/')[1]?.toLowerCase(),
+                    )}
                     darkTheme={darkTheme}
-                    isRemoteActive={isRemoteActive}
+                    applianceExpandBackdropId={applianceExpandBackdropId}
+                    rgbGadgetExpandBackdropId={rgbGadgetExpandBackdropId}
+                    currentDeviceStatus={currentDeviceStatus}
                 />
             </section>
         </div>

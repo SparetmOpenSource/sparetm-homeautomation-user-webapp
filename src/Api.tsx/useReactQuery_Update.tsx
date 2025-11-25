@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query';
-import { api, updateHeaderConfig } from './Axios';
+import { api } from './Axios';
 
 export const usePostUpdateData = (
     url: string,

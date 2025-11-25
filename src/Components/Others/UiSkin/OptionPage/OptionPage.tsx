@@ -15,7 +15,7 @@ const OptionPage = ({ menuType, menuList }: any) => {
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div className="optionPage" style={{ backgroundColor: color?.inner }}>
+        <div className="optionPage">
             <section>
                 <h2 style={{ color: color?.text }}>{menuType}</h2>
                 {menuList?.map((item: any) => (
@@ -26,7 +26,9 @@ const OptionPage = ({ menuType, menuList }: any) => {
                                     item?.currentPath === item?.listPath ||
                                     item?.currentPath?.includes(item?.listPath)
                                         ? `2px solid ${color?.button}`
-                                        : `2px solid ${color?.border}`,
+                                        : `2px solid ${
+                                              color?.icon?.split(')')[0]
+                                          },0.7)`,
                             }}
                             initial={{ scale: 1 }}
                             whileHover={{
@@ -58,7 +60,11 @@ const OptionPage = ({ menuType, menuList }: any) => {
                                             item?.listPath,
                                         )
                                             ? color?.button
-                                            : color?.icon_font,
+                                            : `${
+                                                  color?.icon_font?.split(
+                                                      ')',
+                                                  )[0]
+                                              },0.7)`,
                                 }}
                             >
                                 {item?.label}
@@ -69,62 +75,6 @@ const OptionPage = ({ menuType, menuList }: any) => {
             </section>
             <section style={{ backgroundColor: color?.inner }}>
                 <Outlet />
-                {/* <div
-                    className="optionPage-block"
-                    style={{ backgroundColor: color?.outer }}
-                >
-                    <h1>Event</h1>
-                    <p className="text-block-separation">setting for event</p>
-                    <span>
-                        <p>asdfg</p>
-                        <p>sfaDGzfgh</p>
-                        <p>fdsfgh</p>
-                        <p>hdgfhghj</p>
-                    </span>
-                    <p className="text-block-separation">setting for event</p>
-                    <span>
-                        <p>asdfg</p>
-                        <p>sfaDGzfgh</p>
-                        <p>fdsfgh</p>
-                        <p>hdgfhghj</p>
-                    </span>
-                </div> */}
-                {/* <div
-                    className="optionPage-block"
-                    style={{ backgroundColor: color?.outer }}
-                >
-                    <p>Event</p>
-                    <span>
-                        <p>asdfg</p>
-                        <p>sfaDGzfgh</p>
-                        <p>fdsfgh</p>
-                        <p>hdgfhghj</p>
-                    </span>
-                </div> */}
-                {/* <div
-                    className="optionPage-block"
-                    style={{ backgroundColor: color?.outer }}
-                >
-                    <p>Event</p>
-                    <span>
-                        <p>asdfg</p>
-                        <p>sfaDGzfgh</p>
-                        <p>fdsfgh</p>
-                        <p>hdgfhghj</p>
-                    </span>
-                </div> */}
-                {/* <div
-                    className="optionPage-block"
-                    style={{ backgroundColor: color?.outer }}
-                >
-                    <p>Event</p>
-                    <span>
-                        <p>asdfg</p>
-                        <p>sfaDGzfgh</p>
-                        <p>fdsfgh</p>
-                        <p>hdgfhghj</p>
-                    </span>
-                </div> */}
             </section>
         </div>
     );

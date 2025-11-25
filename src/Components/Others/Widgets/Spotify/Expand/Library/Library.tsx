@@ -32,18 +32,20 @@ import { useQueryClient } from 'react-query';
 import LoadingFade from '../../../../LoadingAnimation/LoadingFade';
 import {
     ITEMPERPAGE,
-    LandscapeSizeS,
-    SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION,
-    spotifyAccountType,
+    // LandscapeSizeS,
+    // SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION,
     spotifyNonPremiumWarning,
-    spotifyQueueAddition,
+    // spotifyQueueAddition,
 } from '../../../../../../Data/Constants';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../Data/Enum';
-import { useBackDropOpen } from '../../../../../../Pages/ThemeProvider';
-import Confirmation from '../../../../BackDrop/Confirmation/Confirmation';
+// import { useBackDropOpen } from '../../../../../../Pages/ThemeProvider';
+// import Confirmation from '../../../../BackDrop/Confirmation/Confirmation';
+import { useAppSelector } from '../../../../../../Features/ReduxHooks';
 
 const Library = ({ data, darkTheme }: any) => {
     const [color, setColor] = useState<any>(light_colors);
+    const accessToken = useAppSelector((state) => state.spotify.accessToken);
+    const spotifyAcntType = useAppSelector((state) => state.spotify.accountType);
     const [isAlbumSongsVisible, setIsAlbumSongsVisible] =
         useState<boolean>(false);
     const [isPlaylistSongsVisible, setIsPlaylistSongsVisible] =
@@ -62,8 +64,7 @@ const Library = ({ data, darkTheme }: any) => {
     const [offsetForPlaylistSong, setOffsetForPlaylistSong] =
         useState<number>(0);
     const queryClient = useQueryClient();
-    const spotifyAcntType = localStorage.getItem(spotifyAccountType);
-    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
+    // const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
 
     const handleChangeSection = (index: number) => {
         setChangeSection(index);
@@ -91,17 +92,14 @@ const Library = ({ data, darkTheme }: any) => {
     };
 
     const getAllAlbumStateFn = (offset: number, limit: number) => {
-        const token = localStorage.getItem('spotify_access_token');
-        return getAllAlbumState(token, limit, offset);
+        return getAllAlbumState(accessToken, limit, offset);
     };
 
     const getAllPlaylistStateFn = (offset: number, limit: number) => {
-        const token = localStorage.getItem('spotify_access_token');
-        return getAllPlaylistState(token, limit, offset);
+        return getAllPlaylistState(accessToken, limit, offset);
     };
     const getPlaylistSongStateFn = (offset: number, limit: number) => {
-        const token = localStorage.getItem('spotify_access_token');
-        return getPlaylistSongState(playlistCoverId, token, limit, offset);
+        return getPlaylistSongState(playlistCoverId, accessToken, limit, offset);
     };
 
     const {
@@ -161,9 +159,7 @@ const Library = ({ data, darkTheme }: any) => {
     );
 
     const updateHeaderConfig = {
-        headers: getMergedHeadersForSpotify(
-            localStorage.getItem('spotify_access_token'),
-        ),
+        headers: getMergedHeadersForSpotify(accessToken),
     };
 
     const { mutate: play } = usePostUpdateData(
@@ -173,21 +169,21 @@ const Library = ({ data, darkTheme }: any) => {
         on_error,
     );
 
-    const on_add_to_queue_success = () => {
-        displayToastify(
-            spotifyQueueAddition,
-            darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-            TOASTIFYSTATE.SUCCESS,
-        );
-        toggleBackDropClose(SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION);
-    };
+    // const on_add_to_queue_success = () => {
+    //     displayToastify(
+    //         spotifyQueueAddition,
+    //         darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
+    //         TOASTIFYSTATE.SUCCESS,
+    //     );
+    //     toggleBackDropClose(SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION);
+    // };
 
-    const { mutate: addToQueue } = usePostUpdateData(
-        featureUrl.spotify_base_url + `?data=addtoqueue`,
-        updateHeaderConfig,
-        on_add_to_queue_success,
-        on_error,
-    );
+    // const { mutate: addToQueuee } = usePostUpdateData(
+    //     featureUrl.spotify_base_url + `?data=addtoqueue`,
+    //     updateHeaderConfig,
+    //     on_add_to_queue_success,
+    //     on_error,
+    // );
 
     const startPlayingFn = (trackUri: any, data: any, contextUri: any) => {
         if (spotifyAcntType === 'premium') {
@@ -310,27 +306,27 @@ const Library = ({ data, darkTheme }: any) => {
         }
     }, [changeSection]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const addTrackToQueue = () => {
-        const backdropId = SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION;
-        toggleBackDropOpen(
-            backdropId,
-            <Confirmation
-                darkTheme={darkTheme}
-                heading="Would you like to add this track to your queue?"
-                btnOkFn={() => {
-                    addToQueue({
-                        id: data?.body?.device?.id,
-                        track_uri: data?.body?.item?.uri,
-                    });
-                    toggleBackDropClose(backdropId);
-                }}
-                btnCancelFn={() => toggleBackDropClose(backdropId)}
-                btnOkLabel="Yes, add"
-                btnCancelLabel="Cancel"
-            />,
-            LandscapeSizeS,
-        );
-    };
+    // const addTrackToQueue = () => {
+    //     const backdropId = SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION;
+    //     toggleBackDropOpen(
+    //         backdropId,
+    //         <Confirmation
+    //             darkTheme={darkTheme}
+    //             heading="Would you like to add this track to your queue?"
+    //             btnOkFn={() => {
+    //                 addToQueue({
+    //                     id: data?.body?.device?.id,
+    //                     track_uri: data?.body?.item?.uri,
+    //                 });
+    //                 toggleBackDropClose(backdropId);
+    //             }}
+    //             btnCancelFn={() => toggleBackDropClose(backdropId)}
+    //             btnOkLabel="Yes, add"
+    //             btnCancelLabel="Cancel"
+    //         />,
+    //         LandscapeSizeS,
+    //     );
+    // };
 
     const getTotalItemForPagination = () => {
         if (changeSection === 1) {
@@ -469,7 +465,6 @@ const Library = ({ data, darkTheme }: any) => {
                             }
                             startPlayingFn={startPlayingFn}
                             darkTheme={darkTheme}
-                            fnToAddTrackToQueue={addTrackToQueue}
                         />
                     )}
                 {changeSection === 1 &&
@@ -483,7 +478,6 @@ const Library = ({ data, darkTheme }: any) => {
                             contextUri={playlistContextUri}
                             startPlayingFn={startPlayingFn}
                             darkTheme={darkTheme}
-                            fnToAddTrackToQueue={addTrackToQueue}
                         />
                     )}
             </section>

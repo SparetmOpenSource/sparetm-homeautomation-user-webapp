@@ -1,53 +1,107 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// initial state
-const initialState = {
-    // mqttUpdate: {},
-    // mqttNotification: {},
-    deviceData: {},
-    currentDevice: {},
+interface RoomCounts {
+    total: number;
+    on: number;
+    off: number;
+}
+
+interface Device {
+    deviceId: string;
+    roomType: string;
+    status: boolean;
+    [key: string]: any; // Allow other properties
+}
+
+interface DeviceState {
+    deviceData: {
+        body: Device[];
+    };
+    currentDevice: Device | null;
+    roomCounts: Record<string, RoomCounts>;
+}
+
+const initialState: DeviceState = {
+    deviceData: { body: [] },
+    currentDevice: null,
+    roomCounts: {},
 };
 
-// actions
 const deviceSlice = createSlice({
     name: 'device',
     initialState,
     reducers: {
-        // addMqttUpdate: (state, action: PayloadAction<any>) => {
-        //     state.mqttUpdate = action.payload;
-        // },
-        // removeMqttUpdate: (state) => {
-        //     state.mqttUpdate = {};
-        // },
-        // addMqttNotification: (state, action: PayloadAction<any>) => {
-        //     state.mqttNotification = action.payload;
-        // },
-        // removeMqttNotification: (state) => {
-        //     state.mqttNotification = {};
-        // },
-        addDeviceData: (state, action: PayloadAction<any>) => {
-            state.deviceData = action.payload;
+        addDeviceData: (state, action: PayloadAction<Device[]>) => {
+            state.deviceData = {
+                body: action.payload.map((el) => ({ ...el })),
+            };
+
+            // ✅ build counts per roomType
+            const counts: Record<string, RoomCounts> = {};
+            action.payload.forEach((el: any) => {
+                const room = el.roomType?.toLowerCase();
+                if (!counts[room]) {
+                    counts[room] = { total: 0, on: 0, off: 0 };
+                }
+                counts[room].total += 1;
+                if (el.status) counts[room].on += 1;
+                else counts[room].off += 1;
+            });
+
+            state.roomCounts = counts;
         },
+
+        updateDeviceStatus: (
+            state,
+            action: PayloadAction<{ id: string; status: boolean }>,
+        ) => {
+            const device = state.deviceData.body.find(
+                (d: any) => d.deviceId === action.payload.id,
+            );
+
+            if (device) {
+                const prevStatus = device.status;
+                device.status = action.payload.status;
+
+                const room = device.roomType?.toLowerCase();
+                if (!state.roomCounts[room]) {
+                    state.roomCounts[room] = { total: 0, on: 0, off: 0 };
+                }
+
+                // ✅ adjust counts for that room only
+                if (prevStatus !== action.payload.status) {
+                    if (action.payload.status) {
+                        state.roomCounts[room].on += 1;
+                        state.roomCounts[room].off -= 1;
+                    } else {
+                        state.roomCounts[room].on -= 1;
+                        state.roomCounts[room].off += 1;
+                    }
+                }
+            }
+        },
+
         removeDeviceData: (state) => {
-            state.deviceData = {};
+            state.deviceData = { body: [] };
+            state.roomCounts = {};
         },
-        addCurrentDevice: (state, action: PayloadAction<any>) => {
+
+        addCurrentDevice: (state, action: PayloadAction<Device>) => {
             state.currentDevice = action.payload;
         },
+
         removeCurrentDevice: (state) => {
-            state.currentDevice = {};
+            state.currentDevice = null;
         },
     },
 });
 
 export const {
-    // addMqttUpdate,
-    // removeMqttUpdate,
-    // addMqttNotification,
-    // removeMqttNotification,
     addDeviceData,
+    updateDeviceStatus,
     removeDeviceData,
     addCurrentDevice,
     removeCurrentDevice,
 } = deviceSlice.actions;
+
 export default deviceSlice.reducer;

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import './Button.css';
 
-//fn, status, width, backColOnDis, backCol, textCol, border, label;
+// fn, status, width, height, backCol, textCol, border, label
 const Button = (props: any) => {
     const status: boolean = props?.status ? props?.status : false;
     return (
@@ -15,15 +15,8 @@ const Button = (props: any) => {
                 padding: '0.5em 0',
                 width: props?.width,
                 height: props?.height ? props?.height : 'auto',
-                // background: status ? props?.backColOnDis : props?.backCol,
                 background: props?.backCol,
-                // color: status
-                //     ? `${props?.textCol?.split(')')[0]},0.5)`
-                //     : props?.textCol,
                 color: props?.textCol,
-                // border: status
-                //     ? `2px solid ${props?.border?.split(')')[0]},0.5)`
-                //     : `2px solid ${props?.border}`,
                 border: `2px solid ${props?.border}`,
             }}
             disabled={status}

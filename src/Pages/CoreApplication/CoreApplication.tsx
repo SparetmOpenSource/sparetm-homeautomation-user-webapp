@@ -1,39 +1,39 @@
 import { useCallback, useMemo, memo } from 'react';
-import { useLocation, Outlet, useNavigate } from 'react-router-dom';
-import { useQueryClient } from 'react-query';
+import { useLocation, Outlet } from 'react-router-dom';
 import { MdLightMode } from 'react-icons/md';
 import { CiDark } from 'react-icons/ci';
 import { GrHomeRounded, GrAppsRounded } from 'react-icons/gr';
 import { IoGameControllerOutline, IoSettingsOutline } from 'react-icons/io5';
-import { VscDebugDisconnect, VscRefresh } from 'react-icons/vsc';
-import { PiDevicesDuotone } from 'react-icons/pi';
+import { VscDebugDisconnect } from 'react-icons/vsc';
 import {
     CORE_APP_ADD_DEVICE,
+    ERROR_MSG,
+    FullScreenSize,
+    GLOBAL_SCREEN_SAVER,
     LandscapeSizeM,
     RoutePath,
 } from '../../Data/Constants';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
 import { useBackDropOpen, useTheme, useThemeUpdate } from '../ThemeProvider';
-import { displayToastify, invalidateQueries } from '../../Utils/HelperFn';
+import { displayToastify } from '../../Utils/HelperFn';
 import { useReactQuery_Get } from '../../Api.tsx/useReactQuery_Get';
-import {
-    GET_PROFILE_QUERY_ID,
-    SELECT_DEVICE_LIST_QUERY_ID,
-    SELECT_DEVICE_SERVICE_URL_LIST_QUERY_ID,
-    SELECT_WEATHER_QUOTE_QUERY_ID,
-} from '../../Data/QueryConstant';
 import { getProfile } from '../../Api.tsx/ProfileConfigApis';
 import { useAppDispatch, useAppSelector } from '../../Features/ReduxHooks';
 import { addFirstRoom } from '../../Features/Room/RoomSlice';
 import { addProfileData } from '../../Features/User/UserSlice';
 import SideNavigation from '../../Components/Others/Navigation/SideNavigation/SideNavigation';
 import UpperNavigation from '../../Components/Others/Navigation/UpperNavigation/UpperNavigation';
-import CommonSkin from '../../Components/Others/UiSkin/CommonSkin/CommonSkin';
+import CommonSkin from '../../Components/Others/UiSkin/CommonNavSkin/CommonNavSkin';
 import LoadingFade from '../../Components/Others/LoadingAnimation/LoadingFade';
-import Error from '../../Components/Others/ErrorPage/ErrorPage';
 import AddDevice from '../../Components/CoreApplicationNew/DeviceRoom/AddDevice/AddDevice';
 import './CoreApplication.css';
+import { GET_PROFILE_QUERY_ID } from '../../Data/QueryConstant';
+import ErrorPage from '../../Components/Others/ErrorPage/ErrorPage';
+import { BsHouseAddFill } from 'react-icons/bs';
+import { SiWechat } from 'react-icons/si';
+import { useUserActivity } from '../../Hooks/useUserActivity';
+import PicFrame from '../../Components/Others/PicFrame/PicFrame';
 
 interface NavItem {
     id: number;
@@ -53,9 +53,7 @@ interface NavOption {
 
 const CoreApplication = memo(() => {
     const location = useLocation();
-    const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const queryClient = useQueryClient();
     const darkTheme = useTheme();
     const toggleTheme = useThemeUpdate();
     const profileId = useAppSelector((state) => state.user?.profileId);
@@ -63,32 +61,41 @@ const CoreApplication = memo(() => {
 
     const { pathname } = location;
     const currentPath = pathname.replace('%20', '');
-    const roomType = useMemo(
-        () => pathname.split('/')[3]?.replace('%20', ' '),
-        [pathname],
-    );
-
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
     const color = useMemo(
         () => (darkTheme ? dark_colors : light_colors),
         [darkTheme],
     );
 
-    // const {
-    //     toggleBackDropOpen,
-    //     toggleBackDropClose,
-    //     setChildForCustomBackDrop,
-    //     setSizeForCustomBackDrop,
-    // } = useBackDropOpen();
+    const addScreenSaver = useCallback(() => {
+        toggleBackDropOpen(GLOBAL_SCREEN_SAVER, <PicFrame />, FullScreenSize);
+    }, [toggleBackDropOpen]);
 
-    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
+    const closeScreenSaver = useCallback(() => {
+        toggleBackDropClose(GLOBAL_SCREEN_SAVER);
+    }, [toggleBackDropClose]);
+
+    // User activity detection
+    useUserActivity({
+        timeout: 60000, // 5 sec inactivity for test
+        enabled: true,
+        onActive: closeScreenSaver,
+        onInactive: addScreenSaver,
+    });
+
+    const roomType = useMemo(
+        () => pathname?.split('/')[3]?.replace('%20', ' '),
+        [pathname],
+    );
 
     const { isLoading, isError } = useReactQuery_Get(
         GET_PROFILE_QUERY_ID,
         () => getProfile(profileId, darkTheme),
         (data) => {
             if (data?.data) {
-                dispatch(addProfileData(data.data));
-                const firstRoomType = data.data.body?.room?.[0]?.room_type;
+                dispatch(addProfileData(data?.data));
+                const firstRoomType =
+                    data?.data?.body?.room?.[0]?.room_type?.toLowerCase();
                 if (firstRoomType) dispatch(addFirstRoom(firstRoomType));
             }
         },
@@ -108,60 +115,14 @@ const CoreApplication = memo(() => {
         10000,
     );
 
-    const handleRefresh = useCallback(() => {
-        const queryArray: string[] = [];
-        if (pathname.includes(RoutePath.CoreApplication_Dashboard)) {
-            queryArray.push(
-                SELECT_DEVICE_SERVICE_URL_LIST_QUERY_ID,
-                GET_PROFILE_QUERY_ID,
-                SELECT_WEATHER_QUOTE_QUERY_ID,
-            );
-        } else if (pathname.includes(RoutePath.CoreApplication_Room)) {
-            queryArray.push(
-                SELECT_DEVICE_SERVICE_URL_LIST_QUERY_ID,
-                GET_PROFILE_QUERY_ID,
-                SELECT_DEVICE_LIST_QUERY_ID,
-            );
-        }
-
-        if (queryArray.length > 0) {
-            invalidateQueries(queryClient, queryArray);
-            displayToastify(
-                `Refreshed ${queryArray.length} queries`,
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.INFO,
-            );
-        }
-    }, [pathname, queryClient, darkTheme]);
-
     const returnPageSpecificIcon = useCallback(
         (pathCheck: string) =>
-            currentPath.includes(pathCheck) ? <PiDevicesDuotone /> : null,
+            currentPath?.includes(pathCheck) ? <BsHouseAddFill /> : null,
         [currentPath],
     );
 
-    // const addDevice = useCallback(() => {
-    //     toggleBackDropOpen();
-    //     setChildForCustomBackDrop(
-    //         <AddDevice
-    //             darkTheme={darkTheme}
-    //             roomType={roomType || ''}
-    //             toggleBackDropClose={toggleBackDropClose}
-    //         />,
-    //     );
-    //     setSizeForCustomBackDrop(LandscapeSizeM);
-    // }, [
-    //     darkTheme,
-    //     roomType,
-    //     toggleBackDropClose,
-    //     toggleBackDropOpen,
-    //     setChildForCustomBackDrop,
-    //     setSizeForCustomBackDrop,
-    // ]);
-
     const addDevice = useCallback(() => {
-        const backdropId = CORE_APP_ADD_DEVICE; // Unique ID for this backdrop
-
+        const backdropId = CORE_APP_ADD_DEVICE;
         toggleBackDropOpen(
             backdropId,
             <AddDevice
@@ -173,7 +134,7 @@ const CoreApplication = memo(() => {
         );
     }, [darkTheme, roomType, toggleBackDropClose, toggleBackDropOpen]);
 
-    const navUpperList = useMemo<NavItem[]>(
+    const side_upper_nav_option = useMemo<NavItem[]>(
         () => [
             {
                 id: 1,
@@ -195,6 +156,14 @@ const CoreApplication = memo(() => {
             },
             {
                 id: 3,
+                to: RoutePath.CoreApplication_Chat,
+                icon: <SiWechat />,
+                currentPath,
+                listPath: RoutePath.CoreApplication_Chat,
+                label: 'Chat',
+            },
+            {
+                id: 4,
                 to: RoutePath.CoreApplication_Play,
                 icon: <IoGameControllerOutline />,
                 currentPath,
@@ -205,7 +174,7 @@ const CoreApplication = memo(() => {
         [currentPath, firstRoom, pathname],
     );
 
-    const navLowerList = useMemo<NavItem[]>(
+    const side_lower_nav_option = useMemo<NavItem[]>(
         () => [
             {
                 id: 1,
@@ -229,7 +198,7 @@ const CoreApplication = memo(() => {
         [currentPath],
     );
 
-    const navUpperOptions = useMemo<NavOption[]>(
+    const upper_nav_option = useMemo<NavOption[]>(
         () => [
             {
                 id: 1,
@@ -241,12 +210,6 @@ const CoreApplication = memo(() => {
             },
             {
                 id: 2,
-                icon: <VscRefresh />,
-                color: color.button,
-                fn: handleRefresh,
-            },
-            {
-                id: 3,
                 icon: darkTheme ? <MdLightMode /> : <CiDark />,
                 color: color.button,
                 fn: toggleTheme,
@@ -256,7 +219,6 @@ const CoreApplication = memo(() => {
             returnPageSpecificIcon,
             color.button,
             addDevice,
-            handleRefresh,
             darkTheme,
             toggleTheme,
         ],
@@ -264,7 +226,7 @@ const CoreApplication = memo(() => {
 
     if (isLoading) {
         return (
-            <div className="coreApplication_isLoading">
+            <div className="coreApplication-isLoading">
                 <LoadingFade />
             </div>
         );
@@ -272,40 +234,24 @@ const CoreApplication = memo(() => {
 
     if (isError) {
         return (
-            <div className="coreApplication_error">
-                <Error
-                    enableBtn={true}
-                    navigate={navigate}
-                    darkTheme={darkTheme}
-                />
+            <div className="coreApplication-error">
+                <ErrorPage errMsg={ERROR_MSG} darkTheme={darkTheme} />
             </div>
         );
     }
 
-    console.log('Loading core application');
-
     return (
         <div className="coreApplication">
             <CommonSkin
+                upper_nav_enable={true}
+                upper_nav={<UpperNavigation nav_option={upper_nav_option} />}
                 side_nav_enable={true}
                 side_nav={
                     <SideNavigation
-                        upper_list={navUpperList}
-                        lower_list={navLowerList}
-                        profileLogOut={true}
-                        logoutBtnOkLabel="Yes, Log me out"
-                        profileBtnOkLabel="Yes"
-                        profileBtnHeading="You want to switch profile, Are you sure?"
-                        logoutBtnHeading="Oh no! You are leaving. Are you sure?"
-                        toggleBackDropOpen={toggleBackDropOpen}
-                        toggleBackDropClose={toggleBackDropClose}
-                        // setChildForCustomBackDrop={setChildForCustomBackDrop}
-                        // setSizeForCustomBackDrop={setSizeForCustomBackDrop}
+                        upper_nav_option={side_upper_nav_option}
+                        lower_nav_option={side_lower_nav_option}
+                        profile_logout_enable={true}
                     />
-                }
-                upper_nav_enable={true}
-                upper_nav={
-                    <UpperNavigation upper_nav_option={navUpperOptions} />
                 }
                 content={<Outlet />}
             />

@@ -139,6 +139,9 @@ export const atomBergRemoteCode =
 export const lgAcRemoteCode =
     '0xCF8976,0x8808F90,0x8808192,0xCF51AE,0xCFC936,0xCF11EE';
 
-export const GadgetRgbDefaultColor = ['177', '216', '213', '0.9', 'regular'];
+export const GadgetRgbDefaultColor = [177, 216, 213, 0.5];
+
+export const GadgetRgbDefaultPattern = `linear`;
+export const GadgetRgbRainbowPattern = `rainbow`;
 
 export const deviceTypeArr = ['gadget', 'appliance'];

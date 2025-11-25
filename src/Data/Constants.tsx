@@ -24,7 +24,11 @@ export const OFFLINETESTPASSWORDKEY = 'offlineTestPassword';
 export const APPUSERKEY = 'appUser';
 export const PROFILEIDKEY = 'profileId';
 export const PROFILENAMEKEY = 'profileName';
+export const ROOMTYPE = 'roomType';
+export const ID = 'Id';
 export const NOTIFICATIONCOLORKEY = 'notificationColor';
+
+export const USE_ACTIVE_SETTINGS = ['keypress', 'mousemove', 'touchmove', 'click', 'scroll'];
 
 export const RoutePath = {
     Home: '/',
@@ -40,12 +44,14 @@ export const RoutePath = {
     Dashboard_Todo: 'segment/todo',
     Dashboard_Device_Status: 'segment/status',
     Device_Status: '/status',
+    Device_Todo: '/todo',
     //--//
     CoreApplication_Room: '/app/room',
 
     ///-select below-///
     CoreApplication_Dashboard: '/app/dashboard/segment',
     CoreApplication_Play: '/app/play',
+    CoreApplication_Chat: '/app/chat',
     CoreApplication_Docs: '/app/connection/docs',
     CoreApplication_Setting: '/app/setting',
 
@@ -56,6 +62,7 @@ export const RoutePath = {
     // Internal dashboard routes
     DeviceRoom: 'room/:type',
     Play: 'play',
+    Chat: 'chat',
     // Setting routes
     Setting: 'setting',
     Setting_Account: 'account',
@@ -63,10 +70,11 @@ export const RoutePath = {
     // Connection routes
     Connection: 'connection',
     GettingStartedDocs: 'docs/getting-started',
-    GettingStartedwithEsp8266Docs: 'docs/esp8266',
+    GettingStartedwithEsp8266Esp32Docs: 'docs/esp8266-esp32',
     GettingStartedwithArduinoIdeDocs: 'docs/arduino',
     Esp8266SpecificDeviceCodeDocs: 'docs/device',
     CodeExamplesDocs: 'docs/code-examples',
+    HardwareConnection: 'docs/hardware-connection',
 };
 
 export const home_contact_social_list = [
@@ -83,7 +91,7 @@ export const home_contact_social_list = [
     {
         id: 3,
         name: 'Contact us',
-        href: 'https://www.linkedin.com/in/sparetm',
+        href: 'https://www.linkedin.com/in/shubham2601',
     },
 ];
 
@@ -99,7 +107,7 @@ export const weather_quote_constant = {
 };
 
 export const spotify_refresh_playback_constant = {
-    play_back_fetch_delay_time: 3000, //1000 * 3 = 3000
+    play_back_fetch_delay_time: 2000, //1000 * 3 = 3000
     queue_fetch_delay_time: 4000, //1000 * 3 = 3000
 };
 
@@ -205,23 +213,40 @@ export const SpringSuspense = {
     hidden: {
         y: '-100vh',
         opacity: 0,
-        transform: 'scale(0) rotateX(-360deg)',
+        scale: 0.8,
+        rotateX: -90,
+        willChange: 'transform, opacity',
     },
     visible: {
         y: '0vh',
         opacity: 1,
+        scale: 1,
+        rotateX: 0,
+        willChange: 'transform, opacity',
         transition: {
-            duration: 0.2,
             type: 'spring',
-            damping: 15,
-            stiffness: 500,
+            damping: 12, // less damping = softer bounce
+            stiffness: 180, // lower stiffness = smoother
+            mass: 0.8, // adds subtle weight to bounce
+            duration: 0.6, // smoother entry
+            velocity: 0.8,
         },
     },
     exit: {
-        y: '-100vh',
+        y: '-10vh',
         opacity: 0,
+        scale: 0.95,
+        rotateX: -15,
+        willChange: 'transform, opacity',
+        transition: {
+            type: 'tween',
+            ease: 'easeInOut', // smooth, non-jumpy fade
+            duration: 0.4,
+        },
     },
 };
+
+
 
 export const deviceTypeArr = ['gadget', 'appliance'];
 
@@ -263,6 +288,8 @@ export const spotifyTokenFetched = 'has_fetched_spotify_access_token';
 export const spotifyTokenFetchedTime = 'has_fetched_spotify_access_token_time';
 export const spotifyNonPremiumWarning =
     'This feature is only available for spotify premium members.';
+export const spotifyUserNotRegisteredWarning =
+    'Your Spotify account is not authorized to use this web application. Please contact the developer to request access.';
 export const spotifyNoPlayableDeviceWarning =
     'Oops! No active Spotify device is playing music right now.';
 export const spotifyAlbumAddition = 'Added album to your collection.';
@@ -287,10 +314,24 @@ export const SPOTIFY_EXPAND_ADD_ALBUM_CONFIRMATION =
     'spotifyExpand-addAlbumConfirmation';
 export const SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION =
     'spotifyExpand-addTrackToQueueConfirmation';
-export const RGB_GADGET_APPLIANCE_EXPAND = 'rgbGadget-applianceExpand';
+export const RGB_GADGET_EXPAND_INFO = 'rgbGadgetExpandInfo';
 export const RGB_GADGET_EXPAND = 'rgbGadgetExpand';
 export const DEVICE_CARD_DELETE_DEVICE_CONFIRMATION =
     'deviceCard-deleteDeviceConfirmation';
+export const RGB_GADGET_DELETE_DEVICE_SAVED_DATA =
+    'rgbGadget-deleteDevice-savedData';
 export const APPLIANCE_EXPAND = 'applianceExpand';
+export const GLOBAL_SCREEN_SAVER = 'global-screen-saver';
+export const DELETING_TODO_LIST = 'deleteToDo';
+export const ADD_TODO_LIST = 'addToDo';
+export const EDIT_TODO_LIST = 'editToDo';
 
-export const DELETING_TODOLIST = 'deleteToDo';
+export const PAGE_LOGGER = {
+    home_page: 'Pages/Home/Home.tsx',
+};
+
+export const ERROR_MSG = 'Something went wrong!';
+export const DATA_NOT_FOUND_MSG = 'Data not found!';
+
+export const BACKGROUND_BLINK_SETTING = 'background_blink_settings';
+

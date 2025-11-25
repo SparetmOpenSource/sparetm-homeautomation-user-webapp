@@ -1,5 +1,5 @@
 import { GiCableStayedBridge } from 'react-icons/gi';
-import Search from '../../Search/Search';
+import DoSearch from '../../Search/DoSearch';
 import './UpperNavigation.css';
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
@@ -10,7 +10,7 @@ import { useTheme } from '../../../../Pages/ThemeProvider';
 import { useLocation } from 'react-router-dom';
 import { isSearchActive, uriArray } from '../../../../Utils/HelperFn';
 
-const UpperNavigation = ({ upper_nav_option }: any) => {
+const UpperNavigation = ({ nav_option }: any) => {
     const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
     const location = useLocation();
@@ -26,17 +26,14 @@ const UpperNavigation = ({ upper_nav_option }: any) => {
     }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        const isEnabled = isSearchActive(
-            uriArray,
-            `/${currentPath?.split('/')[1]}/${currentPath?.split('/')[2]}`,
-        );
+        const isEnabled = isSearchActive(uriArray, `${currentPath}`);
         setIsSearchEnable(isEnabled);
     }, [currentPath]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div className="upper_navigation">
+        <div className="upper-navigation">
             <section
-                className="upper_navigation_logo"
+                className="upper-navigation-logo"
                 style={{ color: color?.text }}
             >
                 <p>{APPNAME}</p>
@@ -50,11 +47,16 @@ const UpperNavigation = ({ upper_nav_option }: any) => {
                     <GiCableStayedBridge />
                 </IconContext.Provider>
             </section>
-            <section className="upper_navigation_search">
-                {isSearchEnable && <Search placeholder="Type to search" />}
+            <section className="upper-navigation-search">
+                {isSearchEnable && (
+                    <DoSearch
+                        placeholder="Type to search"
+                        darkTheme={darkTheme}
+                    />
+                )}
             </section>
-            <section className="upper_navigation_user_option">
-                {upper_nav_option?.map((item: any) => (
+            <section className="upper-navigation-user-btn">
+                {nav_option?.map((item: any) => (
                     <section key={item?.id}>
                         <motion.span
                             whileHover={{ scale: 1.2 }}

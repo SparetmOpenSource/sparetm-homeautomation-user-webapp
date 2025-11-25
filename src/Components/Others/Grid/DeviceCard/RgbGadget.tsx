@@ -1,103 +1,104 @@
 import { motion } from 'framer-motion';
 import './DeviceCard.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useBackDropOpen, useTheme } from '../../../../Pages/ThemeProvider';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { VscSymbolColor } from 'react-icons/vsc';
 import { IconContext } from 'react-icons';
 import { PiPowerFill } from 'react-icons/pi';
-import { MdBrightness5 } from 'react-icons/md';
-import { MdBrightness4 } from 'react-icons/md';
-import { MdBrightness6 } from 'react-icons/md';
-import { MdBrightness7 } from 'react-icons/md';
-import { LandscapeSizeM, RGB_GADGET_EXPAND } from '../../../../Data/Constants';
+import {
+    MdBrightness5,
+    MdBrightness4,
+    MdBrightness6,
+    MdBrightness7,
+} from 'react-icons/md';
+import {
+    LandscapeSizeM,
+    RGB_GADGET_EXPAND,
+} from '../../../../Data/Constants';
 import RgbGadgetExpand from './RgbGadgetExpand';
-import { GadgetRgbDefaultColor } from '../../../../Data/DeviceRoomConstant';
+import {
+    GadgetRgbDefaultColor,
+    GadgetRgbDefaultPattern,
+    GadgetRgbRainbowPattern,
+} from '../../../../Data/DeviceRoomConstant';
 import {
     ConvertTheRangeToRound,
     displayToastify,
+    trimToNChars,
 } from '../../../../Utils/HelperFn';
 import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
 import { usePatchUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
-import { useAppSelector } from '../../../../Features/ReduxHooks';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../Features/ReduxHooks';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
+import { updateDeviceStatus } from '../../../../Features/Device/DeviceSlice';
 
-const RgbGadget = ({
-    statusDetail,
-    statusValue,
-    roomType,
-    showName,
-    deviceName,
-    deviceTopic,
-    deviceType,
-    createdAt,
-    updatedAt,
-    id,
-}: any) => {
-    const [color, setColor] = useState<any>(light_colors);
-    const [status, setStatus] = useState<boolean>(false);
-    const admin = useAppSelector((state: any) => state?.user?.admin);
-    const profile = useAppSelector((state: any) => state?.user?.profile);
-    const animationType = statusDetail
-        ? statusDetail.split(',')[4]
-        : GadgetRgbDefaultColor[4];
-    const [brightness, setBrightness] = useState<number>(0.75);
-    const darkTheme: any = useTheme();
+interface RgbGadgetProps {
+    id: string;
+    statusValue: boolean;
+}
 
-    let background: any = statusDetail
-        ? statusDetail.split(',')
-        : [
-              GadgetRgbDefaultColor[0],
-              GadgetRgbDefaultColor[1],
-              GadgetRgbDefaultColor[2],
-              GadgetRgbDefaultColor[3],
-          ];
-
-    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
-
-    const onSuccess = () => {};
-    const onError = (error: any) => {
-        displayToastify(
-            error?.message,
-            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-            TOASTIFYSTATE.ERROR,
-        );
-    };
-    const { mutate } = usePatchUpdateData(
-        `${featureUrl.update_device}${admin}&profilename=${profile}&roomtype=${roomType}&id=${id}`,
-        updateHeaderConfig,
-        onSuccess,
-        onError,
+const RgbGadget = ({ id, statusValue }: RgbGadgetProps) => {
+    const currentDevice = useAppSelector(
+        (state: any) =>
+            state?.device?.deviceData?.body?.find(
+                (device: any) => device.deviceId === id,
+            ) ?? null,
     );
 
-    const changeStatus = () => {
-        setStatus((prev: boolean) => !prev);
+    const [color, setColor] = useState(light_colors);
+    const dispatch = useAppDispatch();
+    const [status, setStatus] = useState<boolean>(statusValue);
+    const darkTheme = useTheme();
+    const { toggleBackDropOpen } = useBackDropOpen();
+
+    const pattern =
+        currentDevice?.statusDetail?.split(',')[4] ?? GadgetRgbDefaultPattern;
+
+    const background = useMemo<number[]>(() => {
+        return currentDevice?.statusDetail
+            ? currentDevice?.statusDetail.split(',').map(Number)
+            : [...GadgetRgbDefaultColor];
+    }, [currentDevice?.statusDetail]);
+
+    const brightnessPercent = useMemo<number>(() => {
+        return ConvertTheRangeToRound(background[3] ?? 0.5, 0, 1, 0, 100);
+    }, [background]);
+
+    const { mutate } = usePatchUpdateData(
+        `${featureUrl.update_device}${id}`,
+        updateHeaderConfig,
+        () => {},
+        (error: any) => {
+            displayToastify(
+                error?.message,
+                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+                TOASTIFYSTATE.ERROR,
+            );
+        },
+    );
+
+    const changeStatus = useCallback(() => {
+        const newStatus = !status;
+        setStatus(newStatus);
+        dispatch(updateDeviceStatus({ id, status: newStatus }));
         mutate({
-            status: !status,
-            statusDetail: `${background[0]},${background[1]},${background[2]},${background[3]},${animationType}`,
-        } as any);
-    };
+            status: newStatus,
+            statusDetail: `${background[0]},${background[1]},${background[2]},${background[3]},${pattern}`,
+        });
+    }, [status, mutate, background, pattern, dispatch, id]);
 
     useEffect(() => {
-        darkTheme ? setColor(dark_colors) : setColor(light_colors);
-    }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    useEffect(() => {
-        setBrightness(
-            ConvertTheRangeToRound(
-                parseFloat(statusDetail?.split(',')[3]),
-                0,
-                1,
-                0,
-                100,
-            ),
-        );
-    }, [statusDetail]); // eslint-disable-line react-hooks/exhaustive-deps
+        setColor(darkTheme ? dark_colors : light_colors);
+    }, [darkTheme]);
 
     useEffect(() => {
         setStatus(statusValue);
-    }, [statusValue, statusDetail]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [statusValue]);
 
     return (
         <motion.div
@@ -105,9 +106,11 @@ const RgbGadget = ({
             whileTap={{ scale: 1.1 }}
             className="device"
             style={{
-                backgroundColor: status
-                    ? `rgb(${background[0]},${background[1]},${background[2]},0.2)`
-                    : color?.element,
+                background: status
+                    ? pattern === GadgetRgbRainbowPattern
+                        ? 'conic-gradient(from 0deg at left, #00ffff 0%, #ff00ff 25%, #ffff00 50%, #00ff00 75%, #00ffff 100%)'
+                        : `rgba(${background[0]}, ${background[1]}, ${background[2]}, 0.2)`
+                    : color.element,
                 border: status
                     ? `2px solid rgb(${background[0]},${background[1]},${background[2]})`
                     : '',
@@ -118,14 +121,14 @@ const RgbGadget = ({
                     <IconContext.Provider
                         value={{
                             size: '2.5em',
-                            color: status ? color?.button : 'gray',
+                            color: status ? color.button : 'gray',
                         }}
                     >
-                        {brightness <= 25 ? (
+                        {brightnessPercent <= 25 ? (
                             <MdBrightness5 />
-                        ) : brightness > 25 && brightness <= 50 ? (
+                        ) : brightnessPercent <= 50 ? (
                             <MdBrightness4 />
-                        ) : brightness > 50 && brightness <= 75 ? (
+                        ) : brightnessPercent <= 75 ? (
                             <MdBrightness6 />
                         ) : (
                             <MdBrightness7 />
@@ -134,75 +137,53 @@ const RgbGadget = ({
                     <p
                         style={{
                             marginLeft: '0.3rem',
-                            color: status ? color?.text : 'gray',
+                            color: status ? color.text : 'gray',
                         }}
                     >
-                        {status ? `${brightness}%` : '---'}
+                        {status ? `${brightnessPercent}%` : '---'}
                     </p>
                 </span>
+
                 <motion.span
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 1.0 }}
-                    onClick={() => changeStatus()}
+                    onClick={changeStatus}
                 >
                     <IconContext.Provider
                         value={{
                             size: '2.5em',
-                            color: status ? color?.success : 'gray',
+                            color: status ? color.success : 'gray',
                         }}
                     >
                         <PiPowerFill />
                     </IconContext.Provider>
                 </motion.span>
             </section>
+
             <section>
                 <span>
-                    <p style={{ color: status ? color?.text : 'gray' }}>
-                        {showName}
+                    <p style={{ color: status ? color.text : 'gray' }}>
+                        {trimToNChars(currentDevice?.showName, 11)}
                     </p>
-                    <p style={{ color: status ? color?.text : 'gray' }}>
-                        {deviceName}
+                    <p style={{ color: status ? color.text : 'gray' }}>
+                        {trimToNChars(currentDevice?.deviceName, 11)}
                     </p>
                 </span>
                 <motion.span
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 1.0 }}
-                    // onClick={() => {
-                    //     toggleBackDropOpen();
-                    //     setChildForCustomBackDrop(
-                    //         <RgbGadgetExpand
-                    //             darkTheme={darkTheme}
-                    //             defaultBrightness={brightness}
-                    //             background={background}
-                    //             roomType={roomType}
-                    //             id={id}
-                    //             backDropClose={toggleBackDropClose}
-                    //             deviceTopic={deviceTopic}
-                    //             deviceType={deviceType}
-                    //             createdAt={createdAt}
-                    //             updatedAt={updatedAt}
-                    //         />,
-                    //     );
-                    //     setSizeForCustomBackDrop(LandscapeSizeM);
-                    // }}
                     onClick={() => {
-                        const backdropId = `${RGB_GADGET_EXPAND}_${id}`; // Unique ID for this backdrop
-
+                        const backdropId = `${RGB_GADGET_EXPAND}_${id}`;
                         toggleBackDropOpen(
                             backdropId,
                             <RgbGadgetExpand
-                                darkTheme={darkTheme}
-                                defaultBrightness={brightness}
-                                background={background}
-                                roomType={roomType}
                                 id={id}
-                                backDropClose={() =>
-                                    toggleBackDropClose(backdropId)
-                                }
-                                deviceTopic={deviceTopic}
-                                deviceType={deviceType}
-                                createdAt={createdAt}
-                                updatedAt={updatedAt}
+                                defaultBrightness={brightnessPercent}
+                                background={background}
+                                darkTheme={darkTheme}
+                                rgbGadgetExpandBackdropId={backdropId}
+                                currentDeviceStatus={status}
+                                currentAnimation={pattern}
                             />,
                             LandscapeSizeM,
                         );
@@ -211,7 +192,7 @@ const RgbGadget = ({
                     <IconContext.Provider
                         value={{
                             size: '1.5em',
-                            color: status ? color?.text : 'gray',
+                            color: status ? color.text : 'gray',
                         }}
                     >
                         <VscSymbolColor />

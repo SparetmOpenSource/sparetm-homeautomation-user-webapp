@@ -2,8 +2,8 @@ import axios from 'axios';
 import { RoutePath } from '../Data/Constants';
 import { displayToastify } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
-import { authUrl } from '../Api.tsx/SignUpApis';
 import { addAdmin, addToken } from '../Features/User/UserSlice';
+import { authUrl } from '../Api.tsx/Axios';
 
 const login = (
     response: any,
@@ -12,7 +12,9 @@ const login = (
     navigate: any,
 ) => {
     const token = response?.data?.body?.access_token;
-    const admin = response?.data?.body?.admin_name;
+    const adminRaw = response?.data?.body?.admin_name;
+    // Remove surrounding double quotes if present
+    const admin = typeof adminRaw === 'string' ? adminRaw.replace(/^"|"$/g, '') : adminRaw;
     displayToastify(
         `Signing In as ${admin.split('@')[0]}`,
         !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,

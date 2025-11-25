@@ -1,7 +1,11 @@
 import {
-    spotifyAccountType,
+    Current_Date_Time,
+    // spotifyAccountType,
     spotifyCodeVerifier,
-    spotifyRefreshToken,
+    // spotifyRefreshToken,
+    // spotifyToken,
+    // spotifyTokenFetched,
+    // spotifyTokenFetchedTime,
 } from '../../Data/Constants';
 import { generateCodeChallenge, resetSpotify } from '../../Utils/HelperFn';
 import { api } from '../Axios';
@@ -23,8 +27,8 @@ const client_id: string = 'ad37eacb72aa4f8891ccda3c0782b86a';
 const scope: string =
     'user-library-modify user-library-read playlist-read-private user-read-playback-state user-modify-playback-state user-read-currently-playing user-read-email user-read-private';
 
-export const handleLogin = async () => {
-    resetSpotify();
+export const handleLogin = async (dispatch: any) => {
+    resetSpotify(dispatch);
     const { codeVerifier, codeChallenge } = await generateCodeChallenge();
     const authUrl = new URL(auth_uri);
     sessionStorage.setItem(spotifyCodeVerifier, codeVerifier);
@@ -41,9 +45,9 @@ export const handleLogin = async () => {
 };
 
 export const getPlaybackState = async (
-    darkTheme: any,
     callForAccessTokenByRefreshToken: any,
     token: any,
+    refreshToken?: string,
 ) => {
     try {
         const response = await api.get(
@@ -59,18 +63,41 @@ export const getPlaybackState = async (
         }
         return response?.data;
     } catch (error: any) {
-        if (error?.response?.status === 401) {
-            const token = localStorage.getItem(spotifyRefreshToken);
-            if (token) {
-                // localStorage.removeItem(spotifyAccountType);
-                const token = localStorage.getItem(spotifyRefreshToken);
-                callForAccessTokenByRefreshToken({ token });
-                // return undefined;
-            }
+        if (error?.response?.status === 401 && refreshToken) {
+            callForAccessTokenByRefreshToken({ token: refreshToken });
         }
         throw new Error(
             `Failed to fetch playback state: ${
-                error.response?.data?.error?.message || error.message
+                error.response?.data?.error?.message ?? error.message
+            }`,
+        );
+    }
+};
+
+export const getSearchState = async (
+    query: any,
+    type: any,
+    limit: any,
+    offset: any,
+    token: any,
+) => {
+    try {
+        const response = await api.get(
+            featureUrl.spotify_base_url +
+                `?data=search&query=${encodeURIComponent(
+                    query,
+                )}&type=${type}&limit=${limit}&offset=${offset}&include_external=audio&market=IN`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    } catch (error: any) {
+        throw new Error(
+            `Failed to fetch playback state: ${
+                error.response?.data?.error?.message ?? error.message
             }`,
         );
     }
@@ -90,7 +117,7 @@ export const getProfileState = async (token: any) => {
     } catch (error: any) {
         throw new Error(
             `Failed to fetch playback state: ${
-                error.response?.data?.error?.message || error.message
+                error.response?.data?.error?.message ?? error.message
             }`,
         );
     }
@@ -110,7 +137,7 @@ export const getDeviceState = async (token: any) => {
     } catch (error: any) {
         throw new Error(
             `Failed to fetch playback state: ${
-                error.response?.data?.error?.message || error.message
+                error.response?.data?.error?.message ?? error.message
             }`,
         );
     }
@@ -130,7 +157,7 @@ export const getQueueState = async (token: any) => {
     } catch (error: any) {
         throw new Error(
             `Failed to fetch playback state: ${
-                error.response?.data?.error?.message || error.message
+                error.response?.data?.error?.message ?? error.message
             }`,
         );
     }
@@ -156,7 +183,7 @@ export const getPlaylistSongState = async (
     } catch (error: any) {
         throw new Error(
             `Failed to fetch playback state: ${
-                error.response?.data?.error?.message || error.message
+                error.response?.data?.error?.message ?? error.message
             }`,
         );
     }
@@ -177,7 +204,7 @@ export const getAllAlbumState = async (token: any, limit: any, offset: any) => {
     } catch (error: any) {
         throw new Error(
             `Failed to fetch playback state: ${
-                error.response?.data?.error?.message || error.message
+                error.response?.data?.error?.message ?? error.message
             }`,
         );
     }
@@ -202,8 +229,29 @@ export const getAllPlaylistState = async (
     } catch (error: any) {
         throw new Error(
             `Failed to fetch playback state: ${
-                error.response?.data?.error?.message || error.message
+                error.response?.data?.error?.message ?? error.message
             }`,
         );
+    }
+};
+
+export const setting_up_token = (data: any, dispatch: any, handleRefresh: any) => {
+    const access_token = data?.data?.body?.access_token;
+    const refresh_token = data?.data?.body?.refresh_token;
+
+    if (access_token && refresh_token) {
+        // Dispatch Redux actions to update Spotify state
+        dispatch({
+            type: 'spotify/setSpotifyTokens',
+            payload: { accessToken: access_token, refreshToken: refresh_token }
+        });
+        dispatch({ type: 'spotify/setSpotifyTokenFetched', payload: true });
+        dispatch({ type: 'spotify/setSpotifyTokenFetchedTime', payload: Current_Date_Time });
+        handleRefresh();
+    }
+
+    const accountType = data?.data?.headers?.spotify_account_type?.[0];
+    if (accountType) {
+        dispatch({ type: 'spotify/setSpotifyAccountType', payload: accountType });
     }
 };

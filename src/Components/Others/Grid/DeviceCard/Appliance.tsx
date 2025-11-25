@@ -6,31 +6,34 @@ import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { IconContext } from 'react-icons';
 import { PiPowerFill } from 'react-icons/pi';
 import { HiOutlineInformationCircle } from 'react-icons/hi2';
-import { changeDeviceIcon, displayToastify } from '../../../../Utils/HelperFn';
+import {
+    changeDeviceIcon,
+    displayToastify,
+    trimToNChars,
+} from '../../../../Utils/HelperFn';
 import { APPLIANCE_EXPAND, LandscapeSizeM } from '../../../../Data/Constants';
 import ApplianceExpand from './ApplianceExpand';
 import { usePatchUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
-import { useAppSelector } from '../../../../Features/ReduxHooks';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../Features/ReduxHooks';
 import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
+import { updateDeviceStatus } from '../../../../Features/Device/DeviceSlice';
 
-const Appliance = ({
-    statusValue,
-    deviceType,
-    roomType,
-    showName,
-    deviceName,
-    deviceTopic,
-    id,
-    createdAt,
-    updatedAt,
-}: any) => {
+const Appliance = ({ id, statusValue }: any) => {
+    const currentDevice = useAppSelector(
+        (state: any) =>
+            state?.device?.deviceData?.body?.find(
+                (device: any) => device.deviceId === id,
+            ) ?? null,
+    );
     const [color, setColor] = useState<any>(light_colors);
+    const dispatch = useAppDispatch();
     const [status, setStatus] = useState<boolean>(false);
     const darkTheme: any = useTheme();
-    const admin = useAppSelector((state: any) => state?.user?.admin);
-    const profile = useAppSelector((state: any) => state?.user?.profile);
 
     const onSuccess = () => {};
     const onError = (error: any) => {
@@ -41,18 +44,17 @@ const Appliance = ({
         );
     };
     const { mutate } = usePatchUpdateData(
-        `${featureUrl.update_device}${admin}&profilename=${profile}&roomtype=${roomType}&id=${id}`,
+        `${featureUrl.update_device}${id}`,
         updateHeaderConfig,
         onSuccess,
         onError,
     );
 
     const changeStatus = () => {
-        setStatus((prev: boolean) => !prev);
-        mutate({
-            status: !status,
-            statusDetail: '',
-        } as any);
+        const newStatus = !status;
+        setStatus(newStatus);
+        dispatch(updateDeviceStatus({ id, status: newStatus }));
+        mutate({ status: newStatus, statusDetail: '' } as any);
     };
 
     const { toggleBackDropOpen } = useBackDropOpen();
@@ -83,9 +85,10 @@ const Appliance = ({
                             color: status ? color?.button : 'gray',
                         }}
                     >
-                        {/* <LuLightbulb /> */}
                         {changeDeviceIcon(
-                            deviceType.split('/')[1].toUpperCase(),
+                            currentDevice?.deviceType
+                                .split('/')[1]
+                                .toUpperCase(),
                         )}
                     </IconContext.Provider>
                 </span>
@@ -106,53 +109,37 @@ const Appliance = ({
             </section>
             <section>
                 <span>
-                    <p style={{ color: status ? color?.text : 'gray' }}>
-                        {showName}
+                    <p
+                        style={{
+                            color: status ? color?.text : 'gray',
+                            fontSize: '1rem',
+                            fontWeight: '600',
+                        }}
+                    >
+                        {trimToNChars(currentDevice?.showName, 11)}
                     </p>
-                    <p style={{ color: status ? color?.text : 'gray' }}>
-                        {deviceName}
+                    <p
+                        style={{
+                            color: status ? color?.text : 'gray',
+                            fontSize: '0.9rem',
+                            fontWeight: '100',
+                        }}
+                    >
+                        {trimToNChars(currentDevice?.deviceName, 11)}
                     </p>
                 </span>
                 <motion.span
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 1.0 }}
-                    // onClick={() => {
-                    //     toggleBackDropOpen();
-                    //     setChildForCustomBackDrop(
-                    //         <ApplianceExpand
-                    //             deviceTopic={deviceTopic}
-                    //             deviceType={deviceType}
-                    //             createdAt={createdAt}
-                    //             updatedAt={updatedAt}
-                    //             id={id}
-                    //             darkTheme={darkTheme}
-                    //             isRemoteActive={
-                    //                 deviceType.split('/')[1].toUpperCase() ===
-                    //                     'AC' ||
-                    //                 deviceType.split('/')[1].toUpperCase() ===
-                    //                     'FAN'
-                    //                     ? true
-                    //                     : false
-                    //             }
-                    //         />,
-                    //     );
-                    //     setSizeForCustomBackDrop(LandscapeSizeM);
-                    // }}
                     onClick={() => {
-                        const backdropId = APPLIANCE_EXPAND; // Unique ID for this backdrop
-
+                        const backdropId = APPLIANCE_EXPAND;
                         toggleBackDropOpen(
                             backdropId,
                             <ApplianceExpand
-                                deviceTopic={deviceTopic}
-                                deviceType={deviceType}
-                                createdAt={createdAt}
-                                updatedAt={updatedAt}
                                 id={id}
                                 darkTheme={darkTheme}
-                                isRemoteActive={['AC', 'FAN'].includes(
-                                    deviceType.split('/')[1].toUpperCase(),
-                                )}
+                                applianceExpandBackdropId={backdropId}
+                                currentDeviceStatus={status}
                             />,
                             LandscapeSizeM,
                         );

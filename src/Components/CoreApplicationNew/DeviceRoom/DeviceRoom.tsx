@@ -1,17 +1,14 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import './DeviceRoom.css';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { useTheme } from '../../../Pages/ThemeProvider';
 import Button from '../../Others/CustomButton/Button';
 import { useAppDispatch, useAppSelector } from '../../../Features/ReduxHooks';
-// import { FiPower } from 'react-icons/fi';
 import { IconContext } from 'react-icons';
-// import { motion } from 'framer-motion';
 import { PiPlugsConnectedFill } from 'react-icons/pi';
 import { TbPlugConnected } from 'react-icons/tb';
-import { getAllDevices } from '../../../Api.tsx/CoreAppApis';
-// import { usePatchUpdateData } from '../../../Api.tsx/useReactQuery_Update';
+import { featureUrl, getAllDevices } from '../../../Api.tsx/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 import { displayToastify, invalidateQueries } from '../../../Utils/HelperFn';
 import DeviceGrid from '../../Others/Grid/DeviceGrid';
@@ -20,8 +17,13 @@ import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../Data/QueryConstant';
 import { useQueryClient } from 'react-query';
 import { addFirstRoom } from '../../../Features/Room/RoomSlice';
 import LoadingFade from '../../Others/LoadingAnimation/LoadingFade';
-import Error from './../../../Components/Others/ErrorPage/ErrorPage';
+import ErrorPage from './../../../Components/Others/ErrorPage/ErrorPage';
 import { addDeviceData } from '../../../Features/Device/DeviceSlice';
+import { ERROR_MSG, RoutePath } from '../../../Data/Constants';
+import { FaPowerOff } from 'react-icons/fa6';
+import { motion } from 'framer-motion';
+import { usePatchUpdateData } from '../../../Api.tsx/useReactQuery_Update';
+import { updateHeaderConfig } from '../../../Api.tsx/Axios';
 
 const DeviceRoom = () => {
     const [color, setColor] = useState<any>(light_colors);
@@ -31,45 +33,50 @@ const DeviceRoom = () => {
     const profileData = useAppSelector(
         (state: any) => state?.user?.profileData,
     );
-    // const mqttUpdate = useAppSelector(
-    //     (state: any) => state?.device?.mqttUpdate,
-    // );
+
     const admin = useAppSelector((state: any) => state?.user?.admin);
     const profile = useAppSelector((state: any) => state?.user?.profile);
-    const roomType: any = location.pathname.split('/')[3].replace('%20', ' ');
-    //const [allDeviceStatus, setAllDeviceStatus]: any = useState(false);
+    const roomType: any = location?.pathname
+        ?.split('/')[3]
+        ?.replace('%20', ' ');
+
+    const { total, on, off } = useAppSelector(
+        (state: any) =>
+            state.device.roomCounts[roomType?.toLowerCase()] ?? {
+                total: 0,
+                on: 0,
+                off: 0,
+            },
+    );
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const [deviceOn, setDeviceOn] = useState(0);
-    const [deviceOff, setDeviceOff] = useState(0);
-    //const [totalDevice, setTotalDevice] = useState(1);
-    const queryKeys: any = [SELECT_DEVICE_LIST_QUERY_ID];
+    const queryKeys = useMemo(() => [SELECT_DEVICE_LIST_QUERY_ID], []);
     const deviceFn = () => {
         return getAllDevices(admin, profile, darkTheme);
     };
     const on_fetch_device_Success = (data: any) => {
-        // setTotalDevice(
-        //     data?.data?.body?.filter(
-        //         (el: any) =>
-        //             el.roomType.toLowerCase() === roomType.toLowerCase(),
-        //     ).length,
-        // );
-        setDeviceOn(
-            data?.data?.body?.filter(
-                (el: any) =>
-                    el.roomType.toLowerCase() === roomType.toLowerCase() &&
-                    el.status === true,
-            ).length,
-        );
-        setDeviceOff(
-            data?.data?.body?.filter(
-                (el: any) =>
-                    el.roomType.toLowerCase() === roomType.toLowerCase() &&
-                    el.status === false,
-            ).length,
-        );
-        dispatch(addDeviceData(data?.data));
+        dispatch(addDeviceData(data?.data?.body));
     };
+
+    const { mutate } = usePatchUpdateData(
+        `${featureUrl.update_all_device_status}${admin}&profilename=${profile}&roomtype=${roomType}`,
+        updateHeaderConfig,
+        () => {
+            invalidateQueries(queryClient, queryKeys);
+        },
+        (error: any) => {
+            displayToastify(
+                error?.message,
+                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+                TOASTIFYSTATE.ERROR,
+            );
+        },
+    );
+
+    const triggerAllDevices = useCallback(() => {
+        const newStatus = on !== total;
+        mutate({ status: newStatus, statusDetail: '' } as any);
+    }, [mutate, on, total]);
 
     const on_fetch_device_Error = (error: any) => {
         displayToastify(
@@ -93,144 +100,100 @@ const DeviceRoom = () => {
         0, // Stale Time
     );
 
-    // const on_Error = (error: any) => {
-    //     displayToastify(
-    //         error?.message,
-    //         !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-    //         TOASTIFYSTATE.ERROR,
-    //     );
-    // };
-
-    // const on_Success = () => {};
-    // const { mutate } = usePatchUpdateData(
-    //     `${featureUrl.update_all_device_status}${admin}&profilename=${profile}&roomtype=${roomType}`,
-    //     on_Success,
-    //     on_Error,
-    // );
-
-    // const mutateAllDeviceStatus = () => {
-    //     mutate({
-    //         status: !allDeviceStatus,
-    //         statusDetail: ' ',
-    //     } as any);
-    //     !allDeviceStatus
-    //         ? displayToastify(
-    //               'Turning ON all devices',
-    //               !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-    //               TOASTIFYSTATE.INFO,
-    //           )
-    //         : displayToastify(
-    //               'Turning OFF all devices',
-    //               !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-    //               TOASTIFYSTATE.INFO,
-    //           );
-    // };
-
-    // const handlePowerBtnClick = () => {
-    //     if (totalDevice !== 0) {
-    //         setAllDeviceStatus(!allDeviceStatus);
-    //         mutateAllDeviceStatus();
-    //     } else {
-    //         displayToastify(
-    //             'Please add your device first',
-    //             !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-    //             TOASTIFYSTATE.WARN,
-    //         );
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     deviceOn === totalDevice && totalDevice !== 0
-    //         ? setAllDeviceStatus(true)
-    //         : setAllDeviceStatus(false);
-    // }, [deviceOn, totalDevice, roomType]);
-
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    // useEffect(() => {
-    //     const update_type = mqttUpdate?.msg?.message?.split('/');
-    //     if (update_type !== undefined && update_type[4] === admin) {
-    //         invalidateQueries(queryClient, queryKeys);
-    //         displayToastify(
-    //             `Socket device (${update_type[3]})`,
-    //             !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-    //             TOASTIFYSTATE.INFO,
-    //         );
-    //     }
-    // }, [mqttUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="deviceRoom">
             <section style={{ backgroundColor: color?.element }}>
                 <span
-                    className="deviceRoom-intro"
+                    className="deviceRoom-name"
                     style={{ color: color?.text }}
                 >
-                    {profile}'s Home
+                    {profile}'s Space
                 </span>
-                <span
-                    className="deviceRoom-room-btn"
-                    style={{ color: color?.text }}
-                >
+                <span className="deviceRoom-btn" style={{ color: color?.text }}>
                     {profileData?.body?.room?.map((item: any) => (
                         <Button
                             key={item?.room_id}
                             label={item?.room_type}
                             textCol={
                                 location?.pathname?.replace('%20', '') ===
-                                `/app/room/${item?.room_type
+                                `${
+                                    RoutePath?.CoreApplication_Room
+                                }/${item?.room_type
+                                    ?.toLowerCase()
                                     ?.split(' ')
                                     ?.join('')}`
                                     ? color?.button
-                                    : `${color?.icon?.split(')')[0]},0.5)`
+                                    : `${color?.icon_font?.split(')')[0]},0.7)`
                             }
                             backCol={color?.outer}
-                            backColOnDis={color?.inner}
                             width="150px"
                             fn={() => {
                                 invalidateQueries(queryClient, queryKeys);
-                                dispatch(addFirstRoom(item?.room_type));
-                                navigate(`/app/room/${item?.room_type}`);
+                                dispatch(
+                                    addFirstRoom(
+                                        item?.room_type?.toLowerCase(),
+                                    ),
+                                );
+                                navigate(
+                                    `${
+                                        RoutePath?.CoreApplication_Room
+                                    }/${item?.room_type?.toLowerCase()}`,
+                                );
                             }}
                             status={false}
                             border={
                                 location?.pathname?.replace('%20', '') ===
-                                `/app/room/${item?.room_type
+                                `${
+                                    RoutePath?.CoreApplication_Room
+                                }/${item?.room_type
+                                    ?.toLowerCase()
                                     ?.split(' ')
                                     ?.join('')}`
                                     ? color?.button
-                                    : `${color?.icon?.split(')')[0]},0.5)`
+                                    : `${color?.icon?.split(')')[0]},0.7)`
                             }
                         />
                     ))}
                 </span>
                 <span
-                    className="deviceRoom-generic-btn"
+                    className="deviceRoom-status-btn"
                     style={{ color: color?.text }}
                 >
-                    {/* <div>
+                    <div title="Click to turn ON/OFF all devices">
                         <motion.span
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            onClick={() => handlePowerBtnClick()}
+                            whileHover={{ scale: 1.5 }}
+                            whileTap={{ scale: 0.99 }}
+                            onClick={() => triggerAllDevices()}
                         >
                             <IconContext.Provider
                                 value={{
                                     size: '1.5em',
-                                    color: allDeviceStatus
-                                        ? color?.button
-                                        : 'black',
+                                    color:
+                                        on === total && total !== 0
+                                            ? color?.success
+                                            : color?.icon_font,
                                 }}
                             >
-                                <FiPower />
+                                <FaPowerOff />
                             </IconContext.Provider>
                         </motion.span>
-                        <p>{totalDevice}</p>
-                    </div> */}
-                    <div>
-                        <span onClick={() => {}}>
+                        <p
+                            style={{
+                                color:
+                                    on === total && total !== 0
+                                        ? color?.text
+                                        : color?.icon,
+                            }}
+                        >
+                            {total}
+                        </p>
+                    </div>
+                    <div title="Total turned ON devices">
+                        <span>
                             <IconContext.Provider
                                 value={{
                                     size: '1.5em',
@@ -240,10 +203,10 @@ const DeviceRoom = () => {
                                 <PiPlugsConnectedFill />
                             </IconContext.Provider>
                         </span>
-                        <p>{deviceOn}</p>
+                        <p>{on}</p>
                     </div>
-                    <div>
-                        <span onClick={() => {}}>
+                    <div title="Total turned OFF devices">
+                        <span>
                             <IconContext.Provider
                                 value={{
                                     size: '1.5em',
@@ -253,7 +216,7 @@ const DeviceRoom = () => {
                                 <TbPlugConnected />
                             </IconContext.Provider>
                         </span>
-                        <p>{deviceOff}</p>
+                        <p>{off}</p>
                     </div>
                 </span>
             </section>
@@ -264,12 +227,8 @@ const DeviceRoom = () => {
                     </div>
                 )}
                 {!isLoading && isError && (
-                    <div className="deviceRoom_error">
-                        <Error
-                            enableBtn={true}
-                            navigate={navigate}
-                            darkTheme={darkTheme}
-                        />
+                    <div className="deviceRoom_isError">
+                        <ErrorPage errMsg={ERROR_MSG} darkTheme={darkTheme} />
                     </div>
                 )}
                 {!isLoading && !isError && <DeviceGrid />}

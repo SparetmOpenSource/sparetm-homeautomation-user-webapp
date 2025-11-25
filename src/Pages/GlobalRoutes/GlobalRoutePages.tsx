@@ -7,6 +7,9 @@ const CoreApplication = React.lazy(
 const DashBoard = React.lazy(
     () => import('../../Components/CoreApplicationNew/DashBoard/DashBoard'),
 );
+const Chat = React.lazy(
+    () => import('../../Components/CoreApplicationNew/Chat/Chat'),
+);
 const Play = React.lazy(
     () => import('../../Components/CoreApplicationNew/Play/Play'),
 );
@@ -66,6 +69,20 @@ const ExampleCodes = React.lazy(
         ),
 );
 
+const Overview = React.lazy(
+    () =>
+        import(
+            './../../Components/CoreApplicationNew/Connection/Overview/Overview'
+        ),
+);
+
+const ArduinoIde = React.lazy(
+    () =>
+        import(
+            './../../Components/CoreApplicationNew/Connection/ArduinoIde/ArduinoIde'
+        ),
+);
+
 // -------------------- Setting Components -------------------- //
 const AccountSetting = React.lazy(
     () =>
@@ -96,6 +113,9 @@ const SignInSignUp = React.lazy(() => import('../SignUp/SignUp'));
 // -------------------- Miscellaneous Components -------------------- //
 const NotFound = React.lazy(() => import('../NotFound/NotFound'));
 
+// -------------------- About Components -------------------- //
+const About = React.lazy(() => import('../About/About'));
+
 // Export all components
 export {
     Home,
@@ -105,10 +125,13 @@ export {
     SelectProfile,
     CoreApplication,
     DashBoard,
+    Chat,
     Play,
     Setting,
     DeviceRoom,
     Connection,
+    Overview,
+    ArduinoIde,
     TodoListWrapper,
     StatusList,
     GettingStarted,
@@ -119,4 +142,5 @@ export {
     AccountSetting,
     FeatureSetting,
     NotFound,
+    About,
 };

@@ -1,6 +1,6 @@
 .coreApplication,
-.coreApplication_isLoading,
-.coreApplication_error {
+.coreApplication-isLoading,
+.coreApplication-error {
     width: 100%;
     height: 100%;
 }

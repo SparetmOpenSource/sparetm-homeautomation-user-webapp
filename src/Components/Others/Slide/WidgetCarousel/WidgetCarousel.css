@@ -1,10 +1,10 @@
-.list-wrapper {
+.widgetCarousel {
     width: 100%;
     height: 100%;
     display: flex;
 }
 
-.list-wrapper > :first-child {
+.widgetCarousel > :first-child {
     width: 90%;
     height: 100%;
     display: flex;
@@ -12,7 +12,7 @@
     justify-content: center;
     position: relative;
 }
-.list-wrapper > :last-child {
+.widgetCarousel> :last-child {
     width: 10%;
     height: 100%;
     display: flex;
@@ -21,11 +21,10 @@
     justify-content: space-around;
 }
 
-.list {
+.widgetCarousel-list {
     display: flex;
     gap: 16px;
     list-style: none;
-    overflow-x: none;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -33,25 +32,16 @@
     height: 100%;
     padding: 1rem;
     overflow: hidden;
+    overflow-x: none;
 }
 
-.list::-webkit-scrollbar {
+.widgetCarousel-list::-webkit-scrollbar {
     display: none;
 }
 
-.item {
+.widgetCarousel-list-item {
     flex-shrink: 0;
     width: 49%;
     height: 100%;
     scroll-snap-align: center;
-}
-
-.content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-family: sans-serif;
-    font-size: 64px;
-    font-weight: bold;
 }

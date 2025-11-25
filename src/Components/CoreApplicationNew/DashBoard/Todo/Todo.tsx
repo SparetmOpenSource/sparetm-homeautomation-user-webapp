@@ -2,22 +2,17 @@ import { useEffect, useState } from 'react';
 import './Todo.css';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { useBackDropOpen, useTheme } from '../../../../Pages/ThemeProvider';
-import { FiEdit } from 'react-icons/fi';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { motion } from 'framer-motion';
+import TodoListTemp from './TodoListTemp/TodoListTemp';
+import { IoIosAddCircle } from 'react-icons/io';
 import { IconContext } from 'react-icons';
-import { LiaUserEditSolid } from 'react-icons/lia';
-import Confirmation from '../../../Others/BackDrop/Confirmation/Confirmation';
-import {
-    LandscapeSizeS,
-    SPOTIFY_EXPAND_ALBUM_DELETE_CONFIRMATION,
-    DELETING_TODOLIST,
-} from '../../../../Data/Constants';
+import { motion } from 'framer-motion';
+import { ADD_TODO_LIST, LandscapeSizeM } from '../../../../Data/Constants';
 
 const Todo = () => {
     const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
-    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
+
+    const { toggleBackDropOpen } = useBackDropOpen();
 
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
@@ -29,74 +24,58 @@ const Todo = () => {
                 className="todo-list-wrapper"
                 style={{ backgroundColor: color?.element }}
             >
-                <motion.div
-                    // whileHover={{ border: `1px solid ${color?.success}` }}
-                    // whileTap={{ scale: 0.9 }}
-                    whileHover={{ scale: 0.98 }}
-                    whileTap={{ scale: 0.96 }}
-                    style={{ backgroundColor: color?.inner }}
-                >
-                    <span className="todo-list-msg">
-                        <h1 style={{ color: color?.text }}>Car wash</h1>
-                        <p style={{ color: color?.text }}>
-                            Please wash your car till end of this week
-                        </p>
-                    </span>
-                    <span
-                        className="todo-list-edit"
-                        style={{ borderLeft: `2px solid ${color?.button}` }}
+                <div className="todo-list-wrapper-header">
+                    <div
+                        style={{
+                            backgroundColor: `${
+                                color?.button.split(')')[0]
+                            },0.6)`,
+                            color: color?.text,
+                        }}
                     >
+                        <p>Date: 23-05-2025</p>
+                    </div>
+                    <div
+                        style={{
+                            backgroundColor: `${
+                                color?.button.split(')')[0]
+                            },0.6)`,
+                            color: color?.text,
+                        }}
+                    >
+                        <p>Count: 89</p>
                         <motion.span
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}
                             onClick={() => {
-                                const backdropId = DELETING_TODOLIST; // Unique ID for this backdrop
-
+                                const backdropId = ADD_TODO_LIST;
                                 toggleBackDropOpen(
                                     backdropId,
-                                    <Confirmation
-                                        darkTheme={darkTheme}
-                                        heading="Would you like to delete this todo from your collection?"
-                                        btnOkFn={() => {
-                                            // triggerDeletion(docId);
-                                            toggleBackDropClose(backdropId);
-                                        }}
-                                        btnCancelFn={() =>
-                                            toggleBackDropClose(backdropId)
-                                        }
-                                        btnOkLabel="Yes, delete"
-                                        btnCancelLabel="Cancel"
-                                    />,
-                                    LandscapeSizeS,
+                                    <div style={{ backgroundColor: 'white' }}>
+                                        Add
+                                    </div>,
+                                    LandscapeSizeM,
                                 );
                             }}
                         >
-                            <IconContext.Provider
-                                value={{
-                                    size: '2em',
-                                    color: color?.button,
-                                }}
-                            >
-                                <MdOutlineDeleteOutline />
+                            <IconContext.Provider value={{ size: '2em' }}>
+                                <IoIosAddCircle />
                             </IconContext.Provider>
                         </motion.span>
+                    </div>
+                </div>
+                {/* ************** */}
+                <TodoListTemp />
+                <TodoListTemp />
+                <TodoListTemp />
+                <TodoListTemp />
+                <TodoListTemp />
+                <TodoListTemp />
+                <TodoListTemp />
+                <TodoListTemp />
+                <TodoListTemp />
 
-                        <motion.span
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            //   onClick={() => navigate(todoListPath)}
-                        >
-                            <IconContext.Provider
-                                value={{
-                                    size: '2em',
-                                    color: color?.element,
-                                }}
-                            >
-                                <LiaUserEditSolid />
-                            </IconContext.Provider>
-                        </motion.span>
-                    </span>
-                </motion.div>
+                {/* ************** */}
             </section>
         </div>
     );

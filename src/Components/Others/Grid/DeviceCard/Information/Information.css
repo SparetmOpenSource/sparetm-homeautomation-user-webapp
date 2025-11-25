@@ -8,19 +8,19 @@
     padding: 1rem;
 }
 
-.device-information>:first-child {
+.device-information > :first-child {
     height: 14%;
     width: 90%;
     border-radius: 1rem;
 }
 
-.device-information>:first-child>:first-child {
+.device-information > :first-child > :first-child {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
-.device-information>:last-child {
+.device-information > :last-child {
     height: 83%;
     width: 100%;
     display: flex;
@@ -29,7 +29,7 @@
     flex-direction: column;
 }
 
-.device-information>:last-child div {
+.device-information-content-div {
     height: 18%;
     width: 100%;
     display: flex;
@@ -37,8 +37,8 @@
     justify-content: center;
 }
 
-.device-information-content>:first-child,
-.device-information-content-topic>:nth-child(1) {
+.device-information-content > :first-child,
+.device-information-content-topic > :nth-child(1) {
     height: 100%;
     width: 20%;
     display: flex;
@@ -46,8 +46,8 @@
     justify-content: center;
 }
 
-.device-information-content>:last-child,
-.device-information-content-topic>:nth-child(2) {
+.device-information-content > :last-child,
+.device-information-content-topic > :nth-child(2) {
     height: 100%;
     width: 80%;
     display: flex;
@@ -56,15 +56,12 @@
     border-radius: 1rem;
 }
 
-.device-information-content-topic>:nth-child(2) {
-    width: 75%;
-}
-
-.device-information-content-topic>:nth-child(3) {
-    width: 5%;
-    height: 100%;
-    display: flex;
+.device-information-content-topic > :nth-child(2) {
     align-items: center;
-    justify-content: center;
-    border-radius: 1rem;
+    justify-content: space-evenly;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }

@@ -2,6 +2,7 @@
     width: 100%;
     height: 100%;
     display: flex;
+    align-items: center;
     flex-direction: column;
     border-radius: 0.5rem;
     -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -9,9 +10,9 @@
     box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.confirmation>:first-child {
+.confirmation > :first-child {
     width: 100%;
-    height: 50%;
+    height: 48%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,21 +21,22 @@
     padding: 2rem;
 }
 
-.confirmation>:first-child h1{
-    font-weight:lighter !important;
+.confirmation > :first-child h1 {
+    font-weight: lighter !important;
+    font-size: 26px;
+    line-height: 39px;
 }
 
-.confirmation>:last-child {
-    width: 100%;
-    height: 50%;
+.confirmation > :last-child {
+    width: 97%;
+    height: 48%;
     display: flex;
     align-items: center;
     justify-items: center;
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
+    border-radius: 0.4rem;
 }
 
-.confirmation>:last-child>:first-child {
+.confirmation > :last-child > :first-child {
     width: 50%;
     height: 100%;
     display: flex;
@@ -43,11 +45,11 @@
     border-bottom-left-radius: 0.5rem;
 }
 
-.confirmation>:last-child>:last-child {
+.confirmation > :last-child > :last-child {
     width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content:space-around;
+    justify-content: space-around;
     border-bottom-right-radius: 0.5rem;
 }
