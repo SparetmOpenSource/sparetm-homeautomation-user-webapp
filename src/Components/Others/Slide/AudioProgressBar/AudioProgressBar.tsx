@@ -124,7 +124,8 @@ import { usePostUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { spotifyNonPremiumWarning } from '../../../../Data/Constants';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
-import { useAppSelector } from '../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../Hooks/UseLocalStorage';
+import { SPOTIFY_TOKEN_GLOBAL, SPOTIFY_ACCOUNT_TYPE_GLOBAL } from '../../../../Data/Constants';
 
 type AudioProgressBarProps = {
     totalTimeMs: number;
@@ -144,8 +145,8 @@ const AudioProgressBar = ({
     const totalTimeSec = totalTimeMs / 1000;
     const [currentTime, setCurrentTime] = useState(progressTimeMs / 1000);
     const [isSeeking, setIsSeeking] = useState(false);
-    const spotifyAcntType = useAppSelector((state) => state.spotify.accountType);
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
+    const [spotifyAcntType] = useLocalStorage(SPOTIFY_ACCOUNT_TYPE_GLOBAL, '');
+    const [accessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
     const color = useMemo(
         () => (darkTheme ? dark_colors : light_colors),
         [darkTheme],

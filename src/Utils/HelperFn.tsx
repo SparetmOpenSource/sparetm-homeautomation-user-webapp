@@ -27,15 +27,15 @@ import {
     BACKGROUND_BLINK_SETTING,
     NETWORKERRORKEY,
     RoutePath,
-    // spotifyAccountType,
-    spotifyCodeVerifier,
+    SPOTIFY_CODE_VERIFIER,
     spotifyNonPremiumWarning,
     spotifyNoPlayableDeviceWarning,
-    // spotifyRefreshToken,
-    // spotifyToken,
-    // spotifyTokenFetched,
-    // spotifyTokenFetchedTime,
     spotifyUserNotRegisteredWarning,
+    SPOTIFY_TOKEN_GLOBAL,
+    SPOTIFY_REFRESH_TOKEN_GLOBAL,
+    SPOTIFY_ACCOUNT_TYPE_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL,
 } from '../Data/Constants';
 import { LuRefrigerator } from 'react-icons/lu';
 import { SiSocketdotio, SiNano } from 'react-icons/si';
@@ -556,16 +556,20 @@ export function getOffsetAndLimit(
     return { offset, limit };
 }
 
-export const resetSpotify = (dispatch: any) => {
-    // Dispatch Redux action to reset Spotify state
-    // The Store subscription will handle localStorage cleanup
-    dispatch({ type: 'spotify/resetSpotify' });
-    // Still need to clear sessionStorage for code verifier
-    sessionStorage.removeItem(spotifyCodeVerifier);
+export const resetSpotify = () => {
+    localStorage.removeItem(SPOTIFY_TOKEN_GLOBAL);
+    localStorage.removeItem(SPOTIFY_REFRESH_TOKEN_GLOBAL);
+    localStorage.removeItem(SPOTIFY_ACCOUNT_TYPE_GLOBAL);
+    localStorage.removeItem(SPOTIFY_TOKEN_FETCHED_GLOBAL);
+    localStorage.removeItem(SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL);
+    sessionStorage.removeItem(SPOTIFY_CODE_VERIFIER);
+    
+    // Dispatch event to update hooks
+    window.dispatchEvent(new Event('local-storage'));
 };
 
-export const spotifyLogout = (dispatch: any) => {
-    resetSpotify(dispatch);
+export const spotifyLogout = () => {
+    resetSpotify();
 };
 
 export const navigateTo = (navigate: any, to: any) => {

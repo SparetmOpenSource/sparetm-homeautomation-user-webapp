@@ -30,7 +30,8 @@ import { featureUrl } from '../../../../../Api.tsx/CoreAppApis';
 import { getMergedHeadersForSpotify } from '../../../../../Api.tsx/Axios';
 import { GET_SPOTIFY_QUEUE_STATE_QUERY_ID } from '../../../../../Data/QueryConstant';
 import { useQueryClient } from 'react-query';
-import { useAppSelector } from '../../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../../Hooks/UseLocalStorage';
+import { SPOTIFY_TOKEN_GLOBAL } from '../../../../../Data/Constants';
 
 const SpotifyCurrentPlayback = ({
     data,
@@ -44,7 +45,7 @@ const SpotifyCurrentPlayback = ({
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const playbackType = data?.body?.currently_playing_type;
     const { toggleBackDropOpen } = useBackDropOpen();
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
+    const [accessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
     const renderPlaybackIcon = () => {
         if (!data) return <RiNeteaseCloudMusicLine />;
         if (data && playbackType === 'unknown') return <CiWarning />;

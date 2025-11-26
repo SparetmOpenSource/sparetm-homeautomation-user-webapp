@@ -10,7 +10,8 @@ import {
 import { useQueryClient } from 'react-query';
 import { getMergedHeadersForSpotify } from '../../../../../../../Api.tsx/Axios';
 import { useMemo } from 'react';
-import { useAppSelector } from '../../../../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../../../../Hooks/UseLocalStorage';
+import { SPOTIFY_TOKEN_GLOBAL } from '../../../../../../../Data/Constants';
 
 interface CoverProps {
     listData: {
@@ -34,7 +35,7 @@ const Cover = ({
     albumIdQueryIdToBeRefreshed,
 }: CoverProps) => {
     const queryClient = useQueryClient();
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
+    const [accessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
 
     const onSuccess = () => {
         invalidateQueries(queryClient, [albumIdQueryIdToBeRefreshed]);

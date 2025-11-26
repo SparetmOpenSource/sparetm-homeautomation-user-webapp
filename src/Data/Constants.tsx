@@ -283,7 +283,7 @@ export const toServerSocketTopic = '/to/server/update/device/mqtt/data';
 export const spotifyToken = 'spotify_access_token';
 export const spotifyAccountType = 'spotify_account_type';
 export const spotifyRefreshToken = 'spotify_refresh_token';
-export const spotifyCodeVerifier = 'code_verifier';
+export const spotifyCodeVerifier = 'spotify_code_verifier_global';
 export const spotifyTokenFetched = 'has_fetched_spotify_access_token';
 export const spotifyTokenFetchedTime = 'has_fetched_spotify_access_token_time';
 export const spotifyNonPremiumWarning =
@@ -294,6 +294,19 @@ export const spotifyNoPlayableDeviceWarning =
     'Oops! No active Spotify device is playing music right now.';
 export const spotifyAlbumAddition = 'Added album to your collection.';
 export const spotifyQueueAddition = 'Added track to your queue.';
+
+// Global localStorage keys (with _global suffix for Redux persistence)
+export const ADMIN_GLOBAL = `${ADMIN}_global`;
+export const PROFILE_GLOBAL = `${PROFILE}_global`;
+export const TOKEN_GLOBAL = `${TOKEN}_global`;
+export const PROFILEID_GLOBAL = `${PROFILEID}_global`;
+
+export const SPOTIFY_TOKEN_GLOBAL = `${spotifyToken}_global`;
+export const SPOTIFY_REFRESH_TOKEN_GLOBAL = `${spotifyRefreshToken}_global`;
+export const SPOTIFY_ACCOUNT_TYPE_GLOBAL = `${spotifyAccountType}_global`;
+export const SPOTIFY_TOKEN_FETCHED_GLOBAL = `${spotifyTokenFetched}_global`;
+export const SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL = `${spotifyTokenFetchedTime}_global`;
+export const SPOTIFY_CODE_VERIFIER = spotifyCodeVerifier; // sessionStorage key (no _global suffix)
 
 export const ITEMPERPAGE = 20;
 

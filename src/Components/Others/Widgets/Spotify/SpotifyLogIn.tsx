@@ -8,24 +8,45 @@ import { profileUrl } from '../../../../Api.tsx/ProfileConfigApis';
 import { handleLogin, setting_up_token } from '../../../../Api.tsx/Spotify/Api';
 import { usePostUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
-import { spotifyCodeVerifier } from '../../../../Data/Constants';
+
 import Button from '../../CustomButton/Button';
 import { SpotifyActive } from './SpotifyActive';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { useTheme } from '../../../../Pages/ThemeProvider';
 import { catchError } from '../../../../Utils/HelperFn';
-import { useAppSelector, useAppDispatch } from '../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../Hooks/UseLocalStorage';
+import {
+    Current_Date_Time,
+    SPOTIFY_TOKEN_GLOBAL,
+    SPOTIFY_REFRESH_TOKEN_GLOBAL,
+    SPOTIFY_ACCOUNT_TYPE_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL,
+    SPOTIFY_CODE_VERIFIER,
+} from '../../../../Data/Constants';
 
 const Spotify = ({ handleRefresh }: any) => {
     const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
     const hasFetched = useRef(false);
-    const dispatch = useAppDispatch();
-    const tokenFetched = useAppSelector((state) => state.spotify.tokenFetched);
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
+    const [accessToken, setAccessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
+    const [, setRefreshToken] = useLocalStorage(SPOTIFY_REFRESH_TOKEN_GLOBAL, '');
+    const [, setAccountType] = useLocalStorage(SPOTIFY_ACCOUNT_TYPE_GLOBAL, '');
+    const [tokenFetched, setTokenFetched] = useLocalStorage(SPOTIFY_TOKEN_FETCHED_GLOBAL, false);
+    const [, setTokenFetchedTime] = useLocalStorage(SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL, '');
 
     const on_success = (data: any) => {
-        setting_up_token(data, dispatch, handleRefresh);
+        const { access_token, refresh_token, accountType: acctType } = setting_up_token(data);
+        if (access_token && refresh_token) {
+            setAccessToken(access_token);
+            setRefreshToken(refresh_token);
+            setTokenFetched(true);
+            setTokenFetchedTime(Current_Date_Time);
+            handleRefresh();
+        }
+        if (acctType) {
+            setAccountType(acctType);
+        }
     };
 
     const on_error = (error: any) => {
@@ -42,7 +63,7 @@ const Spotify = ({ handleRefresh }: any) => {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
-        const codeVerifier = sessionStorage.getItem(spotifyCodeVerifier);
+        const codeVerifier = sessionStorage.getItem(SPOTIFY_CODE_VERIFIER);
         if (
             code &&
             codeVerifier &&
@@ -90,7 +111,7 @@ const Spotify = ({ handleRefresh }: any) => {
                         textCol={color?.text}
                         backCol={`${color?.button.split(')')[0]},0.6)`}
                         width="200px"
-                        fn={() => handleLogin(dispatch)}
+                        fn={() => handleLogin()}
                         status={false}
                         border={color?.element}
                     />

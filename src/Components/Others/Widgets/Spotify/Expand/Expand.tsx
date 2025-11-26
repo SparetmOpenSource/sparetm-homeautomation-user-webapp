@@ -30,13 +30,22 @@ import Info from './Info/Info';
 import { Home } from './Home/Home';
 import { profileUrl } from '../../../../../Api.tsx/ProfileConfigApis';
 import { useQueryClient } from 'react-query';
-import { useAppSelector, useAppDispatch } from '../../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../../Hooks/UseLocalStorage';
+import {
+    Current_Date_Time,
+    SPOTIFY_TOKEN_GLOBAL,
+    SPOTIFY_REFRESH_TOKEN_GLOBAL,
+    SPOTIFY_ACCOUNT_TYPE_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL,
+} from '../../../../../Data/Constants';
 
 const Expand = ({ darkTheme, handleRefresh }: any) => {
-    const dispatch = useAppDispatch();
-    const spotifyAcntType = useAppSelector((state) => state.spotify.accountType);
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
-    const refreshToken = useAppSelector((state) => state.spotify.refreshToken);
+    const [accessToken, setAccessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
+    const [refreshToken, setRefreshToken] = useLocalStorage(SPOTIFY_REFRESH_TOKEN_GLOBAL, '');
+    const [spotifyAcntType, setSpotifyAcntType] = useLocalStorage(SPOTIFY_ACCOUNT_TYPE_GLOBAL, '');
+    const [, setTokenFetched] = useLocalStorage(SPOTIFY_TOKEN_FETCHED_GLOBAL, false);
+    const [, setTokenFetchedTime] = useLocalStorage(SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL, '');
     const [color, setColor] = useState(darkTheme ? dark_colors : light_colors);
     const queryClient = useQueryClient();
     const [changeSection, setChangeSection] = useState(
@@ -67,7 +76,17 @@ const Expand = ({ darkTheme, handleRefresh }: any) => {
     };
 
     const on_success = (data: any) => {
-        setting_up_token(data, dispatch, handleRefresh);
+        const { access_token, refresh_token, accountType: acctType } = setting_up_token(data);
+        if (access_token && refresh_token) {
+            setAccessToken(access_token);
+            setRefreshToken(refresh_token);
+            setTokenFetched(true);
+            setTokenFetchedTime(Current_Date_Time);
+            handleRefresh();
+        }
+        if (acctType) {
+            setSpotifyAcntType(acctType);
+        }
     };
 
     const on_error = (error: any) => {

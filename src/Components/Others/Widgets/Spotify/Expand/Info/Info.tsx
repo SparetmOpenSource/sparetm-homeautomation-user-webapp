@@ -36,7 +36,8 @@ import {
 import { GiSoundWaves } from 'react-icons/gi';
 import { VscRefresh } from 'react-icons/vsc';
 import { useQueryClient } from 'react-query';
-import { useAppSelector, useAppDispatch } from '../../../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../../../Hooks/UseLocalStorage';
+import { SPOTIFY_TOKEN_GLOBAL } from '../../../../../../Data/Constants';
 
 interface InfoProps {
     darkTheme: boolean;
@@ -47,8 +48,7 @@ interface InfoProps {
 const Info = ({ darkTheme, currentActiveDevice, handleRefresh }: InfoProps) => {
     const queryClient = useQueryClient();
     const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
-    const dispatch = useAppDispatch();
+    const [accessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
 
     const color = useMemo(
         () => (darkTheme ? dark_colors : light_colors),
@@ -106,10 +106,10 @@ const Info = ({ darkTheme, currentActiveDevice, handleRefresh }: InfoProps) => {
     }, [queryClient]);
 
     const logoutSpotify = useCallback(() => {
-        spotifyLogout(dispatch);
+        spotifyLogout();
         handleRefresh();
         toggleBackDropClose(SPOTIFY_EXPAND_LOGOUT_CONFIRMATION);
-    }, [dispatch, handleRefresh, toggleBackDropClose]);
+    }, [handleRefresh, toggleBackDropClose]);
 
     const renderProfile = () => (
         <section>

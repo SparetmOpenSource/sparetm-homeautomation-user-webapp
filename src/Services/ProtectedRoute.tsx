@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { RoutePath, TOKEN } from '../Data/Constants';
+import { RoutePath, TOKEN_GLOBAL } from '../Data/Constants';
 import useLocalStorage from '../Hooks/UseLocalStorage';
 
 const useAuth = (accessToken: any) => {
@@ -7,7 +7,7 @@ const useAuth = (accessToken: any) => {
 };
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-    const [accessToken] = useLocalStorage(`${TOKEN}_global`, '');
+    const [accessToken] = useLocalStorage(TOKEN_GLOBAL, '');
     const auth = useAuth(accessToken);
     if (!auth) {
         return <Navigate to={RoutePath.Home} />;

@@ -16,6 +16,7 @@ import { resetApp } from '../../../../Features/User/UserSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { logoutProfileOnClick } from '../../../../Utils/ProfileConfigHelperFn';
+import { spotifyLogout } from '../../../../Utils/HelperFn';
 import Confirmation from '../../BackDrop/Confirmation/Confirmation';
 import { useQueryClient } from 'react-query';
 
@@ -222,6 +223,7 @@ const SideNavigation = ({
                                 heading="Oh no! You are leaving. Are you sure?"
                                 btnOkFn={() => {
                                     toggleBackDropClose(backdropId);
+                                    spotifyLogout();
                                     dispatch(resetApp());
                                     queryClient.clear();
                                     navigate(RoutePath.Home);

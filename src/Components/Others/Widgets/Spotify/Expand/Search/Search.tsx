@@ -23,12 +23,13 @@ import LoadingFade from '../../../../LoadingAnimation/LoadingFade';
 import { FaSadTear } from 'react-icons/fa';
 import Confirmation from '../../../../BackDrop/Confirmation/Confirmation';
 import { useBackDropOpen } from '../../../../../../Pages/ThemeProvider';
-import { useAppSelector } from '../../../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../../../Hooks/UseLocalStorage';
+import { SPOTIFY_TOKEN_GLOBAL, SPOTIFY_ACCOUNT_TYPE_GLOBAL } from '../../../../../../Data/Constants';
 
 const Search = ({ data, darkTheme }: any) => {
     const [query, setQuery] = useState('');
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
-    const spotifyAcntType = useAppSelector((state) => state.spotify.accountType);
+    const [accessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
+    const [spotifyAcntType] = useLocalStorage(SPOTIFY_ACCOUNT_TYPE_GLOBAL, '');
     const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
     const {
         data: results,

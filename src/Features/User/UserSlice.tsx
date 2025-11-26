@@ -1,11 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ADMIN, PROFILE, PROFILEID, TOKEN } from '../../Data/Constants';
+import { ADMIN_GLOBAL, PROFILE_GLOBAL, PROFILEID_GLOBAL, TOKEN_GLOBAL } from '../../Data/Constants';
 
 // Helper to safely get from localStorage and convert null to empty string
 const getStorageValue = (key: string): string => {
     const value = localStorage.getItem(key);
-    // Return empty string if null, undefined, or the string "null"
-    return (value === null || value === 'null') ? '' : value;
+    if (value === null || value === 'null') return '';
+    try {
+        return JSON.parse(value);
+    } catch (e) {
+        return value;
+    }
 };
 
 // State interface
@@ -19,10 +23,10 @@ interface UserState {
 
 // initial state
 const initialState: UserState = {
-    admin: getStorageValue(`${ADMIN}_global`),
-    profile: getStorageValue(`${PROFILE}_global`),
-    token: getStorageValue(`${TOKEN}_global`),
-    profileId: getStorageValue(`${PROFILEID}_global`),
+    admin: getStorageValue(ADMIN_GLOBAL),
+    profile: getStorageValue(PROFILE_GLOBAL),
+    token: getStorageValue(TOKEN_GLOBAL),
+    profileId: getStorageValue(PROFILEID_GLOBAL),
     profileData: {},
 };
 

@@ -17,7 +17,8 @@ import { getMergedHeadersForSpotify } from '../../../../../../../Api.tsx/Axios';
 import { usePostUpdateData } from '../../../../../../../Api.tsx/useReactQuery_Update';
 import { featureUrl } from '../../../../../../../Api.tsx/CoreAppApis';
 import Confirmation from '../../../../../BackDrop/Confirmation/Confirmation';
-import { useAppSelector } from '../../../../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../../../../Hooks/UseLocalStorage';
+import { SPOTIFY_TOKEN_GLOBAL } from '../../../../../../../Data/Constants';
 
 interface Artist {
     name: string;
@@ -58,7 +59,7 @@ const Songs = ({
     darkTheme,
 }: SongsProps) => {
     const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
+    const [accessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
     const getUniqueSongs = useMemo(() => {
         if (!songData) return [];
 

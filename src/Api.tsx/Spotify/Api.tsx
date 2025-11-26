@@ -1,11 +1,5 @@
 import {
-    Current_Date_Time,
-    // spotifyAccountType,
-    spotifyCodeVerifier,
-    // spotifyRefreshToken,
-    // spotifyToken,
-    // spotifyTokenFetched,
-    // spotifyTokenFetchedTime,
+    SPOTIFY_CODE_VERIFIER,
 } from '../../Data/Constants';
 import { generateCodeChallenge, resetSpotify } from '../../Utils/HelperFn';
 import { api } from '../Axios';
@@ -27,11 +21,11 @@ const client_id: string = 'ad37eacb72aa4f8891ccda3c0782b86a';
 const scope: string =
     'user-library-modify user-library-read playlist-read-private user-read-playback-state user-modify-playback-state user-read-currently-playing user-read-email user-read-private';
 
-export const handleLogin = async (dispatch: any) => {
-    resetSpotify(dispatch);
+export const handleLogin = async () => {
+    resetSpotify();
     const { codeVerifier, codeChallenge } = await generateCodeChallenge();
     const authUrl = new URL(auth_uri);
-    sessionStorage.setItem(spotifyCodeVerifier, codeVerifier);
+    sessionStorage.setItem(SPOTIFY_CODE_VERIFIER, codeVerifier);
     const params = {
         response_type: 'code',
         client_id: client_id,
@@ -235,23 +229,10 @@ export const getAllPlaylistState = async (
     }
 };
 
-export const setting_up_token = (data: any, dispatch: any, handleRefresh: any) => {
+export const setting_up_token = (data: any) => {
     const access_token = data?.data?.body?.access_token;
     const refresh_token = data?.data?.body?.refresh_token;
-
-    if (access_token && refresh_token) {
-        // Dispatch Redux actions to update Spotify state
-        dispatch({
-            type: 'spotify/setSpotifyTokens',
-            payload: { accessToken: access_token, refreshToken: refresh_token }
-        });
-        dispatch({ type: 'spotify/setSpotifyTokenFetched', payload: true });
-        dispatch({ type: 'spotify/setSpotifyTokenFetchedTime', payload: Current_Date_Time });
-        handleRefresh();
-    }
-
     const accountType = data?.data?.headers?.spotify_account_type?.[0];
-    if (accountType) {
-        dispatch({ type: 'spotify/setSpotifyAccountType', payload: accountType });
-    }
+
+    return { access_token, refresh_token, accountType };
 };

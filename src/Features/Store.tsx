@@ -3,14 +3,10 @@ import userReducer from '../Features/User/UserSlice';
 import deviceReducer from '../Features/Device/DeviceSlice';
 import roomReducer from '../Features/Room/RoomSlice';
 import blinkReducer from '../Features/Blink/BlinkSlice';
-import spotifyReducer from '../Features/Spotify/SpotifySlice';
-import { ADMIN, PROFILE, PROFILEID, TOKEN } from '../Data/Constants';
+
+import { ADMIN_GLOBAL, PROFILE_GLOBAL, PROFILEID_GLOBAL, TOKEN_GLOBAL } from '../Data/Constants';
 import {
-    spotifyToken,
-    spotifyRefreshToken,
-    spotifyAccountType,
-    spotifyTokenFetched,
-    spotifyTokenFetchedTime,
+
 } from '../Data/Constants';
 import {
     addAdmin,
@@ -22,14 +18,7 @@ import {
     addProfileId,
     removeProfileId,
 } from './User/UserSlice';
-import {
-    setSpotifyAccessToken,
-    setSpotifyRefreshToken,
-    setSpotifyAccountType,
-    setSpotifyTokenFetched,
-    setSpotifyTokenFetchedTime,
-    resetSpotify,
-} from './Spotify/SpotifySlice';
+
 
 export const store = configureStore({
     reducer: {
@@ -37,7 +26,7 @@ export const store = configureStore({
         device: deviceReducer,
         room: roomReducer,
         blink: blinkReducer,
-        spotify: spotifyReducer,
+
     },
     // middleware: (getDefaultMiddleware) => getDefaultMiddleware.concat(logger),
 });
@@ -65,18 +54,12 @@ store.subscribe(() => {
         }
     };
 
-    updateStorage(`${ADMIN}_global`, admin);
-    updateStorage(`${PROFILE}_global`, profile);
-    updateStorage(`${TOKEN}_global`, token);
-    updateStorage(`${PROFILEID}_global`, profileId);
+    updateStorage(ADMIN_GLOBAL, admin);
+    updateStorage(PROFILE_GLOBAL, profile);
+    updateStorage(TOKEN_GLOBAL, token);
+    updateStorage(PROFILEID_GLOBAL, profileId);
     
-    // Persist Spotify state
-    const spotifyState = store.getState().spotify;
-    updateStorage(`${spotifyToken}_global`, spotifyState.accessToken);
-    updateStorage(`${spotifyRefreshToken}_global`, spotifyState.refreshToken);
-    updateStorage(`${spotifyAccountType}_global`, spotifyState.accountType);
-    updateStorage(`${spotifyTokenFetched}_global`, spotifyState.tokenFetched);
-    updateStorage(`${spotifyTokenFetchedTime}_global`, spotifyState.tokenFetchedTime);
+
 });
 
 
@@ -86,7 +69,7 @@ window.addEventListener('storage', (e) => {
         const { key, newValue } = e;
         
         const state = store.getState().user;
-        const spotifyState = store.getState().spotify;
+
         
         // Helper to dispatch action only if Redux state is different
         const dispatchUpdate = (
@@ -119,51 +102,23 @@ window.addEventListener('storage', (e) => {
             }
         };
         
-        // Helper for Spotify boolean value (tokenFetched)
-        const dispatchSpotifyBoolean = (currentValue: boolean, action: any) => {
-            let parsedNewValue = false;
-            try {
-                if (newValue && newValue !== 'null') {
-                    parsedNewValue = JSON.parse(newValue);
-                }
-            } catch (error) {
-                console.warn(`Error parsing localStorage value for key "${key}":`, error);
-            }
-            
-            if (currentValue !== parsedNewValue) {
-                store.dispatch(action(parsedNewValue));
-            }
-        };
+
 
         switch (key) {
-            case `${ADMIN}_global`:
+            case ADMIN_GLOBAL:
                 dispatchUpdate(state.admin, addAdmin, removeAdmin);
                 break;
-            case `${PROFILE}_global`:
+            case PROFILE_GLOBAL:
                 dispatchUpdate(state.profile, addProfile, removeProfile);
                 break;
-            case `${TOKEN}_global`:
+            case TOKEN_GLOBAL:
                 dispatchUpdate(state.token, addToken, removeToken);
                 break;
-            case `${PROFILEID}_global`:
+            case PROFILEID_GLOBAL:
                 dispatchUpdate(state.profileId, addProfileId, removeProfileId);
                 break;
             // Spotify cases
-            case `${spotifyToken}_global`:
-                dispatchUpdate(spotifyState.accessToken, setSpotifyAccessToken, resetSpotify);
-                break;
-            case `${spotifyRefreshToken}_global`:
-                dispatchUpdate(spotifyState.refreshToken, setSpotifyRefreshToken, resetSpotify);
-                break;
-            case `${spotifyAccountType}_global`:
-                dispatchUpdate(spotifyState.accountType, setSpotifyAccountType, resetSpotify);
-                break;
-            case `${spotifyTokenFetched}_global`:
-                dispatchSpotifyBoolean(spotifyState.tokenFetched, setSpotifyTokenFetched);
-                break;
-            case `${spotifyTokenFetchedTime}_global`:
-                dispatchUpdate(spotifyState.tokenFetchedTime, setSpotifyTokenFetchedTime, resetSpotify);
-                break;
+
         }
     }
 });

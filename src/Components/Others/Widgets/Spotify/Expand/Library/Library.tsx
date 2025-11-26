@@ -40,12 +40,13 @@ import {
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../Data/Enum';
 // import { useBackDropOpen } from '../../../../../../Pages/ThemeProvider';
 // import Confirmation from '../../../../BackDrop/Confirmation/Confirmation';
-import { useAppSelector } from '../../../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../../../Hooks/UseLocalStorage';
+import { SPOTIFY_TOKEN_GLOBAL, SPOTIFY_ACCOUNT_TYPE_GLOBAL } from '../../../../../../Data/Constants';
 
 const Library = ({ data, darkTheme }: any) => {
     const [color, setColor] = useState<any>(light_colors);
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
-    const spotifyAcntType = useAppSelector((state) => state.spotify.accountType);
+    const [accessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
+    const [spotifyAcntType] = useLocalStorage(SPOTIFY_ACCOUNT_TYPE_GLOBAL, '');
     const [isAlbumSongsVisible, setIsAlbumSongsVisible] =
         useState<boolean>(false);
     const [isPlaylistSongsVisible, setIsPlaylistSongsVisible] =

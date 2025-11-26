@@ -35,7 +35,8 @@ import Error from './../../../../ErrorPage/ErrorPage';
 import { IoIosAddCircle } from 'react-icons/io';
 import { FaSadTear } from 'react-icons/fa';
 import SpotifyCurrentPlayback from '../../SpotifyCurrentPlayback/SpotifyCurrentPlayback';
-import { useAppSelector } from '../../../../../../Features/ReduxHooks';
+import useLocalStorage from '../../../../../../Hooks/UseLocalStorage';
+import { SPOTIFY_TOKEN_GLOBAL, SPOTIFY_ACCOUNT_TYPE_GLOBAL } from '../../../../../../Data/Constants';
 
 const getCurrentColor = (darkTheme: boolean) =>
     darkTheme ? dark_colors : light_colors;
@@ -57,8 +58,8 @@ export const Home = ({ data, darkTheme }: any) => {
     const [color, setColor] = useState(getCurrentColor(darkTheme));
     const queryClient = useQueryClient();
     const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
-    const spotifyAcntType = useAppSelector((state) => state.spotify.accountType);
-    const accessToken = useAppSelector((state) => state.spotify.accessToken);
+    const [spotifyAcntType] = useLocalStorage(SPOTIFY_ACCOUNT_TYPE_GLOBAL, '');
+    const [accessToken] = useLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');
 
     const updateHeaderConfig = {
         headers: getMergedHeadersForSpotify(accessToken),
