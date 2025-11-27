@@ -2,16 +2,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from './Pages/ThemeProvider';
 import { useEffect, useState } from 'react';
 import { GlobalRoutes } from './Pages/GlobalRoutes/GlobalRoutes';
-import { gsap } from 'gsap';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import './App.css';
 import useBlink from './Hooks/useBlink';
 import { useAppDispatch, useAppSelector } from './Features/ReduxHooks';
 import { resetBlink } from './Features/Blink/BlinkSlice';
 import { BACKGROUND_BLINK_SETTING } from './Data/Constants';
 import useLocalStorage from './Hooks/UseLocalStorage';
-
-gsap.registerPlugin(MotionPathPlugin);
 
 function App() {
     const [backgroundColor, setBackgroundColor] = useState<string>('black');
