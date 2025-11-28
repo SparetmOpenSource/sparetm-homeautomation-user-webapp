@@ -40,13 +40,13 @@ const DeviceRoom = () => {
         ?.split('/')[3]
         ?.replace('%20', ' ');
 
-    const { total, on, off } = useAppSelector(
-        (state: any) =>
-            state.device.roomCounts[roomType?.toLowerCase()] ?? {
-                total: 0,
-                on: 0,
-                off: 0,
-            },
+    const roomCounts = useAppSelector(
+        (state: any) => state.device.roomCounts[roomType?.toLowerCase()],
+    );
+
+    const { total, on, off } = useMemo(
+        () => roomCounts ?? { total: 0, on: 0, off: 0 },
+        [roomCounts],
     );
     const navigate = useNavigate();
     const queryClient = useQueryClient();

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from './Features/ReduxHooks';
 import { resetBlink } from './Features/Blink/BlinkSlice';
 import { BACKGROUND_BLINK_SETTING } from './Data/Constants';
 import useLocalStorage from './Hooks/UseLocalStorage';
+import { WebSocketProvider } from './Context/WebSocketContext';
 
 function App() {
     const [backgroundColor, setBackgroundColor] = useState<string>('black');
@@ -40,16 +41,18 @@ function App() {
 
     return (
         <ThemeProvider>
-            <div
-                className="app"
-                style={{
-                    background: backgroundColor,
-                }}
-            >
-                <Router>
-                    <GlobalRoutes />
-                </Router>
-            </div>
+            <WebSocketProvider>
+                <div
+                    className="app"
+                    style={{
+                        background: backgroundColor,
+                    }}
+                >
+                    <Router>
+                        <GlobalRoutes />
+                    </Router>
+                </div>
+            </WebSocketProvider>
         </ThemeProvider>
     );
 }

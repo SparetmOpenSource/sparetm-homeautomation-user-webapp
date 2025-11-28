@@ -93,6 +93,39 @@ const deviceSlice = createSlice({
         removeCurrentDevice: (state) => {
             state.currentDevice = null;
         },
+
+        // New action for WebSocket updates - updates any device property
+        updateDevice: (
+            state,
+            action: PayloadAction<{ deviceId: string; updates: Partial<Device> }>,
+        ) => {
+            const device = state.deviceData.body.find(
+                (d: any) => d.deviceId === action.payload.deviceId,
+            );
+
+            if (device) {
+                const prevStatus = device.status;
+                
+                // Apply all updates
+                Object.assign(device, action.payload.updates);
+
+                // Recalculate room counts if status changed
+                if (prevStatus !== device.status) {
+                    const room = device.roomType?.toLowerCase();
+                    if (!state.roomCounts[room]) {
+                        state.roomCounts[room] = { total: 0, on: 0, off: 0 };
+                    }
+
+                    if (device.status) {
+                        state.roomCounts[room].on += 1;
+                        state.roomCounts[room].off -= 1;
+                    } else {
+                        state.roomCounts[room].on -= 1;
+                        state.roomCounts[room].off += 1;
+                    }
+                }
+            }
+        },
     },
 });
 
@@ -102,6 +135,7 @@ export const {
     removeDeviceData,
     addCurrentDevice,
     removeCurrentDevice,
+    updateDevice,
 } = deviceSlice.actions;
 
 export default deviceSlice.reducer;
