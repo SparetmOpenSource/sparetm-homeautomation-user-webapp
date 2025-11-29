@@ -5,12 +5,13 @@ import { useAppDispatch, useAppSelector } from '../Features/ReduxHooks';
 import { updateDevice, addDevice, removeDevice, updateAllDevices, updateDeviceDataStore, deleteDeviceDataStore } from '../Features/Device/DeviceSlice';
 import { setNotification } from '../Features/Notification/NotificationSlice';
 import { getWebSocketUrl } from '../Api.tsx/ProfileConfigApis';
-import { WEBSOCKET_TOPIC_EVENTS } from '../Data/Constants';
+import { RoutePath, WEBSOCKET_TOPIC_EVENTS } from '../Data/Constants';
 import { useReactQuery_Get } from '../Api.tsx/useReactQuery_Get';
 import { GET_WEBSOCKET_URL_QUERY_ID } from '../Data/QueryConstant';
 import { displayToastify, handleClickForBlinkNotification } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import { useTheme } from '../Pages/ThemeProvider';
+import { useLocation } from 'react-router-dom';
 import { dark_colors, light_colors } from '../Data/ColorConstant';
 
 // ... (existing code)
@@ -45,6 +46,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const reconnectAttemptsRef = useRef(0);
     const dispatch = useAppDispatch();
+    const location = useLocation();
     const darkTheme = useTheme();
     
     const color = useMemo(
@@ -63,7 +65,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
         );
         return delay;
     };
-    
+
     // Get authentication state from Redux
     const token = useAppSelector((state) => state.user.token);
     const admin = useAppSelector((state) => state.user.admin);
@@ -75,7 +77,8 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     const { 
         isLoading: isLoadingWsUrl, 
         refetch, 
-        isFetching 
+        isFetching,
+        isError
     } = useReactQuery_Get(
         GET_WEBSOCKET_URL_QUERY_ID,
         () => getWebSocketUrl(),
@@ -106,10 +109,8 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
         (error) => {
             console.error('[WebSocket] Failed to fetch URL:', error);
             setConnectionStatus('error');
-            // If fetching URL fails, schedule a retry
-            scheduleReconnect();
         },
-        !!token && !!admin && !!profileId, // Only fetch if authenticated AND profile selected
+        !!token && !!admin && !!profileId && location.pathname.startsWith(RoutePath.CoreApplication), // Only fetch if authenticated AND profile selected AND on core app routes
         true, // refetch on mount
         false, // don't refetch on window focus
         false, // no refetch interval
@@ -117,6 +118,23 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
         300000, // cache for 5 minutes
         300000, // stale after 5 minutes
     );
+
+    // Handle WebSocket URL fetch error
+    useEffect(() => {
+        if (isError) {
+            scheduleReconnect();
+        }
+    }, [isError]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // Effect to disconnect if NOT on core app route
+    useEffect(() => {
+        if (!location.pathname.startsWith(RoutePath.CoreApplication)) {
+            if (clientRef.current?.connected) {
+                console.log('[WebSocket] Disconnecting due to non-core route:', location.pathname);
+                disconnect();
+            }
+        }
+    }, [location.pathname]);
 
     const connectToWebSocket = (url: string) => {
         if (clientRef.current?.connected) {

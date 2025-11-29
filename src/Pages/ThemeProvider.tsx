@@ -149,7 +149,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
                     {children}
                 </ToggleDarkThemeContext.Provider>
             </ThemeContext.Provider>
-            <ToastContainer />
+            <ToastContainer style={{ zIndex: 99999 }} />
 
             {Object.entries(backdrops).map(([id, { open, child, size, showButton, enableBackdropClose }]) => (
                 <BackDropWrapper

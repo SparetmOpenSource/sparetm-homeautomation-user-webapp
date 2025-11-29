@@ -41,19 +41,19 @@ function App() {
 
     return (
         <ThemeProvider>
-            <WebSocketProvider>
-                <div
-                    className="app"
-                    style={{
-                        background: backgroundColor,
-                    }}
-                >
-                    <Router>
+            <div
+                className="app"
+                style={{
+                    background: backgroundColor,
+                }}
+            >
+                <Router>
+                    <WebSocketProvider>
                         <GlobalRoutes />
-                    </Router>
-                </div>
-            </WebSocketProvider>
-        </ThemeProvider>
+                    </WebSocketProvider>
+                </Router>
+            </div>
+        </ThemeProvider>      
     );
 }
 

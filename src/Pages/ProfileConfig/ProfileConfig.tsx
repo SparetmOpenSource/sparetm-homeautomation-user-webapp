@@ -10,12 +10,19 @@ import SideNavigation from '../../Components/Others/Navigation/SideNavigation/Si
 import { RoutePath } from '../../Data/Constants';
 import { BiSolidSelectMultiple, BiAddToQueue } from 'react-icons/bi';
 import { Outlet, useLocation } from 'react-router-dom';
+import { useAppDispatch } from '../../Features/ReduxHooks';
+import { resetProfile } from '../../Features/User/UserSlice';
 
 const ProfileConfig = () => {
     const [color, setColor] = useState<any>(light_colors);
     const toggleTheme: any = useThemeUpdate();
     const darkTheme: any = useTheme();
     const location = useLocation();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(resetProfile());
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const upper_nav_option = [
         {
