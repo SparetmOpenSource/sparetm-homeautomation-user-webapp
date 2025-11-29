@@ -28,10 +28,18 @@ interface BackDropState {
     open: boolean;
     child: ReactNode;
     size: any;
+    showButton?: boolean;
+    enableBackdropClose?: boolean;
 }
 
 interface BackDropActions {
-    toggleBackDropOpen: (id: string, child: ReactNode, size: any) => void;
+    toggleBackDropOpen: (
+        id: string,
+        child: ReactNode,
+        size: any,
+        showButton?: boolean,
+        enableBackdropClose?: boolean,
+    ) => void;
     toggleBackDropClose: (id: string) => void;
 }
 
@@ -83,10 +91,22 @@ const useBackDrop = (themeColors: any) => {
     );
 
     const toggleBackDropOpen = useCallback(
-        (id: string, child: ReactNode, size: any) => {
+        (
+            id: string,
+            child: ReactNode,
+            size: any,
+            showButton?: boolean,
+            enableBackdropClose?: boolean,
+        ) => {
             setBackdrops((prev) => ({
                 ...prev,
-                [id]: { open: true, child, size },
+                [id]: {
+                    open: true,
+                    child,
+                    size,
+                    showButton,
+                    enableBackdropClose,
+                },
             }));
         },
         [],
@@ -131,12 +151,13 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
             </ThemeContext.Provider>
             <ToastContainer />
 
-            {Object.entries(backdrops).map(([id, { open, child, size }]) => (
+            {Object.entries(backdrops).map(([id, { open, child, size, showButton, enableBackdropClose }]) => (
                 <BackDropWrapper
                     key={id}
                     isOpen={open}
                     background={background}
-                    showButton
+                    showButton={showButton ?? true} // Default to true if not provided
+                    enableBackdropClose={enableBackdropClose ?? true} // Default to true if not provided
                     size={size}
                     handleClose={() => toggleBackDropClose(id)}
                     darkTheme={darkTheme}
@@ -154,6 +175,7 @@ const BackDropWrapper = ({
     children,
     background,
     showButton = false,
+    enableBackdropClose = true,
     size = FullScreenSize,
     handleClose,
     darkTheme,
@@ -162,6 +184,7 @@ const BackDropWrapper = ({
     children: ReactNode;
     background: string;
     showButton?: boolean;
+    enableBackdropClose?: boolean;
     size?: any;
     handleClose?: () => void;
     darkTheme: any;
@@ -171,6 +194,7 @@ const BackDropWrapper = ({
             <WindowDrop
                 background={background}
                 showButton={showButton}
+                enableBackdropClose={enableBackdropClose}
                 handleClose={handleClose}
                 darkTheme={darkTheme}
                 size={size}

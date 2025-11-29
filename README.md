@@ -300,5 +300,13 @@ didMount.current = true;
   error?.response?.data?.status === 500 ? 'ERROR' : 'WARNING',
   dispatch
 );
+----------------------------------------
+toggleBackDropOpen(
+    id,
+    content,
+    size,
+    showButton,          // 4th arg: Controls the "X" button
+    enableBackdropClose  // 5th arg: Controls clicking background to close
+);
 
 

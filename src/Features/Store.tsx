@@ -3,6 +3,7 @@ import userReducer from '../Features/User/UserSlice';
 import deviceReducer from '../Features/Device/DeviceSlice';
 import roomReducer from '../Features/Room/RoomSlice';
 import blinkReducer from '../Features/Blink/BlinkSlice';
+import notificationReducer from '../Features/Notification/NotificationSlice';
 
 import { ADMIN_GLOBAL, PROFILE_GLOBAL, PROFILEID_GLOBAL, TOKEN_GLOBAL } from '../Data/Constants';
 import {
@@ -26,7 +27,7 @@ export const store = configureStore({
         device: deviceReducer,
         room: roomReducer,
         blink: blinkReducer,
-
+        notification: notificationReducer,
     },
     // middleware: (getDefaultMiddleware) => getDefaultMiddleware.concat(logger),
 });

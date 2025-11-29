@@ -13,6 +13,7 @@ const WindowDrop = ({
     handleClose,
     darkTheme,
     showButton,
+    enableBackdropClose,
     size,
     drag,
 }: any) => {
@@ -22,7 +23,10 @@ const WindowDrop = ({
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
     return (
-        <BackDrop onClick={handleClose} background={background}>
+        <BackDrop
+            onClick={enableBackdropClose ? handleClose : undefined}
+            background={background}
+        >
             <motion.div
                 drag={drag}
                 ref={constraintsRef}

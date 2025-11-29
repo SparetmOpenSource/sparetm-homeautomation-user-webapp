@@ -34,6 +34,7 @@ import { BsHouseAddFill } from 'react-icons/bs';
 import { SiWechat } from 'react-icons/si';
 import { useUserActivity } from '../../Hooks/useUserActivity';
 import PicFrame from '../../Components/Others/PicFrame/PicFrame';
+import PersistentNotification from '../../Components/Others/Notification/PersistentNotification';
 
 interface NavItem {
     id: number;
@@ -68,7 +69,12 @@ const CoreApplication = memo(() => {
     );
 
     const addScreenSaver = useCallback(() => {
-        toggleBackDropOpen(GLOBAL_SCREEN_SAVER, <PicFrame />, FullScreenSize);
+        toggleBackDropOpen(
+            GLOBAL_SCREEN_SAVER,
+            <PicFrame />,
+            FullScreenSize,
+            false
+        );
     }, [toggleBackDropOpen]);
 
     const closeScreenSaver = useCallback(() => {
@@ -242,6 +248,7 @@ const CoreApplication = memo(() => {
 
     return (
         <div className="coreApplication">
+            <PersistentNotification />
             <CommonSkin
                 upper_nav_enable={true}
                 upper_nav={<UpperNavigation nav_option={upper_nav_option} />}

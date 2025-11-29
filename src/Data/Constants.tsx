@@ -275,7 +275,7 @@ export const HorizontalSize = ['min(90%, 1200px)', 'clamp(40%, 300px, 90%)'];
 export const FullScreenSize = ['100%', '100%'];
 
 export const socketUrlPostFix = '/api/v1/socket/data/update';
-export const toClientMqttSocketTopic = '/to/client/update/device/mqtt/data';
+export const WEBSOCKET_TOPIC_EVENTS = '/topic/events';
 export const toClientNotificationSocketTopic =
     '/to/client/update/notification/data';
 export const toServerSocketTopic = '/to/server/update/device/mqtt/data';
@@ -335,6 +335,7 @@ export const RGB_GADGET_DELETE_DEVICE_SAVED_DATA =
     'rgbGadget-deleteDevice-savedData';
 export const APPLIANCE_EXPAND = 'applianceExpand';
 export const GLOBAL_SCREEN_SAVER = 'global-screen-saver';
+export const GLOBAL_NOTIFICATION = 'global-notification';
 export const DELETING_TODO_LIST = 'deleteToDo';
 export const ADD_TODO_LIST = 'addToDo';
 export const EDIT_TODO_LIST = 'editToDo';

@@ -12,8 +12,9 @@ import LoadingFade from '../../Others/LoadingAnimation/LoadingFade';
 import './Select.css';
 import { DATA_NOT_FOUND_MSG, ERROR_MSG } from '../../../Data/Constants';
 import ErrorPage from '../../Others/ErrorPage/ErrorPage';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
+import { resetProfile } from '../../../Features/User/UserSlice';
 
 const Select = () => {
     const darkTheme: any = useTheme();
@@ -26,6 +27,12 @@ const Select = () => {
     const getProfile = () => {
         return getProfiles(admin, darkTheme);
     };
+
+    // Reset profile state when entering selection screen
+    useEffect(() => {
+        dispatch(resetProfile());
+    }, [dispatch]);
+
     const on_Success = () => {
         handleClickForBlinkNotification(color, 'SUCCESS', dispatch);
     };

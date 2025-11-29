@@ -2,9 +2,10 @@ import React, { createContext, useContext, useEffect, useRef, useState, useMemo 
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { useAppDispatch, useAppSelector } from '../Features/ReduxHooks';
-import { updateDevice } from '../Features/Device/DeviceSlice';
+import { updateDevice, addDevice, removeDevice, updateAllDevices, updateDeviceDataStore, deleteDeviceDataStore } from '../Features/Device/DeviceSlice';
+import { setNotification } from '../Features/Notification/NotificationSlice';
 import { getWebSocketUrl } from '../Api.tsx/ProfileConfigApis';
-import { toClientMqttSocketTopic, socketUrlPostFix } from '../Data/Constants';
+import { WEBSOCKET_TOPIC_EVENTS } from '../Data/Constants';
 import { useReactQuery_Get } from '../Api.tsx/useReactQuery_Get';
 import { GET_WEBSOCKET_URL_QUERY_ID } from '../Data/QueryConstant';
 import { displayToastify, handleClickForBlinkNotification } from '../Utils/HelperFn';
@@ -39,6 +40,7 @@ interface WebSocketProviderProps {
 export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }) => {
     const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('disconnected');
     const [wsUrl, setWsUrl] = useState<string | null>(null);
+    const [wsTopic, setWsTopic] = useState<string | null>(null);
     const clientRef = useRef<Client | null>(null);
     const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const reconnectAttemptsRef = useRef(0);
@@ -86,6 +88,16 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                 const fullUrl = responseData.url[0];
                 console.log('[WebSocket] Fetched URL:', fullUrl);
                 setWsUrl(fullUrl);
+                
+                // Extract topic from response
+                if (responseData?.topic && Array.isArray(responseData.topic) && responseData.topic.length > 0) {
+                    const topic = responseData.topic[0];
+                    console.log('[WebSocket] Fetched Topic:', topic);
+                    setWsTopic(topic);
+                } else {
+                    console.warn('[WebSocket] No topic in response, using default');
+                    setWsTopic(WEBSOCKET_TOPIC_EVENTS); // Fallback to constant
+                }
             } else {
                 console.error('[WebSocket] Invalid URL response:', responseData);
                 setConnectionStatus('error');
@@ -148,14 +160,64 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                 );
 
                 // Subscribe to device updates topic
-                client.subscribe(toClientMqttSocketTopic, (message) => {
+                const topicToUse = wsTopic || WEBSOCKET_TOPIC_EVENTS;
+                console.log('[WebSocket] Subscribing to topic:', topicToUse);
+                client.subscribe(topicToUse, (message) => {
                     try {
                         const payload = JSON.parse(message.body);
                         console.log('[WebSocket] Received update:', payload);
 
-                        // Dispatch Redux action to update device
-                        // Expected payload format: { deviceId: string, ...updates }
-                        if (payload.deviceId) {
+                        // Handle structured messages (New Format)
+                        if (payload.type && payload.payload) {
+                            switch (payload.type) {
+                                case 'DEVICE_ADD':
+                                    dispatch(addDevice(payload.payload));
+                                    break;
+                                case 'DEVICE_DELETE':
+                                    dispatch(removeDevice(payload.payload)); // payload is deviceId string
+                                    break;
+                                case 'GLOBAL_UPDATE':
+                                    dispatch(updateAllDevices(payload.payload)); // payload is { status: boolean }
+                                    break;
+                                case 'DEVICE_UPDATE':
+                                    if (payload.payload.deviceId) {
+                                        dispatch(updateDevice({
+                                            deviceId: payload.payload.deviceId,
+                                            updates: payload.payload
+                                        }));
+                                    }
+                                    break;
+                                case 'DEVICE_DATA_STORE_UPDATE':
+                                    if (payload.payload.deviceId && payload.payload.data) {
+                                        dispatch(updateDeviceDataStore({
+                                            deviceId: payload.payload.deviceId,
+                                            data: payload.payload.data
+                                        }));
+                                    }
+                                    break;
+                                case 'DEVICE_DATA_STORE_DELETE':
+                                    if (payload.payload.deviceId && payload.payload.keys) {
+                                        dispatch(deleteDeviceDataStore({
+                                            deviceId: payload.payload.deviceId,
+                                            keys: payload.payload.keys
+                                        }));
+                                    }
+                                    break;
+                                case 'NOTIFICATION':
+                                    if (payload.payload.id && payload.payload.message) {
+                                        dispatch(setNotification({
+                                            id: payload.payload.id,
+                                            message: payload.payload.message,
+                                            type: payload.payload.type || 'INFO'
+                                        }));
+                                    }
+                                    break;
+                                default:
+                                    console.warn('[WebSocket] Unknown message type:', payload.type);
+                            }
+                        } 
+                        // Fallback for legacy format (Direct device object)
+                        else if (payload.deviceId) {
                             dispatch(updateDevice({
                                 deviceId: payload.deviceId,
                                 updates: payload
@@ -254,9 +316,14 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
         );
 
         reconnectTimeoutRef.current = setTimeout(() => {
-            // Refetch URL before reconnecting to handle dynamic server ports
-            console.log('[WebSocket] Refetching URL before reconnect...');
-            refetch();
+            // Only refetch if we don't have a URL yet or if it's explicitly invalid
+            if (!wsUrl) {
+                console.log('[WebSocket] Refetching URL before reconnect...');
+                refetch();
+            } else {
+                // Otherwise just try to connect with existing URL
+                connect();
+            }
         }, delay);
     };
 
