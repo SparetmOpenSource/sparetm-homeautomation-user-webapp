@@ -14,8 +14,6 @@ import { useTheme } from '../Pages/ThemeProvider';
 import { useLocation } from 'react-router-dom';
 import { dark_colors, light_colors } from '../Data/ColorConstant';
 
-// ... (existing code)
-
 type ConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'error';
 
 interface WebSocketContextType {
@@ -134,7 +132,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                 disconnect();
             }
         }
-    }, [location.pathname]);
+    }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const connectToWebSocket = (url: string) => {
         if (clientRef.current?.connected) {
