@@ -50,11 +50,11 @@ const PATTERN_OPTIONS = [
         id: 1,
         icon: <TbIrregularPolyhedron />,
         name: 'Linear',
-        value: 'linear',
+        value: 'Linear',
     },
-    { id: 2, icon: <GiOilySpiral />, name: 'Spiral', value: 'spiral' },
-    { id: 3, icon: <FaHubspot />, name: 'Pixel', value: 'pixel' },
-    { id: 4, icon: <LuRainbow />, name: 'Rainbow', value: 'rainbow' },
+    { id: 2, icon: <GiOilySpiral />, name: 'Spiral', value: 'Spiral' },
+    { id: 3, icon: <FaHubspot />, name: 'Pixel', value: 'Pixel' },
+    { id: 4, icon: <LuRainbow />, name: 'Rainbow', value: 'Rainbow' },
 ];
 
 const RgbGadgetExpandSavedColor = ({

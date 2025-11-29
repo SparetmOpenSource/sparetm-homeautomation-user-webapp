@@ -20,7 +20,7 @@ import { BiCheck } from 'react-icons/bi';
 import {
     GadgetRgbDefaultColor,
     GadgetRgbDefaultPattern,
-    RgbDeviceAnimation,
+    // RgbDeviceAnimation,
 } from '../../../../Data/DeviceRoomConstant';
 import DeviceInfo from '../DeviceInfo/DeviceInfo';
 import { ConvertTheRangeToRound } from '../../../../Utils/HelperFn';
@@ -325,7 +325,7 @@ const AddColorToRgbModel = ({
                         )}
                         {rgbAnimationOption && (
                             <section className="addColorToRgbModel_saved_function_container">
-                                {RgbDeviceAnimation.map((item) => (
+                                {/* {RgbDeviceAnimation.map((item) => (
                                     <motion.span
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.95 }}
@@ -349,7 +349,7 @@ const AddColorToRgbModel = ({
                                             )}
                                         </motion.div>
                                     </motion.span>
-                                ))}
+                                ))} */}
                             </section>
                         )}
                         {deviceInfoOption && (

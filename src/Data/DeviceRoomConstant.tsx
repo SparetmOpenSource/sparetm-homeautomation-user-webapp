@@ -128,10 +128,10 @@ export const RgbDeviceAnimation = [
     },
 ];
 
-export const findAnimationBasedColor = (animationType: any) => {
-    return RgbDeviceAnimation.filter((el: any) => el.value === animationType)[0]
-        .color;
-};
+// export const findAnimationBasedColor = (animationType: any) => {
+//     return RgbDeviceAnimation.filter((el: any) => el.value === animationType)[0]
+//         .color;
+// };
 
 export const atomBergRemoteCode =
     '0xCF8976,0xCFD12E,0xCF09F6,0xCF51AE,0xCFC936,0xCF11EE,0xCFF10E';
@@ -141,7 +141,7 @@ export const lgAcRemoteCode =
 
 export const GadgetRgbDefaultColor = [177, 216, 213, 0.5];
 
-export const GadgetRgbDefaultPattern = `linear`;
-export const GadgetRgbRainbowPattern = `rainbow`;
+export const GadgetRgbDefaultPattern = `Linear`;
+export const GadgetRgbRainbowPattern = `Rainbow`;
 
 export const deviceTypeArr = ['gadget', 'appliance'];
