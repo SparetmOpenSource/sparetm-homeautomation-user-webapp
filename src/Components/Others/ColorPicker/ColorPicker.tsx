@@ -54,7 +54,17 @@ const ColorPicker = ({ rgb, setRgb, darkTheme }: any) => {
     }, [rgb]);
 
     return (
-        <div ref={colorPickerContainerRef} className="color-picker-wheel"></div>
+        <div 
+            ref={colorPickerContainerRef} 
+            className="color-picker-wheel"
+            style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                width: '100%', 
+                height: '100%' 
+            }}
+        ></div>
     );
 };
 
