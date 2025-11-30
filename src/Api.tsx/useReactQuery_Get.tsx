@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { QueryFunctionContext, useQuery } from 'react-query';
 
-// return const {isLoading, data, isError, error, isFetching}
 export const useReactQuery_Get = (
     id: string,
     fetchData: {

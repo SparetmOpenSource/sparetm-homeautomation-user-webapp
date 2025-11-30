@@ -5,35 +5,35 @@ const CoreApplication = React.lazy(
     () => import('../CoreApplication/CoreApplication'),
 );
 const DashBoard = React.lazy(
-    () => import('../../Components/CoreApplicationNew/DashBoard/DashBoard'),
+    () => import('../../Components/CoreApplication/DashBoard/DashBoard'),
 );
 const Chat = React.lazy(
-    () => import('../../Components/CoreApplicationNew/Chat/Chat'),
+    () => import('../../Components/CoreApplication/Chat/Chat'),
 );
 const Play = React.lazy(
-    () => import('../../Components/CoreApplicationNew/Play/Play'),
+    () => import('../../Components/CoreApplication/Play/Play'),
 );
 const Setting = React.lazy(
-    () => import('../../Components/CoreApplicationNew/Setting/Setting'),
+    () => import('../../Components/CoreApplication/Setting/Setting'),
 );
 const DeviceRoom = React.lazy(
-    () => import('../../Components/CoreApplicationNew/DeviceRoom/DeviceRoom'),
+    () => import('../../Components/CoreApplication/DeviceRoom/DeviceRoom'),
 );
 const Connection = React.lazy(
-    () => import('../../Components/CoreApplicationNew/Connection/Connection'),
+    () => import('../../Components/CoreApplication/Connection/Connection'),
 );
 
 const Overview = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplicationNew/Connection/Overview/Overview'
+            './../../Components/CoreApplication/Connection/Overview/Overview'
         ),
 );
 
 const ArduinoIde = React.lazy(
     () =>
         import(
-            './../../Components/CoreApplicationNew/Connection/ArduinoIde/ArduinoIde'
+            './../../Components/CoreApplication/Connection/ArduinoIde/ArduinoIde'
         ),
 );
 

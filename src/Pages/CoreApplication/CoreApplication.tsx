@@ -26,7 +26,7 @@ import SideNavigation from '../../Components/Others/Navigation/SideNavigation/Si
 import UpperNavigation from '../../Components/Others/Navigation/UpperNavigation/UpperNavigation';
 import CommonSkin from '../../Components/Others/UiSkin/CommonNavSkin/CommonNavSkin';
 import LoadingFade from '../../Components/Others/LoadingAnimation/LoadingFade';
-import AddDevice from '../../Components/CoreApplicationNew/DeviceRoom/AddDevice/AddDevice';
+import AddDevice from '../../Components/CoreApplication/DeviceRoom/AddDevice/AddDevice';
 import './CoreApplication.css';
 import { GET_PROFILE_QUERY_ID } from '../../Data/QueryConstant';
 import ErrorPage from '../../Components/Others/ErrorPage/ErrorPage';

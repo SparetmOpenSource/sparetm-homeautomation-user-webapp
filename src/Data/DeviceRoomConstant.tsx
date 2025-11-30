@@ -12,44 +12,6 @@ import {
     MdBrightnessMedium,
 } from 'react-icons/md';
 
-export const DeviceTypeConfig = [
-    {
-        value: 'gadget/rgb',
-        label: 'Gadget/RGB',
-        remote: null,
-    },
-    {
-        value: 'appliance/light',
-        label: 'Appliance/Light',
-        remote: false,
-    },
-    {
-        value: 'appliance/fan',
-        label: 'Appliance/Fan',
-        remote: true,
-    },
-    {
-        value: 'appliance/switch',
-        label: 'Appliance/Switch',
-        remote: false,
-    },
-    {
-        value: 'appliance/ac',
-        label: 'Appliance/Ac',
-        remote: true,
-    },
-    {
-        value: 'appliance/tv',
-        label: 'Appliance/Tv',
-        remote: false,
-    },
-    {
-        value: 'appliance/music',
-        label: 'Appliance/Music',
-        remote: false,
-    },
-];
-
 export const changeDeviceIcon = (device: string) => {
     let icon: any;
     switch (device) {
@@ -127,11 +89,6 @@ export const RgbDeviceAnimation = [
         color: 'pink',
     },
 ];
-
-// export const findAnimationBasedColor = (animationType: any) => {
-//     return RgbDeviceAnimation.filter((el: any) => el.value === animationType)[0]
-//         .color;
-// };
 
 export const atomBergRemoteCode =
     '0xCF8976,0xCFD12E,0xCF09F6,0xCF51AE,0xCFC936,0xCF11EE,0xCFF10E';

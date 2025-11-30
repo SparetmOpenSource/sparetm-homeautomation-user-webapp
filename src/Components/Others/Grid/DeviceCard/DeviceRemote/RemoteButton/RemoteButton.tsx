@@ -1,5 +1,17 @@
 import Button from '../../../../CustomButton/Button';
 
+/**
+ * RemoteButton Component
+ * 
+ * A reusable button component for device remote controls (AC and Fan).
+ * 
+ * NOTE: This component intentionally uses inline-only styling (no separate CSS file).
+ * All styling is handled through props passed to the underlying Button component,
+ * allowing for dynamic color changes based on device state (active/inactive/disabled).
+ * This approach provides better flexibility for remote control buttons that need
+ * to change appearance based on real-time device status.
+ */
+
 interface RemoteButtonProps {
     label: string;
     onClick: () => void;

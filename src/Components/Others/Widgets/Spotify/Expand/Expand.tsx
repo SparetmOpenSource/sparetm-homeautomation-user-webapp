@@ -131,8 +131,6 @@ const Expand = ({ darkTheme, handleRefresh }: any) => {
         0,
     );
 
-    // const queryKeys = [GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID];
-
     return (
         <div
             className="spotify-expand"

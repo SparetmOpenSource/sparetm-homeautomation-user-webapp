@@ -18,9 +18,8 @@ interface DeviceAcRemoteProps {
     darkTheme: boolean;
 }
 
+
 const DeviceAcRemote: React.FC<DeviceAcRemoteProps> = ({ deviceId, darkTheme }) => {
-    // const darkTheme = useTheme();
-    
     const currentDevice = useAppSelector(
         (state: any) =>
             state?.device?.deviceData?.body?.find(

@@ -56,9 +56,6 @@ export const RoutePath = {
     CoreApplication_Setting: '/app/setting',
 
     // Core app route
-
-    // Internal dashboard routes
-
     // Internal dashboard routes
     DeviceRoom: 'room/:type',
     Play: 'play',
@@ -110,13 +107,6 @@ export const spotify_refresh_playback_constant = {
     play_back_fetch_delay_time: 2000, //1000 * 3 = 3000
     queue_fetch_delay_time: 4000, //1000 * 3 = 3000
 };
-
-// export let Current_Date_Time = new Date().toLocaleDateString('en-us', {
-//     weekday: 'long',
-//     year: 'numeric',
-//     month: 'short',
-//     day: 'numeric',
-// });
 
 export const Current_Date_Time = new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata',
@@ -172,27 +162,6 @@ export const ProfileConfigRoomNames = RoomNamesConst.map((roomName) => ({
 export const NONPREMIUMROOMCOUNT = 6;
 
 export const SelectColorStyles = {
-    // menuList: (styles: any) => ({
-    //     ...styles,
-    //     background: '#272629',
-    //     color: 'lavender', //color after opening dropdown
-    // }),
-    // option: (styles: any, { isFocused, isSelected }: any) => ({
-    //     ...styles,
-    //     background: isFocused
-    //         ? 'rgb(194,231,255)'
-    //         : isSelected
-    //         ? '#9DE9F4'
-    //         : undefined,
-    //     color: isFocused ? 'black' : isSelected ? 'black' : undefined,
-    //     zIndex: 1,
-    // }),
-    // menu: (base: any) => ({
-    //     ...base,
-    //     zIndex: 100,
-    //     background: 'blue',
-    // }),
-
     menuList: (styles: any) => ({
         ...styles,
         background: '#272629',

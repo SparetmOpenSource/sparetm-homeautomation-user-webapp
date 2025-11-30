@@ -52,12 +52,9 @@ const Weather = () => {
         0, // Stale Time
     );
 
-    /*{----------------------------------------------------------------------------------------------------------}*/
-
     const iconCode: string = data?.data?.body?.weatherData?.weather[0]?.icon;
     const weather: any = data?.data?.body?.weatherData;
     const state: any = data?.data?.headers?.state[0];
-    // const quote: any = data?.data?.body?.quoteData;
     let icon = changeWeatherIcon(iconCode);
     const { toggleBackDropOpen } = useBackDropOpen();
 

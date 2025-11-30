@@ -32,14 +32,9 @@ import { useQueryClient } from 'react-query';
 import LoadingFade from '../../../../LoadingAnimation/LoadingFade';
 import {
     ITEMPERPAGE,
-    // LandscapeSizeS,
-    // SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION,
     spotifyNonPremiumWarning,
-    // spotifyQueueAddition,
 } from '../../../../../../Data/Constants';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../Data/Enum';
-// import { useBackDropOpen } from '../../../../../../Pages/ThemeProvider';
-// import Confirmation from '../../../../BackDrop/Confirmation/Confirmation';
 import useLocalStorage from '../../../../../../Hooks/UseLocalStorage';
 import { SPOTIFY_TOKEN_GLOBAL, SPOTIFY_ACCOUNT_TYPE_GLOBAL } from '../../../../../../Data/Constants';
 
@@ -65,7 +60,6 @@ const Library = ({ data, darkTheme }: any) => {
     const [offsetForPlaylistSong, setOffsetForPlaylistSong] =
         useState<number>(0);
     const queryClient = useQueryClient();
-    // const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
 
     const handleChangeSection = (index: number) => {
         setChangeSection(index);
@@ -169,22 +163,6 @@ const Library = ({ data, darkTheme }: any) => {
         on_success,
         on_error,
     );
-
-    // const on_add_to_queue_success = () => {
-    //     displayToastify(
-    //         spotifyQueueAddition,
-    //         darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-    //         TOASTIFYSTATE.SUCCESS,
-    //     );
-    //     toggleBackDropClose(SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION);
-    // };
-
-    // const { mutate: addToQueuee } = usePostUpdateData(
-    //     featureUrl.spotify_base_url + `?data=addtoqueue`,
-    //     updateHeaderConfig,
-    //     on_add_to_queue_success,
-    //     on_error,
-    // );
 
     const startPlayingFn = (trackUri: any, data: any, contextUri: any) => {
         if (spotifyAcntType === 'premium') {
@@ -306,28 +284,6 @@ const Library = ({ data, darkTheme }: any) => {
             setLimitForAlbum(ITEMPERPAGE);
         }
     }, [changeSection]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    // const addTrackToQueue = () => {
-    //     const backdropId = SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION;
-    //     toggleBackDropOpen(
-    //         backdropId,
-    //         <Confirmation
-    //             darkTheme={darkTheme}
-    //             heading="Would you like to add this track to your queue?"
-    //             btnOkFn={() => {
-    //                 addToQueue({
-    //                     id: data?.body?.device?.id,
-    //                     track_uri: data?.body?.item?.uri,
-    //                 });
-    //                 toggleBackDropClose(backdropId);
-    //             }}
-    //             btnCancelFn={() => toggleBackDropClose(backdropId)}
-    //             btnOkLabel="Yes, add"
-    //             btnCancelLabel="Cancel"
-    //         />,
-    //         LandscapeSizeS,
-    //     );
-    // };
 
     const getTotalItemForPagination = () => {
         if (changeSection === 1) {

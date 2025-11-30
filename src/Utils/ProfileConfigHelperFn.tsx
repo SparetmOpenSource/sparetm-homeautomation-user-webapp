@@ -64,11 +64,6 @@ export const getAppAdminUser = () => {
     return adminUserName;
 };
 
-// export const setAppAdminUser = (response: any) => {
-//     const adminUserName = response?.data?.body?.admin_name;
-//     localStorage.setItem(APPUSERKEY, adminUserName);
-// };
-
 export const removeAppAdminUser = () => {
     localStorage.removeItem(APPUSERKEY);
 };
@@ -101,16 +96,6 @@ export const removeProfileName = () => {
     localStorage.removeItem(PROFILENAMEKEY);
 };
 
-// ----------------------- Set,Get,Remove JWT Token -------------------------//
-
-// export const setAccessToken = (response: any) => {
-//     const accessToken = response?.data?.body?.access_token;
-//     localStorage.setItem(APPTOKENKEY, accessToken);
-// };
-// export const getAccessToken = () => {
-//     const accessToken = localStorage.getItem(APPTOKENKEY);
-//     return accessToken;
-// };
 export const removeAccessToken = () => {
     localStorage.removeItem(APPTOKENKEY);
 };
@@ -165,7 +150,6 @@ export const appLogOut = (navigate: any) => {
     removeProfileId();
     removeAccessToken();
     removeAppAdminUser();
-    //removeCityCountryStateToken();
     removeProfileName();
     navigate(RoutePath.Home);
 };

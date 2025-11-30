@@ -291,37 +291,7 @@ export const appliance = [
         label: 'Washing Machine',
         value: 'appliance/washingMachine',
         remote: false,
-    },
-    // {
-    //   label: "Dryer",
-    //   value: "appliance/dryer",
-    //   remote: false,
-    // },
-    // {
-    //   label: "Heater",
-    //   value: "appliance/heater",
-    //   remote: false,
-    // },
-    // {
-    //   label: "Mixer",
-    //   value: "appliance/mixer",
-    //   remote: false,
-    // },
-    // {
-    //     label: 'Toaster',
-    //     value: 'appliance/toaster',
-    //     remote: false,
-    // },
-    // {
-    //   label: "Water Purifier",
-    //   value: "appliance/waterPurifier",
-    //   remote: false,
-    // },
-    // {
-    //     label: 'Vacuum Cleaner',
-    //     value: 'appliance/vacuumCleaner',
-    //     remote: false,
-    // },
+    }
 ];
 
 export const gadget = [
@@ -456,25 +426,6 @@ export const copyText = async (text: any) => {
     }
 };
 
-// export const imageScrollAnimate = {
-//     offscreen: { x: -100, opacity: 0 },
-//     onscreen: {
-//         x: 0,
-//         opacity: 1,
-//         rotate: [0, 10, 0],
-//         transition: { type: 'spring', bounce: 0.4, duration: 1 },
-//     },
-// };
-
-// export const textScrollAnimate = {
-//     offscreen: { y: 100, opacity: 0 },
-//     onscreen: {
-//         y: 0,
-//         opacity: 1,
-//         transition: { type: 'spring', bounce: 0.4, duration: 1 },
-//     },
-// };
-
 export const logger = (file: string) => {
     const enable_logging: boolean = true;
     if (enable_logging) {
@@ -499,40 +450,6 @@ export const doScroll = (paragraphRef: any) => {
         block: 'start',
     });
 };
-
-// export const notificationBackground = (
-//     setCount: any,
-//     setColor: any,
-//     intervalRef: any,
-//     notificationModeStatus: any,
-// ) => {
-//     const notificationCol = notificationModeStatus
-//         ? dark_colors?.success
-//         : dark_colors?.error;
-//     const refId = setInterval(function () {
-//         setCount((cnt: any) => {
-//             return cnt + 1;
-//         });
-//         setColor((col: string) => {
-//             if (col === notificationCol) {
-//                 return 'black';
-//             } else {
-//                 return notificationCol;
-//             }
-//         });
-//     }, 180);
-//     intervalRef.current = refId;
-// };
-
-// export const notificationModeChanged = (
-//     notificationMode: any,
-//     setNotificationMode: any,
-//     setNotificationModeStatus: any,
-//     notificationModeStatus: boolean,
-// ) => {
-//     setNotificationMode(!notificationMode);
-//     setNotificationModeStatus(notificationModeStatus);
-// };
 
 export const reloadPage = () => {
     window.location.reload();

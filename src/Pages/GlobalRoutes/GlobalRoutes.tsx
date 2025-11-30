@@ -21,7 +21,7 @@ import {
     Setting,
     SignInSignUp,
 } from './GlobalRoutePages';
-import Todo from '../../Components/CoreApplicationNew/DashBoard/Todo/Todo';
+import Todo from '../../Components/CoreApplication/DashBoard/Todo/Todo';
 import HomeWithLoader from '../Home/HomeWithLoader/HomeWithLoader';
 
 const routes = [

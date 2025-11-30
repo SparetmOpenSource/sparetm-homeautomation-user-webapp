@@ -19,9 +19,6 @@ export const cityCountryState_headers = {
 
 export const profileUrl = {
     get_location: '/mpa/api/v1/profiles/location',
-    // get_city:
-    //     'https://api.countrystatecity.in/v1/countries/%cntry%/states/%stat%/cities ',
-    // get_state: 'https://api.countrystatecity.in/v1/countries/%cntry%/states',
     get_all_profiles: '/mpa/api/v1/profiles/all?admin=',
     get_all_device_instance_url: '/mda/api/v1/devices/websocket/url',
     get_profile: '/mpa/api/v1/profiles?id=',
@@ -31,8 +28,6 @@ export const profileUrl = {
     get_spotify_access_token: '/mpa/api/v1/profiles/spotify/token',
     get_spotify_refresh_access_token: '/mpa/api/v1/profiles/spotify/token/refresh',
 };
-
-/// new ///
 
 export const getProfiles = async (appUser: any, darkTheme: any) => {
     try {
@@ -92,19 +87,6 @@ export const getCountryList = async (headerOptions: any, darkTheme: any) => {
     }
 };
 
-// export const getMqttCred = async (admin: any, darkTheme: any) => {
-//     try {
-//         const response = await api.get(
-//             profileUrl.get_mqtt_cred + admin,
-//             getHeaderConfig,
-//         );
-//         return response;
-//     } catch (error) {
-//         catchError(error, darkTheme);
-//         throw new Error('Failed to fetch mqtt credentials');
-//     }
-// };
-
 export const getWebSocketUrl = async () => {
     try {
         const response = await api.get(
@@ -130,40 +112,6 @@ export const getProfile = async (profileId: any, darkTheme: any) => {
     }
 };
 
-/// new ///
-
-/********************************Fetch all profiles********************************/
-
-/********************************Fetch all profiles********************************/
-
-/********************************Fetch all profiles********************************/
-
-/*************************Fetch specific profile*******************************/
-// export const getProfile = async (appUser: any, profileId: any) => {
-//     return await api.get(
-//         `${profileUrl.get_profile}${appUser}&id=${profileId}`,
-//         getHeaderConfig,
-//     );
-// };
-
-/************************* Add user profile in profile config page *******************************/
-// export const useAddProfiles = (
-//     appUser: any,
-//     on_Success: any,
-//     on_Error: any,
-// ) => {
-//     return useMutation(
-//         (data) => {
-//             return api.post(
-//                 profileUrl.add_profile + appUser,
-//                 data,
-//                 postHeaderConfig,
-//             );
-//         },
-//         { onSuccess: on_Success, onError: on_Error },
-//     );
-// };
-
 /************************* Add user profile in profile config page *******************************/
 export const useAddMqttCred = (appUser: any, on_Error: any) => {
     const queryClient = useQueryClient();
@@ -183,5 +131,3 @@ export const useAddMqttCred = (appUser: any, on_Error: any) => {
         },
     );
 };
-
-/*************************Fetch Mqtt Cred*******************************/

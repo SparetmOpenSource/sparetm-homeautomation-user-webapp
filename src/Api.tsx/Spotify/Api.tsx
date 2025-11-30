@@ -5,15 +5,6 @@ import { generateCodeChallenge, resetSpotify } from '../../Utils/HelperFn';
 import { api } from '../Axios';
 import { featureUrl } from '../CoreAppApis';
 
-// export const apiScope = [
-//     'user-library-read',
-//     'playlist-read-private',
-//     'user-read-playback-state',
-//     'user-modify-playback-state',
-//     'user-read-currently-playing',
-//     'user-library-modify',
-// ];
-
 const auth_uri: string = 'https://accounts.spotify.com/authorize';
 const redirect_uri: string =
     'http://localhost:3000/app/dashboard/segment/status';

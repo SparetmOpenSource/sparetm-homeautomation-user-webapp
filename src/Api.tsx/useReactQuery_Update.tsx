@@ -68,12 +68,3 @@ export const useDeleteData = (
         },
     );
 };
-
-/////////
-
-//     const { mutate: seekPosition } = usePostUpdateData(
-//         featureUrl.spotify_base_url + '?data=seek',
-//         updateHeaderConfig,
-//         on_success_for_seek,
-//         on_error_for_seek,
-// );
