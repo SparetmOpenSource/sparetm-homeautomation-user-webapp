@@ -294,8 +294,8 @@ const Information = ({
                 </section>
             )}
             {isRemoteActive && infoWindowCount === 1 && (
-                <section>
-                    <DeviceRemote />
+                <section className="device-remote-section">
+                    <DeviceRemote deviceId={id} darkTheme={darkTheme} /> 
                 </section>
             )}
             {infoWindowCount === 2 && (

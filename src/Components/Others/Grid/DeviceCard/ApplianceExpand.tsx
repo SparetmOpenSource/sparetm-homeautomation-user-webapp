@@ -35,7 +35,7 @@ const ApplianceExpand = ({
                     deviceTopic={currentDevice?.deviceTopic}
                     createdAt={currentDevice?.createdAt}
                     updatedAt={currentDevice?.updatedAt}
-                    isRemoteActive={['ac', 'fan'].includes(
+                    isRemoteActive={['fan', 'airconditioner'].includes(
                         currentDevice?.deviceType.split('/')[1]?.toLowerCase(),
                     )}
                     darkTheme={darkTheme}

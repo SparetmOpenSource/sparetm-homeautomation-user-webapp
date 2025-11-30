@@ -1,0 +1,53 @@
+.remoteConfig {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.remoteConfig p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.textCopyLink {
+    cursor: pointer;
+    color: #4a9eff;
+    text-decoration: underline;
+}
+
+.textCopyLink:hover {
+    color: #6bb0ff;
+}
+
+.remoteConfig_code_input {
+    display: flex;
+    width: 100%;
+}
+
+.remoteConfig_code_input form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.remoteConfig_code_input input {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #444;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.remoteConfig_code_input_form_error {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.remoteConfig mark {
+    background-color: #ffd93d;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}

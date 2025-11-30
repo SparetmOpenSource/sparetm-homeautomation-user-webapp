@@ -1,0 +1,53 @@
+.deviceAcRemote {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.deviceAcRemote_saved_details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+}
+
+.deviceAcRemote_saved_details > span:first-child {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.deviceAcRemote_saved_details > span:first-child > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.deviceAcRemote_saved_details > span:first-child > div > p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.deviceAcRemote_saved_details > span:last-child {
+    display: flex;
+    justify-content: center;
+}
+
+.deviceAcRemote_btn {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.deviceAcRemote_btn > span {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}

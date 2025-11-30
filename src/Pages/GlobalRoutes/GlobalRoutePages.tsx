@@ -23,52 +23,6 @@ const Connection = React.lazy(
     () => import('../../Components/CoreApplicationNew/Connection/Connection'),
 );
 
-// -------------------- Dashboard Features -------------------- //
-const TodoListWrapper = React.lazy(
-    () =>
-        import(
-            '../../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/TodoList/TodoListWrapper'
-        ),
-);
-const StatusList = React.lazy(
-    () =>
-        import(
-            '../../Components/CoreApplication/CoreApplicationDashBoard/Features/FeatureWrapper/StatusList/StatusList'
-        ),
-);
-
-// -------------------- Connection Components -------------------- //
-const GettingStarted = React.lazy(
-    () =>
-        import(
-            '../../Components/CoreApplication/CoreApplicationConnection/GettingStarted/GettingStarted'
-        ),
-);
-const SetupArduinoIde = React.lazy(
-    () =>
-        import(
-            '../../Components/CoreApplication/CoreApplicationConnection/SetupArduinoIde/SetupArduinoIde'
-        ),
-);
-const ESP8266BasicSetup = React.lazy(
-    () =>
-        import(
-            '../../Components/CoreApplication/CoreApplicationConnection/ESP8266BasicSetup/ESP8266BasicSetup'
-        ),
-);
-const SpecificDeviceCodes = React.lazy(
-    () =>
-        import(
-            '../../Components/CoreApplication/CoreApplicationConnection/SpecificDevice/SpecificDeviceCodes'
-        ),
-);
-const ExampleCodes = React.lazy(
-    () =>
-        import(
-            '../../Components/CoreApplication/CoreApplicationConnection/ExampleCodes/ExampleCodes'
-        ),
-);
-
 const Overview = React.lazy(
     () =>
         import(
@@ -80,20 +34,6 @@ const ArduinoIde = React.lazy(
     () =>
         import(
             './../../Components/CoreApplicationNew/Connection/ArduinoIde/ArduinoIde'
-        ),
-);
-
-// -------------------- Setting Components -------------------- //
-const AccountSetting = React.lazy(
-    () =>
-        import(
-            '../../Components/CoreApplication/CoreApplicationSetting/AccountSetting/AccountSetting'
-        ),
-);
-const FeatureSetting = React.lazy(
-    () =>
-        import(
-            '../../Components/CoreApplication/CoreApplicationSetting/FeatureSetting/FeatureSetting'
         ),
 );
 
@@ -132,15 +72,6 @@ export {
     Connection,
     Overview,
     ArduinoIde,
-    TodoListWrapper,
-    StatusList,
-    GettingStarted,
-    SetupArduinoIde,
-    ESP8266BasicSetup,
-    SpecificDeviceCodes,
-    ExampleCodes,
-    AccountSetting,
-    FeatureSetting,
     NotFound,
     About,
 };
