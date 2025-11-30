@@ -1,0 +1,50 @@
+.profile-grid {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    gap: 3.5rem;
+    padding: 3.5em;
+    grid-template-columns: repeat(auto-fit, 160px);
+    grid-template-rows: max-content;
+    overflow: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.profile-grid::-webkit-scrollbar {
+    display: none;
+}
+
+/* *********** */
+
+.device-grid {
+    width: 100%;
+    height: 100%;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.device-grid-data-not-available {
+    width: 100%;
+    height: 100%;
+}
+
+.device-grid-data-available {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    gap: 3.5rem;
+    padding: 3.5em;
+    grid-template-columns: repeat(auto-fit, 160px);
+    grid-template-rows: max-content;
+    overflow: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.device-grid-data-available::-webkit-scrollbar {
+    display: none;
+}

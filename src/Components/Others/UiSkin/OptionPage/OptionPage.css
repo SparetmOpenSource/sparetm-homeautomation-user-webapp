@@ -1,0 +1,78 @@
+.optionPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.optionPage>:first-child {
+    width: 25%;
+    height: 100%;
+    flex-direction: column;
+    padding: 3rem;
+}
+
+.optionPage>:first-child span {
+    width: auto;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 5rem;
+    border-radius: 0.5rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+}
+
+.optionPage>:first-child a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.optionPage>:first-child span p {
+    margin-left: 0.5rem;
+    font-size: 15px;
+}
+
+.optionPage>:last-child {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    flex-direction: column;
+}
+
+.optionPage>:last-child::-webkit-scrollbar {
+    display: none;
+}
+
+/* ************* */
+
+.optionPage-block {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+}
+
+.optionPage-block span {
+    margin-top: 1rem;
+
+}
+
+.optionPage-block span p {
+    background-color: blueviolet;
+    padding: 1rem;
+}
+
+.optionPage-block-separation {
+    margin-top: 1rem;
+}

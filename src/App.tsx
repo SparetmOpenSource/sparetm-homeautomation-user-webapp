@@ -1,30 +1,59 @@
-import './App.css';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { GlobalRoutes } from './Pages/GlobalRoutes';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import { HOME_COLOR } from './Data/ColorConstant';
-
-const queryClient = new QueryClient();
+import { ThemeProvider } from './Pages/ThemeProvider';
+import { useEffect, useState } from 'react';
+import { GlobalRoutes } from './Pages/GlobalRoutes/GlobalRoutes';
+import './App.css';
+import useBlink from './Hooks/useBlink';
+import { useAppDispatch, useAppSelector } from './Features/ReduxHooks';
+import { resetBlink } from './Features/Blink/BlinkSlice';
+import { BACKGROUND_BLINK_SETTING } from './Data/Constants';
+import useLocalStorage from './Hooks/UseLocalStorage';
+import { WebSocketProvider } from './Context/WebSocketContext';
 
 function App() {
+    const [backgroundColor, setBackgroundColor] = useState<string>('black');
+    const blinkTrigger = useAppSelector((state) => state.blink.trigger);
+    const blinkColor = useAppSelector((state) => state.blink.color);
+    const { startBlink } = useBlink(200, blinkColor, setBackgroundColor, 2);
+    const dispatch = useAppDispatch();
+    const [, setBackgroundBlinkSettings] = useLocalStorage(BACKGROUND_BLINK_SETTING, {
+            SUCCESS: true,
+            ERROR: true,
+            WARNING: false,
+            INFO: false,
+        });
+
+    useEffect(() => {
+        setBackgroundBlinkSettings({
+            SUCCESS: true,
+            ERROR: true,
+            WARNING: false,
+            INFO: false,
+        });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        if (blinkTrigger) {
+            startBlink();
+            dispatch(resetBlink());
+        }
+    }, [blinkTrigger, startBlink, dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+
     return (
-        <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
             <div
-                className="App"
+                className="app"
                 style={{
-                    background: HOME_COLOR.OUTER,
+                    background: backgroundColor,
                 }}
             >
                 <Router>
-                    <GlobalRoutes />
+                    <WebSocketProvider>
+                        <GlobalRoutes />
+                    </WebSocketProvider>
                 </Router>
-                <ToastContainer />
             </div>
-            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-        </QueryClientProvider>
+        </ThemeProvider>      
     );
 }
 

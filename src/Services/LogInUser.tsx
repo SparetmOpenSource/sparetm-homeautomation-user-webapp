@@ -1,34 +1,36 @@
 import axios from 'axios';
-import {
-    APPPROFILEKEY,
-    OFFLINETESTUSERNAMEKEY,
-    RoutePath,
-} from '../Data/Constants';
+import { RoutePath } from '../Data/Constants';
 import { displayToastify } from '../Utils/HelperFn';
-import {
-    APPPROFILE,
-    OFFLINECRED,
-    TOASTIFYCOLOR,
-    TOASTIFYSTATE,
-} from '../Data/Enum';
-import { homeUrl } from '../Api.tsx/HomeApi';
-import {
-    setAccessToken,
-    setAppAdminUser,
-} from '../Utils/ProfileConfigHelperFn';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
+import { addAdmin, addToken } from '../Features/User/UserSlice';
+import { authUrl } from '../Api.tsx/Axios';
 
-const login = (response: any, navigate: any) => {
+const login = (
+    response: any,
+    darkTheme: boolean,
+    dispatch: any,
+    navigate: any,
+) => {
+    const token = response?.data?.body?.access_token;
+    const adminRaw = response?.data?.body?.admin_name;
+    // Remove surrounding double quotes if present
+    const admin = typeof adminRaw === 'string' ? adminRaw.replace(/^"|"$/g, '') : adminRaw;
     displayToastify(
-        `Signing In as ${response?.data?.body?.admin_name?.split('@')[0]}`,
-        TOASTIFYCOLOR.DARK,
+        `Signing In as ${admin.split('@')[0]}`,
+        !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
         TOASTIFYSTATE.SUCCESS,
     );
-    setAccessToken(response);
-    setAppAdminUser(response);
+    dispatch(addToken(token));
+    dispatch(addAdmin(admin));
     navigate(RoutePath.ProfileConfig);
 };
 
-export const LoginUser = async (data: any, navigate: any) => {
+export const LoginUser = async (
+    data: any,
+    darkTheme: boolean,
+    dispatch: any,
+    navigate: any,
+) => {
     const options = {
         headers: {
             Accept: 'application/json',
@@ -36,28 +38,13 @@ export const LoginUser = async (data: any, navigate: any) => {
         },
     };
     try {
-        let response = null;
-        if (localStorage.getItem(APPPROFILEKEY) === APPPROFILE.STATUSON) {
-            response = await axios.post(homeUrl.app_login, data, options);
-        } else {
-            response = {
-                data: {
-                    body: {
-                        admin_name: localStorage.getItem(
-                            OFFLINETESTUSERNAMEKEY,
-                        ),
-                        access_token: OFFLINECRED.TOKEN,
-                    },
-                },
-            };
-        }
-        login(response, navigate);
+        let response = await axios.post(authUrl.app_login, data, options);
+        login(response, darkTheme, dispatch, navigate);
     } catch (error) {
         displayToastify(
             'The user name or password are incorrect',
-            TOASTIFYCOLOR.LIGHT,
+            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
             TOASTIFYSTATE.ERROR,
         );
-        //catchError(error);
     }
 };

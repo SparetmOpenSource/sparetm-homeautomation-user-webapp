@@ -1,0 +1,35 @@
+.spotify-pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.spotify-pagination-page-item {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.spotify-pagination-page-link {
+  padding: 4px 8px;
+  /* border: 1px solid #ddd; */
+  border-radius: 4px;
+  /* color: #007bff; */
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.spotify-pagination-page-link:hover {
+  background-color: rgb(42,50,55);
+}
+
+.spotify-pagination-page-item.active .spotify-pagination-page-link {
+  background-color: rgb(105,188,52);
+  /* color: white; */
+}
+
+.spotify-pagination-page-item.disabled .spotify-pagination-page-link {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: not-allowed;
+}

@@ -1,0 +1,20 @@
+.maintenance {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.maintenance section {
+    width: 50%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.maintenance h1 {
+    font-size: 2rem;
+}

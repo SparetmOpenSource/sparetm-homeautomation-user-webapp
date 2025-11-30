@@ -1,0 +1,47 @@
+.widgetCarousel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.widgetCarousel > :first-child {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.widgetCarousel> :last-child {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.widgetCarousel-list {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    overflow: hidden;
+    overflow-x: none;
+}
+
+.widgetCarousel-list::-webkit-scrollbar {
+    display: none;
+}
+
+.widgetCarousel-list-item {
+    flex-shrink: 0;
+    width: 49%;
+    height: 100%;
+    scroll-snap-align: center;
+}

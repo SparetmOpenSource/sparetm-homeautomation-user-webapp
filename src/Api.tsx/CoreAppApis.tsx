@@ -1,12 +1,10 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { api, postHeaderConfig, getHeaderConfig } from './Axios';
+import { api, getHeaderConfig, updateHeaderConfig } from './Axios';
 import { weather_quote_constant } from '../Data/Constants';
 
 export const featureUrl = {
     get_weather_quote_1: '/mpa/api/v1/profiles/features?id=',
     get_weather_quote_2: `&data=weather&unit=metric&quotelimit=${weather_quote_constant.quote_char_limit}`,
-    // get_todo_list_1: `/mpa/api/v1/profiles/features?id=`,
-    // get_todo_list_2: `&data=todo`,
     get_todo_list: `/mpa/api/v1/profiles/features?id=%profileId%&data=todo`,
     del_todo_list: '/mpa/api/v1/profiles/features/todo?id=',
     add_todo_list: `/mpa/api/v1/profiles/features/todo?id=`,
@@ -15,27 +13,47 @@ export const featureUrl = {
     add_device: `/mda/api/v1/devices?admin=`,
     get_all_devices: `/mda/api/v1/devices/all?admin=`,
     get_devices: `/mda/api/v1/devices?admin=`,
-    update_device: `/mda/api/v1/devices?admin=`,
+    update_device: `/mda/api/v1/devices?id=`,
     del_device: `/mda/api/v1/devices?id=`,
-    update_all_device_status: `/mda/api/v1/devices/all/status?admin=`,
+    update_all_device_status: `/mda/api/v1/devices/all?admin=`,
     update_device_data_store: `/mda/api/v1/devices/data?id=`,
-    delete_device_data_store: `/mda/api/v1/devices/data/remove?id=`,
+    remove_device_data_store: `/mda/api/v1/devices/data/remove?id=`,
+    spotify_base_url: `/mpa/api/v1/profiles/spotify`,
 };
 
-/*************************Fetch weather and quotes*******************************/
-export const getWeatherQuote = async (profileId: any) => {
-    return await api.get(
-        featureUrl.get_weather_quote_1 +
-            profileId +
-            featureUrl.get_weather_quote_2,
-        getHeaderConfig,
-    );
+export const getWeatherQuote = async (profileId: any, darkTheme: any) => {
+    try {
+        const response = await api.get(
+            featureUrl.get_weather_quote_1 +
+                profileId +
+                featureUrl.get_weather_quote_2,
+            getHeaderConfig,
+        );
+        return response;
+    } catch (error) {
+        throw new Error('Failed to fetch weather and quote');
+    }
+};
+
+export const getAllDevices = async (
+    admin: any,
+    profile: any,
+    darkTheme: any,
+) => {
+    try {
+        const response = await api.get(
+            `${featureUrl.get_all_devices}${admin}&profilename=${profile}`,
+            getHeaderConfig,
+        );
+        return response;
+    } catch (error) {
+        throw new Error('Failed to fetch device details');
+    }
 };
 
 /*************************Fetch todo list*******************************/
 export const getTodoList = async (profileId: any) => {
     return await api.get(
-        // featureUrl.get_todo_list_1 + profileId + featureUrl.get_todo_list_2,
         featureUrl.get_todo_list.replace('%profileId%', profileId),
         getHeaderConfig,
     );
@@ -46,7 +64,7 @@ export const delTodoList = async (todoId: any) => {
     return await api.get(featureUrl.del_todo_list + todoId);
 };
 
-export const getActiveDeviceList = async (appUser: any, profileName:any) => {
+export const getActiveDeviceList = async (appUser: any, profileName: any) => {
     return await api.get(
         featureUrl.get_active_device_list +
             appUser +
@@ -61,12 +79,11 @@ export const useDeleteTodo = (on_Error: any, closeDeleteTodo: any) => {
         (todoId) => {
             return api.delete(
                 featureUrl.del_todo_list + todoId,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
             onSuccess: () => {
-                // toast.success(`Deleted todo`);
                 closeDeleteTodo();
                 queryClient.invalidateQueries('get_todo_list');
             },
@@ -83,12 +100,11 @@ export const useAddTodo = (profileId: any, on_Error: any, closeFn: any) => {
             return api.post(
                 featureUrl.add_todo_list + profileId,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
             onSuccess: () => {
-                // toast.success(`Added todo`);
                 closeFn();
                 queryClient.invalidateQueries('get_todo_list');
             },
@@ -105,12 +121,11 @@ export const useUpdateTodo = (todoId: any, on_Error: any, handleClose: any) => {
             return api.patch(
                 featureUrl.update_todo_list + todoId,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
             onSuccess: () => {
-                // toast.success(`Updated todo`);
                 handleClose();
                 queryClient.invalidateQueries('get_todo_list');
             },
@@ -132,12 +147,11 @@ export const useAddDevice = (
             return api.post(
                 `${featureUrl.add_device}${admin}&profilename=${profileName}`,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
             onSuccess: () => {
-                // toast.success(`Added device`);
                 closeFn();
                 queryClient.invalidateQueries('get_device_list');
             },
@@ -147,12 +161,6 @@ export const useAddDevice = (
 };
 
 /*************************Fetch Devices*******************************/
-export const getAllDevices = async (admin: any, profileName: any) => {
-    return await api.get(
-        `${featureUrl.get_all_devices}${admin}&profilename=${profileName}`,
-        getHeaderConfig,
-    );
-};
 
 export const getDevices = async (
     admin: any,
@@ -181,7 +189,7 @@ export const useUpdateDevice = (
             return api.patch(
                 `${featureUrl.update_device}${admin}&profilename=${profileName}&roomtype=${roomType}&id=${id}`,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -209,32 +217,7 @@ export const useUpdateDeviceStatus = (
             return api.patch(
                 `${featureUrl.update_device}${admin}&profilename=${profileName}&roomtype=${roomType}&id=${id}`,
                 data,
-                postHeaderConfig,
-            );
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('get_device_list');
-            },
-            onError: on_Error,
-        },
-    );
-};
-
-/*************************Update all device status*******************************/
-export const useUpdateAllDeviceStatus = (
-    admin: any,
-    profileName: any,
-    roomType: any,
-    on_Error: any,
-) => {
-    const queryClient = useQueryClient();
-    return useMutation(
-        (data) => {
-            return api.patch(
-                `${featureUrl.update_all_device_status}${admin}&profilename=${profileName}&roomtype=${roomType}`,
-                data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -259,7 +242,7 @@ export const useUpdateAllDeviceStatusWidget = (
             return api.patch(
                 `${featureUrl.update_all_device_status}${admin}&profilename=${profileName}&roomtype=${roomType}`,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -280,7 +263,7 @@ export const useUpdateDeviceStoreData = (deviceId: any, on_Error: any) => {
             return api.patch(
                 featureUrl.update_device_data_store + deviceId,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -299,9 +282,9 @@ export const useDeleteDeviceStoreData = (deviceId: any, on_Error: any) => {
     return useMutation(
         (data) => {
             return api.patch(
-                featureUrl.delete_device_data_store + deviceId,
+                featureUrl.remove_device_data_store + deviceId,
                 data,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
@@ -326,12 +309,11 @@ export const useDeleteDevice = (
         (deviceId) => {
             return api.delete(
                 `${featureUrl.del_device}${deviceId}&admin=${admin}&profilename=${profileName}`,
-                postHeaderConfig,
+                updateHeaderConfig,
             );
         },
         {
             onSuccess: () => {
-                // toast.success(`Deleted device`);
                 closeDeleteDevice();
                 queryClient.invalidateQueries('get_device_list');
             },

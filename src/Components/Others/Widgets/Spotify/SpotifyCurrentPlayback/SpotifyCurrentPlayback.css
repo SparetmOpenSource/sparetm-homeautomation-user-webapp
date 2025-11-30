@@ -1,0 +1,198 @@
+.spotifyCurrentPlayback {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spotifyCurrentPlayback-pic {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.spotifyCurrentPlayback-info {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    position: relative;
+}
+
+.spotifyCurrentPlayback-pic span {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spotifyCurrentPlayback-pic-image {
+    border-radius: 0.8rem;
+}
+
+.spotifyCurrentPlayback-info-ad,
+.spotifyCurrentPlayback-info-unknown,
+.spotifyCurrentPlayback-info-no-data {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spotifyCurrentPlayback-info-unknown h1,
+.spotifyCurrentPlayback-info-ad h1,
+.spotifyCurrentPlayback-info-no-data h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.spotifyCurrentPlayback-info-unknown p,
+.spotifyCurrentPlayback-info-ad p,
+.spotifyCurrentPlayback-info-no-data p {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin: 0;
+}
+
+.spotifyCurrentPlayback-info-expand {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 6px;
+    top: 6px;
+    width: 40px !important;
+    height: 40px;
+}
+
+.spotifyCurrentPlayback-info-playing {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spotifyCurrentPlayback-info-playing h1,
+.spotifyCurrentPlayback-info-playing p {
+    margin: 0;
+    padding: 0;
+}
+
+.spotifyCurrentPlayback-info-playing h1 {
+    font-size: 1.3rem;
+}
+
+.spotifyCurrentPlayback-info-playing p {
+    font-size: 0.9rem;
+}
+
+.spotifyCurrentPlayback-info-playing-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spotifyCurrentPlayback-info-playing-btn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem;
+    padding-bottom: 0;
+}
+.spotifyCurrentPlayback-info-playing-btn span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/***** s *****/
+
+.spotifyCurrentPlayback-pic-s {
+    width: 34.5%;
+}
+
+.spotifyCurrentPlayback-info-s {
+    width: 64.5%;
+}
+
+.spotifyCurrentPlayback-info-ad-s,
+.spotifyCurrentPlayback-info-unknown-s,
+.spotifyCurrentPlayback-info-no-data-s {
+    padding: 1.5rem;
+}
+
+.spotifyCurrentPlayback-info-unknown-s h1,
+.spotifyCurrentPlayback-info-ad-s h1,
+.spotifyCurrentPlayback-info-no-data-s h1 {
+    text-align: start;
+}
+
+.spotifyCurrentPlayback-info-unknown-s p,
+.spotifyCurrentPlayback-info-ad-s p,
+.spotifyCurrentPlayback-info-no-data-s p {
+    text-align: start;
+}
+
+.spotifyCurrentPlayback-info-playing-s {
+    align-items: flex-start;
+    padding: 1.5rem;
+    padding-left: 2rem;
+}
+
+.spotifyCurrentPlayback-info-playing-s p {
+    padding-top: 0.2rem;
+}
+
+.spotifyCurrentPlayback-info-playing-progress-s {
+    width: 100%;
+    padding-top: 1.5rem;
+}
+
+.spotifyCurrentPlayback-info-playing-btn-s {
+    width: 100%;
+}
+
+/***** xl *****/
+
+.spotifyCurrentPlayback-pic-xl {
+    width: 30.5%;
+}
+
+.spotifyCurrentPlayback-info-xl {
+    width: 68.5%;
+}
+
+.spotifyCurrentPlayback-info-playing-xl {
+    align-items: center;
+}
+
+.spotifyCurrentPlayback-info-playing-song-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spotifyCurrentPlayback-info-playing-xl p {
+    padding-top: 0.5rem;
+}
+
+.spotifyCurrentPlayback-info-playing-progress-xl {
+    width: 70%;
+    padding-top: 1.5rem;
+}
+
+.spotifyCurrentPlayback-info-playing-btn-xl {
+    width: 80%;
+}

@@ -1,0 +1,64 @@
+.notFount {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+
+.notFount>:first-child {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.notFount>:first-child img {
+    padding: 0;
+    margin: 0;
+}
+
+.notFount>:last-child {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.notFount>:first-child p {
+    font-size: 20rem;
+    font-weight: bolder;
+
+}
+
+.notFount>:last-child h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 3rem;
+    font-weight: lighter;
+}
+
+.notFount>:last-child h2 {
+    margin: 0;
+    padding: 1rem;
+    font-size: 2rem;
+}
+
+.notFount>:last-child p {
+    margin: 0;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.notFount>:last-child span {
+    cursor: pointer;
+}
+
+.notFount>:last-child span:hover {
+    text-decoration: underline;
+}

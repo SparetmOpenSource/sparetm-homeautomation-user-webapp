@@ -1,0 +1,103 @@
+.submitForm {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+}
+
+.submitForm-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+.submitForm-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.submitForm-wrapper span {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+    margin-bottom: 0.5em;
+}
+
+.submitForm-heading {
+    width: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    align-items: center;
+}
+
+.submitForm-subHeading {
+    margin-bottom: 3rem;
+}
+
+.submitForm-eyeIcon-button {
+    width: 4em;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    border: 3px solid grey;
+    border-radius: 0.5rem;
+}
+
+.submitForm-field-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.submitForm-field {
+    width: 100%;
+    padding: 1em;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    line-height: 24px;
+    transition: 0.1s all ease;
+    margin: 0;
+    border: 3px solid grey;
+}
+
+.submitForm-field:focus {
+    outline-offset: 5px;
+    border: 3px solid orange;
+    transition: 0.5s all ease;
+}
+
+/* ******************************* */
+
+.submitForm-error {
+    color: red;
+    background: rgb(255, 0, 0, 0.1);
+    padding: 0.7em 1.5em 0.7em 1.5em;
+    border-radius: 0.8em;
+    font-size: 0.87rem;
+    line-height: 21px;
+    margin-top: 2rem;
+}
+
+.submitForm-rearrangeForPassword {
+    width: 83% !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,0 +1,16 @@
+.doSearch input {
+    outline: 0;
+    width: 80%;
+    min-height: 3em;
+    padding-left: 1em;
+    border-radius: 0.5rem;
+    border: 1px solid grey;
+}
+
+.doSearch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}

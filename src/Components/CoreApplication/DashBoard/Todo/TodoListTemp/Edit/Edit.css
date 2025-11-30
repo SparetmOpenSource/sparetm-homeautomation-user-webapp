@@ -1,0 +1,25 @@
+.todo-edit {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.todo-edit > :first-child {
+    width: 100%;
+    height: 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.todo-edit > :first-child span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.todo-edit > :last-child {
+    width: 100%;
+    height: 91%;
+}

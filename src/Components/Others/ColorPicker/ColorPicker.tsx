@@ -1,0 +1,58 @@
+import { dark_colors, light_colors } from '../../../Data/ColorConstant';
+import { useEffect, useRef, useState } from 'react';
+import './ColorPicker.css';
+import iro from '@jaames/iro';
+
+const ColorPicker = ({ rgb, setRgb, darkTheme }: any) => {
+    const colorPickerContainerRef = useRef<HTMLDivElement>(null);
+    const colorPickerInstanceRef = useRef<any>(null);
+    const [color, setColor] = useState<any>(light_colors);
+
+    useEffect(() => {
+        darkTheme ? setColor(dark_colors) : setColor(light_colors);
+    }, [darkTheme]);
+
+    useEffect(() => {
+        if (!colorPickerContainerRef.current) return;
+
+        colorPickerInstanceRef.current = new (iro as any).ColorPicker(
+            colorPickerContainerRef.current,
+            {
+                color: rgb,
+                width: 280,
+                borderWidth: 3,
+                borderColor: color?.button,
+                layout: [
+                    { component: iro.ui.Wheel },
+                    {
+                        component: iro.ui.Slider,
+                        options: { sliderType: 'alpha' },
+                    },
+                ],
+            },
+        );
+
+        colorPickerInstanceRef.current.on(
+            'color:change',
+            (color: iro.Color) => {
+                setRgb(color.rgba);
+            },
+        );
+
+        return () => {
+            colorPickerInstanceRef.current.off('color:change');
+        };
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        if (colorPickerInstanceRef.current && rgb) {
+            colorPickerInstanceRef.current.color.set(rgb);
+        }
+    }, [rgb]);
+
+    return (
+        <div ref={colorPickerContainerRef} className="color-picker-wheel"></div>
+    );
+};
+
+export default ColorPicker;

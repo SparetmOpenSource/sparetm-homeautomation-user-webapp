@@ -9,8 +9,14 @@ import {
 export const RootUrl = {
     authMS: 'http://localhost:8085',
 };
+export const APPNAME = 'OpenBridge';
+export const TOKEN = 'token';
+export const PROFILE = 'profile';
+export const PROFILEID = 'profileId';
+export const ADMIN = 'admin';
+export const NETWORKERRORKEY = 'Network Error, please try again later';
+// --- //
 
-export const NETWORKERRORKEY = 'Network Error';
 export const APPTOKENKEY = 'appToken';
 export const APPPROFILEKEY = 'appProfile';
 export const OFFLINETESTUSERNAMEKEY = 'offlineTestUserName';
@@ -18,34 +24,42 @@ export const OFFLINETESTPASSWORDKEY = 'offlineTestPassword';
 export const APPUSERKEY = 'appUser';
 export const PROFILEIDKEY = 'profileId';
 export const PROFILENAMEKEY = 'profileName';
+export const ROOMTYPE = 'roomType';
+export const ID = 'Id';
 export const NOTIFICATIONCOLORKEY = 'notificationColor';
 
-export const AppName = 'OpenBridge';
-//export const NotificationColor = 'rgb(46,52,56)'; //"#1F2123"; //  "#CEC7BF";
+export const USE_ACTIVE_SETTINGS = ['keypress', 'mousemove', 'touchmove', 'click', 'scroll'];
 
 export const RoutePath = {
-    // Home route
     Home: '/',
     About: '/about',
     Auth: '/auth',
-    // Profile route
+    // -------------- //
     ProfileConfig: '/profileconfig',
     AddProfileConfig: '/profileconfig/add',
     SelectProfileConfig: '/profileconfig/select',
-    // Core app route
+    // --------------- //
     CoreApplication: '/app',
-    CoreApplication_Dashboard: '/app/dashboard/segment',
-    CoreApplication_Room: '/app/room',
-    CoreApplication_Premium_Offer: '/app/premium',
-    CoreApplication_Docs: '/app/connection/docs',
-    CoreApplication_Setting: '/app/setting',
-    // Internal dashboard routes
     Dashboard: 'dashboard',
     Dashboard_Todo: 'segment/todo',
     Dashboard_Device_Status: 'segment/status',
+    Device_Status: '/status',
+    Device_Todo: '/todo',
+    //--//
+    CoreApplication_Room: '/app/room',
+
+    ///-select below-///
+    CoreApplication_Dashboard: '/app/dashboard/segment',
+    CoreApplication_Play: '/app/play',
+    CoreApplication_Chat: '/app/chat',
+    CoreApplication_Docs: '/app/connection/docs',
+    CoreApplication_Setting: '/app/setting',
+
+    // Core app route
     // Internal dashboard routes
     DeviceRoom: 'room/:type',
-    Premium: 'premium',
+    Play: 'play',
+    Chat: 'chat',
     // Setting routes
     Setting: 'setting',
     Setting_Account: 'account',
@@ -53,10 +67,11 @@ export const RoutePath = {
     // Connection routes
     Connection: 'connection',
     GettingStartedDocs: 'docs/getting-started',
-    GettingStartedwithEsp8266Docs: 'docs/esp8266',
+    GettingStartedwithEsp8266Esp32Docs: 'docs/esp8266-esp32',
     GettingStartedwithArduinoIdeDocs: 'docs/arduino',
     Esp8266SpecificDeviceCodeDocs: 'docs/device',
     CodeExamplesDocs: 'docs/code-examples',
+    HardwareConnection: 'docs/hardware-connection',
 };
 
 export const home_contact_social_list = [
@@ -73,7 +88,7 @@ export const home_contact_social_list = [
     {
         id: 3,
         name: 'Contact us',
-        href: 'https://www.linkedin.com/in/sparetm',
+        href: 'https://www.linkedin.com/in/shubham2601',
     },
 ];
 
@@ -84,17 +99,26 @@ export const useMountEffect = (fun: any, dep: any) => useEffect(fun, [dep]); // 
 // -------------------- core app constant ----------------------- //
 
 export const weather_quote_constant = {
-    fetch_delay_time: 1000000000, //15x60x1000 = 900000
+    fetch_delay_time: 1800000, //1000 * 60 * 30 = 1800000
     quote_char_limit: 70,
 };
 
-export let Current_Date_Time = new Date().toLocaleDateString('en-us', {
+export const spotify_refresh_playback_constant = {
+    play_back_fetch_delay_time: 2000, //1000 * 3 = 3000
+    queue_fetch_delay_time: 4000, //1000 * 3 = 3000
+};
+
+export const Current_Date_Time = new Date().toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
     weekday: 'long',
     year: 'numeric',
     month: 'short',
     day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
 });
-
 // ----------------- profile config constant ------------------ //
 
 export const ProfileConfigTypography = {
@@ -104,76 +128,38 @@ export const ProfileConfigTypography = {
 };
 
 let RoomNamesConst: string[] = [
-    'Bathroom',
     'Bedroom',
-    'Dining Room',
-    'Drawing Room',
-    'Hall',
-    'Kitchen',
-    'Living Room',
     'Master Bedroom',
-    'Room',
-    'Store Room',
+    'Living Room',
+    'Kitchen',
+    'Bathroom',
+    'Dining Room',
+    'Hall',
+    'Drawing Room',
+    'Guest Room',
     'Study Room',
+    'Home Office',
+    'Store Room',
+    'Utility Room',
+    'Basement',
+    'Game Room',
+    'Library',
+    'Music Room',
+    'Room-1',
+    'Room-2',
+    'Room-3',
+    'Room-4',
+    'Room-5',
+    'Room-6',
 ];
 
-export const ProfileConfigRoomNames = [
-    {
-        room_type: RoomNamesConst[0],
-        value: RoomNamesConst[0],
-        label: RoomNamesConst[0],
-    },
-    {
-        room_type: RoomNamesConst[1],
-        value: RoomNamesConst[1],
-        label: RoomNamesConst[1],
-    },
-    {
-        room_type: RoomNamesConst[2],
-        value: RoomNamesConst[2],
-        label: RoomNamesConst[2],
-    },
-    {
-        room_type: RoomNamesConst[3],
-        value: RoomNamesConst[3],
-        label: RoomNamesConst[3],
-    },
-    {
-        room_type: RoomNamesConst[4],
-        value: RoomNamesConst[4],
-        label: RoomNamesConst[4],
-    },
-    {
-        room_type: RoomNamesConst[5],
-        value: RoomNamesConst[5],
-        label: RoomNamesConst[5],
-    },
-    {
-        room_type: RoomNamesConst[6],
-        value: RoomNamesConst[6],
-        label: RoomNamesConst[6],
-    },
-    {
-        room_type: RoomNamesConst[7],
-        value: RoomNamesConst[7],
-        label: RoomNamesConst[7],
-    },
-    {
-        room_type: RoomNamesConst[8],
-        value: RoomNamesConst[8],
-        label: RoomNamesConst[8],
-    },
-    {
-        room_type: RoomNamesConst[9],
-        value: RoomNamesConst[9],
-        label: RoomNamesConst[9],
-    },
-    {
-        room_type: RoomNamesConst[10],
-        value: RoomNamesConst[10],
-        label: RoomNamesConst[10],
-    },
-];
+export const ProfileConfigRoomNames = RoomNamesConst.map((roomName) => ({
+    room_type: roomName,
+    value: roomName,
+    label: roomName,
+}));
+
+export const NONPREMIUMROOMCOUNT = 6;
 
 export const SelectColorStyles = {
     menuList: (styles: any) => ({
@@ -181,16 +167,12 @@ export const SelectColorStyles = {
         background: '#272629',
         color: 'lavender', //color after opening dropdown
     }),
-    option: (styles: any, { isFocused, isSelected }: any) => ({
-        ...styles,
-        background: isFocused ? 'pink' : isSelected ? '#9DE9F4' : undefined,
-        color: isFocused ? 'black' : isSelected ? 'black' : undefined,
-        zIndex: 1,
-    }),
-    menu: (base: any) => ({
-        ...base,
-        zIndex: 100,
-        background: 'blue',
+
+    control: (baseStyles: any, state: any) => ({
+        ...baseStyles,
+        borderColor: state.isFocused ? 'orange' : 'grey',
+        backgroundColor: 'black',
+        color: 'yellow',
     }),
 };
 
@@ -200,25 +182,44 @@ export const SpringSuspense = {
     hidden: {
         y: '-100vh',
         opacity: 0,
-        transform: 'scale(0) rotateX(-360deg)',
+        scale: 0.8,
+        rotateX: -90,
+        willChange: 'transform, opacity',
     },
     visible: {
         y: '0vh',
         opacity: 1,
+        scale: 1,
+        rotateX: 0,
+        willChange: 'transform, opacity',
         transition: {
-            duration: 0.2,
             type: 'spring',
-            damping: 15,
-            stiffness: 500,
+            damping: 12, // less damping = softer bounce
+            stiffness: 180, // lower stiffness = smoother
+            mass: 0.8, // adds subtle weight to bounce
+            duration: 0.6, // smoother entry
+            velocity: 0.8,
         },
     },
     exit: {
-        y: '-100vh',
+        y: '-10vh',
         opacity: 0,
+        scale: 0.95,
+        rotateX: -15,
+        willChange: 'transform, opacity',
+        transition: {
+            type: 'tween',
+            ease: 'easeInOut', // smooth, non-jumpy fade
+            duration: 0.4,
+        },
     },
 };
 
+
+
 export const deviceTypeArr = ['gadget', 'appliance'];
+
+export const colorNotificationStatus = ['success', 'error'];
 
 export const ChangeBrightnessIcon = (brightness: any) => {
     let icon: any;
@@ -235,3 +236,85 @@ export const ChangeBrightnessIcon = (brightness: any) => {
 };
 
 export const GadgetRgbDefaultColor = ['177', '216', '213', '0.9', 'regular'];
+
+export const LandscapeSizeL = ['min(90%, 800px)', 'clamp(50%, 1500px, 92%)'];
+export const LandscapeSizeM = ['min(60%, 600px)', 'clamp(60%, 700px, 90%)'];
+export const LandscapeSizeS = ['min(50%, 300px)', 'clamp(50%, 700px, 90%)'];
+export const HorizontalSize = ['min(90%, 1200px)', 'clamp(40%, 300px, 90%)'];
+export const FullScreenSize = ['100%', '100%'];
+
+export const socketUrlPostFix = '/api/v1/socket/data/update';
+export const WEBSOCKET_TOPIC_EVENTS = '/topic/events';
+export const toClientNotificationSocketTopic =
+    '/to/client/update/notification/data';
+export const toServerSocketTopic = '/to/server/update/device/mqtt/data';
+
+export const spotifyToken = 'spotify_access_token';
+export const spotifyAccountType = 'spotify_account_type';
+export const spotifyRefreshToken = 'spotify_refresh_token';
+export const spotifyCodeVerifier = 'spotify_code_verifier_global';
+export const spotifyTokenFetched = 'has_fetched_spotify_access_token';
+export const spotifyTokenFetchedTime = 'has_fetched_spotify_access_token_time';
+export const spotifyNonPremiumWarning =
+    'This feature is only available for spotify premium members.';
+export const spotifyUserNotRegisteredWarning =
+    'Your Spotify account is not authorized to use this web application. Please contact the developer to request access.';
+export const spotifyNoPlayableDeviceWarning =
+    'Oops! No active Spotify device is playing music right now.';
+export const spotifyAlbumAddition = 'Added album to your collection.';
+export const spotifyQueueAddition = 'Added track to your queue.';
+
+// Global localStorage keys (with _global suffix for Redux persistence)
+export const ADMIN_GLOBAL = `${ADMIN}_global`;
+export const PROFILE_GLOBAL = `${PROFILE}_global`;
+export const TOKEN_GLOBAL = `${TOKEN}_global`;
+export const PROFILEID_GLOBAL = `${PROFILEID}_global`;
+
+export const SPOTIFY_TOKEN_GLOBAL = `${spotifyToken}_global`;
+export const SPOTIFY_REFRESH_TOKEN_GLOBAL = `${spotifyRefreshToken}_global`;
+export const SPOTIFY_ACCOUNT_TYPE_GLOBAL = `${spotifyAccountType}_global`;
+export const SPOTIFY_TOKEN_FETCHED_GLOBAL = `${spotifyTokenFetched}_global`;
+export const SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL = `${spotifyTokenFetchedTime}_global`;
+export const SPOTIFY_CODE_VERIFIER = spotifyCodeVerifier; // sessionStorage key (no _global suffix)
+
+export const ITEMPERPAGE = 20;
+
+// backdropIds
+
+export const SIDE_NAV_CONFIRMATION_FOR_PROFILE_CHANGE =
+    'sideNavigation-confirmationModal-for-profile-change';
+export const SIDE_NAV_CONFIRMATION_FOR_LOGOUT_PROFILE =
+    'sideNavigation-confirmationModal-for-logout-profile';
+export const CORE_APP_ADD_DEVICE = 'coreApplication-addDevice';
+export const WEATHER_EXPAND = 'weather-expandModal';
+export const SPOTIFY_ACTIVE_EXPAND = 'spotifyActive-expandModal';
+export const SPOTIFY_EXPAND_ALBUM_DELETE_CONFIRMATION =
+    'spotifyExpand-deleteAlbumConfirmation';
+export const SPOTIFY_EXPAND_LOGOUT_CONFIRMATION =
+    'spotifyExpand-logoutConfirmation';
+export const SPOTIFY_EXPAND_ADD_ALBUM_CONFIRMATION =
+    'spotifyExpand-addAlbumConfirmation';
+export const SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION =
+    'spotifyExpand-addTrackToQueueConfirmation';
+export const RGB_GADGET_EXPAND_INFO = 'rgbGadgetExpandInfo';
+export const RGB_GADGET_EXPAND = 'rgbGadgetExpand';
+export const DEVICE_CARD_DELETE_DEVICE_CONFIRMATION =
+    'deviceCard-deleteDeviceConfirmation';
+export const RGB_GADGET_DELETE_DEVICE_SAVED_DATA =
+    'rgbGadget-deleteDevice-savedData';
+export const APPLIANCE_EXPAND = 'applianceExpand';
+export const GLOBAL_SCREEN_SAVER = 'global-screen-saver';
+export const GLOBAL_NOTIFICATION = 'global-notification';
+export const DELETING_TODO_LIST = 'deleteToDo';
+export const ADD_TODO_LIST = 'addToDo';
+export const EDIT_TODO_LIST = 'editToDo';
+
+export const PAGE_LOGGER = {
+    home_page: 'Pages/Home/Home.tsx',
+};
+
+export const ERROR_MSG = 'Something went wrong!';
+export const DATA_NOT_FOUND_MSG = 'Data not found!';
+
+export const BACKGROUND_BLINK_SETTING = 'background_blink_settings';
+

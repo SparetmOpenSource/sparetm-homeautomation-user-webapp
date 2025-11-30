@@ -1,5 +1,1 @@
-OpenBridge
-
-Web app to control your devices at home
-
-Deployed Link: [Netlify](https://openbridge.netlify.app)
+This is a react application for home automation.

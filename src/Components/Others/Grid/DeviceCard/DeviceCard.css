@@ -1,0 +1,307 @@
+.device {
+    width: 190px;
+    height: 170px;
+    border-radius: 2rem;
+    padding: 0.7rem;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.device > :first-child {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.device > :last-child {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+/* ***** */
+
+.device > :first-child > :first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.device > :first-child > :last-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.device > :last-child > :first-child {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.device > :last-child > :first-child p {
+    margin: 0;
+    padding: 0.1rem;
+}
+
+.device > :last-child > :last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* ****** */
+
+.rgbGadgetExpand {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    border-radius: 1.5rem;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.rgbGadgetExpand section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.rgbGadgetExpand > :first-child {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rgbGadgetExpand > :last-child {
+    width: 60%;
+}
+
+.rgbGadgetExpand > :last-child > :nth-child(1) {
+    width: 100%;
+    height: 13%;
+    display: flex;
+    border-top-right-radius: 1.5rem;
+}
+
+.rgbGadgetExpand > :last-child > :nth-child(1) section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+    margin-right: 4rem;
+}
+
+.rgbGadgetExpand > :last-child > :nth-child(1) section div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12%;
+    height: 100%;
+}
+
+.rgbGadgetExpand > :last-child > :nth-child(2) {
+    width: 100%;
+    height: 67%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    position: relative;
+}
+
+.rgbGadgetExpand-pattern-type {
+    top: 5px;
+    right: 25px;
+    position: absolute;
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.8rem;
+}
+
+.rgbGadgetExpand > :last-child > :nth-child(3) {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-bottom-right-radius: 1.5rem;
+}
+
+.rgbGadgetExpand-r {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rgbGadgetExpand-g {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(0, 128, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rgbGadgetExpand-b {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rgbGadgetExpand-brightness {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* **** */
+
+.applianceExpand {
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5rem;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.applianceExpand section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ************************************************************** */
+
+.rgbGadgetExpandSavedColor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.rgbGadgetExpandSavedColor > :first-child {
+    height: 80%;
+    width: 100%;
+    padding-bottom: 0.5rem;
+}
+
+.rgbGadgetExpandSavedColor > :last-child {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    border-radius: 0.5rem;
+}
+
+.rgbGadgetExpandSavedColor > :last-child > :first-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 4rem;
+    width: 70%;
+    height: 60%;
+    border-right: 2px solid gray;
+    overflow: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.rgbGadgetExpandSavedColor > :last-child > :last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    height: 100%;
+}
+
+.rgbGadgetExpandSavedColor_withData {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 0.5em;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    overflow: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.rgbGadgetExpandSavedColor_withData::-webkit-scrollbar {
+    display: none;
+}
+
+/* .rgbGadgetExpandSavedColor_withData {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 0.5em;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    grid-auto-rows: 50px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+} */
+
+.rgbGadgetExpandSavedColor_withData_color {
+    height: 50px;
+    width: 50px;
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.6rem;
+    cursor: pointer;
+}
+
+.rgbGadgetExpandSavedColor_withData_pattern {
+    height: 50px;
+    width: 50px;
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+}

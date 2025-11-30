@@ -1,0 +1,102 @@
+.spotify-expand-content-home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.spotify-expand-content-home-widget {
+    width: 100%;
+    height: 30%;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spotify-expand-content-home-wrapper {
+    width: 100%;
+    height: 69%;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+/* ********* */
+
+.spotify-expand-content-home-wrapper-header {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom: 1px solid black;
+}
+
+.spotify-expand-content-home-wrapper-header > :first-child {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 2rem;
+}
+
+.spotify-expand-content-home-wrapper-header > :last-child {
+    height: 100%;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spotify-expand-content-home-wrapper-header-add-to-album {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+}
+
+.spotify-expand-content-home-wrapper-song {
+    width: 100%;
+    height: 90%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.spotify-expand-content-home-wrapper-song::-webkit-scrollbar {
+    display: none;
+}
+
+.spotify-expand-content-home-wrapper-song-isLoading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.2rem;
+}
+
+.spotify-expand-content-home-wrapper-song-empty {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spotify-expand-content-home-wrapper-song-isError {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.2rem;
+}

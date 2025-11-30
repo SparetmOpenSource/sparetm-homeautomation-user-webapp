@@ -1,31 +1,40 @@
 import axios from 'axios';
-// import { useQueryClient } from 'react-query';
-// const queryClient = useQueryClient();
 
 export const RootUrl = {
     gateway: 'http://localhost:8086',
 };
 
-//export const api = axios.create({ baseURL: 'http://localhost:8086', timeout: 100 });
+export const authUrl = {
+    app_registration: `${RootUrl.gateway}/msa/api/v1/auth/register`,
+    app_login: `${RootUrl.gateway}/msa/api/v1/auth/authenticate`,
+    app_refresh_token: `${RootUrl.gateway}/msa/api/v1/auth/refresh-token`,
+};
+
 export const api = axios.create({ baseURL: RootUrl.gateway });
-// const instance = axios.create({
-//   baseURL: 'https://some-domain.com/api/',
-//   timeout: 1000,
-//   headers: {'X-Custom-Header': 'foobar'}
-// });
+
 export const getHeaderConfig = {
     headers: {
         Accept: 'application/json',
     },
 };
 
-export const postHeaderConfig = {
+export const updateHeaderConfig = {
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
     },
 };
 
-// export const refreshQuery = (id:any) => {
-//      queryClient.invalidateQueries(id);
-//  };
+export const getMergedHeadersForSpotify = (token: any) => {
+    return {
+        ...updateHeaderConfig.headers,
+        Authorization: `Bearer ${token}`,
+    };
+};
+
+export const getMergedHeadersForLocation = (apiKey: any) => {
+    return {
+        ...getHeaderConfig.headers,
+        'X-CSCAPI-KEY': apiKey,
+    };
+};

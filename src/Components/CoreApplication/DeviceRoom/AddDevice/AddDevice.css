@@ -1,0 +1,115 @@
+.addDevice {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.addDevice-form-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.addDevice-form-wrapper-input-field {
+    width: 70%;
+    padding: 0.6em;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    line-height: 24px;
+    transition: 0.1s all ease;
+    margin: 0;
+    border: 3px solid grey;
+}
+
+.addDevice-form-wrapper-input-field:focus {
+    outline-offset: 5px;
+    border: 3px solid orange;
+    transition: 0.5s all ease;
+}
+
+.addDevice-form-wrapper-input-field-error {
+    color: red;
+    background-color: rgb(255, 0, 0, 0.1);
+    padding: 0.5em 1.2em 0.5em 1.2em;
+    border-radius: 0.8em;
+    font-size: 0.97rem !important;
+}
+
+.addDevice-form-wrapper-input {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.addDevice-form-wrapper-select {
+    width: 100%;
+    height: 60%;
+}
+
+.addDevice-form-wrapper-select > :first-child {
+    width: 100%;
+    height: 70%;
+    margin: 0 auto;
+    display: grid;
+    justify-content: center;
+    gap: 1em;
+    padding: 1.1em;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    overflow: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    border-radius: 0.5rem;
+}
+
+.addDevice-form-wrapper-select > :first-child ::-webkit-scrollbar {
+    display: none;
+}
+
+.addDevice-form-wrapper-select > :last-child {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addDevice-form-wrapper-select > :first-child span {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    background-color: rgb(161, 255, 253);
+    cursor: pointer;
+}
+
+.addDevice-form-wrapper-select > :first-child span > :first-child {
+    padding: 0;
+    margin: 0;
+}
+.addDevice-form-wrapper-select > :first-child span > :last-child {
+    padding: 0;
+    margin: 0;
+}
+
+.addDevice-form-wrapper-input p {
+    font-weight: lighter !important;
+    margin-bottom: 1.5rem;
+    font-size: 26px;
+}
+
+.addDevice-form-wrapper-select p {
+    font-size: 0.87rem;
+}

@@ -1,0 +1,68 @@
+.todo {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    padding-bottom: 0;
+}
+
+.todo-list-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    border-bottom-right-radius: 2rem;
+    padding: 0.5rem;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    position: relative;
+}
+
+.todo-list-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.todo-list-wrapper-header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0.3rem;
+    margin-bottom: 0.5rem;
+    top: 0;
+    position: sticky;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.todo-list-wrapper-header div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border-radius: 0.3rem;
+}
+
+.todo-list-wrapper-header div span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.todo-list-wrapper-header div p {
+    font-size: 1rem;
+}
+
+.todo-list-wrapper-header > :first-child {
+    width: 69.5%;
+}
+
+.todo-list-wrapper-header > :last-child {
+    width: 29.5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}

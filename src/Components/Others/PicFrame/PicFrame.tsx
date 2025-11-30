@@ -1,8 +1,8 @@
 import './PicFrame.css';
-//import Frame from './../../../Assets/Frame.png';
 import Pooh from './../../../Assets/Pooh.jpg';
 
 const PicFrame = () => {
+
     return (
         <div className="picFrame">
             <section className="picFrame_firstBorder">

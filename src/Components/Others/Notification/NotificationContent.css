@@ -1,0 +1,132 @@
+.notification-content {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-content-header {
+    padding: 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.notification-content-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.notification-content-body {
+    flex: 1;
+    padding: 32px 24px;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-content-body p {
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: #374151;
+    text-align: center;
+}
+
+.notification-content-footer {
+    padding: 20px 24px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: center;
+}
+
+.notification-content-acknowledge-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 150px;
+}
+
+.notification-content-acknowledge-btn:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.notification-content-acknowledge-btn:active {
+    transform: translateY(0);
+}
+
+/* Type-specific styling */
+.notification-info .notification-content-header {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-bottom-color: #bfdbfe;
+}
+
+.notification-info .notification-content-header h3 {
+    color: #1e40af;
+}
+
+.notification-warning .notification-content-header {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-bottom-color: #fde68a;
+}
+
+.notification-warning .notification-content-header h3 {
+    color: #92400e;
+}
+
+.notification-warning .notification-content-acknowledge-btn {
+    background: #f59e0b;
+}
+
+.notification-warning .notification-content-acknowledge-btn:hover {
+    background: #d97706;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.notification-error .notification-content-header {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border-bottom-color: #fecaca;
+}
+
+.notification-error .notification-content-header h3 {
+    color: #991b1b;
+}
+
+.notification-error .notification-content-acknowledge-btn {
+    background: #ef4444;
+}
+
+.notification-error .notification-content-acknowledge-btn:hover {
+    background: #dc2626;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .notification-content {
+        background: #1f2937;
+    }
+
+    .notification-content-header {
+        border-bottom-color: #374151;
+    }
+
+    .notification-content-body p {
+        color: #d1d5db;
+    }
+
+    .notification-content-footer {
+        border-top-color: #374151;
+    }
+}

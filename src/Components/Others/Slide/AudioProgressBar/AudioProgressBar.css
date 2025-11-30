@@ -1,0 +1,41 @@
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 1rem;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    background: #555;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.progress-bar:hover {
+    background: #777;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    background: rgb(105,188,52);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.time-label {
+    font-size: 14px;
+    text-align: center;
+}
