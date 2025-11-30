@@ -1,6 +1,5 @@
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { useEffect, useRef, useState } from 'react';
-import './ColorPicker.css';
 import iro from '@jaames/iro';
 
 const ColorPicker = ({ rgb, setRgb, darkTheme }: any) => {
@@ -13,10 +12,11 @@ const ColorPicker = ({ rgb, setRgb, darkTheme }: any) => {
     }, [darkTheme]);
 
     useEffect(() => {
-        if (!colorPickerContainerRef.current) return;
+        const container = colorPickerContainerRef.current;
+        if (!container) return;
 
         colorPickerInstanceRef.current = new (iro as any).ColorPicker(
-            colorPickerContainerRef.current,
+            container,
             {
                 color: rgb,
                 width: 280,
@@ -41,6 +41,9 @@ const ColorPicker = ({ rgb, setRgb, darkTheme }: any) => {
 
         return () => {
             colorPickerInstanceRef.current.off('color:change');
+            if (container) {
+                container.innerHTML = '';
+            }
         };
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

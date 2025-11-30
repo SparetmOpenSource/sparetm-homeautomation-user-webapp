@@ -73,10 +73,6 @@ const Overview = () => {
                 </span>{' '}
                 to connect.
             </p>
-            {/* <p style={{ color: color?.button, fontSize: '14px' }}>
-                **Please note that some links may not always reflect the latest
-                updates. We’ll strive to keep them current**
-            </p> */}
         </div>
     );
 };
