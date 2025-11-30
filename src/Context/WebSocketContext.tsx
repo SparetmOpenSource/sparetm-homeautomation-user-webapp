@@ -144,6 +144,14 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
             setConnectionStatus('connecting');
             console.log('[WebSocket] Connecting to:', url);
 
+            // Security Check: Prevent Mixed Content Error
+            // If we are on HTTPS, we cannot connect to HTTP (insecure) WebSocket
+            if (window.location.protocol === 'https:' && url.startsWith('http://')) {
+                console.warn('[WebSocket] Security Block: Cannot connect to insecure WebSocket (' + url + ') from secure page (HTTPS). Connection aborted to prevent SecurityError.');
+                setConnectionStatus('error');
+                return;
+            }
+
             // Create SockJS instance
             const socket = new SockJS(url);
 
