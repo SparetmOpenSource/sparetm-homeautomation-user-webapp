@@ -8,7 +8,7 @@ import { getWebSocketUrl } from '../Api.tsx/ProfileConfigApis';
 import { RoutePath, WEBSOCKET_TOPIC_EVENTS } from '../Data/Constants';
 import { useReactQuery_Get } from '../Api.tsx/useReactQuery_Get';
 import { GET_WEBSOCKET_URL_QUERY_ID } from '../Data/QueryConstant';
-import { displayToastify, handleClickForBlinkNotification } from '../Utils/HelperFn';
+import { displayToastify, handleClickForBlinkNotification, playNotificationSound } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import { useTheme } from '../Pages/ThemeProvider';
 import { useLocation } from 'react-router-dom';
@@ -23,6 +23,20 @@ interface WebSocketContextType {
 }
 
 const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
+
+const ACKNOWLEDGED_NOTIFICATIONS_KEY = 'acknowledged_notifications';
+
+// Helper function to check if notification was already acknowledged
+const isNotificationAcknowledged = (notificationId: string): boolean => {
+    try {
+        const stored = localStorage.getItem(ACKNOWLEDGED_NOTIFICATIONS_KEY);
+        const acknowledgedIds: string[] = stored ? JSON.parse(stored) : [];
+        return acknowledgedIds.includes(notificationId);
+    } catch (error) {
+        console.error('Error checking acknowledged notifications:', error);
+        return false;
+    }
+};
 
 export const useWebSocket = () => {
     const context = useContext(WebSocketContext);
@@ -46,6 +60,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     const dispatch = useAppDispatch();
     const location = useLocation();
     const darkTheme = useTheme();
+    const lastNotificationIdRef = useRef<string | null>(null); // Track last notification that played sound
     
     const color = useMemo(
         () => (darkTheme ? dark_colors : light_colors),
@@ -234,6 +249,15 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                                             message: payload.payload.message,
                                             type: payload.payload.type || 'INFO'
                                         }));
+                                        
+                                        // Play sound only for NEW notifications that haven't been acknowledged
+                                        const isNewNotification = lastNotificationIdRef.current !== payload.payload.id;
+                                        const isNotAcknowledged = !isNotificationAcknowledged(payload.payload.id);
+                                        
+                                        if (isNewNotification && isNotAcknowledged) {
+                                            lastNotificationIdRef.current = payload.payload.id;
+                                            playNotificationSound();
+                                        }
                                     }
                                     break;
                                 default:

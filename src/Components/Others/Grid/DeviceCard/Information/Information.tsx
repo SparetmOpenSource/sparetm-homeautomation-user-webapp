@@ -300,7 +300,7 @@ const Information = ({
             )}
             {infoWindowCount === 2 && (
                 <section>
-                    <DeviceDataGraph />
+                    <DeviceDataGraph darkTheme={darkTheme} />
                 </section>
             )}
         </div>

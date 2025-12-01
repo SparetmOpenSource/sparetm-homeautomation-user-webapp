@@ -43,6 +43,119 @@ import { RiMistLine, RiMoonClearLine } from 'react-icons/ri';
 import { BiSolidWasher } from 'react-icons/bi';
 import { setBlinkColor, triggerBlink } from '../Features/Blink/BlinkSlice';
 
+// -----------------------Sound Helper-----------------------//
+// Global AudioContext
+const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+let audioCtx: AudioContext | null = null;
+let hasInteracted = false;
+
+// Initialize context lazily
+const initAudio = () => {
+    if (!audioCtx && AudioContext) {
+        audioCtx = new AudioContext();
+    }
+};
+
+// Listen for interaction to unlock audio
+const enableSound = () => {
+    hasInteracted = true;
+    initAudio();
+    
+    if (audioCtx) {
+        // 1. Resume context
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume().then(() => {
+                console.log("AudioContext resumed by user interaction.");
+            });
+        }
+
+        // 2. KEEP-ALIVE HACK: Play a silent oscillator forever
+        // This prevents the browser from suspending the context again.
+        try {
+            const silentOsc = audioCtx.createOscillator();
+            const silentGain = audioCtx.createGain();
+            silentOsc.type = 'sine';
+            silentOsc.frequency.value = 0.01; // Almost zero Hz
+            silentGain.gain.value = 0.001; // Almost zero volume
+            
+            silentOsc.connect(silentGain);
+            silentGain.connect(audioCtx.destination);
+            silentOsc.start();
+            console.log("Audio Keep-Alive started (Silent Oscillator).");
+        } catch (e) {
+            console.error("Keep-Alive failed", e);
+        }
+    }
+    
+    // Remove listeners
+    window.removeEventListener('click', enableSound, true);
+    window.removeEventListener('keydown', enableSound, true);
+    window.removeEventListener('touchstart', enableSound, true);
+};
+
+if (typeof window !== 'undefined') {
+    // Use Capture Phase (true) to catch events before they are stopped
+    window.addEventListener('click', enableSound, true);
+    window.addEventListener('keydown', enableSound, true);
+    window.addEventListener('touchstart', enableSound, true);
+}
+
+export const playNotificationSound = async (isManual: boolean = false) => {
+    // If manual (button click), we force resume and set the flag
+    if (isManual) {
+        hasInteracted = true;
+    }
+
+    // If we haven't interacted yet, we strictly block to avoid errors
+    if (!hasInteracted) {
+        return; 
+    }
+
+    // Initialize if needed
+    initAudio();
+    if (!audioCtx) return;
+
+    try {
+        // Ensure context is running BEFORE playing
+        if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+        }
+
+        const currentTime = audioCtx.currentTime;
+        
+        // Create a pleasant notification chime (similar to macOS)
+        // Using two notes: C6 (1046.5 Hz) and E6 (1318.5 Hz)
+        const playNote = (frequency: number, startTime: number, duration: number) => {
+            const oscillator = audioCtx!.createOscillator();
+            const gainNode = audioCtx!.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx!.destination);
+
+            // Use sine wave for a softer, more pleasant sound
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(frequency, startTime);
+            
+            // Smooth envelope for natural, resonant sound
+            gainNode.gain.setValueAtTime(0, startTime);
+            gainNode.gain.linearRampToValueAtTime(0.2, startTime + 0.02); // Quick attack
+            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration); // Long, smooth decay
+
+            oscillator.start(startTime);
+            oscillator.stop(startTime + duration);
+        };
+
+        // Play two-tone chime with longer duration (C6 -> E6)
+        playNote(1046.5, currentTime, 0.5); // C6 note - longer resonance
+        playNote(1318.5, currentTime + 0.12, 0.6); // E6 note - even longer tail
+        
+        console.log("Notification chime played");
+
+    } catch (error) {
+        console.error("Audio generation failed", error);
+    }
+};
+
 // -----------------------Toastify functions-----------------------//
 
 const toastProperty: any = (color: any) => {
@@ -62,6 +175,7 @@ const toastProperty: any = (color: any) => {
 
 // status -> "info","success","warn","error"
 export const displayToastify: any = (message: any, color: any, status: any) => {
+    playNotificationSound(); // Play sound on toast
     if (status === TOASTIFYSTATE.INFO) {
         toast.info(message, toastProperty(color));
     } else if (status === TOASTIFYSTATE.SUCCESS) {
@@ -101,6 +215,9 @@ export const handleClickForBlinkNotification = (
     const blinkColor = colorMap[status] || 'gray';
     dispatch(setBlinkColor(blinkColor));
     dispatch(triggerBlink());
+    
+    // Play notification sound for background blink
+    playNotificationSound();
 };
 
 // ---------------- Error inside catch -------------------- //
@@ -516,7 +633,7 @@ export const getFormattedDate = () => {
                 return 'rd';
             default:
                 return 'th';
-        }
+            }
     }
     const monthNames = [
         'Jan',
