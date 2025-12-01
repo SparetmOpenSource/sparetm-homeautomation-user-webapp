@@ -74,7 +74,6 @@ const Todo = () => {
                 <TodoListTemp />
                 <TodoListTemp />
                 <TodoListTemp />
-
                 {/* ************** */}
             </section>
         </div>
