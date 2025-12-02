@@ -210,6 +210,35 @@ const Home = () => {
                     freedom to create from anywhere
                 </h2>
 
+                {/* TODO: Customize UI/UX for Demo Button */}
+                <motion.button
+                    className="home-landing-demo-btn"
+                    style={{
+                        backgroundColor: color?.button,
+                        color: color?.outer,
+                        padding: '15px 40px',
+                        fontSize: '1.1rem',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        marginTop: '20px',
+                        fontWeight: 'bold',
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() =>
+                        displayToastify(
+                            'Demo coming soon!',
+                            !darkTheme
+                                ? TOASTIFYCOLOR.DARK
+                                : TOASTIFYCOLOR.LIGHT,
+                            TOASTIFYSTATE.INFO,
+                        )
+                    }
+                >
+                    See Demo
+                </motion.button>
+
                 <div
                     className="home-landing-pic"
                     style={{ backgroundColor: color?.inner }}
@@ -726,6 +755,22 @@ const Home = () => {
                                     style={{ color: color?.text }}
                                 >
                                     ABOUT
+                                </p>
+                            </li>
+                            <li>
+                                <p
+                                    onClick={() =>
+                                        displayToastify(
+                                            'Implementation inprogress',
+                                            !darkTheme
+                                                ? TOASTIFYCOLOR.DARK
+                                                : TOASTIFYCOLOR.LIGHT,
+                                            TOASTIFYSTATE.INFO,
+                                        )
+                                    }
+                                    style={{ color: color?.text }}
+                                >
+                                    FAQ
                                 </p>
                             </li>
                         </ul>

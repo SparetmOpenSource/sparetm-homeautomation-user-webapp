@@ -35,6 +35,7 @@ import { SiWechat } from 'react-icons/si';
 import { useUserActivity } from '../../Hooks/useUserActivity';
 import PicFrame from '../../Components/Others/PicFrame/PicFrame';
 import PersistentNotification from '../../Components/Others/Notification/PersistentNotification';
+import PageTransition from '../../Components/Others/PageTransition/PageTransition';
 
 interface NavItem {
     id: number;
@@ -247,22 +248,24 @@ const CoreApplication = memo(() => {
     }
 
     return (
-        <div className="coreApplication">
-            <PersistentNotification />
-            <CommonSkin
-                upper_nav_enable={true}
-                upper_nav={<UpperNavigation nav_option={upper_nav_option} />}
-                side_nav_enable={true}
-                side_nav={
-                    <SideNavigation
-                        upper_nav_option={side_upper_nav_option}
-                        lower_nav_option={side_lower_nav_option}
-                        profile_logout_enable={true}
-                    />
-                }
-                content={<Outlet />}
-            />
-        </div>
+        <PageTransition>
+            <div className="coreApplication">
+                <PersistentNotification />
+                <CommonSkin
+                    upper_nav_enable={true}
+                    upper_nav={<UpperNavigation nav_option={upper_nav_option} />}
+                    side_nav_enable={true}
+                    side_nav={
+                        <SideNavigation
+                            upper_nav_option={side_upper_nav_option}
+                            lower_nav_option={side_lower_nav_option}
+                            profile_logout_enable={true}
+                        />
+                    }
+                    content={<Outlet />}
+                />
+            </div>
+        </PageTransition>
     );
 });
 

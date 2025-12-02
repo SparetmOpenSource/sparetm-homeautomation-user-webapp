@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Home from '../Home';
 import StarterLoader from '../StarterLoader/StarterLoader';
 
+import PageTransition from '../../../Components/Others/PageTransition/PageTransition';
+
 const HomeWithLoader = () => {
     const [showHome, setShowHome] = useState(false);
 
@@ -13,7 +15,13 @@ const HomeWithLoader = () => {
         return () => clearTimeout(timer);
     }, []);
 
-    return showHome ? <Home /> : <StarterLoader />;
+    return showHome ? (
+        <PageTransition>
+            <Home />
+        </PageTransition>
+    ) : (
+        <StarterLoader />
+    );
 };
 
 export default HomeWithLoader;
