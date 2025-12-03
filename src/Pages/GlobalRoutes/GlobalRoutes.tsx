@@ -5,6 +5,7 @@ import LoadingFade from '../../Components/Others/LoadingAnimation/LoadingFade';
 import PublicRoute from '../../Services/PublicRoute';
 import ProtectedRoute from '../../Services/ProtectedRoute';
 import { RoutePath } from '../../Data/Constants';
+import Preferences from '../../Components/CoreApplication/Setting/Preferences/Preferences';
 import {
     About,
     AddProfile,
@@ -118,7 +119,7 @@ const routes = [
                     },
                     {
                         path: RoutePath.Setting_Features,
-                        element: <h1>Feature Setting</h1>,
+                        element: <Preferences />,
                     },
                 ],
             },

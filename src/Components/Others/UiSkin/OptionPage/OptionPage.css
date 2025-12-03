@@ -42,14 +42,8 @@
     padding-right: 5rem;
     padding-top: 2rem;
     padding-bottom: 2rem;
-    overflow: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    overflow-y: auto;
     flex-direction: column;
-}
-
-.optionPage>:last-child::-webkit-scrollbar {
-    display: none;
 }
 
 /* ************* */

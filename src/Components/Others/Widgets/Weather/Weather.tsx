@@ -43,7 +43,7 @@ const Weather = () => {
         weatherQuoteFn,
         on_Success,
         on_Error,
-        true, // !fetch_On_Click_Status
+        !!profileId, // !fetch_On_Click_Status
         true, // refetch_On_Mount
         false, // refetch_On_Window_Focus
         weather_quote_constant.fetch_delay_time, // refetch_Interval

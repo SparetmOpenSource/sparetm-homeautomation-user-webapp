@@ -4,8 +4,9 @@ import { useAppDispatch, useAppSelector } from '../../../Features/ReduxHooks';
 import { useBackDropOpen } from '../../../Pages/ThemeProvider';
 import { acknowledgeNotification, hideNotification } from '../../../Features/Notification/NotificationSlice';
 import { GLOBAL_NOTIFICATION, LandscapeSizeM } from '../../../Data/Constants';
+import useLocalStorage from '../../../Hooks/UseLocalStorage';
 
-const ACKNOWLEDGED_NOTIFICATIONS_KEY = 'acknowledged_notifications';
+import { ACKNOWLEDGED_NOTIFICATIONS_KEY } from '../../../Data/Constants';
 
 const PersistentNotification: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -13,34 +14,50 @@ const PersistentNotification: React.FC = () => {
     const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
 
     const { id, message, type, isVisible, timestamp } = notification;
+    
+    // Use hook for acknowledged notifications
+    const [acknowledgedIds, setAcknowledgedIds] = useLocalStorage<string[]>(ACKNOWLEDGED_NOTIFICATIONS_KEY, []);
+    
+    // Track the last processed timestamp to prevent re-opening on mount/remount
+    const lastProcessedTimestamp = React.useRef(timestamp);
 
     // Check if this notification was already acknowledged and show if needed
     useEffect(() => {
         // Only process if we have an ID and notification is marked as visible
         if (id && isVisible) {
-            const acknowledgedIds = getAcknowledgedIds();
-            
             if (acknowledgedIds.includes(id)) {
                 // Already acknowledged, hide it immediately
                 dispatch(hideNotification());
                 return;
             }
         }
-    }, [id, isVisible, timestamp, dispatch]);
+    }, [id, isVisible, timestamp, dispatch, acknowledgedIds]);
 
     const handleAcknowledge = useCallback(() => {
         if (id) {
-            // Save to localStorage
-            saveAcknowledgedId(id);
+            // Update storage via hook
+            setAcknowledgedIds((prev) => {
+                if (!prev.includes(id)) {
+                    return [...prev, id];
+                }
+                return prev;
+            });
         }
 
         // Dispatch acknowledge action
         dispatch(acknowledgeNotification());
-    }, [id, dispatch]);
+    }, [id, dispatch, setAcknowledgedIds]);
 
-    // Open/close backdrop based on isVisible
+    // Open/close backdrop based on isVisible AND timestamp change
     useEffect(() => {
-        if (id && isVisible) {
+        // Only open if:
+        // 1. We have a valid ID and it's visible
+        // 2. The timestamp is NEW (different from what we last processed)
+        //    OR it's a completely new ID (though timestamp usually covers this)
+        
+        if (id && isVisible && timestamp !== lastProcessedTimestamp.current) {
+            lastProcessedTimestamp.current = timestamp;
+            
             toggleBackDropOpen(
                 GLOBAL_NOTIFICATION,
                 <NotificationContent
@@ -50,9 +67,12 @@ const PersistentNotification: React.FC = () => {
                 />,
                 LandscapeSizeM
             );
-        } else {
+        } else if (!isVisible) {
             toggleBackDropClose(GLOBAL_NOTIFICATION);
         }
+        // Note: We intentionally DO NOT open on mount (when timestamp === lastProcessedTimestamp.current)
+        // This solves the "showing on page change" issue.
+        
     }, [id, isVisible, timestamp, message, type, handleAcknowledge, toggleBackDropOpen, toggleBackDropClose]);
 
     // Listen for backdrop close button clicks to sync state
@@ -79,32 +99,6 @@ const PersistentNotification: React.FC = () => {
     }, [id, isVisible, dispatch]);
 
     return null; // Component doesn't render anything directly
-};
-
-// Helper functions for localStorage
-const getAcknowledgedIds = (): string[] => {
-    try {
-        const stored = localStorage.getItem(ACKNOWLEDGED_NOTIFICATIONS_KEY);
-        return stored ? JSON.parse(stored) : [];
-    } catch (error) {
-        console.error('Error reading acknowledged notifications:', error);
-        return [];
-    }
-};
-
-const saveAcknowledgedId = (id: string) => {
-    try {
-        const acknowledgedIds = getAcknowledgedIds();
-        if (!acknowledgedIds.includes(id)) {
-            acknowledgedIds.push(id);
-            localStorage.setItem(
-                ACKNOWLEDGED_NOTIFICATIONS_KEY,
-                JSON.stringify(acknowledgedIds)
-            );
-        }
-    } catch (error) {
-        console.error('Error saving acknowledged notification:', error);
-    }
 };
 
 export default PersistentNotification;

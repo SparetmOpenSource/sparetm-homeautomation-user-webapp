@@ -24,7 +24,6 @@ import {
 } from 'react-icons/gi';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import {
-    BACKGROUND_BLINK_SETTING,
     NETWORKERRORKEY,
     RoutePath,
     SPOTIFY_CODE_VERIFIER,
@@ -36,12 +35,86 @@ import {
     SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_TOKEN_FETCHED_GLOBAL,
     SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL,
+    SCREENSAVER_ENABLED_KEY,
+    SCREENSAVER_TIMEOUT_KEY,
+    SECURITY_LOCK_ENABLED_KEY,
+    SECURITY_LOCK_TIMEOUT_KEY,
+    NOTIFICATION_SOUNDS_ENABLED_KEY,
+    NOTIFICATION_POSITION_KEY,
+    BLINK_NOTIFICATIONS_ENABLED_KEY,
+    BACKGROUND_BLINK_SETTING,
+    ACKNOWLEDGED_NOTIFICATIONS_KEY,
+    PAGE_TRANSITIONS_ENABLED_KEY,
+    PROFILE_GLOBAL,
+    PROFILEID_GLOBAL,
+    TOKEN_GLOBAL,
+    ADMIN_GLOBAL,
 } from '../Data/Constants';
 import { LuRefrigerator } from 'react-icons/lu';
 import { SiSocketdotio, SiNano } from 'react-icons/si';
 import { RiMistLine, RiMoonClearLine } from 'react-icons/ri';
 import { BiSolidWasher } from 'react-icons/bi';
 import { setBlinkColor, triggerBlink } from '../Features/Blink/BlinkSlice';
+import { getNotificationConfig } from './NotificationConfig';
+import { removeItem, getItem } from '../Hooks/UseLocalStorage';
+
+// Scalable key lists for cleanup
+const PROFILE_SWITCH_KEYS = [
+    PROFILE_GLOBAL,
+    PROFILEID_GLOBAL,
+    ACKNOWLEDGED_NOTIFICATIONS_KEY,
+    BACKGROUND_BLINK_SETTING,
+    BLINK_NOTIFICATIONS_ENABLED_KEY,
+    NOTIFICATION_POSITION_KEY,
+    NOTIFICATION_SOUNDS_ENABLED_KEY,
+    PAGE_TRANSITIONS_ENABLED_KEY,
+    SCREENSAVER_ENABLED_KEY,
+    SCREENSAVER_TIMEOUT_KEY,
+    SECURITY_LOCK_ENABLED_KEY,
+    SECURITY_LOCK_TIMEOUT_KEY,
+];
+
+const LOGOUT_KEYS = [
+    TOKEN_GLOBAL,
+    ADMIN_GLOBAL,
+];
+
+const SPOTIFY_KEYS = [
+    SPOTIFY_TOKEN_GLOBAL,
+    SPOTIFY_REFRESH_TOKEN_GLOBAL,
+    SPOTIFY_ACCOUNT_TYPE_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL,
+];
+
+
+
+export const removeLocalStorageKeys = (keys: string[]) => {
+    keys.forEach((key) => removeItem(key));
+};
+
+export const clearLocalStorageOnProfileSwitch = () => {
+    removeLocalStorageKeys(PROFILE_SWITCH_KEYS);
+};
+
+export const resetSpotify = () => {
+    removeLocalStorageKeys(SPOTIFY_KEYS);
+    sessionStorage.removeItem(SPOTIFY_CODE_VERIFIER);
+};
+
+export const clearLocalStorageOnLogout = () => {
+    clearLocalStorageOnProfileSwitch();
+    removeLocalStorageKeys(LOGOUT_KEYS);
+    resetSpotify(); // Clears all Spotify keys including sessionStorage
+    
+    // Explicitly preserved keys:
+    // - REACT_QUERY_DEVTOOLS_SORT_FN_KEY
+    // - darkTheme
+};
+
+export const spotifyLogout = () => {
+    resetSpotify();
+};
 
 // -----------------------Sound Helper-----------------------//
 // Global AudioContext
@@ -101,6 +174,13 @@ if (typeof window !== 'undefined') {
 }
 
 export const playNotificationSound = async (isManual: boolean = false) => {
+    // Check if sound is enabled in settings via config
+    const { soundEnabled } = getNotificationConfig();
+
+    if (!soundEnabled && !isManual) {
+        return;
+    }
+
     // If manual (button click), we force resume and set the flag
     if (isManual) {
         hasInteracted = true;
@@ -159,8 +239,14 @@ export const playNotificationSound = async (isManual: boolean = false) => {
 // -----------------------Toastify functions-----------------------//
 
 const toastProperty: any = (color: any) => {
+    // Read position from config
+    const { position } = getNotificationConfig();
+    
+    // Clean up position string if needed (though config should have clean string)
+    const cleanPosition = position.replace(/"/g, '');
+
     return {
-        position: 'bottom-right',
+        position: cleanPosition,
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -198,10 +284,13 @@ export const handleClickForBlinkNotification = (
     status: string,
     dispatch: any,
 ) => {
-    const stored = localStorage.getItem(BACKGROUND_BLINK_SETTING);
-    const settings = stored ? JSON.parse(stored) : {};
+    const { blinkSettings } = getNotificationConfig();
+    
+    // Check master blink switch
+    const masterBlinkEnabled = getItem(BLINK_NOTIFICATIONS_ENABLED_KEY) ?? false;
+    if (!masterBlinkEnabled) return;
 
-    const isEnabled = settings[status] ?? true;
+    const isEnabled = blinkSettings[status] ?? true;
 
     if (!isEnabled) return;
 
@@ -589,22 +678,6 @@ export function getOffsetAndLimit(
     const limit = recordsPerPage;
     return { offset, limit };
 }
-
-export const resetSpotify = () => {
-    localStorage.removeItem(SPOTIFY_TOKEN_GLOBAL);
-    localStorage.removeItem(SPOTIFY_REFRESH_TOKEN_GLOBAL);
-    localStorage.removeItem(SPOTIFY_ACCOUNT_TYPE_GLOBAL);
-    localStorage.removeItem(SPOTIFY_TOKEN_FETCHED_GLOBAL);
-    localStorage.removeItem(SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL);
-    sessionStorage.removeItem(SPOTIFY_CODE_VERIFIER);
-    
-    // Dispatch event to update hooks
-    window.dispatchEvent(new Event('local-storage'));
-};
-
-export const spotifyLogout = () => {
-    resetSpotify();
-};
 
 export const navigateTo = (navigate: any, to: any) => {
     navigate(to);

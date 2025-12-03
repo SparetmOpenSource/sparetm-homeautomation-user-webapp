@@ -1,5 +1,45 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
+// --- Standalone Storage Utilities (Exported for use in helpers) ---
+
+/**
+ * Removes an item from localStorage and dispatches a 'local-storage' event
+ */
+export const removeItem = (key: string) => {
+    if (typeof window !== 'undefined') {
+        window.localStorage.removeItem(key);
+        window.dispatchEvent(new Event('local-storage'));
+    }
+};
+
+/**
+ * Sets an item in localStorage and dispatches a 'local-storage' event
+ */
+export const setItem = (key: string, value: any) => {
+    if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, JSON.stringify(value));
+        window.dispatchEvent(new Event('local-storage'));
+    }
+};
+
+/**
+ * Gets an item from localStorage
+ */
+export const getItem = (key: string) => {
+    if (typeof window !== 'undefined') {
+        const item = window.localStorage.getItem(key);
+        try {
+            return item ? JSON.parse(item) : null;
+        } catch (error) {
+            console.warn(`Error reading localStorage key "${key}":`, error);
+            return null;
+        }
+    }
+    return null;
+};
+
+// --- Hook Implementation ---
+
 /**
  * Hook to persist state in local storage.
  * use like ->   const [settings, setSettings] = useLocalStorage('user-settings', { theme: 'light' });
@@ -9,7 +49,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
  * @param initialValue The initial value to use if no value is found in local storage.
  * @returns A tuple containing the stored value and a function to update it.
  */
-function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
+function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void, () => void] {
   // Use a ref to store the initial value to avoid re-running the effect
   // when initialValue changes (mimicking useState behavior)
   const initialValueRef = useRef(initialValue);
@@ -18,16 +58,8 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val
   // Get from local storage then
   // parse stored json or if none return initialValue
   const readValue = useCallback((): T => {
-    if (typeof window === 'undefined') {
-      return initialValueRef.current;
-    }
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? (JSON.parse(item) as T) : initialValueRef.current;
-    } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
-      return initialValueRef.current;
-    }
+    const item = getItem(key);
+    return item !== null ? (item as T) : initialValueRef.current;
   }, [key]); // Only re-create if key changes
 
   const [storedValue, setStoredValue] = useState<T>(readValue);
@@ -44,12 +76,7 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val
       setStoredValue(valueToStore);
       
       // Save to local storage
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
-        
-        // Dispatch a custom event so other hooks in the same tab update
-        window.dispatchEvent(new Event('local-storage'));
-      }
+      setItem(key, valueToStore);
     } catch (error) {
       console.warn(`Error setting localStorage key "${key}":`, error);
     }
@@ -81,7 +108,16 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val
     };
   }, [key, readValue]);
 
-  return [storedValue, setValue];
+  const removeValue = useCallback(() => {
+    try {
+      removeItem(key);
+      setStoredValue(initialValue);
+    } catch (error) {
+      console.warn(`Error removing localStorage key "${key}":`, error);
+    }
+  }, [key, initialValue]);
+
+  return [storedValue, setValue, removeValue];
 }
 
 export default useLocalStorage;

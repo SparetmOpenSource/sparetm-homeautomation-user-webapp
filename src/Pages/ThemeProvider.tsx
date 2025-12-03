@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AnimatePresence } from 'framer-motion';
 import WindowDrop from '../Components/Others/BackDrop/WindowDrop/WindowDrop';
-import { FullScreenSize } from '../Data/Constants';
+import { FullScreenSize, DARK_THEME_KEY } from '../Data/Constants';
 import { dark_colors, light_colors } from '../Data/ColorConstant';
 import useLocalStorage from '../Hooks/UseLocalStorage';
 
@@ -70,7 +70,7 @@ export function useBackDropOpen(): BackDropActions {
 
 // Custom hook for theme management
 const useThemeManagement = () => {
-    const [darkTheme, setDarkTheme] = useLocalStorage<boolean>('darkTheme', false);
+    const [darkTheme, setDarkTheme] = useLocalStorage<boolean>(DARK_THEME_KEY, false);
     const [themeColors, setThemeColors] = useState<any>(light_colors);
 
     const toggleTheme = useCallback(() => {
