@@ -322,4 +322,3 @@ export const SECURITY_LOCK_TIMEOUT_KEY = 'securityLockTimeout';
 export const ACKNOWLEDGED_NOTIFICATIONS_KEY = 'acknowledged_notifications';
 export const PAGE_TRANSITIONS_ENABLED_KEY = 'pageTransitionsEnabled';
 export const DARK_THEME_KEY = 'darkTheme';
-// export const REACT_QUERY_DEVTOOLS_SORT_FN_KEY = 'reactQueryDevtoolsSortFn';

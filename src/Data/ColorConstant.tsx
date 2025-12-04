@@ -31,3 +31,20 @@ export const light_colors = {
     warning: 'orange',
     info: 'cyan',
 };
+
+export const light_color = {
+    outer: 'rgb(255,255,255)',
+    inner: 'rgb(240,240,240)',
+    element: 'rgb(245,245,245)',
+    button: 'rgb(68,138,255)',
+    icon: 'rgb(128,128,128)',
+    icon_font: 'rgb(118,123,127)',
+    text: 'rgb(8,23,23)',
+    hover: 'rgb(233,233,234)',
+    success: 'rgb(105,188,52)',
+    error: 'rgb(251,90,90)',
+    border: 'rgb(45,45,45)',
+    card: 'rgb(255,255,255)',
+    warning: 'orange',
+    info: 'cyan',
+};
