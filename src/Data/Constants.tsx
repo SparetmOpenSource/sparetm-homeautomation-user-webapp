@@ -296,6 +296,7 @@ export const GLOBAL_NOTIFICATION = 'global-notification';
 export const DELETING_TODO_LIST = 'deleteToDo';
 export const ADD_TODO_LIST = 'addToDo';
 export const EDIT_TODO_LIST = 'editToDo';
+export const POLICY_MODAL = 'policy-modal';
 
 export const PAGE_LOGGER = {
     home_page: 'Pages/Home/Home.tsx',
@@ -317,3 +318,4 @@ export const SECURITY_LOCK_TIMEOUT_KEY = 'securityLockTimeout';
 export const ACKNOWLEDGED_NOTIFICATIONS_KEY = 'acknowledged_notifications';
 export const PAGE_TRANSITIONS_ENABLED_KEY = 'pageTransitionsEnabled';
 export const DARK_THEME_KEY = 'darkTheme';
+export const COOKIES_PREFERENCES_KEY = 'cookies_preferences';

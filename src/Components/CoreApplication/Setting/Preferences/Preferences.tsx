@@ -18,6 +18,10 @@ import {
 import { displayToastify } from '../../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 
+import { useBackDropOpen } from '../../../../Pages/ThemeProvider';
+import { POLICY_MODAL, HorizontalSize } from '../../../../Data/Constants';
+import PolicyModal from '../../../../Components/Others/PolicyModal/PolicyModal';
+
 // --- Types & Interfaces ---
 interface SettingOption {
     label: string;
@@ -92,6 +96,20 @@ const SETTINGS_CONFIG: SettingSectionConfig[] = [
                 ],
             },
         ],
+    },
+    {
+        id: 'privacy',
+        title: 'Privacy',
+        items: [
+             {
+                id: 'cookie_settings',
+                type: 'button',
+                label: 'Cookie Preferences',
+                description: 'Manage your privacy and cookie settings',
+                buttonLabel: 'Manage Cookies',
+                action: () => {}, 
+            },
+        ]
     },
     {
         id: 'blink_notifications',
@@ -272,7 +290,9 @@ const StorageSettingItem = ({ config }: { config: SettingItemConfig }) => {
 const ActionSettingItem = ({ config }: { config: SettingItemConfig }) => {
     // Specific logic for Clear History button
     const [acknowledgedList, setAcknowledgedList] = useLocalStorage(ACKNOWLEDGED_NOTIFICATIONS_KEY, []);
-    
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
+    const darkTheme: any = useTheme();
+
     let isDisabled = false;
     if (config.id === 'clear_acknowledged') {
         isDisabled = !acknowledgedList || acknowledgedList.length === 0;
@@ -284,8 +304,19 @@ const ActionSettingItem = ({ config }: { config: SettingItemConfig }) => {
             setAcknowledgedList([]);
             displayToastify(
                 'Notification history cleared!',
-                TOASTIFYCOLOR.DARK, // Or use theme context if available here
+                TOASTIFYCOLOR.DARK, 
                 TOASTIFYSTATE.SUCCESS
+            );
+        } else if (config.id === 'cookie_settings') {
+             toggleBackDropOpen(
+                POLICY_MODAL,
+                <PolicyModal 
+                    handleClose={() => toggleBackDropClose(POLICY_MODAL)} 
+                    darkTheme={darkTheme}
+                    initialTab="settings"
+                />,
+                HorizontalSize,
+                false
             );
         } else if (config.action) {
             config.action();

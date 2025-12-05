@@ -15,7 +15,7 @@ import {
     observer,
 } from '../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import HomePage_SVG from './../../Asset/HomePage_SVG.svg';
 import { useActive } from '../../Hooks/UseActive';
 import { useNavigate } from 'react-router-dom';
@@ -37,6 +37,10 @@ import { MdCloudSync } from 'react-icons/md';
 import { FaFileSignature } from 'react-icons/fa6';
 import { MdDashboard } from 'react-icons/md';
 import { MdOutlineConnectWithoutContact } from 'react-icons/md';
+import PolicyModal from '../../Components/Others/PolicyModal/PolicyModal';
+
+import { useBackDropOpen } from '../ThemeProvider';
+import { POLICY_MODAL, HorizontalSize } from '../../Data/Constants';
 
 const Home = () => {
     const paragraphLandingRef: any = useRef(null);
@@ -46,14 +50,18 @@ const Home = () => {
     const paragraphContactRef: any = useRef(null);
     const [status] = useActive(2000, true, USE_ACTIVE_SETTINGS);
     const toggleTheme: any = useThemeUpdate();
-    const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
+    // Derived state for color - eliminates double render from useEffect sync
+    const color = useMemo(() => darkTheme ? dark_colors : light_colors, [darkTheme]);
+    
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
     const navigate = useNavigate();
 
     const tranValForMenu = 0.1;
     const tranValForText = 0.7;
 
-    const MenuListt = [
+    // Memoize MenuList to prevent recreation on every render
+    const MenuList = useMemo(() => [
         {
             id: 1,
             icon: status ? <GrHomeRounded /> : <GoDotFill />,
@@ -79,11 +87,7 @@ const Home = () => {
             icon: status ? <IoMdContacts /> : <GoDotFill />,
             ref: paragraphContactRef,
         },
-    ];
-
-    useEffect(() => {
-        darkTheme ? setColor(dark_colors) : setColor(light_colors);
-    }, [darkTheme]);
+    ], [status]);
 
     useEffect(() => {
         const hiddenElements = document.querySelectorAll('.hidden-el');
@@ -94,8 +98,8 @@ const Home = () => {
 
     logger(PAGE_LOGGER.home_page);
 
-    // Define CSS variables based on current theme state
-    const themeStyles = {
+    // Define CSS variables based on current theme state - Memoized
+    const themeStyles = useMemo(() => ({
         '--bg-outer': color?.outer,
         '--bg-inner': color?.inner,
         '--text-primary': color?.text,
@@ -108,7 +112,7 @@ const Home = () => {
         '--menu-item-bg': status ? color?.outer : `rgb(62, 62, 62, ${tranValForMenu})`,
         '--menu-icon-color': status ? color?.icon_font : `rgb(62, 62, 62, ${tranValForMenu})`,
         '--text-secondary': `${color?.text?.split(')')[0]}, ${tranValForText})`,
-    } as React.CSSProperties;
+    } as React.CSSProperties), [color, darkTheme, status]);
 
     return (
         <div className="home" style={themeStyles}>
@@ -131,7 +135,7 @@ const Home = () => {
             </motion.span>
             
             <span className="home-bounce-menu-wrapper">
-                {MenuListt.map((item: any) => (
+                {MenuList.map((item: any) => (
                     <motion.span
                         key={item?.id}
                         className="home-bounce-menu"
@@ -266,7 +270,7 @@ const Home = () => {
                             <div className="home-intro-feature-container-top-stats">
                                 <div className="home-intro-feature-container-top-stat">
                                     <p className="home-intro-feature-container-top-label">Interface</p>
-                                    <p className="home-intro-feature-container-top-value blue">
+                                    <p className="home-intro-feature-container-top-value">
                                         <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
                                             <MdWeb />
                                         </IconContext.Provider>
@@ -279,7 +283,7 @@ const Home = () => {
                                 </div>
                                 <div className="home-intro-feature-container-top-stat">
                                     <p className="home-intro-feature-container-top-label">DIY</p>
-                                    <p className="home-intro-feature-container-top-value blue">
+                                    <p className="home-intro-feature-container-top-value">
                                         <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
                                             <FaCode />
                                         </IconContext.Provider>
@@ -292,7 +296,7 @@ const Home = () => {
                                 </div>
                                 <div className="home-intro-feature-container-top-stat">
                                     <p className="home-intro-feature-container-top-label">Real-Time</p>
-                                    <p className="home-intro-feature-container-top-value green">
+                                    <p className="home-intro-feature-container-top-value">
                                         <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
                                             <MdCloudSync />
                                         </IconContext.Provider>
@@ -416,7 +420,22 @@ const Home = () => {
                         <ul>
                             {['PRIVACY POLICY', 'COOKIE POLICY', 'ABOUT', 'FAQ'].map((link) => (
                                 <li key={link}>
-                                    <p onClick={() => link === 'ABOUT' ? navigate(RoutePath.About) : displayToastify('Implementation in progress', !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.INFO)}>
+                                    <p onClick={() => {
+                                        if (link === 'ABOUT') navigate(RoutePath.About);
+                                        else if (link === 'PRIVACY POLICY' || link === 'COOKIE POLICY') {
+                                             toggleBackDropOpen(
+                                                POLICY_MODAL,
+                                                <PolicyModal 
+                                                    handleClose={() => toggleBackDropClose(POLICY_MODAL)} 
+                                                    darkTheme={darkTheme}
+                                                    initialTab={link === 'COOKIE POLICY' ? 'settings' : 'what'}
+                                                />,
+                                                HorizontalSize,
+                                                false
+                                            );
+                                        }
+                                        else displayToastify('Implementation in progress', !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.INFO);
+                                    }}>
                                         {link}
                                     </p>
                                 </li>
