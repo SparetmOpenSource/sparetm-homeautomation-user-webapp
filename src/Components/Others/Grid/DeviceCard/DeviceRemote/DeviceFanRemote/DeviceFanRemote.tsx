@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { atomBergRemoteCode } from '../../../../../../Data/DeviceRoomConstant';
 import { useDeleteDeviceStoreData, useUpdateDeviceStoreData } from '../../../../../../Api.tsx/CoreAppApis';
@@ -58,17 +57,17 @@ const DeviceFanRemote: React.FC<DeviceFanRemoteProps> = ({ deviceId, darkTheme }
     const handleRemoteClick = (index: number) => {
         const code = deviceDataStore[index];
         if (!code) {
-            toast.warn('No value');
+            displayToastify('No value', !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.WARN);
             return;
         }
         
-        toast.info(code);
+        displayToastify(code, !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.INFO);
         mutate({ status: true, statusDetail: code } as any);
     };
 
     const onRemoteCodeSave = (codes: string) => {
         saveDeviceStoreData({ deviceDataStore: codes } as any);
-        toast.info(codes);
+        displayToastify(codes, !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.INFO);
     };
 
     if (deviceDataStore.length === 0) {

@@ -24,7 +24,6 @@ import {
 } from 'react-icons/gi';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import {
-    BACKGROUND_BLINK_SETTING,
     NETWORKERRORKEY,
     RoutePath,
     SPOTIFY_CODE_VERIFIER,
@@ -36,18 +35,218 @@ import {
     SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_TOKEN_FETCHED_GLOBAL,
     SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL,
+    SCREENSAVER_ENABLED_KEY,
+    SCREENSAVER_TIMEOUT_KEY,
+    SECURITY_LOCK_ENABLED_KEY,
+    SECURITY_LOCK_TIMEOUT_KEY,
+    NOTIFICATION_SOUNDS_ENABLED_KEY,
+    NOTIFICATION_POSITION_KEY,
+    BLINK_NOTIFICATIONS_ENABLED_KEY,
+    BACKGROUND_BLINK_SETTING,
+    ACKNOWLEDGED_NOTIFICATIONS_KEY,
+    PAGE_TRANSITIONS_ENABLED_KEY,
+    PROFILE_GLOBAL,
+    PROFILEID_GLOBAL,
+    TOKEN_GLOBAL,
+    ADMIN_GLOBAL,
 } from '../Data/Constants';
 import { LuRefrigerator } from 'react-icons/lu';
 import { SiSocketdotio, SiNano } from 'react-icons/si';
 import { RiMistLine, RiMoonClearLine } from 'react-icons/ri';
 import { BiSolidWasher } from 'react-icons/bi';
 import { setBlinkColor, triggerBlink } from '../Features/Blink/BlinkSlice';
+import { getNotificationConfig } from './NotificationConfig';
+import { removeItem, getItem } from '../Hooks/UseLocalStorage';
+
+// Scalable key lists for cleanup
+const PROFILE_SWITCH_KEYS = [
+    PROFILE_GLOBAL,
+    PROFILEID_GLOBAL,
+    ACKNOWLEDGED_NOTIFICATIONS_KEY,
+    BACKGROUND_BLINK_SETTING,
+    BLINK_NOTIFICATIONS_ENABLED_KEY,
+    NOTIFICATION_POSITION_KEY,
+    NOTIFICATION_SOUNDS_ENABLED_KEY,
+    PAGE_TRANSITIONS_ENABLED_KEY,
+    SCREENSAVER_ENABLED_KEY,
+    SCREENSAVER_TIMEOUT_KEY,
+    SECURITY_LOCK_ENABLED_KEY,
+    SECURITY_LOCK_TIMEOUT_KEY,
+];
+
+const LOGOUT_KEYS = [
+    TOKEN_GLOBAL,
+    ADMIN_GLOBAL,
+];
+
+const SPOTIFY_KEYS = [
+    SPOTIFY_TOKEN_GLOBAL,
+    SPOTIFY_REFRESH_TOKEN_GLOBAL,
+    SPOTIFY_ACCOUNT_TYPE_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_GLOBAL,
+    SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL,
+];
+
+
+
+export const removeLocalStorageKeys = (keys: string[]) => {
+    keys.forEach((key) => removeItem(key));
+};
+
+export const clearLocalStorageOnProfileSwitch = () => {
+    removeLocalStorageKeys(PROFILE_SWITCH_KEYS);
+};
+
+export const resetSpotify = () => {
+    removeLocalStorageKeys(SPOTIFY_KEYS);
+    sessionStorage.removeItem(SPOTIFY_CODE_VERIFIER);
+};
+
+export const clearLocalStorageOnLogout = () => {
+    clearLocalStorageOnProfileSwitch();
+    removeLocalStorageKeys(LOGOUT_KEYS);
+    resetSpotify(); // Clears all Spotify keys including sessionStorage
+    
+    // Explicitly preserved keys:
+    // - REACT_QUERY_DEVTOOLS_SORT_FN_KEY
+    // - darkTheme
+};
+
+export const spotifyLogout = () => {
+    resetSpotify();
+};
+
+// -----------------------Sound Helper-----------------------//
+// Global AudioContext
+const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+let audioCtx: AudioContext | null = null;
+let hasInteracted = false;
+
+// Initialize context lazily
+const initAudio = () => {
+    if (!audioCtx && AudioContext) {
+        audioCtx = new AudioContext();
+    }
+};
+
+// Listen for interaction to unlock audio
+const enableSound = () => {
+    hasInteracted = true;
+    initAudio();
+    
+    if (audioCtx) {
+        // 1. Resume context
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume().then(() => {
+                console.log("AudioContext resumed by user interaction.");
+            });
+        }
+
+        // 2. KEEP-ALIVE HACK: Play a silent oscillator forever
+        // This prevents the browser from suspending the context again.
+        try {
+            const silentOsc = audioCtx.createOscillator();
+            const silentGain = audioCtx.createGain();
+            silentOsc.type = 'sine';
+            silentOsc.frequency.value = 0.01; // Almost zero Hz
+            silentGain.gain.value = 0.001; // Almost zero volume
+            
+            silentOsc.connect(silentGain);
+            silentGain.connect(audioCtx.destination);
+            silentOsc.start();
+            console.log("Audio Keep-Alive started (Silent Oscillator).");
+        } catch (e) {
+            console.error("Keep-Alive failed", e);
+        }
+    }
+    
+    // Remove listeners
+    window.removeEventListener('click', enableSound, true);
+    window.removeEventListener('keydown', enableSound, true);
+    window.removeEventListener('touchstart', enableSound, true);
+};
+
+if (typeof window !== 'undefined') {
+    // Use Capture Phase (true) to catch events before they are stopped
+    window.addEventListener('click', enableSound, true);
+    window.addEventListener('keydown', enableSound, true);
+    window.addEventListener('touchstart', enableSound, true);
+}
+
+export const playNotificationSound = async (isManual: boolean = false) => {
+    // Check if sound is enabled in settings via config
+    const { soundEnabled } = getNotificationConfig();
+
+    if (!soundEnabled && !isManual) {
+        return;
+    }
+
+    // If manual (button click), we force resume and set the flag
+    if (isManual) {
+        hasInteracted = true;
+    }
+
+    // If we haven't interacted yet, we strictly block to avoid errors
+    if (!hasInteracted) {
+        return; 
+    }
+
+    // Initialize if needed
+    initAudio();
+    if (!audioCtx) return;
+
+    try {
+        // Ensure context is running BEFORE playing
+        if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+        }
+
+        const currentTime = audioCtx.currentTime;
+        
+        // Create a pleasant notification chime (similar to macOS)
+        // Using two notes: C6 (1046.5 Hz) and E6 (1318.5 Hz)
+        const playNote = (frequency: number, startTime: number, duration: number) => {
+            const oscillator = audioCtx!.createOscillator();
+            const gainNode = audioCtx!.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx!.destination);
+
+            // Use sine wave for a softer, more pleasant sound
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(frequency, startTime);
+            
+            // Smooth envelope for natural, resonant sound
+            gainNode.gain.setValueAtTime(0, startTime);
+            gainNode.gain.linearRampToValueAtTime(0.2, startTime + 0.02); // Quick attack
+            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration); // Long, smooth decay
+
+            oscillator.start(startTime);
+            oscillator.stop(startTime + duration);
+        };
+
+        // Play two-tone chime with longer duration (C6 -> E6)
+        playNote(1046.5, currentTime, 0.5); // C6 note - longer resonance
+        playNote(1318.5, currentTime + 0.12, 0.6); // E6 note - even longer tail
+        
+        console.log("Notification chime played");
+
+    } catch (error) {
+        console.error("Audio generation failed", error);
+    }
+};
 
 // -----------------------Toastify functions-----------------------//
 
 const toastProperty: any = (color: any) => {
+    // Read position from config
+    const { position } = getNotificationConfig();
+    
+    // Clean up position string if needed (though config should have clean string)
+    const cleanPosition = position.replace(/"/g, '');
+
     return {
-        position: 'bottom-right',
+        position: cleanPosition,
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -62,6 +261,7 @@ const toastProperty: any = (color: any) => {
 
 // status -> "info","success","warn","error"
 export const displayToastify: any = (message: any, color: any, status: any) => {
+    playNotificationSound(); // Play sound on toast
     if (status === TOASTIFYSTATE.INFO) {
         toast.info(message, toastProperty(color));
     } else if (status === TOASTIFYSTATE.SUCCESS) {
@@ -84,10 +284,13 @@ export const handleClickForBlinkNotification = (
     status: string,
     dispatch: any,
 ) => {
-    const stored = localStorage.getItem(BACKGROUND_BLINK_SETTING);
-    const settings = stored ? JSON.parse(stored) : {};
+    const { blinkSettings } = getNotificationConfig();
+    
+    // Check master blink switch
+    const masterBlinkEnabled = getItem(BLINK_NOTIFICATIONS_ENABLED_KEY) ?? false;
+    if (!masterBlinkEnabled) return;
 
-    const isEnabled = settings[status] ?? true;
+    const isEnabled = blinkSettings[status] ?? true;
 
     if (!isEnabled) return;
 
@@ -101,6 +304,9 @@ export const handleClickForBlinkNotification = (
     const blinkColor = colorMap[status] || 'gray';
     dispatch(setBlinkColor(blinkColor));
     dispatch(triggerBlink());
+    
+    // Play notification sound for background blink
+    playNotificationSound();
 };
 
 // ---------------- Error inside catch -------------------- //
@@ -473,22 +679,6 @@ export function getOffsetAndLimit(
     return { offset, limit };
 }
 
-export const resetSpotify = () => {
-    localStorage.removeItem(SPOTIFY_TOKEN_GLOBAL);
-    localStorage.removeItem(SPOTIFY_REFRESH_TOKEN_GLOBAL);
-    localStorage.removeItem(SPOTIFY_ACCOUNT_TYPE_GLOBAL);
-    localStorage.removeItem(SPOTIFY_TOKEN_FETCHED_GLOBAL);
-    localStorage.removeItem(SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL);
-    sessionStorage.removeItem(SPOTIFY_CODE_VERIFIER);
-    
-    // Dispatch event to update hooks
-    window.dispatchEvent(new Event('local-storage'));
-};
-
-export const spotifyLogout = () => {
-    resetSpotify();
-};
-
 export const navigateTo = (navigate: any, to: any) => {
     navigate(to);
 };
@@ -516,7 +706,7 @@ export const getFormattedDate = () => {
                 return 'rd';
             default:
                 return 'th';
-        }
+            }
     }
     const monthNames = [
         'Jan',

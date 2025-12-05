@@ -1,7 +1,191 @@
-.deviceDataGraph{
+.deviceDataGraph {
     width: 100%;
+    height: 350px; /* Increased height for energy view */
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+    padding: 1rem;
+    transition: background-color 0.3s ease;
+    overflow: hidden;
+}
+
+.deviceDataGraph.dark {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.deviceDataGraph.light {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.graph-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+}
+
+.graph-switch {
+    display: flex;
+    background: rgba(128, 128, 128, 0.2);
+    border-radius: 20px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.graph-switch button {
+    border: none;
+    background: transparent;
+    padding: 6px 16px;
+    border-radius: 16px;
+    color: inherit;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.deviceDataGraph.dark .graph-switch button {
+    color: #ccc;
+}
+
+.deviceDataGraph.light .graph-switch button {
+    color: #555;
+}
+
+.graph-switch button.active {
+    background: rgba(255, 255, 255, 0.9);
+    color: #000 !important;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.deviceDataGraph.dark .graph-switch button.active {
+    background: rgba(255, 255, 255, 0.9);
+    color: #000 !important;
+}
+
+.deviceDataGraph.light .graph-switch button.active {
+    background: white;
+    color: black !important;
+}
+
+.graph-container {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Energy View Styles */
+.energy-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     height: 100%;
+    overflow-y: auto;
+    padding-right: 5px; /* Space for scrollbar */
+}
+
+.energy-view::-webkit-scrollbar {
+    width: 4px;
+}
+
+.energy-view::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.5);
+    border-radius: 4px;
+}
+
+.energy-input-section {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: inherit;
+}
+
+.wattage-input {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: inherit;
+    width: 80px;
+}
+
+.deviceDataGraph.light .wattage-input {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: #ccc;
+}
+
+.energy-formula-card {
+    background: rgba(128, 128, 128, 0.1);
+    border-radius: 8px;
+    padding: 0.8rem;
+    font-size: 0.85rem;
+    border-left: 3px solid #4caf50;
+}
+
+.formula-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.formula-text {
+    margin-bottom: 0.3rem;
+
+}
+
+.formula-example {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.energy-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.energy-stat-card {
+    background: rgba(128, 128, 128, 0.1);
+    border-radius: 8px;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-bottom: 0.3rem;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    color: #ff9800; /* Orange for energy */
+}
+
+.stat-value span {
+    font-size: 0.7rem;
+    font-weight: normal;
+    opacity: 0.8;
+    color: inherit;
+}
+
+.stat-sub {
+    font-size: 0.7rem;
+    opacity: 0.6;
+    margin-top: 0.2rem;
 }

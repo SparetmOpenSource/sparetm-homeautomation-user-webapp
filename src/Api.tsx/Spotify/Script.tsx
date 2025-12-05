@@ -1,9 +1,11 @@
+import { SPOTIFY_CODE_VERIFIER } from '../../Data/Constants';
+
 export const getAccessToken = async (
     clientId: string,
     code: string,
     redirectUri: string,
 ): Promise<string> => {
-    const verifier = localStorage.getItem('verifier');
+    const verifier = sessionStorage.getItem(SPOTIFY_CODE_VERIFIER);
 
     const params = new URLSearchParams();
     params.append('client_id', clientId);

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useRef, useState, useMemo } from 'react';
+import useLocalStorage from '../Hooks/UseLocalStorage';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { useAppDispatch, useAppSelector } from '../Features/ReduxHooks';
@@ -8,8 +9,9 @@ import { getWebSocketUrl } from '../Api.tsx/ProfileConfigApis';
 import { RoutePath, WEBSOCKET_TOPIC_EVENTS } from '../Data/Constants';
 import { useReactQuery_Get } from '../Api.tsx/useReactQuery_Get';
 import { GET_WEBSOCKET_URL_QUERY_ID } from '../Data/QueryConstant';
-import { displayToastify, handleClickForBlinkNotification } from '../Utils/HelperFn';
+import { displayToastify, handleClickForBlinkNotification, playNotificationSound } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
+import { ACKNOWLEDGED_NOTIFICATIONS_KEY, NOTIFICATION_SOUNDS_ENABLED_KEY } from '../Data/Constants';
 import { useTheme } from '../Pages/ThemeProvider';
 import { useLocation } from 'react-router-dom';
 import { dark_colors, light_colors } from '../Data/ColorConstant';
@@ -23,6 +25,8 @@ interface WebSocketContextType {
 }
 
 const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
+
+
 
 export const useWebSocket = () => {
     const context = useContext(WebSocketContext);
@@ -46,6 +50,23 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     const dispatch = useAppDispatch();
     const location = useLocation();
     const darkTheme = useTheme();
+    const lastNotificationIdRef = useRef<string | null>(null); // Track last notification that played sound
+    
+    // Use hooks for settings and storage
+    const [acknowledgedIds] = useLocalStorage<string[]>(ACKNOWLEDGED_NOTIFICATIONS_KEY, []);
+    const [notificationSoundsEnabled] = useLocalStorage(NOTIFICATION_SOUNDS_ENABLED_KEY, true);
+
+    // Refs to hold latest values for WebSocket callback (avoids stale closures)
+    const acknowledgedIdsRef = useRef(acknowledgedIds);
+    const notificationSoundsEnabledRef = useRef(notificationSoundsEnabled);
+
+    useEffect(() => {
+        acknowledgedIdsRef.current = acknowledgedIds;
+    }, [acknowledgedIds]);
+
+    useEffect(() => {
+        notificationSoundsEnabledRef.current = notificationSoundsEnabled;
+    }, [notificationSoundsEnabled]);
     
     const color = useMemo(
         () => (darkTheme ? dark_colors : light_colors),
@@ -229,11 +250,25 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                                     break;
                                 case 'NOTIFICATION':
                                     if (payload.payload.id && payload.payload.message) {
-                                        dispatch(setNotification({
-                                            id: payload.payload.id,
-                                            message: payload.payload.message,
-                                            type: payload.payload.type || 'INFO'
-                                        }));
+                                        // Check if notification is already acknowledged BEFORE dispatching
+                                        // We use the REF value here to avoid stale closures in the callback
+                                        const isNotAcknowledged = !acknowledgedIdsRef.current.includes(payload.payload.id);
+                                        
+                                        if (isNotAcknowledged) {
+                                            // Dispatch every time the server sends it (updates timestamp)
+                                            dispatch(setNotification({
+                                                id: payload.payload.id,
+                                                message: payload.payload.message,
+                                                type: payload.payload.type || 'INFO'
+                                            }));
+                                            
+                                            // Play sound for EVERY server payload if not acknowledged
+                                            // We check the sound setting from the REF
+                                            lastNotificationIdRef.current = payload.payload.id;
+                                            if (notificationSoundsEnabledRef.current) {
+                                                playNotificationSound();
+                                            }
+                                        }
                                     }
                                     break;
                                 default:

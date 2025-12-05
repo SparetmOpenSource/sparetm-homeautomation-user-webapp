@@ -7,6 +7,7 @@ import { CiDark } from 'react-icons/ci';
 import CommonNavSkin from '../../Components/Others/UiSkin/CommonNavSkin/CommonNavSkin';
 import UpperNavigation from '../../Components/Others/Navigation/UpperNavigation/UpperNavigation';
 import Content from './Content/Content';
+import PageTransition from '../../Components/Others/PageTransition/PageTransition';
 
 const SignUp = () => {
     const darkTheme: any = useTheme();
@@ -37,14 +38,16 @@ const SignUp = () => {
     ];
 
     return (
-        <div className="signUp">
-            <CommonNavSkin
-                side_nav_enable={false}
-                upper_nav_enable={true}
-                upper_nav={<UpperNavigation nav_option={nav_options} />}
-                content={<Content />}
-            />
-        </div>
+        <PageTransition>
+            <div className="signUp">
+                <CommonNavSkin
+                    side_nav_enable={false}
+                    upper_nav_enable={true}
+                    upper_nav={<UpperNavigation nav_option={nav_options} />}
+                    content={<Content />}
+                />
+            </div>
+        </PageTransition>
     );
 };
 

@@ -17,16 +17,9 @@ export const ADMIN = 'admin';
 export const NETWORKERRORKEY = 'Network Error, please try again later';
 // --- //
 
-export const APPTOKENKEY = 'appToken';
-export const APPPROFILEKEY = 'appProfile';
-export const OFFLINETESTUSERNAMEKEY = 'offlineTestUserName';
-export const OFFLINETESTPASSWORDKEY = 'offlineTestPassword';
-export const APPUSERKEY = 'appUser';
 export const PROFILEIDKEY = 'profileId';
 export const PROFILENAMEKEY = 'profileName';
-export const ROOMTYPE = 'roomType';
 export const ID = 'Id';
-export const NOTIFICATIONCOLORKEY = 'notificationColor';
 
 export const USE_ACTIVE_SETTINGS = ['keypress', 'mousemove', 'touchmove', 'click', 'scroll'];
 
@@ -82,11 +75,6 @@ export const home_contact_social_list = [
     },
     {
         id: 2,
-        name: 'Instagram',
-        href: 'https://www.instagram.com/shubham_tales/',
-    },
-    {
-        id: 3,
         name: 'Contact us',
         href: 'https://www.linkedin.com/in/shubham2601',
     },
@@ -308,6 +296,7 @@ export const GLOBAL_NOTIFICATION = 'global-notification';
 export const DELETING_TODO_LIST = 'deleteToDo';
 export const ADD_TODO_LIST = 'addToDo';
 export const EDIT_TODO_LIST = 'editToDo';
+export const POLICY_MODAL = 'policy-modal';
 
 export const PAGE_LOGGER = {
     home_page: 'Pages/Home/Home.tsx',
@@ -318,3 +307,15 @@ export const DATA_NOT_FOUND_MSG = 'Data not found!';
 
 export const BACKGROUND_BLINK_SETTING = 'background_blink_settings';
 
+
+export const NOTIFICATION_SOUNDS_ENABLED_KEY = 'notificationSoundsEnabled';
+export const NOTIFICATION_POSITION_KEY = 'notificationPosition';
+export const BLINK_NOTIFICATIONS_ENABLED_KEY = 'blinkNotificationsEnabled';
+export const SCREENSAVER_ENABLED_KEY = 'screensaverEnabled';
+export const SCREENSAVER_TIMEOUT_KEY = 'screensaverTimeout';
+export const SECURITY_LOCK_ENABLED_KEY = 'securityLockEnabled';
+export const SECURITY_LOCK_TIMEOUT_KEY = 'securityLockTimeout';
+export const ACKNOWLEDGED_NOTIFICATIONS_KEY = 'acknowledged_notifications';
+export const PAGE_TRANSITIONS_ENABLED_KEY = 'pageTransitionsEnabled';
+export const DARK_THEME_KEY = 'darkTheme';
+export const COOKIES_PREFERENCES_KEY = 'cookies_preferences';

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, memo } from 'react';
+import { useCallback, useMemo, memo, useState } from 'react';
 import { useLocation, Outlet } from 'react-router-dom';
 import { MdLightMode } from 'react-icons/md';
 import { CiDark } from 'react-icons/ci';
@@ -11,7 +11,12 @@ import {
     FullScreenSize,
     GLOBAL_SCREEN_SAVER,
     LandscapeSizeM,
+
     RoutePath,
+    SCREENSAVER_ENABLED_KEY,
+    SCREENSAVER_TIMEOUT_KEY,
+    SECURITY_LOCK_ENABLED_KEY,
+    SECURITY_LOCK_TIMEOUT_KEY,
 } from '../../Data/Constants';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
@@ -35,6 +40,10 @@ import { SiWechat } from 'react-icons/si';
 import { useUserActivity } from '../../Hooks/useUserActivity';
 import PicFrame from '../../Components/Others/PicFrame/PicFrame';
 import PersistentNotification from '../../Components/Others/Notification/PersistentNotification';
+import PageTransition from '../../Components/Others/PageTransition/PageTransition';
+import useLocalStorage from '../../Hooks/UseLocalStorage';
+import LockScreen from '../../Components/Others/LockScreen/LockScreen';
+
 
 interface NavItem {
     id: number;
@@ -81,13 +90,33 @@ const CoreApplication = memo(() => {
         toggleBackDropClose(GLOBAL_SCREEN_SAVER);
     }, [toggleBackDropClose]);
 
-    // User activity detection
+    // User activity detection for Screensaver
+    const [screensaverEnabled] = useLocalStorage(SCREENSAVER_ENABLED_KEY, false);
+    const [screensaverTimeout] = useLocalStorage(SCREENSAVER_TIMEOUT_KEY, 60000);
+
     useUserActivity({
-        timeout: 60000, // 5 sec inactivity for test
-        enabled: true,
+        timeout: screensaverTimeout,
+        enabled: screensaverEnabled,
         onActive: closeScreenSaver,
         onInactive: addScreenSaver,
     });
+
+    // User activity detection for Security Lock
+    const [securityLockEnabled] = useLocalStorage(SECURITY_LOCK_ENABLED_KEY, false);
+    const [securityLockTimeout] = useLocalStorage(SECURITY_LOCK_TIMEOUT_KEY, 300000);
+    const [isLocked, setIsLocked] = useState(false);
+
+    useUserActivity({
+        timeout: securityLockTimeout,
+        enabled: securityLockEnabled && !isLocked, // Don't trigger if already locked
+        onActive: () => {}, // Do nothing on active (unlock is manual)
+        onInactive: () => setIsLocked(true),
+
+    });
+
+    const handleUnlock = useCallback(() => {
+        setIsLocked(false);
+    }, []);
 
     const roomType = useMemo(
         () => pathname?.split('/')[3]?.replace('%20', ' '),
@@ -112,7 +141,7 @@ const CoreApplication = memo(() => {
                 TOASTIFYSTATE.ERROR,
             );
         },
-        true,
+        !!profileId,
         true,
         false,
         false,
@@ -247,22 +276,25 @@ const CoreApplication = memo(() => {
     }
 
     return (
-        <div className="coreApplication">
-            <PersistentNotification />
-            <CommonSkin
-                upper_nav_enable={true}
-                upper_nav={<UpperNavigation nav_option={upper_nav_option} />}
-                side_nav_enable={true}
-                side_nav={
-                    <SideNavigation
-                        upper_nav_option={side_upper_nav_option}
-                        lower_nav_option={side_lower_nav_option}
-                        profile_logout_enable={true}
-                    />
-                }
-                content={<Outlet />}
-            />
-        </div>
+        <PageTransition>
+            <div className="coreApplication">
+                {isLocked && <LockScreen onUnlock={handleUnlock} />}
+                <PersistentNotification />
+                <CommonSkin
+                    upper_nav_enable={true}
+                    upper_nav={<UpperNavigation nav_option={upper_nav_option} />}
+                    side_nav_enable={true}
+                    side_nav={
+                        <SideNavigation
+                            upper_nav_option={side_upper_nav_option}
+                            lower_nav_option={side_lower_nav_option}
+                            profile_logout_enable={true}
+                        />
+                    }
+                    content={<Outlet />}
+                />
+            </div>
+        </PageTransition>
     );
 });
 

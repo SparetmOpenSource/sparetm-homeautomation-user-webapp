@@ -1,5 +1,30 @@
 .about{
     width: 100%;
     height: 100%;
-    background-color: rgb(255, 255, 255);
+    border-radius: 0.5rem;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    box-sizing: border-box;
+}
+
+.about::-webkit-scrollbar {
+    display: none;
+}
+
+.about-theme-icon {
+    position: fixed; /* Fixed to stay on screen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    top: 20px; /* Adjusted spacing */
+    right: 20px;
+    padding: 10px;
+    z-index: 1001;
+    background: var(--bg-inner);
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
 }

@@ -1,9 +1,11 @@
 import { Suspense } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import LoadingFade from '../../Components/Others/LoadingAnimation/LoadingFade';
 import PublicRoute from '../../Services/PublicRoute';
 import ProtectedRoute from '../../Services/ProtectedRoute';
 import { RoutePath } from '../../Data/Constants';
+import Preferences from '../../Components/CoreApplication/Setting/Preferences/Preferences';
 import {
     About,
     AddProfile,
@@ -117,7 +119,7 @@ const routes = [
                     },
                     {
                         path: RoutePath.Setting_Features,
-                        element: <h1>Feature Setting</h1>,
+                        element: <Preferences />,
                     },
                 ],
             },
@@ -186,10 +188,16 @@ const renderRoutes = (routes: any) => {
     });
 };
 
+
 export const GlobalRoutes = () => {
+    const location = useLocation();
     return (
         <Suspense fallback={<LoadingFade />}>
-            <Routes>{renderRoutes(routes)}</Routes>
+            <AnimatePresence exitBeforeEnter>
+                <Routes location={location} key={location.pathname}>
+                    {renderRoutes(routes)}
+                </Routes>
+            </AnimatePresence>
         </Suspense>
     );
 };

@@ -1,22 +1,13 @@
-import { APPPROFILE, TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
-import {
-    APPPROFILEKEY,
-    APPTOKENKEY,
-    APPUSERKEY,
-    OFFLINETESTPASSWORDKEY,
-    OFFLINETESTUSERNAMEKEY,
-    PROFILEIDKEY,
-    PROFILENAMEKEY,
-    RoutePath,
-} from '../Data/Constants';
-import { displayToastify } from './HelperFn';
+import { RoutePath } from '../Data/Constants';
 import {
     addProfile,
     addProfileId,
     resetProfile,
 } from '../Features/User/UserSlice';
+import {
+    clearLocalStorageOnProfileSwitch,
+} from './HelperFn';
 
-// --new-- //
 export const openProfileOnClick = (
     profileName: any,
     profileId: any,
@@ -24,6 +15,7 @@ export const openProfileOnClick = (
     queryClient: any,
     navigate: any,
 ) => {
+    clearLocalStorageOnProfileSwitch();
     dispatch(resetProfile());
     dispatch(addProfile(profileName));
     dispatch(addProfileId(profileId));
@@ -36,120 +28,14 @@ export const openProfileOnClick = (
             RoutePath.Dashboard_Device_Status,
     );
 };
+
 export const logoutProfileOnClick = (
     dispatch: any,
     queryClient: any,
     navigate: any,
 ) => {
+    clearLocalStorageOnProfileSwitch();
     dispatch(resetProfile());
     queryClient.clear();
     navigate(RoutePath.SelectProfileConfig);
-};
-// --new-- //
-
-export const profileLogOutWithNavigation = (navigate: any) => {
-    removeProfileId();
-    removeProfileName();
-    navigate(RoutePath.SelectProfileConfig);
-};
-
-export const profileLogOutWithoutNavigation = () => {
-    removeProfileId();
-    removeProfileName();
-};
-
-// Admin user
-export const getAppAdminUser = () => {
-    const adminUserName = localStorage.getItem(APPUSERKEY);
-    return adminUserName;
-};
-
-export const removeAppAdminUser = () => {
-    localStorage.removeItem(APPUSERKEY);
-};
-
-// Profile id
-export const setProfileId = (profileId: any) => {
-    localStorage.setItem(PROFILEIDKEY, profileId);
-};
-
-export const getProfileId = () => {
-    const profileName = localStorage.getItem(PROFILEIDKEY);
-    return profileName;
-};
-
-export const removeProfileId = () => {
-    localStorage.removeItem(PROFILEIDKEY);
-};
-
-// Profile name
-export const setProfileName = (profileName: any) => {
-    localStorage.setItem(PROFILENAMEKEY, profileName);
-};
-
-export const getProfileName = () => {
-    const profileName = localStorage.getItem(PROFILENAMEKEY);
-    return profileName;
-};
-
-export const removeProfileName = () => {
-    localStorage.removeItem(PROFILENAMEKEY);
-};
-
-export const removeAccessToken = () => {
-    localStorage.removeItem(APPTOKENKEY);
-};
-
-// ---------------------- setOfflineUser ------------------------- //
-
-export const setAppProfile = (status: boolean) => {
-    if (status === true) {
-        localStorage.setItem(APPPROFILEKEY, APPPROFILE.STATUSOFF);
-    } else {
-        localStorage.setItem(APPPROFILEKEY, APPPROFILE.STATUSON);
-    }
-    let currentProfile = localStorage.getItem(APPPROFILEKEY);
-    if (localStorage.getItem(APPPROFILEKEY) === APPPROFILE.STATUSOFF) {
-        displayToastify(
-            `${currentProfile?.charAt(0).toUpperCase()}${currentProfile?.slice(
-                1,
-            )} mode ON`,
-            TOASTIFYCOLOR.LIGHT,
-            TOASTIFYSTATE.INFO,
-        );
-    }
-};
-
-export const setOfflineUser = (userName: any, password: any) => {
-    localStorage.setItem(OFFLINETESTUSERNAMEKEY, userName);
-    localStorage.setItem(OFFLINETESTPASSWORDKEY, password);
-};
-
-export const getOfflineUser = () => {
-    const offlineTestUserName = localStorage.getItem(OFFLINETESTUSERNAMEKEY);
-    const offlineTestPassword = localStorage.getItem(OFFLINETESTPASSWORDKEY);
-    const offlineCred = {
-        userName: offlineTestUserName,
-        password: offlineTestPassword,
-    };
-    return offlineCred;
-};
-
-const removeOfflineUser = () => {
-    localStorage.removeItem(OFFLINETESTUSERNAMEKEY);
-    localStorage.removeItem(OFFLINETESTPASSWORDKEY);
-};
-
-// Logout
-export const appLogOut = (navigate: any) => {
-    if (localStorage.getItem(APPPROFILEKEY) === APPPROFILE.STATUSOFF) {
-        removeOfflineUser();
-    }
-    removeAccessToken();
-    removeAppAdminUser();
-    removeProfileId();
-    removeAccessToken();
-    removeAppAdminUser();
-    removeProfileName();
-    navigate(RoutePath.Home);
 };

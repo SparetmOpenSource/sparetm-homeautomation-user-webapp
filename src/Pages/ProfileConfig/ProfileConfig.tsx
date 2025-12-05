@@ -12,6 +12,7 @@ import { BiSolidSelectMultiple, BiAddToQueue } from 'react-icons/bi';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../Features/ReduxHooks';
 import { resetProfile } from '../../Features/User/UserSlice';
+import PageTransition from '../../Components/Others/PageTransition/PageTransition';
 
 const ProfileConfig = () => {
     const [color, setColor] = useState<any>(light_colors);
@@ -67,20 +68,22 @@ const ProfileConfig = () => {
     }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div className="profileConfig">
-            <CommonSkin
-                upper_nav_enable={true}
-                upper_nav={<UpperNavigation nav_option={upper_nav_option} />}
-                side_nav_enable={true}
-                side_nav={
-                    <SideNavigation
-                        upper_nav_option={side_upper_nav_option}
-                        profile_logout_enable={false}
-                    />
-                }
-                content={<Outlet />}
-            />
-        </div>
+        <PageTransition>
+            <div className="profileConfig">
+                <CommonSkin
+                    upper_nav_enable={true}
+                    upper_nav={<UpperNavigation nav_option={upper_nav_option} />}
+                    side_nav_enable={true}
+                    side_nav={
+                        <SideNavigation
+                            upper_nav_option={side_upper_nav_option}
+                            profile_logout_enable={false}
+                        />
+                    }
+                    content={<Outlet />}
+                />
+            </div>
+        </PageTransition>
     );
 };
 
