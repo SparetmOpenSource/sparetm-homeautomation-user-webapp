@@ -35,7 +35,7 @@ import { MdWeb } from 'react-icons/md';
 import { FaCode } from 'react-icons/fa';
 import { MdCloudSync } from 'react-icons/md';
 import { FaFileSignature } from 'react-icons/fa6';
-import { MdAddBusiness, MdDashboard } from 'react-icons/md';
+import { MdDashboard } from 'react-icons/md';
 import { MdOutlineConnectWithoutContact } from 'react-icons/md';
 
 const Home = () => {
@@ -94,8 +94,24 @@ const Home = () => {
 
     logger(PAGE_LOGGER.home_page);
 
+    // Define CSS variables based on current theme state
+    const themeStyles = {
+        '--bg-outer': color?.outer,
+        '--bg-inner': color?.inner,
+        '--text-primary': color?.text,
+        '--color-accent': color?.button,
+        '--bg-card': darkTheme ? color?.element : color?.card,
+        '--card-border': darkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+        '--card-shadow': darkTheme ? '0 10px 30px rgba(0,0,0,0.3)' : '0 10px 30px rgba(0,0,0,0.05)',
+        '--icon-bg': `${color?.button}20`,
+        '--menu-bg': status ? color?.icon : `rgb(34, 34, 34, ${tranValForMenu})`,
+        '--menu-item-bg': status ? color?.outer : `rgb(62, 62, 62, ${tranValForMenu})`,
+        '--menu-icon-color': status ? color?.icon_font : `rgb(62, 62, 62, ${tranValForMenu})`,
+        '--text-secondary': `${color?.text?.split(')')[0]}, ${tranValForText})`,
+    } as React.CSSProperties;
+
     return (
-        <div className="home" style={{ backgroundColor: color?.outer }}>
+        <div className="home" style={themeStyles}>
             <motion.span
                 className="home-theme-icon"
                 whileHover={{ scale: 1.2 }}
@@ -113,38 +129,21 @@ const Home = () => {
                     {darkTheme ? <MdLightMode /> : <CiDark />}
                 </IconContext.Provider>
             </motion.span>
-            <span
-                className="home-bounce-menu-wrapper"
-                style={{
-                    backgroundColor: status
-                        ? color?.icon
-                        : `rgb(34, 34, 34, ${tranValForMenu})`,
-                }}
-            >
+            
+            <span className="home-bounce-menu-wrapper">
                 {MenuListt.map((item: any) => (
                     <motion.span
                         key={item?.id}
                         className="home-bounce-menu"
-                        style={{
-                            backgroundColor: status
-                                ? color?.outer
-                                : `rgb(62, 62, 62, ${tranValForMenu})`,
-                        }}
                         initial={{ scale: 1 }}
-                        whileHover={{
-                            scale: 1.05,
-                        }}
-                        whileTap={{
-                            scale: 0.95,
-                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => doScroll(item?.ref)}
                     >
                         <IconContext.Provider
                             value={{
                                 size: '1.5em',
-                                color: status
-                                    ? color?.icon_font
-                                    : `rgb(62, 62, 62, ${tranValForMenu})`,
+                                className: 'home-menu-icon'
                             }}
                         >
                             {item?.icon}
@@ -153,85 +152,44 @@ const Home = () => {
                 ))}
                 <motion.span
                     initial={{ scale: 1 }}
-                    whileHover={{
-                        scale: 1.05,
-                    }}
-                    whileTap={{
-                        scale: 0.95,
-                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     className="home-bounce-menu-login"
-                    style={{
-                        color: status ? color?.text : `rgb(62, 62, 62, ${0.5})`,
-                        backgroundColor: status
-                            ? color?.button
-                            : `rgb(62, 62, 62, ${tranValForMenu})`,
-                    }}
                     onClick={() => navigate(RoutePath.Auth)}
+                    style={{
+                         color: status ? color?.text : `rgb(62, 62, 62, ${0.5})`,
+                         backgroundColor: status ? color?.button : `rgb(62, 62, 62, ${tranValForMenu})`
+                    }}
                 >
                     Login
                 </motion.span>
             </span>
 
-            {/* page - 1 */}
-
-            <section
-                className="home-landing"
-                ref={paragraphLandingRef}
-                style={{ backgroundColor: color?.outer }}
-            >
-                <div
-                    className="home-landing-logo"
-                    style={{ color: color?.text }}
-                >
+            {/* Hero Section */}
+            <section className="home-landing" ref={paragraphLandingRef}>
+                <div className="home-landing-logo">
                     {APPNAME}&nbsp;&nbsp;
-                    <IconContext.Provider
-                        value={useMemo(() => {
-                            return {
-                                size: '1.5em',
-                                color: color?.button,
-                            };
-                        }, [color?.button])}
-                    >
+                    <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
                         <GiCableStayedBridge />
                     </IconContext.Provider>
                 </div>
-                <h1 style={{ color: color?.button }}>
+                <h1>
                     Take control of your smart home <br />
                     your way
                 </h1>
-                <h2
-                    style={{
-                        color: `${
-                            color?.text?.split(')')[0]
-                        }, ${tranValForText})`,
-                    }}
-                >
+                <h2 className="home-subtitle">
                     Empowering DIYers with open tools, smart tech, and the
                     freedom to create from anywhere
                 </h2>
 
-                {/* TODO: Customize UI/UX for Demo Button */}
                 <motion.button
                     className="home-landing-demo-btn"
-                    style={{
-                        backgroundColor: color?.button,
-                        color: color?.outer,
-                        padding: '15px 40px',
-                        fontSize: '1.1rem',
-                        border: 'none',
-                        borderRadius: '8px',
-                        cursor: 'pointer',
-                        marginTop: '20px',
-                        fontWeight: 'bold',
-                    }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() =>
                         displayToastify(
                             'Demo coming soon!',
-                            !darkTheme
-                                ? TOASTIFYCOLOR.DARK
-                                : TOASTIFYCOLOR.LIGHT,
+                            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
                             TOASTIFYSTATE.INFO,
                         )
                     }
@@ -239,348 +197,158 @@ const Home = () => {
                     See Demo
                 </motion.button>
 
-                <div
-                    className="home-landing-pic"
-                    style={{ backgroundColor: color?.inner }}
-                >
+                <div className="home-landing-pic-container">
                     <img
                         src={HomePage_SVG}
                         height="100%"
                         width="100%"
                         loading="lazy"
-                        alt="home_icon"
+                        alt="Home Automation Concept"
                     />
                 </div>
             </section>
 
-            {/* page - 2&3&4 */}
-
+            {/* Intro & Features Section */}
             <section className="home-intro">
-                <div style={{ backgroundColor: color?.inner }}>
-                    <section>
-                        <h1
-                            className="hidden-el"
-                            style={{ color: color?.text }}
-                        >
-                            The story of{' '}
+                <div className="home-intro-bg-inner">
+                    <section className="home-story-header">
+                        <h1 className="hidden-el">
+                            The story of <br />
                             <span className="home-intro-text-style">
                                 {APPNAME}
                             </span>{' '}
-                            begins with curiosity.
+                            begins <br />
+                            with curiosity.
                         </h1>
                     </section>
-                    <section ref={paragraphStoryRef}>
-                        <p
-                            className="hidden-el"
-                            style={{
-                                color: `${
-                                    color?.text?.split(')')[0]
-                                }, ${tranValForText})`,
-                            }}
-                        >
-                            From the beginning, we’ve been driven by a passion
-                            for{' '}
-                            <strong>
-                                <i>electronics</i>
-                            </strong>{' '}
-                            and{' '}
-                            <strong>
-                                <i>coding</i>
-                            </strong>
-                            . Our vision has always been to build something
-                            useful for{' '}
-                            <strong>
-                                <i>many people.</i>
-                            </strong>{' '}
-                            And yes — we’ve also experienced those everyday
-                            inconveniences, like being too tired to get up and
-                            turn off the lights at night.
+                    <section ref={paragraphStoryRef} className="home-story-content">
+                        <p className="hidden-el text-secondary">
+                            From the beginning, we’ve been driven by a passion for{' '}
+                            <strong><i>electronics</i></strong> and{' '}
+                            <strong><i>coding</i></strong>. Our vision has always been to build something
+                            useful for <strong><i>many people.</i></strong>{' '}
+                            And yes — we’ve also experienced those everyday inconveniences,
+                            like being too tired to get up and turn off the lights at night.
                         </p>
 
-                        <p
-                            className="hidden-el"
-                            style={{
-                                color: `${
-                                    color?.text?.split(')')[0]
-                                }, ${tranValForText})`,
-                            }}
-                        >
-                            <strong>
-                                <i>That’s when it clicked.</i>
-                            </strong>
+                        <p className="hidden-el text-secondary">
+                            <strong><i>That’s when it clicked.</i></strong>
                         </p>
-                        <p
-                            className="hidden-el"
-                            style={{
-                                color: `${
-                                    color?.text?.split(')')[0]
-                                }, ${tranValForText})`,
-                            }}
-                        >
-                            With the support of the{' '}
-                            <strong>
-                                <i>open source</i>
-                            </strong>{' '}
-                            and{' '}
-                            <strong>
-                                <i>DIY community</i>
-                            </strong>{' '}
+                        
+                        <p className="hidden-el text-secondary">
+                            With the support of the <strong><i>open source</i></strong>{' '}
+                            and <strong><i>DIY community</i></strong>{' '}
                             — whom we deeply admire — we set out to build a{' '}
-                            <strong>
-                                <i>platform</i>
-                            </strong>{' '}
+                            <strong><i>platform</i></strong>{' '}
                             that empowers makers and dreamers alike. A{' '}
-                            <strong>
-                                <i>home automation</i>
-                            </strong>{' '}
+                            <strong><i>home automation</i></strong>{' '}
                             system that’s not just smart and helpful, but also
                             open source and fully customizable.
                         </p>
-                        <p
-                            className="hidden-el"
-                            style={{
-                                color: `${
-                                    color?.text?.split(')')[0]
-                                }, ${tranValForText})`,
-                            }}
-                        >
-                            It’s built for people who want to{' '}
-                            <strong>
-                                <i>learn</i>
-                            </strong>
-                            ,{' '}
-                            <strong>
-                                <i>create</i>
-                            </strong>
-                            , and even gain{' '}
-                            <strong>
-                                <i>recognition</i>
-                            </strong>{' '}
-                            for their{' '}
-                            <strong>
-                                <i>contributions.</i>
-                            </strong>
+                        
+                        <p className="hidden-el text-secondary">
+                            It’s built for people who want to <strong><i>learn</i></strong>,{' '}
+                            <strong><i>create</i></strong>, and even gain{' '}
+                            <strong><i>recognition</i></strong> for their{' '}
+                            <strong><i>contributions.</i></strong>
                         </p>
-                        <p
-                            className="hidden-el"
-                            style={{
-                                color: `${
-                                    color?.text?.split(')')[0]
-                                }, ${tranValForText})`,
-                            }}
-                        >
-                            If that sounds like you,{' '}
-                            <strong>
-                                <i>welcome aboard.</i>
-                            </strong>
+                        
+                        <p className="hidden-el text-secondary">
+                            If that sounds like you, <strong><i>welcome aboard.</i></strong>
                         </p>
                     </section>
                 </div>
-                <div
-                    ref={paragraphFeaturesRef}
-                    style={{ backgroundColor: color?.outer }}
-                >
+
+                <div ref={paragraphFeaturesRef} className="home-intro-bg-outer">
                     <div className="home-intro-feature-container">
                         <div className="home-intro-feature-container-top">
                             <FloatingCube />
-                            <div
-                                className="home-intro-feature-container-top-stats"
-                                style={{
-                                    color: color?.text,
-                                    borderLeft: `2px solid ${color?.text}`,
-                                }}
-                            >
+                            <div className="home-intro-feature-container-top-stats">
                                 <div className="home-intro-feature-container-top-stat">
-                                    <p className="home-intro-feature-container-top-label">
-                                        Interface
-                                    </p>
+                                    <p className="home-intro-feature-container-top-label">Interface</p>
                                     <p className="home-intro-feature-container-top-value blue">
-                                        <IconContext.Provider
-                                            value={useMemo(() => {
-                                                return {
-                                                    size: '1.5em',
-                                                    color: color?.button,
-                                                };
-                                            }, [color?.button])}
-                                        >
+                                        <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
                                             <MdWeb />
                                         </IconContext.Provider>
                                     </p>
-                                    <p className="home-intro-feature-container-top-description">
-                                        React Web App <br />
-                                        Deployed on Netlify <br />
-                                        UI Enhancements Regularly
-                                    </p>
+                                    <div className="home-intro-feature-container-top-description-rows">
+                                        <div>React Web App</div>
+                                        <div>Deployed on Netlify</div>
+                                        <div>UI Enhancements Regularly</div>
+                                    </div>
                                 </div>
                                 <div className="home-intro-feature-container-top-stat">
-                                    <p className="home-intro-feature-container-top-label">
-                                        DIY
-                                    </p>
+                                    <p className="home-intro-feature-container-top-label">DIY</p>
                                     <p className="home-intro-feature-container-top-value blue">
-                                        <IconContext.Provider
-                                            value={useMemo(() => {
-                                                return {
-                                                    size: '1.5em',
-                                                    color: color?.button,
-                                                };
-                                            }, [color?.button])}
-                                        >
+                                        <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
                                             <FaCode />
                                         </IconContext.Provider>
                                     </p>
-                                    <p className="home-intro-feature-container-top-description">
-                                        Setup Documentation <br />
-                                        Custom Code Snippets <br />
-                                        Regular Idea Updates
-                                    </p>
+                                    <div className="home-intro-feature-container-top-description-rows">
+                                        <div>Setup Documentation</div>
+                                        <div>Custom Code Snippets</div>
+                                        <div>Regular Idea Updates</div>
+                                    </div>
                                 </div>
                                 <div className="home-intro-feature-container-top-stat">
-                                    <p className="home-intro-feature-container-top-label">
-                                        Real-Time
-                                    </p>
+                                    <p className="home-intro-feature-container-top-label">Real-Time</p>
                                     <p className="home-intro-feature-container-top-value green">
-                                        <IconContext.Provider
-                                            value={useMemo(() => {
-                                                return {
-                                                    size: '1.5em',
-                                                    color: color?.button,
-                                                };
-                                            }, [color?.button])}
-                                        >
+                                        <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
                                             <MdCloudSync />
                                         </IconContext.Provider>
                                     </p>
-                                    <p className="home-intro-feature-container-top-description">
-                                        Appliance State Sync <br />
-                                        Real-time Updates <br />
-                                        Unified Control System
-                                    </p>
+                                    <div className="home-intro-feature-container-top-description-rows">
+                                        <div>Appliance State Sync</div>
+                                        <div>Real-time Updates</div>
+                                        <div>Unified Control System</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div
-                            className="home-intro-feature-container-content"
-                            style={{ color: color?.text }}
-                        >
+                        
+                        <div className="home-intro-feature-container-content">
                             <p className="hidden-el">
-                                <strong className="home-intro-text-style">
-                                    Modern Web Interface:{' '}
-                                </strong>
-                                <span
-                                    style={{
-                                        color: `${
-                                            color?.text?.split(')')[0]
-                                        }, ${tranValForText})`,
-                                    }}
-                                >
-                                    {' '}
-                                    Our system comes with a{' '}
-                                    <strong>
-                                        <i>visually appealing</i>
-                                    </strong>
-                                    , An intuitive{' '}
-                                    <strong>
-                                        <i>web-based</i>
-                                    </strong>{' '}
-                                    interface designed for{' '}
-                                    <strong>
-                                        <i>Seamless appliance control</i>
-                                    </strong>
-                                    . Whether you're turning on the lights,
-                                    adjusting the fan speed, or checking the
-                                    status of your devices, the user interface
-                                    ensures a smooth and a responsive
-                                    experience. With just a few taps or clicks,
-                                    you can manage your entire home environment
-                                    in{' '}
-                                    <strong>
-                                        <i>real-time</i>
-                                    </strong>
-                                    , right from Your browser.
+                                <strong className="home-intro-text-style">Modern Web Interface: </strong>
+                                <span className="text-secondary">
+                                    {' '} Our system comes with a <strong><i>visually appealing</i></strong>, 
+                                    an intuitive <strong><i>web-based</i></strong> interface designed for 
+                                    <strong><i> Seamless appliance control</i></strong>. Whether you're turning on the lights,
+                                    adjusting the fan speed, or checking the status of your devices, the user interface
+                                    ensures a smooth and responsive experience. With just a few taps or clicks,
+                                    you can manage your entire home environment in <strong><i>real-time</i></strong>, 
+                                    right from your browser.
                                 </span>
                             </p>
                             <p className="hidden-el">
-                                <strong className="home-intro-text-style">
-                                    DIY-Friendly Code:{' '}
-                                </strong>
-                                <span
-                                    style={{
-                                        color: `${
-                                            color?.text?.split(')')[0]
-                                        }, ${tranValForText})`,
-                                    }}
-                                >
-                                    {' '}
-                                    For those who love to tinker and build,
-                                    We’ve got you covered. All our code is
-                                    <strong>
-                                        <i> thoroughly documented, </i>
-                                    </strong>
-                                    making it easy for
-                                    <strong>
-                                        <i> DIY enthusiasts and developers</i>
-                                    </strong>{' '}
-                                    to explore, Modify or expand the system.
-                                    Whether you're integrating new sensors,
-                                    customizing controls, or simply learning how
-                                    everything works, the clear and{' '}
-                                    <strong>
-                                        <i>structured codebase </i>
-                                    </strong>
-                                    empowers you to create your own{' '}
-                                    <strong>
-                                        <i>tailored solutions.</i>
-                                    </strong>
+                                <strong className="home-intro-text-style">DIY-Friendly Code: </strong>
+                                <span className="text-secondary">
+                                     {' '} For those who love to tinker and build, We’ve got you covered. All our code is
+                                    <strong><i> thoroughly documented, </i></strong> making it easy for
+                                    <strong><i> DIY enthusiasts and developers</i></strong> to explore, modify or expand the system.
+                                    Whether you're integrating new sensors, customizing controls, or simply learning how
+                                    everything works, the clear and <strong><i>structured codebase </i></strong>
+                                    empowers you to create your own <strong><i>tailored solutions.</i></strong>
                                 </span>
                             </p>
                             <p className="hidden-el">
-                                <strong className="home-intro-text-style">
-                                    Real-Time Sync:{' '}
-                                </strong>
-                                <span
-                                    style={{
-                                        color: `${
-                                            color?.text?.split(')')[0]
-                                        }, ${tranValForText})`,
-                                    }}
-                                >
-                                    {' '}
-                                    One of the core features of our system is
-                                    <strong>
-                                        <i> full appliance synchronization</i>
-                                    </strong>
-                                    . Any change made to the state of an
-                                    appliance, it through the UI, physical
-                                    switches, or voice The commands are{' '}
-                                    <strong>
-                                        <i>instantly reflected</i>
-                                    </strong>{' '}
-                                    across all connected devices and dashboards.
-                                    This
-                                    <strong>
-                                        <i> Real-time sync</i>
-                                    </strong>{' '}
-                                    ensures accuracy, consistency, and
-                                    convenience, no matter where Or how you
+                                <strong className="home-intro-text-style">Real-Time Sync: </strong>
+                                <span className="text-secondary">
+                                     {' '} One of the core features of our system is <strong><i> full appliance synchronization</i></strong>.
+                                    Any change made to the state of an appliance, be it through the UI, physical
+                                    switches, or voice commands, is <strong><i>instantly reflected</i></strong> 
+                                    across all connected devices and dashboards. This <strong><i>Real-time sync</i></strong> 
+                                    ensures accuracy, consistency, and convenience, no matter where or how you
                                     interact with your home.
                                 </span>
                             </p>
                         </div>
                     </div>
-                    {/*  */}
                 </div>
-                <div
-                    ref={paragraphStepsRef}
-                    className="hidden-el"
-                    style={{
-                        backgroundColor: color?.inner, 
-                    }}
-                >
-                    <div
-                        style={{
-                            // Grid styles are now in CSS under .home-intro > :last-child > div
-                        }}
-                    >
+                
+                <div className="home-separator"></div>
+                
+                <div ref={paragraphStepsRef} className="home-intro-bg-inner hidden-el">
+                    <div className="home-steps-grid-container">
                         {[
                             {
                                 icon: <FaFileSignature />,
@@ -604,84 +372,37 @@ const Home = () => {
                             <motion.div
                                 key={index}
                                 whileHover={{ y: -10 }}
-                                style={{
-                                    backgroundColor: darkTheme
-                                        ? color?.element
-                                        : color?.card,
-                                    border: `1px solid ${
-                                        darkTheme
-                                            ? 'rgba(255,255,255,0.05)'
-                                            : 'rgba(0,0,0,0.05)'
-                                    }`,
-                                    boxShadow: darkTheme
-                                        ? '0 10px 30px rgba(0,0,0,0.3)'
-                                        : '0 10px 30px rgba(0,0,0,0.05)',
-                                }}
+                                className="home-step-card"
                             >
-                                <div
-                                    style={{
-                                        backgroundColor: `${color?.button}20`, // 20% opacity
-                                    }}
-                                >
-                                    <IconContext.Provider
-                                        value={{
-                                            size: '3em',
-                                            color: color?.button,
-                                        }}
-                                    >
+                                <div className="home-step-icon">
+                                    <IconContext.Provider value={{ size: '3em', className: 'accent-icon' }}>
                                         {step.icon}
                                     </IconContext.Provider>
                                 </div>
-                                <h3
-                                    style={{
-                                        color: color?.button,
-                                    }}
-                                >
-                                    {step.title}
-                                </h3>
-                                <p
-                                    style={{
-                                        color: color?.text,
-                                    }}
-                                >
-                                    {step.description}
-                                </p>
+                                <h3>{step.title}</h3>
+                                <p>{step.description}</p>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Page - 5 */}
-
+            {/* Contact / Footer Page */}
             <section className="home-contact" ref={paragraphContactRef}>
-                <div style={{ backgroundColor: color?.outer }}>
-                    <section>
-                        <p style={{ color: color?.button }}>
-                            &reg;&nbsp;
-                            <span
-                                style={{
-                                    color: color?.button,
-                                    paddingLeft: '0',
-                                }}
-                            >
-                                Sparetm
-                            </span>
+                <div className="home-contact-top">
+                    <section className="brand-section">
+                        <p className="brand-name">
+                            &reg;&nbsp;<span>Sparetm</span>
                         </p>
-                        <p style={{ color: color?.text }}>
+                        <p className="brand-tagline">
                             Make this app better by connecting with us &#128512;
                         </p>
                     </section>
-                    <section>
+                    <section className="social-links-section">
                         <ul>
                             {home_contact_social_list.map((item) => (
                                 <li key={item?.id}>
-                                    <a
-                                        href={item?.href}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        style={{ color: color?.button }}
-                                    >
+                                    <a href={item?.href} target="_blank" rel="noreferrer">
                                         {item?.name}
                                     </a>
                                 </li>
@@ -689,77 +410,23 @@ const Home = () => {
                         </ul>
                     </section>
                 </div>
-                <div
-                    style={{
-                        backgroundColor: color?.inner,
-                        color: color?.text,
-                    }}
-                >
-                    <section>
+                
+                <div className="home-contact-bottom">
+                    <section className="footer-links">
                         <ul>
-                            <li>
-                                <p
-                                    onClick={() =>
-                                        displayToastify(
-                                            'Implementation inprogress',
-                                            !darkTheme
-                                                ? TOASTIFYCOLOR.DARK
-                                                : TOASTIFYCOLOR.LIGHT,
-                                            TOASTIFYSTATE.INFO,
-                                        )
-                                    }
-                                    style={{ color: color?.text }}
-                                >
-                                    PRIVACY POLICY
-                                </p>
-                            </li>
-                            <li>
-                                <p
-                                    onClick={() =>
-                                        displayToastify(
-                                            'Implementation inprogress',
-                                            !darkTheme
-                                                ? TOASTIFYCOLOR.DARK
-                                                : TOASTIFYCOLOR.LIGHT,
-                                            TOASTIFYSTATE.INFO,
-                                        )
-                                    }
-                                    style={{ color: color?.text }}
-                                >
-                                    COOKIE POLICY
-                                </p>
-                            </li>
-                            <li>
-                                <p
-                                    onClick={() => navigate(RoutePath.About)}
-                                    style={{ color: color?.text }}
-                                >
-                                    ABOUT
-                                </p>
-                            </li>
-                            <li>
-                                <p
-                                    onClick={() =>
-                                        displayToastify(
-                                            'Implementation inprogress',
-                                            !darkTheme
-                                                ? TOASTIFYCOLOR.DARK
-                                                : TOASTIFYCOLOR.LIGHT,
-                                            TOASTIFYSTATE.INFO,
-                                        )
-                                    }
-                                    style={{ color: color?.text }}
-                                >
-                                    FAQ
-                                </p>
-                            </li>
+                            {['PRIVACY POLICY', 'COOKIE POLICY', 'ABOUT', 'FAQ'].map((link) => (
+                                <li key={link}>
+                                    <p onClick={() => link === 'ABOUT' ? navigate(RoutePath.About) : displayToastify('Implementation in progress', !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.INFO)}>
+                                        {link}
+                                    </p>
+                                </li>
+                            ))}
                         </ul>
                     </section>
-                    <section>
-                        <p style={{ color: color?.button }}>
-                            COPYRIGHT &copy; {new Date().getFullYear()}{' '}
-                            OPENBRIDGE INC. <br />
-                            ALL RIGHT RESERVED.
+                    <section className="copyright-section">
+                        <p>
+                            COPYRIGHT &copy; {new Date().getFullYear()} OPENBRIDGE INC. <br />
+                            ALL RIGHTS RESERVED.
                         </p>
                     </section>
                 </div>

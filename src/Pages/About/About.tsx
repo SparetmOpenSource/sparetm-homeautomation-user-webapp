@@ -122,9 +122,17 @@ const About = () => {
         },
     ];
 
+    const themeStyles = {
+        backgroundColor: color?.outer,
+        '--bg-inner': color?.inner,
+        '--text-primary': color?.text,
+        '--color-accent': color?.button,
+        '--bg-outer': color?.outer,
+    } as React.CSSProperties;
+
     return (
         <PageTransition>
-            <div className="about" style={{ backgroundColor: color?.outer }}>
+            <div className="about" style={themeStyles}>
             {/* Theme Toggle Button */}
             <motion.span
                 className="about-theme-icon"

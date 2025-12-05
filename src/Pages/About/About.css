@@ -13,15 +13,18 @@
 }
 
 .about-theme-icon {
-    position: absolute;
+    position: fixed; /* Fixed to stay on screen */
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
-    top: 6px;
-    right: 22px;
-    padding: 0.5rem;
-    z-index: 1000 !important;
+    width: 50px;
+    height: 50px;
+    top: 20px; /* Adjusted spacing */
+    right: 20px;
+    padding: 10px;
+    z-index: 1001;
+    background: var(--bg-inner);
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     cursor: pointer;
 }
