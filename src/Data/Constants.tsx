@@ -75,11 +75,6 @@ export const home_contact_social_list = [
     },
     {
         id: 2,
-        name: 'Instagram',
-        href: 'https://www.instagram.com/shubham_tales/',
-    },
-    {
-        id: 3,
         name: 'Contact us',
         href: 'https://www.linkedin.com/in/shubham2601',
     },

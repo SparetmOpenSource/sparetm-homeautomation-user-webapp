@@ -10,8 +10,9 @@ import { CiDark } from 'react-icons/ci';
 import { observer } from '../../Utils/HelperFn';
 import { MdWeb, MdCloudSync } from 'react-icons/md';
 import { FaCode, FaUsers } from 'react-icons/fa';
-
+import Profile from '../../Assets/Profile.png';
 import PageTransition from '../../Components/Others/PageTransition/PageTransition';
+import { home_contact_social_list } from '../../Data/Constants';
 
 const About = () => {
     const darkTheme: any = useTheme();
@@ -33,12 +34,12 @@ const About = () => {
     const coFounders = [
         {
             id: 1,
-            name: 'Co-Founder Name',
-            role: 'CEO & Co-Founder',
+            name: 'Shubham Kumar Singh',
+            role: 'Project Lead & Co-Founder',
             quote: 'When starting OpenBridge, I had a crystal clear vision of what a great home automation platform should feel like. Honest, skillful, fun, creative, humble, innovative. These are just some of the words I use to judge if we live up to that vision.',
-            image: '', // TODO: Add image path
-            linkedin: '#',
-            github: '#',
+            image: Profile, // TODO: Add image path
+            linkedin: home_contact_social_list[1].href,
+            github: 'https://github.com/sparetm',
         },
     ];
 
@@ -305,24 +306,19 @@ const About = () => {
                                 alignItems: 'center',
                             }}
                         >
-                            {/* TODO: Add founder image */}
-                            <div
+                            <img
+                                src={founder.image}
+                                alt={founder.name}
                                 style={{
                                     width: '350px',
                                     height: '350px',
                                     borderRadius: '50%',
-                                    backgroundColor: color?.outer,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontSize: '8rem',
-                                    color: color?.button,
-                                    fontWeight: 'bold',
+                                    objectFit: 'cover',
+                                    objectPosition: '20% top',
                                     boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+                                    border: `5px solid ${color?.outer}`,
                                 }}
-                            >
-                                {founder.name.charAt(0)}
-                            </div>
+                            />
                         </div>
 
                         {/* Founder Quote */}
@@ -368,6 +364,34 @@ const About = () => {
                                 >
                                     {founder.role}
                                 </p>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        gap: '15px',
+                                        marginTop: '15px',
+                                    }}
+                                >
+                                    <IconContext.Provider
+                                        value={{ size: '1.5em', color: color?.outer }}
+                                    >
+                                        <a
+                                            href={founder.linkedin}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            <FaLinkedin />
+                                        </a>
+                                        <a
+                                            href={founder.github}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            <FaGithub />
+                                        </a>
+                                    </IconContext.Provider>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -622,7 +646,7 @@ const About = () => {
                         cursor: 'pointer',
                         fontWeight: 'bold',
                     }}
-                    onClick={() => window.open('https://github.com/your-repo', '_blank')}
+                    onClick={() => window.open(home_contact_social_list[0].href, '_blank')}
                 >
                     Contribute on GitHub
                 </motion.button>

@@ -35,7 +35,7 @@ import { MdWeb } from 'react-icons/md';
 import { FaCode } from 'react-icons/fa';
 import { MdCloudSync } from 'react-icons/md';
 import { FaFileSignature } from 'react-icons/fa6';
-import { MdAddBusiness } from 'react-icons/md';
+import { MdAddBusiness, MdDashboard } from 'react-icons/md';
 import { MdOutlineConnectWithoutContact } from 'react-icons/md';
 
 const Home = () => {
@@ -569,106 +569,86 @@ const Home = () => {
                     </div>
                     {/*  */}
                 </div>
-                <div ref={paragraphStepsRef} className="hidden-el">
-                    <section className="hidden-el">
-                        <div>
-                            <IconContext.Provider
-                                value={useMemo(() => {
-                                    return {
-                                        size: '6em',
-                                        color: 'lavender',
-                                    };
-                                }, [])}
+                <div
+                    ref={paragraphStepsRef}
+                    className="hidden-el"
+                    style={{
+                        backgroundColor: color?.inner, 
+                    }}
+                >
+                    <div
+                        style={{
+                            // Grid styles are now in CSS under .home-intro > :last-child > div
+                        }}
+                    >
+                        {[
+                            {
+                                icon: <FaFileSignature />,
+                                title: 'Create Your Profile',
+                                description:
+                                    'Join to unlock personalized features. Configure your rooms and location for real-time weather updates and a tailored automation experience.',
+                            },
+                            {
+                                icon: <MdDashboard />,
+                                title: 'Personalize Dashboard',
+                                description:
+                                    'Customize your interface to match your workflow. Organize devices, tweak settings, and control your environment effortlessly.',
+                            },
+                            {
+                                icon: <MdOutlineConnectWithoutContact />,
+                                title: 'Connect Your Devices',
+                                description:
+                                    'Access step-by-step guides for ESP32, ESP8266, and Raspberry Pi. Seamlessly integrate your custom circuits and start controlling your hardware.',
+                            },
+                        ].map((step, index) => (
+                            <motion.div
+                                key={index}
+                                whileHover={{ y: -10 }}
+                                style={{
+                                    backgroundColor: darkTheme
+                                        ? color?.element
+                                        : color?.card,
+                                    border: `1px solid ${
+                                        darkTheme
+                                            ? 'rgba(255,255,255,0.05)'
+                                            : 'rgba(0,0,0,0.05)'
+                                    }`,
+                                    boxShadow: darkTheme
+                                        ? '0 10px 30px rgba(0,0,0,0.3)'
+                                        : '0 10px 30px rgba(0,0,0,0.05)',
+                                }}
                             >
-                                <FaFileSignature />
-                            </IconContext.Provider>
-                            <h1 style={{ color: '#FFEE99' }}>
-                                Sign in and set up your profile
-                            </h1>
-                        </div>
-                        <div>
-                            <p style={{ color: '#FFEE99' }}>
-                                Create your account to access all essential
-                                features and get started right away.
-                            </p>
-                            <p style={{ color: '#FFEE99' }}>
-                                Add your personal details and room information
-                                so the app can tailor the experience to your
-                                setup.
-                            </p>
-                            <p style={{ color: '#FFEE99' }}>
-                                Set your location to receive real-time weather
-                                updates and enjoy a fully personalized
-                                experience.
-                            </p>
-                        </div>
-                    </section>
-                    <section className="hidden-el">
-                        <div>
-                            <IconContext.Provider
-                                value={useMemo(() => {
-                                    return {
-                                        size: '6em',
-                                        color: 'lavender',
-                                    };
-                                }, [])}
-                            >
-                                <MdAddBusiness />
-                            </IconContext.Provider>
-                            <h1 style={{ color: '#FFEE99' }}>
-                                Customize your application
-                            </h1>
-                        </div>
-                        <div>
-                            <p style={{ color: '#FFEE99' }}>
-                                Make the app truly yours with endless
-                                customization options designed to fit your
-                                needs.
-                            </p>
-                            <p style={{ color: '#FFEE99' }}>
-                                Personalize your dashboard and manage the
-                                devices in your room effortlessly.
-                            </p>
-                            <p style={{ color: '#FFEE99' }}>
-                                Explore a variety of settings and controls for a
-                                fully tailored and enhanced experience.
-                            </p>
-                        </div>
-                    </section>
-                    <section className="hidden-el">
-                        <div>
-                            <IconContext.Provider
-                                value={useMemo(() => {
-                                    return {
-                                        size: '6em',
-                                        color: 'lavender',
-                                    };
-                                }, [])}
-                            >
-                                <MdOutlineConnectWithoutContact />
-                            </IconContext.Provider>
-                            <h1 style={{ color: '#FFEE99' }}>
-                                Set up your appliance
-                            </h1>
-                        </div>
-                        <div>
-                            <p style={{ color: '#FFEE99' }}>
-                                Head to the Connect section to find step-by-step
-                                instructions and sample code for your embedded
-                                circuits.
-                            </p>
-                            <p style={{ color: '#FFEE99' }}>
-                                Most code examples are provided for ESP32,
-                                ESP8266, and Raspberry Pi, making integration
-                                quick and simple.
-                            </p>
-                            <p style={{ color: '#FFEE99' }}>
-                                Experiment with the available guides to
-                                personalize and control your appliances the way
-                                you want.
-                            </p>
-                        </div>
-                    </section>
+                                <div
+                                    style={{
+                                        backgroundColor: `${color?.button}20`, // 20% opacity
+                                    }}
+                                >
+                                    <IconContext.Provider
+                                        value={{
+                                            size: '3em',
+                                            color: color?.button,
+                                        }}
+                                    >
+                                        {step.icon}
+                                    </IconContext.Provider>
+                                </div>
+                                <h3
+                                    style={{
+                                        color: color?.button,
+                                    }}
+                                >
+                                    {step.title}
+                                </h3>
+                                <p
+                                    style={{
+                                        color: color?.text,
+                                    }}
+                                >
+                                    {step.description}
+                                </p>
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
