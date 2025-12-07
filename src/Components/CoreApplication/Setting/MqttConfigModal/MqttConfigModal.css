@@ -1,0 +1,95 @@
+.mqtt-config-modal {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mqtt-config-modal h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.mqtt-config-modal p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.mqtt-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 1;
+}
+
+.mqtt-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mqtt-form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.mqtt-form-group input {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.mqtt-form-group input:focus {
+    border-color: var(--accent-color, #448AFF);
+}
+
+.mqtt-form-group input::placeholder {
+    opacity: 0.5;
+}
+
+.mqtt-form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: auto;
+}
+
+.mqtt-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.mqtt-btn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.mqtt-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.mqtt-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.mqtt-btn-cancel {
+    border-style: solid;
+}
+
+.mqtt-btn-submit {
+    border: none;
+}

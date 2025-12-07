@@ -226,7 +226,8 @@ export const ChangeBrightnessIcon = (brightness: any) => {
 export const GadgetRgbDefaultColor = ['177', '216', '213', '0.9', 'regular'];
 
 export const LandscapeSizeL = ['min(90%, 800px)', 'clamp(50%, 1500px, 92%)'];
-export const LandscapeSizeM = ['min(60%, 600px)', 'clamp(60%, 700px, 90%)'];
+export const LandscapeSizeM = ['min(70%, 500px)', 'clamp(60%, 600px, 90%)'];
+// export const LandscapeSizeM = ['min(60%, 600px)', 'clamp(60%, 700px, 90%)'];
 export const LandscapeSizeS = ['min(50%, 300px)', 'clamp(50%, 700px, 90%)'];
 export const HorizontalSize = ['min(90%, 1200px)', 'clamp(40%, 300px, 90%)'];
 export const PolicyModalSize = ['min(85vh, 650px)', 'min(95%, 500px)'];
@@ -298,6 +299,7 @@ export const DELETING_TODO_LIST = 'deleteToDo';
 export const ADD_TODO_LIST = 'addToDo';
 export const EDIT_TODO_LIST = 'editToDo';
 export const POLICY_MODAL = 'policy-modal';
+export const MQTT_CONFIG_MODAL = 'mqtt-config-modal';
 
 export const PAGE_LOGGER = {
     home_page: 'Pages/Home/Home.tsx',
@@ -305,6 +307,9 @@ export const PAGE_LOGGER = {
 
 export const ERROR_MSG = 'Something went wrong!';
 export const DATA_NOT_FOUND_MSG = 'Data not found!';
+export const MQTT_ERROR_PREFIX = 'MQTT configuration missing for tenant';
+export const MQTT_ERROR_USER_MESSAGE =
+    'Device configuration is missing. Please configure your MQTT credentials in Settings.';
 
 export const BACKGROUND_BLINK_SETTING = 'background_blink_settings';
 

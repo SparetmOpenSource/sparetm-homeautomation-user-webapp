@@ -19,6 +19,7 @@ export const featureUrl = {
     update_device_data_store: `/mda/api/v1/devices/data?id=`,
     remove_device_data_store: `/mda/api/v1/devices/data/remove?id=`,
     spotify_base_url: `/mpa/api/v1/profiles/spotify`,
+    mqtt_connect: `/mda/api/v1/devices/mqtt/connect`,
 };
 
 export const getWeatherQuote = async (profileId: any, darkTheme: any) => {
@@ -321,3 +322,21 @@ export const useDeleteDevice = (
         },
     );
 };
+
+/*************************Connect MQTT*******************************/
+export const useConnectMqtt = (on_Error: any, on_Success: any) => {
+    return useMutation(
+        (data) => {
+            return api.post(
+                featureUrl.mqtt_connect,
+                data,
+                updateHeaderConfig,
+            );
+        },
+        {
+            onSuccess: on_Success,
+            onError: on_Error,
+        },
+    );
+};
+

@@ -11,7 +11,7 @@ import {
     displayToastify,
     trimToNChars,
 } from '../../../../Utils/HelperFn';
-import { APPLIANCE_EXPAND, LandscapeSizeM } from '../../../../Data/Constants';
+import { APPLIANCE_EXPAND, LandscapeSizeM, LandscapeSizeS, MQTT_ERROR_PREFIX, MQTT_ERROR_USER_MESSAGE, RoutePath } from '../../../../Data/Constants';
 import ApplianceExpand from './ApplianceExpand';
 import { usePatchUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import {
@@ -22,8 +22,11 @@ import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 import { updateDeviceStatus } from '../../../../Features/Device/DeviceSlice';
+import ApiErrorModal from '../../ApiErrorModal/ApiErrorModal';
+import { useNavigate } from 'react-router-dom';
 
 const Appliance = ({ id, statusValue }: any) => {
+    const navigate = useNavigate();
     const currentDevice = useAppSelector(
         (state: any) =>
             state?.device?.deviceData?.body?.find(
@@ -34,14 +37,36 @@ const Appliance = ({ id, statusValue }: any) => {
     const dispatch = useAppDispatch();
     const [status, setStatus] = useState<boolean>(false);
     const darkTheme: any = useTheme();
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
 
     const onSuccess = () => {};
     const onError = (error: any) => {
-        displayToastify(
-            error?.message,
-            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-            TOASTIFYSTATE.ERROR,
-        );
+        if (
+            error?.response?.status === 400 &&
+            error?.response?.data?.message?.startsWith(
+                MQTT_ERROR_PREFIX,
+            )
+        ) {
+            const backdropId = 'api-error-modal';
+            toggleBackDropOpen(
+                backdropId,
+                <ApiErrorModal
+                    message={MQTT_ERROR_USER_MESSAGE}
+                    darkTheme={darkTheme}
+                    onNavigateToSettings={() => {
+                        toggleBackDropClose(backdropId);
+                        navigate(`${RoutePath.CoreApplication_Setting}/${RoutePath.Setting_Account}`);
+                    }}
+                />,
+                LandscapeSizeS,
+            );
+        } else {
+            displayToastify(
+                error?.message,
+                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+                TOASTIFYSTATE.ERROR,
+            );
+        }
     };
     const { mutate } = usePatchUpdateData(
         `${featureUrl.update_device}${id}`,
@@ -56,8 +81,6 @@ const Appliance = ({ id, statusValue }: any) => {
         dispatch(updateDeviceStatus({ id, status: newStatus }));
         mutate({ status: newStatus, statusDetail: '' } as any);
     };
-
-    const { toggleBackDropOpen } = useBackDropOpen();
 
     useEffect(() => {
         setStatus(statusValue);

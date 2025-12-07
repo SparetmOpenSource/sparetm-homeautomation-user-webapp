@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import './DeviceCard.css';
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useBackDropOpen, useTheme } from '../../../../Pages/ThemeProvider';
@@ -14,7 +15,11 @@ import {
 } from 'react-icons/md';
 import {
     LandscapeSizeM,
+    LandscapeSizeS,
+    MQTT_ERROR_PREFIX,
+    MQTT_ERROR_USER_MESSAGE,
     RGB_GADGET_EXPAND,
+    RoutePath,
 } from '../../../../Data/Constants';
 import RgbGadgetExpand from './RgbGadgetExpand';
 import {
@@ -36,6 +41,7 @@ import {
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 import { updateDeviceStatus } from '../../../../Features/Device/DeviceSlice';
+import ApiErrorModal from '../../ApiErrorModal/ApiErrorModal';
 
 interface RgbGadgetProps {
     id: string;
@@ -43,6 +49,7 @@ interface RgbGadgetProps {
 }
 
 const RgbGadget = ({ id, statusValue }: RgbGadgetProps) => {
+    const navigate = useNavigate();
     const currentDevice = useAppSelector(
         (state: any) =>
             state?.device?.deviceData?.body?.find(
@@ -54,7 +61,7 @@ const RgbGadget = ({ id, statusValue }: RgbGadgetProps) => {
     const dispatch = useAppDispatch();
     const [status, setStatus] = useState<boolean>(statusValue);
     const darkTheme = useTheme();
-    const { toggleBackDropOpen } = useBackDropOpen();
+    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
 
     const pattern =
         currentDevice?.statusDetail?.split(',')[4] ?? GadgetRgbDefaultPattern;
@@ -74,11 +81,32 @@ const RgbGadget = ({ id, statusValue }: RgbGadgetProps) => {
         updateHeaderConfig,
         () => {},
         (error: any) => {
-            displayToastify(
-                error?.message,
-                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                TOASTIFYSTATE.ERROR,
-            );
+            if (
+                error?.response?.status === 400 &&
+                error?.response?.data?.message?.startsWith(
+                    MQTT_ERROR_PREFIX,
+                )
+            ) {
+                const backdropId = 'api-error-modal';
+                toggleBackDropOpen(
+                    backdropId,
+                    <ApiErrorModal
+                        message={MQTT_ERROR_USER_MESSAGE}
+                        darkTheme={darkTheme}
+                        onNavigateToSettings={() => {
+                            toggleBackDropClose(backdropId);
+                            navigate(`${RoutePath.CoreApplication_Setting}/${RoutePath.Setting_Account}`);
+                        }}
+                    />,
+                    LandscapeSizeS,
+                );
+            } else {
+                displayToastify(
+                    error?.message,
+                    !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+                    TOASTIFYSTATE.ERROR,
+                );
+            }
         },
     );
 
