@@ -19,7 +19,7 @@ import { displayToastify } from '../../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 
 import { useBackDropOpen } from '../../../../Pages/ThemeProvider';
-import { POLICY_MODAL, HorizontalSize } from '../../../../Data/Constants';
+import { POLICY_MODAL, PolicyModalSize } from '../../../../Data/Constants';
 import PolicyModal from '../../../../Components/Others/PolicyModal/PolicyModal';
 
 // --- Types & Interfaces ---
@@ -315,7 +315,7 @@ const ActionSettingItem = ({ config }: { config: SettingItemConfig }) => {
                     darkTheme={darkTheme}
                     initialTab="settings"
                 />,
-                HorizontalSize,
+                PolicyModalSize,
                 false
             );
         } else if (config.action) {

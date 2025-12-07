@@ -229,6 +229,7 @@ export const LandscapeSizeL = ['min(90%, 800px)', 'clamp(50%, 1500px, 92%)'];
 export const LandscapeSizeM = ['min(60%, 600px)', 'clamp(60%, 700px, 90%)'];
 export const LandscapeSizeS = ['min(50%, 300px)', 'clamp(50%, 700px, 90%)'];
 export const HorizontalSize = ['min(90%, 1200px)', 'clamp(40%, 300px, 90%)'];
+export const PolicyModalSize = ['min(85vh, 650px)', 'min(95%, 500px)'];
 export const FullScreenSize = ['100%', '100%'];
 
 export const socketUrlPostFix = '/api/v1/socket/data/update';
