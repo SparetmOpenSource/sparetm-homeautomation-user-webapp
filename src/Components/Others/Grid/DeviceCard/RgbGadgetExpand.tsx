@@ -18,7 +18,7 @@ import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import { useAppSelector } from '../../../../Features/ReduxHooks';
 import {
     LandscapeSizeM,
-    RGB_GADGET_EXPAND_INFO,
+    RGB_GADGET_EXPAND_INFO
 } from '../../../../Data/Constants';
 import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../Data/QueryConstant';
 import { useQueryClient } from 'react-query';
@@ -31,6 +31,7 @@ import RgbGadgetExpandSavedColor from './RgbGadgetExpandSavedColor';
 import { IoMdCloudDownload } from 'react-icons/io';
 import { GadgetRgbRainbowPattern } from '../../../../Data/DeviceRoomConstant';
 import { SiNano } from 'react-icons/si';
+import { useDeviceMutation } from '../../../../Hooks/useDeviceMutation';
 
 interface RGBA {
     r: number;
@@ -47,6 +48,7 @@ interface RgbGadgetExpandProps {
     rgbGadgetExpandBackdropId: string;
     currentDeviceStatus: boolean;
     currentAnimation: string;
+    onNavigate: (path: string) => void;
 }
 
 const RgbGadgetExpand = ({
@@ -57,6 +59,7 @@ const RgbGadgetExpand = ({
     rgbGadgetExpandBackdropId,
     currentDeviceStatus,
     currentAnimation,
+    onNavigate,
 }: RgbGadgetExpandProps) => {
     const currentDevice = useAppSelector(
         (state: any) =>
@@ -87,19 +90,12 @@ const RgbGadgetExpand = ({
         setColor(darkTheme ? dark_colors : light_colors);
     }, [darkTheme]);
 
-    const { mutate } = usePatchUpdateData(
+    const { mutate } = useDeviceMutation(
         `${featureUrl.update_device}${id}`,
         updateHeaderConfig,
         () => {
             invalidateQueries(queryClient, [SELECT_DEVICE_LIST_QUERY_ID]);
             toggleBackDropClose(rgbGadgetExpandBackdropId);
-        },
-        (error: any) => {
-            displayToastify(
-                error?.message,
-                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                TOASTIFYSTATE.ERROR,
-            );
         },
     );
 

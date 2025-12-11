@@ -72,12 +72,12 @@ const Info = ({ darkTheme, currentActiveDevice, handleRefresh }: InfoProps) => {
             defaultOnSuccess,
             on_error,
             !!accessToken, // enable only when token is available
-            true,
             false,
             false,
             false,
-            0,
-            0,
+            false,
+            300000,
+            300000,
         );
 
     const { isLoading: deviceIsLoading, data: deviceState } = useReactQuery_Get(

@@ -14,6 +14,7 @@ import {
     SECURITY_LOCK_TIMEOUT_KEY,
     ACKNOWLEDGED_NOTIFICATIONS_KEY,
     PAGE_TRANSITIONS_ENABLED_KEY,
+    WEBSOCKET_ENABLED_KEY,
 } from '../../../../Data/Constants';
 import { displayToastify } from '../../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
@@ -30,7 +31,7 @@ interface SettingOption {
 
 interface SettingItemConfig {
     id: string;
-    type: 'toggle' | 'select' | 'button' | 'object-toggle';
+    type: 'toggle' | 'select' | 'button' | 'object-toggle' | 'warning';
     label: string;
     description: string;
     storageKey?: string; // Optional for buttons
@@ -39,7 +40,7 @@ interface SettingItemConfig {
     objectKey?: string; // For 'object-toggle' type (key within the object)
     action?: () => void; // For 'button' type
     buttonLabel?: string; // For 'button' type
-    dependency?: { key: string; value: any }; // Future proofing for dependent settings
+    dependency?: { key: string; value: any }; // For dependent settings
 }
 
 interface SettingSectionConfig {
@@ -110,6 +111,27 @@ const SETTINGS_CONFIG: SettingSectionConfig[] = [
                 action: () => {}, 
             },
         ]
+    },
+    {
+        id: 'realtime_updates',
+        title: 'Real-time Updates',
+        items: [
+            {
+                id: 'websocket_enabled',
+                type: 'toggle',
+                label: 'Enable Real-time Connections',
+                description: 'Keep devices and notifications in sync instantly',
+                storageKey: WEBSOCKET_ENABLED_KEY,
+                defaultValue: true,
+            },
+            {
+                id: 'websocket_warning',
+                type: 'warning',
+                label: '',
+                description: '',
+                dependency: { key: WEBSOCKET_ENABLED_KEY, value: false },
+            },
+        ],
     },
     {
         id: 'blink_notifications',
@@ -286,6 +308,46 @@ const StorageSettingItem = ({ config }: { config: SettingItemConfig }) => {
     );
 };
 
+// Component for Warning Message (Special Case)
+const WarningMessageItem = ({ config }: { config: SettingItemConfig }) => {
+    const [isEnabled] = useLocalStorage(config.dependency?.key || '', true);
+    const darkTheme = useTheme();
+    const colors = useMemo(() => (darkTheme ? dark_colors : light_colors), [darkTheme]);
+
+    if(isEnabled) return null;
+
+    return (
+        <div 
+            className="preference-warning"
+            style={{
+                marginTop: '1rem',
+                padding: '1rem',
+                backgroundColor: `${colors.error}20`,
+                border: `1px solid ${colors.error}`,
+                borderRadius: '0.5rem',
+                color: colors.text,
+                fontSize: '0.9rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.5rem'
+            }}
+        >
+            <strong style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: colors.error }}>
+                ⚠️ Functionality Restricted
+            </strong>
+            <p style={{ margin: 0, opacity: 0.9 }}>
+                Disabling real-time connections will turn of the following features:
+            </p>
+            <ul style={{ margin: 0, paddingLeft: '1.5rem', opacity: 0.8, lineHeight: '1.4' }}>
+                <li>Live device status updates from other users</li>
+                <li>Real-time push notifications</li>
+                <li>Instant dashboard synchronization</li>
+                <li>Global connectivity alerts</li>
+            </ul>
+        </div>
+    );
+};
+
 // Component for action-based settings (Buttons) - No localStorage hook needed
 const ActionSettingItem = ({ config }: { config: SettingItemConfig }) => {
     // Specific logic for Clear History button
@@ -359,6 +421,10 @@ const ActionSettingItem = ({ config }: { config: SettingItemConfig }) => {
 const PreferenceItem = ({ config }: { config: SettingItemConfig }) => {
     if (config.type === 'button') {
         return <ActionSettingItem config={config} />;
+    }
+    // For warning items
+    if (config.type === 'warning' as any) {
+        return <WarningMessageItem config={config} />;
     }
     // For all other types that use storage
     return <StorageSettingItem config={config} />;

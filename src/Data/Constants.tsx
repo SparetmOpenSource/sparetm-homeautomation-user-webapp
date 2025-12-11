@@ -92,8 +92,7 @@ export const weather_quote_constant = {
 };
 
 export const spotify_refresh_playback_constant = {
-    play_back_fetch_delay_time: 2000, //1000 * 3 = 3000
-    queue_fetch_delay_time: 4000, //1000 * 3 = 3000
+    play_back_fetch_delay_time: 2000, //1000 * 2 = 3000
 };
 
 export const Current_Date_Time = new Date().toLocaleString('en-IN', {
@@ -310,6 +309,7 @@ export const DATA_NOT_FOUND_MSG = 'Data not found!';
 export const MQTT_ERROR_PREFIX = 'MQTT configuration missing for tenant';
 export const MQTT_ERROR_USER_MESSAGE =
     'Device configuration is missing. Please configure your MQTT credentials in Settings.';
+export const IS_MQTT_CONFIGURED_KEY = 'is_mqtt_configured';
 
 export const BACKGROUND_BLINK_SETTING = 'background_blink_settings';
 
@@ -325,3 +325,4 @@ export const ACKNOWLEDGED_NOTIFICATIONS_KEY = 'acknowledged_notifications';
 export const PAGE_TRANSITIONS_ENABLED_KEY = 'pageTransitionsEnabled';
 export const DARK_THEME_KEY = 'darkTheme';
 export const COOKIES_PREFERENCES_KEY = 'cookies_preferences';
+export const WEBSOCKET_ENABLED_KEY = 'websocket_enabled_global';

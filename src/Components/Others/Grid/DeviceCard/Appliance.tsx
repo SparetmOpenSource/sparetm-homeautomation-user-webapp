@@ -8,25 +8,20 @@ import { PiPowerFill } from 'react-icons/pi';
 import { HiOutlineInformationCircle } from 'react-icons/hi2';
 import {
     changeDeviceIcon,
-    displayToastify,
     trimToNChars,
 } from '../../../../Utils/HelperFn';
-import { APPLIANCE_EXPAND, LandscapeSizeM, LandscapeSizeS, MQTT_ERROR_PREFIX, MQTT_ERROR_USER_MESSAGE, RoutePath } from '../../../../Data/Constants';
+import { APPLIANCE_EXPAND, LandscapeSizeM, LandscapeSizeS } from '../../../../Data/Constants';
 import ApplianceExpand from './ApplianceExpand';
-import { usePatchUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../Features/ReduxHooks';
 import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 import { updateDeviceStatus } from '../../../../Features/Device/DeviceSlice';
-import ApiErrorModal from '../../ApiErrorModal/ApiErrorModal';
-import { useNavigate } from 'react-router-dom';
+import { useDeviceMutation } from '../../../../Hooks/useDeviceMutation';
 
 const Appliance = ({ id, statusValue }: any) => {
-    const navigate = useNavigate();
     const currentDevice = useAppSelector(
         (state: any) =>
             state?.device?.deviceData?.body?.find(
@@ -37,42 +32,31 @@ const Appliance = ({ id, statusValue }: any) => {
     const dispatch = useAppDispatch();
     const [status, setStatus] = useState<boolean>(false);
     const darkTheme: any = useTheme();
-    const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
+    const { toggleBackDropOpen } = useBackDropOpen();
 
-    const onSuccess = () => {};
-    const onError = (error: any) => {
-        if (
-            error?.response?.status === 400 &&
-            error?.response?.data?.message?.startsWith(
-                MQTT_ERROR_PREFIX,
-            )
-        ) {
-            const backdropId = 'api-error-modal';
-            toggleBackDropOpen(
-                backdropId,
-                <ApiErrorModal
-                    message={MQTT_ERROR_USER_MESSAGE}
-                    darkTheme={darkTheme}
-                    onNavigateToSettings={() => {
-                        toggleBackDropClose(backdropId);
-                        navigate(`${RoutePath.CoreApplication_Setting}/${RoutePath.Setting_Account}`);
-                    }}
-                />,
-                LandscapeSizeS,
-            );
-        } else {
-            displayToastify(
-                error?.message,
-                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                TOASTIFYSTATE.ERROR,
-            );
-        }
+    const onSuccess = () => {
+        // useDeviceMutation handles safety re-fetch automatically
     };
-    const { mutate } = usePatchUpdateData(
+
+    const onError = (error: any) => {
+        // Revert Optimistic Update
+        setStatus((prev) => {
+             const reverted = !prev;
+             setTimeout(() => {
+                 dispatch(updateDeviceStatus({ id, status: reverted }));
+             }, 0);
+             return reverted;
+        });
+        // Note: useDeviceMutation handles the modal/toast logic automatically
+    };
+
+    const { mutate } = useDeviceMutation(
         `${featureUrl.update_device}${id}`,
         updateHeaderConfig,
         onSuccess,
-        onError,
+        undefined, // Default non-MQTT error handling (Toast)
+        LandscapeSizeS,
+        onError // Run this on ANY error (revert)
     );
 
     const changeStatus = () => {

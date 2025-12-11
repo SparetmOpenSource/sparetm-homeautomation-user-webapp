@@ -22,8 +22,9 @@ import { addDeviceData } from '../../../Features/Device/DeviceSlice';
 import { ERROR_MSG, RoutePath } from '../../../Data/Constants';
 import { FaPowerOff } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
-import { usePatchUpdateData } from '../../../Api.tsx/useReactQuery_Update';
 import { updateHeaderConfig } from '../../../Api.tsx/Axios';
+import { useDeviceMutation } from '../../../Hooks/useDeviceMutation';
+
 
 const DeviceRoom = () => {
     const [color, setColor] = useState<any>(light_colors);
@@ -58,20 +59,14 @@ const DeviceRoom = () => {
         dispatch(addDeviceData(data?.data?.body));
     };
 
-    const { mutate } = usePatchUpdateData(
+    const { mutate } = useDeviceMutation(
         `${featureUrl.update_all_device_status}${admin}&profilename=${profile}&roomtype=${roomType}`,
         updateHeaderConfig,
         () => {
             invalidateQueries(queryClient, queryKeys);
         },
-        (error: any) => {
-            displayToastify(
-                error?.message,
-                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                TOASTIFYSTATE.ERROR,
-            );
-        },
     );
+
 
     const triggerAllDevices = useCallback(() => {
         const newStatus = on !== total;
@@ -91,13 +86,13 @@ const DeviceRoom = () => {
         deviceFn,
         on_fetch_device_Success,
         on_fetch_device_Error,
-        true, // !fetch_On_Click_Status
-        true, // refetch_On_Mount
+        !!(admin && profile), // !fetch_On_Click_Status
+        false, // refetch_On_Mount
         false, // refetch_On_Window_Focus
         false, // refetch_Interval
         false, // refetch_Interval_In_Background
         300000, // Cache time
-        0, // Stale Time
+        300000, // Stale Time
     );
 
     useEffect(() => {
@@ -132,7 +127,6 @@ const DeviceRoom = () => {
                             backCol={color?.outer}
                             width="150px"
                             fn={() => {
-                                invalidateQueries(queryClient, queryKeys);
                                 dispatch(
                                     addFirstRoom(
                                         item?.room_type?.toLowerCase(),

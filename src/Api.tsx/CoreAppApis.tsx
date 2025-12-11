@@ -20,6 +20,8 @@ export const featureUrl = {
     remove_device_data_store: `/mda/api/v1/devices/data/remove?id=`,
     spotify_base_url: `/mpa/api/v1/profiles/spotify`,
     mqtt_connect: `/mda/api/v1/devices/mqtt/connect`,
+    get_mqtt_config: `/mda/api/v1/devices/mqtt/config/`,
+    del_mqtt_config: `/mda/api/v1/devices/mqtt/config/`,
 };
 
 export const getWeatherQuote = async (profileId: any, darkTheme: any) => {
@@ -323,20 +325,17 @@ export const useDeleteDevice = (
     );
 };
 
-/*************************Connect MQTT*******************************/
-export const useConnectMqtt = (on_Error: any, on_Success: any) => {
-    return useMutation(
-        (data) => {
-            return api.post(
-                featureUrl.mqtt_connect,
-                data,
-                updateHeaderConfig,
-            );
-        },
-        {
-            onSuccess: on_Success,
-            onError: on_Error,
-        },
-    );
-};
 
+
+/*************************Get MQTT Config*******************************/
+export const getMqttConfig = async (admin: string) => {
+    try {
+        const response = await api.get(
+            featureUrl.get_mqtt_config + admin,
+            getHeaderConfig,
+        );
+        return response;
+    } catch (error) {
+        throw new Error('Failed to fetch mqtt configuration');
+    }
+};
