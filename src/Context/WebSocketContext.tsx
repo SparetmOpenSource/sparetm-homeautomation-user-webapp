@@ -11,7 +11,7 @@ import { useReactQuery_Get } from '../Api.tsx/useReactQuery_Get';
 import { GET_WEBSOCKET_URL_QUERY_ID } from '../Data/QueryConstant';
 import { displayToastify, handleClickForBlinkNotification, playNotificationSound } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
-import { ACKNOWLEDGED_NOTIFICATIONS_KEY, NOTIFICATION_SOUNDS_ENABLED_KEY } from '../Data/Constants';
+import { ACKNOWLEDGED_NOTIFICATIONS_KEY, NOTIFICATION_SOUNDS_ENABLED_KEY, WEBSOCKET_ENABLED_KEY } from '../Data/Constants';
 import { useTheme } from '../Pages/ThemeProvider';
 import { useLocation } from 'react-router-dom';
 import { dark_colors, light_colors } from '../Data/ColorConstant';
@@ -55,6 +55,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     // Use hooks for settings and storage
     const [acknowledgedIds] = useLocalStorage<string[]>(ACKNOWLEDGED_NOTIFICATIONS_KEY, []);
     const [notificationSoundsEnabled] = useLocalStorage(NOTIFICATION_SOUNDS_ENABLED_KEY, true);
+    const [isWebSocketEnabled] = useLocalStorage(WEBSOCKET_ENABLED_KEY, true);
 
     // Refs to hold latest values for WebSocket callback (avoids stale closures)
     const acknowledgedIdsRef = useRef(acknowledgedIds);
@@ -424,17 +425,17 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
         reconnectAttemptsRef.current = 0;
     };
 
-    // Auto-connect when authenticated and URL is available
+    // Auto-connect when authenticated, URL is available, AND WebSocket is enabled
     useEffect(() => {
-        if (token && admin && profileId && wsUrl && !isLoadingWsUrl && !isFetching) {
+        if (token && admin && profileId && wsUrl && !isLoadingWsUrl && !isFetching && isWebSocketEnabled) {
             connect();
-        } else if (!token || !admin || !profileId) {
+        } else if (!token || !admin || !profileId || !isWebSocketEnabled) {
             disconnect();
         }
         // Note: We intentionally do NOT return disconnect() here.
         // disconnect() resets the reconnection attempts, which we don't want
         // when just refetching the URL or updating state.
-    }, [token, admin, profileId, wsUrl, isLoadingWsUrl, isFetching]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [token, admin, profileId, wsUrl, isLoadingWsUrl, isFetching, isWebSocketEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Cleanup on unmount only
     useEffect(() => {

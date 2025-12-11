@@ -6,6 +6,7 @@ import PublicRoute from '../../Services/PublicRoute';
 import ProtectedRoute from '../../Services/ProtectedRoute';
 import { RoutePath } from '../../Data/Constants';
 import Preferences from '../../Components/CoreApplication/Setting/Preferences/Preferences';
+import Account from '../../Components/CoreApplication/Setting/Account/Account';
 import {
     About,
     AddProfile,
@@ -115,7 +116,7 @@ const routes = [
                     },
                     {
                         path: RoutePath.Setting_Account,
-                        element: <h1>Account setting</h1>,
+                        element: <Account />,
                     },
                     {
                         path: RoutePath.Setting_Features,

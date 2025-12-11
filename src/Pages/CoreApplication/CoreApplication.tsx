@@ -142,12 +142,12 @@ const CoreApplication = memo(() => {
             );
         },
         !!profileId,
-        true,
+        false, // refetchOnMount
+        false, // refetchOnWindowFocus
         false,
         false,
-        false,
-        20000,
-        10000,
+        300000,
+        300000,
     );
 
     const returnPageSpecificIcon = useCallback(

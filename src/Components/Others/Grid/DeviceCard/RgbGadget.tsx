@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import './DeviceCard.css';
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useBackDropOpen, useTheme } from '../../../../Pages/ThemeProvider';
@@ -14,6 +15,7 @@ import {
 } from 'react-icons/md';
 import {
     LandscapeSizeM,
+    LandscapeSizeS,
     RGB_GADGET_EXPAND,
 } from '../../../../Data/Constants';
 import RgbGadgetExpand from './RgbGadgetExpand';
@@ -24,18 +26,17 @@ import {
 } from '../../../../Data/DeviceRoomConstant';
 import {
     ConvertTheRangeToRound,
-    displayToastify,
     trimToNChars,
 } from '../../../../Utils/HelperFn';
 import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
-import { usePatchUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
+import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
+import { updateDeviceStatus } from '../../../../Features/Device/DeviceSlice';
+import { useDeviceMutation } from '../../../../Hooks/useDeviceMutation';
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../Features/ReduxHooks';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
-import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
-import { updateDeviceStatus } from '../../../../Features/Device/DeviceSlice';
+
 
 interface RgbGadgetProps {
     id: string;
@@ -43,6 +44,7 @@ interface RgbGadgetProps {
 }
 
 const RgbGadget = ({ id, statusValue }: RgbGadgetProps) => {
+    const navigate = useNavigate();
     const currentDevice = useAppSelector(
         (state: any) =>
             state?.device?.deviceData?.body?.find(
@@ -69,17 +71,29 @@ const RgbGadget = ({ id, statusValue }: RgbGadgetProps) => {
         return ConvertTheRangeToRound(background[3] ?? 0.5, 0, 1, 0, 100);
     }, [background]);
 
-    const { mutate } = usePatchUpdateData(
+    const onSuccess = () => {
+        // useDeviceMutation handles safety re-fetch automatically
+    };
+
+    const onError = (error: any) => {
+        // Revert Optimistic Update
+        setStatus((prev) => {
+             const reverted = !prev;
+             setTimeout(() => {
+                 dispatch(updateDeviceStatus({ id, status: reverted }));
+             }, 0);
+             return reverted;
+        });
+        // Note: useDeviceMutation handles the modal/toast logic automatically
+    };
+
+    const { mutate } = useDeviceMutation(
         `${featureUrl.update_device}${id}`,
         updateHeaderConfig,
-        () => {},
-        (error: any) => {
-            displayToastify(
-                error?.message,
-                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                TOASTIFYSTATE.ERROR,
-            );
-        },
+        onSuccess,
+        undefined, // Default non-MQTT error handling (Toast)
+        LandscapeSizeS,
+        onError // Run this on ANY error (revert)
     );
 
     const changeStatus = useCallback(() => {
@@ -184,6 +198,7 @@ const RgbGadget = ({ id, statusValue }: RgbGadgetProps) => {
                                 rgbGadgetExpandBackdropId={backdropId}
                                 currentDeviceStatus={status}
                                 currentAnimation={pattern}
+                                onNavigate={(path: string) => navigate(path)}
                             />,
                             LandscapeSizeM,
                         );

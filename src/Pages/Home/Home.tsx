@@ -40,7 +40,7 @@ import { MdOutlineConnectWithoutContact } from 'react-icons/md';
 import PolicyModal from '../../Components/Others/PolicyModal/PolicyModal';
 
 import { useBackDropOpen } from '../ThemeProvider';
-import { POLICY_MODAL, HorizontalSize } from '../../Data/Constants';
+import { POLICY_MODAL, PolicyModalSize } from '../../Data/Constants';
 
 const Home = () => {
     const paragraphLandingRef: any = useRef(null);
@@ -430,7 +430,7 @@ const Home = () => {
                                                     darkTheme={darkTheme}
                                                     initialTab={link === 'COOKIE POLICY' ? 'settings' : 'what'}
                                                 />,
-                                                HorizontalSize,
+                                                PolicyModalSize,
                                                 false
                                             );
                                         }

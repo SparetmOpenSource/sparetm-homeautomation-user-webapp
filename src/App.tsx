@@ -53,20 +53,20 @@ function App() {
     }, [blinkTrigger, startBlink, dispatch, blinkNotificationsEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <ThemeProvider>
-            <div
-                className="app"
-                style={{
-                    background: backgroundColor,
-                }}
-            >
-                <Router>
+        <Router>
+            <ThemeProvider>
+                <div
+                    className="app"
+                    style={{
+                        background: backgroundColor,
+                    }}
+                >
                     <WebSocketProvider>
                         <GlobalRoutes />
                     </WebSocketProvider>
-                </Router>
-            </div>
-        </ThemeProvider>      
+                </div>
+            </ThemeProvider>
+        </Router>      
     );
 }
 

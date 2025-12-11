@@ -49,6 +49,8 @@ import {
     PROFILEID_GLOBAL,
     TOKEN_GLOBAL,
     ADMIN_GLOBAL,
+    WEBSOCKET_ENABLED_KEY,
+    IS_MQTT_CONFIGURED_KEY,
 } from '../Data/Constants';
 import { LuRefrigerator } from 'react-icons/lu';
 import { SiSocketdotio, SiNano } from 'react-icons/si';
@@ -72,11 +74,13 @@ const PROFILE_SWITCH_KEYS = [
     SCREENSAVER_TIMEOUT_KEY,
     SECURITY_LOCK_ENABLED_KEY,
     SECURITY_LOCK_TIMEOUT_KEY,
+    WEBSOCKET_ENABLED_KEY,
 ];
 
 const LOGOUT_KEYS = [
     TOKEN_GLOBAL,
     ADMIN_GLOBAL,
+    IS_MQTT_CONFIGURED_KEY,
 ];
 
 const SPOTIFY_KEYS = [

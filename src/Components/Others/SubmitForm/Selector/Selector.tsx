@@ -31,12 +31,12 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
         on_success,
         on_error,
         true, // !fetch_On_Click_Status
-        true, // refetch_On_Mount
+        false, // refetch_On_Mount
         false, // refetch_On_Window_Focus
         false, // refetch_Interval
         false, // refetch_Interval_In_Background
         300000, // Cache time
-        0, // Stale Time
+        300000, // Stale Time
     );
 
     const buttonList: Record<string, any> = [

@@ -147,24 +147,23 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
             <ThemeContext.Provider value={darkTheme}>
                 <ToggleDarkThemeContext.Provider value={toggleTheme}>
                     {children}
+                    {Object.entries(backdrops).map(([id, { open, child, size, showButton, enableBackdropClose }]) => (
+                        <BackDropWrapper
+                            key={id}
+                            isOpen={open}
+                            background={background}
+                            showButton={showButton ?? true} // Default to true if not provided
+                            enableBackdropClose={enableBackdropClose ?? true} // Default to true if not provided
+                            size={size}
+                            handleClose={() => toggleBackDropClose(id)}
+                            darkTheme={darkTheme}
+                        >
+                            {child}
+                        </BackDropWrapper>
+                    ))}
                 </ToggleDarkThemeContext.Provider>
             </ThemeContext.Provider>
             <ToastContainer style={{ zIndex: 99999 }} />
-
-            {Object.entries(backdrops).map(([id, { open, child, size, showButton, enableBackdropClose }]) => (
-                <BackDropWrapper
-                    key={id}
-                    isOpen={open}
-                    background={background}
-                    showButton={showButton ?? true} // Default to true if not provided
-                    enableBackdropClose={enableBackdropClose ?? true} // Default to true if not provided
-                    size={size}
-                    handleClose={() => toggleBackDropClose(id)}
-                    darkTheme={darkTheme}
-                >
-                    {child}
-                </BackDropWrapper>
-            ))}
         </ToggleBackDropContext.Provider>
     );
 }
