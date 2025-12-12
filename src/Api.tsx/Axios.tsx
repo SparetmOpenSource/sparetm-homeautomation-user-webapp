@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 export const RootUrl = {
-    gateway: process.env.REACT_APP_API_URL || 'http://localhost:8086',
+    // gateway: process.env.REACT_APP_API_URL || 'http://localhost:8086',
+    gateway: 'http://dona-unblundering-disconcertingly.ngrok-free.dev',
 };
 
 export const authUrl = {
