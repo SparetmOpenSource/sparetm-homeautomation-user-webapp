@@ -15,6 +15,7 @@ import { ACKNOWLEDGED_NOTIFICATIONS_KEY, NOTIFICATION_SOUNDS_ENABLED_KEY, WEBSOC
 import { useTheme } from '../Pages/ThemeProvider';
 import { useLocation } from 'react-router-dom';
 import { dark_colors, light_colors } from '../Data/ColorConstant';
+import { RootUrl } from '../Api.tsx/Axios';
 
 type ConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'error';
 
@@ -25,6 +26,9 @@ interface WebSocketContextType {
 }
 
 const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
+
+
+
 
 
 
@@ -107,8 +111,11 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
             const responseData = data?.data?.body || data?.data;
             
             if (responseData?.url && Array.isArray(responseData.url) && responseData.url.length > 0) {
-                // Backend returns complete URL, use it as-is
-                const fullUrl = responseData.url[0];
+                // Backend returns complete URL, but we need to ensure it matches our current gateway
+                // to avoid Mixed Content errors (e.g. backend says http://localhost but we are on https://ngrok)
+                const backendUrl = new URL(responseData.url[0]);
+                const fullUrl = `${RootUrl.gateway}${backendUrl.pathname}${backendUrl.search}`;
+                
                 console.log('[WebSocket] Fetched URL:', fullUrl);
                 setWsUrl(fullUrl);
                 
