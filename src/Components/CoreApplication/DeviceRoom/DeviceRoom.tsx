@@ -69,9 +69,17 @@ const DeviceRoom = () => {
 
 
     const triggerAllDevices = useCallback(() => {
+        if (total === 0) {
+            displayToastify(
+                'No device found!',
+                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+                TOASTIFYSTATE.WARN,
+            );
+            return;
+        }
         const newStatus = on !== total;
         mutate({ status: newStatus, statusDetail: '' } as any);
-    }, [mutate, on, total]);
+    }, [mutate, on, total, darkTheme]);
 
     const on_fetch_device_Error = (error: any) => {
         displayToastify(

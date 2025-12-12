@@ -13,6 +13,10 @@ import { useBackDropOpen } from '../../../../Pages/ThemeProvider';
 import Confirmation from '../../../Others/BackDrop/Confirmation/Confirmation';
 import { LandscapeSizeS, IS_MQTT_CONFIGURED_KEY } from '../../../../Data/Constants';
 import Button from '../../../Others/CustomButton/Button';
+import { copyText } from '../../../../Utils/HelperFn';
+import { IoCopyOutline } from 'react-icons/io5';
+import { IconContext } from 'react-icons';
+import { motion } from 'framer-motion';
 
 interface MqttConfigModalProps {
     darkTheme: boolean;
@@ -178,16 +182,58 @@ const MqttConfigModal = ({ darkTheme, handleClose }: MqttConfigModalProps) => {
 
             {showConfig ? (
                 <div className="mqtt-config-details">
-                    <div className="mqtt-detail-row">
-                        <label style={{ color: color.text }}>Server Address:</label>
-                        <span style={{ color: color.text }}>{configData?.mqttServerAddress}</span>
+                    <div className="mqtt-detail-item">
+                        <label style={{ color: color.icon }}>Server Address</label>
+                        <div className="mqtt-detail-value">
+                            <span style={{ color: color.text }}>{configData?.mqttServerAddress}</span>
+                            <motion.span
+                                whileHover={{ scale: 1.2 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => copyText(configData?.mqttServerAddress)}
+                                className="mqtt-copy-btn"
+                            >
+                                <IconContext.Provider value={{ size: '1.2em', color: color.text }}>
+                                    <IoCopyOutline />
+                                </IconContext.Provider>
+                            </motion.span>
+                        </div>
                     </div>
-                    <div className="mqtt-detail-row">
-                        <label style={{ color: color.text }}>Username:</label>
-                        <span style={{ color: color.text }}>{configData?.brokerUserName}</span>
+                    
+                    <div className="mqtt-detail-item">
+                        <label style={{ color: color.icon }}>Client ID</label>
+                        <div className="mqtt-detail-value">
+                            <span style={{ color: color.text }}>{configData?.clientId || 'Not available'}</span>
+                            <motion.span
+                                whileHover={{ scale: 1.2 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => copyText(configData?.clientId || '')}
+                                className="mqtt-copy-btn"
+                            >
+                                <IconContext.Provider value={{ size: '1.2em', color: color.text }}>
+                                    <IoCopyOutline />
+                                </IconContext.Provider>
+                            </motion.span>
+                        </div>
                     </div>
 
-                    <div className="mqtt-form-actions">
+                    <div className="mqtt-detail-item">
+                        <label style={{ color: color.icon }}>Username</label>
+                        <div className="mqtt-detail-value">
+                            <span style={{ color: color.text }}>{configData?.brokerUserName}</span>
+                            <motion.span
+                                whileHover={{ scale: 1.2 }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => copyText(configData?.brokerUserName)}
+                                className="mqtt-copy-btn"
+                            >
+                                <IconContext.Provider value={{ size: '1.2em', color: color.text }}>
+                                    <IoCopyOutline />
+                                </IconContext.Provider>
+                            </motion.span>
+                        </div>
+                    </div>
+
+                    <div className="mqtt-form-actions-display">
                         <Button
                             label="Close"
                             fn={onCancel}
