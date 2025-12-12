@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const RootUrl = {
-    gateway: process.env.REACT_APP_API_URL
+    gateway: process.env.REACT_APP_API_URL || 'http://localhost:8086',
 };
 
 export const authUrl = {
@@ -15,6 +15,7 @@ export const api = axios.create({ baseURL: RootUrl.gateway });
 export const getHeaderConfig = {
     headers: {
         Accept: 'application/json',
+        'ngrok-skip-browser-warning': 'true',
     },
 };
 
@@ -22,6 +23,7 @@ export const updateHeaderConfig = {
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
     },
 };
 
