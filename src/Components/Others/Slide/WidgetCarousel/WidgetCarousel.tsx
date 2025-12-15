@@ -22,9 +22,30 @@ const WidgetCarousel = () => {
     const [refreshKey, setRefreshKey] = useState(false);
     const [items, setItems] = useState<WidgetItem[]>([]);
     const [isDragMapLocked, setIsDragMapLocked] = useState(true);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
 
     const listRef = useRef<HTMLUListElement>(null);
     const itemRef = useRef<HTMLLIElement>(null);
+
+    const checkScroll = useCallback(() => {
+        if (listRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = listRef.current;
+            // Add tolerance for sub-pixel rendering or small offsets
+            const tolerance = 20;
+            console.log('Scroll:', scrollLeft, scrollWidth, clientWidth);
+            setCanScrollLeft(scrollLeft > tolerance);
+            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - tolerance);
+        }
+    }, []);
+
+    useEffect(() => {
+        // Initial check and on resize
+        checkScroll();
+        window.addEventListener('resize', checkScroll);
+        // Also check periodically during interactions if needed, but onScroll should cover it
+        return () => window.removeEventListener('resize', checkScroll);
+    }, [checkScroll, items]);
 
     const handleClick = useCallback((direction: 'previous' | 'next') => {
         if (listRef.current && itemRef.current) {
@@ -35,8 +56,10 @@ const WidgetCarousel = () => {
                 left: scrollAmount,
                 behavior: 'smooth',
             });
+            // Manual check after animation finishes (smooth scroll can take ~500ms)
+            setTimeout(checkScroll, 600); 
         }
-    }, []);
+    }, [checkScroll]);
 
     const handleRefresh = useCallback(() => {
         setRefreshKey((prev) => !prev);
@@ -93,6 +116,7 @@ const WidgetCarousel = () => {
                     onReorder={handleReorder} 
                     className="widgetCarousel-list" 
                     ref={listRef}
+                    onScroll={checkScroll}
                 >
                     {items.map((widget, index) => (
                         <Reorder.Item
@@ -110,9 +134,10 @@ const WidgetCarousel = () => {
             </div>
             <div>
                 <motion.span
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => handleClick('previous')}
+                    whileHover={{ scale: canScrollLeft ? 1.1 : 1 }}
+                    whileTap={{ scale: canScrollLeft ? 0.9 : 1 }}
+                    onClick={() => canScrollLeft && handleClick('previous')}
+                    style={{ opacity: canScrollLeft ? 1 : 0.3, cursor: canScrollLeft ? 'pointer' : 'default' }}
                 >
                     <IconContext.Provider
                         value={{ size: '2.5em', color: color.button }}
@@ -122,9 +147,10 @@ const WidgetCarousel = () => {
                 </motion.span>
 
                 <motion.span
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => handleClick('next')}
+                    whileHover={{ scale: canScrollRight ? 1.1 : 1 }}
+                    whileTap={{ scale: canScrollRight ? 0.9 : 1 }}
+                    onClick={() => canScrollRight && handleClick('next')}
+                    style={{ opacity: canScrollRight ? 1 : 0.3, cursor: canScrollRight ? 'pointer' : 'default' }}
                 >
                     <IconContext.Provider
                         value={{ size: '2.5em', color: color.button }}

@@ -25,7 +25,7 @@ import {
     SPOTIFY_CODE_VERIFIER,
 } from '../../../../Data/Constants';
 
-const Spotify = ({ handleRefresh }: any) => {
+const SpotifyLogIn = ({ handleRefresh }: any) => {
     const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
     const hasFetched = useRef(false);
@@ -123,4 +123,4 @@ const Spotify = ({ handleRefresh }: any) => {
     );
 };
 
-export default Spotify;
+export default SpotifyLogIn;

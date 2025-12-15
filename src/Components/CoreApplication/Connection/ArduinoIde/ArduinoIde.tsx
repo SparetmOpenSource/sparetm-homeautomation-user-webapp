@@ -160,6 +160,31 @@ const ArduinoIde = () => {
         setColor(darkTheme ? dark_colors : light_colors);
     }, [darkTheme]);
 
+    const renderWithLinks = (text: string) => {
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        const parts = text.split(urlRegex);
+        return parts.map((part: any, index: any) => {
+            if (part.match(urlRegex)) {
+                return (
+                    <a
+                        key={index}
+                        href={part}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                            color: color?.button,
+                            textDecoration: 'underline',
+                            wordBreak: 'break-all',
+                        }}
+                    >
+                        {part}
+                    </a>
+                );
+            }
+            return part;
+        });
+    };
+
     return (
         <div className="arduinoIde">
             <h1 style={{ color: color?.text }}>Arduino IDE Setup</h1>
@@ -186,7 +211,7 @@ const ArduinoIde = () => {
                                         key={item?.id}
                                         style={{ color: color?.icon }}
                                     >
-                                        {item?.statement}
+                                        {renderWithLinks(item?.statement)}
                                     </li>
                                 ))}
                             </ul>

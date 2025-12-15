@@ -166,6 +166,7 @@ const AddDevice = ({ darkTheme, roomType, toggleBackDropClose }: any) => {
                                                 ? color?.text
                                                 : color?.icon,
                                     }}
+                                    title={item?.label}
                                 >
                                     {trimToNChars(item?.label, 5)}
                                 </p>

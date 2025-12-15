@@ -81,6 +81,11 @@ const RgbGadgetExpandSavedColor = ({
         updateHeaderConfig,
         () => {
             invalidateQueries(queryClient, [SELECT_DEVICE_LIST_QUERY_ID]);
+            displayToastify(
+                "Color removed successfully",
+                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+                TOASTIFYSTATE.SUCCESS,
+            );
         },
         (error: any) => {
             displayToastify(

@@ -1,4 +1,4 @@
-import Spotify from '../../Widgets/Spotify/SpotifyLogIn';
+import SpotifyLogIn from '../../Widgets/Spotify/SpotifyLogIn';
 import Weather from '../../Widgets/Weather/Weather';
 
 export type WidgetItem = {
@@ -10,7 +10,7 @@ export const getWidgets = (refreshKey: boolean, handleRefresh: () => void): Widg
     {
         id: 1,
         component: (
-            <Spotify
+            <SpotifyLogIn
                 key={refreshKey.toString()}
                 handleRefresh={handleRefresh}
             />
@@ -23,7 +23,7 @@ export const getWidgets = (refreshKey: boolean, handleRefresh: () => void): Widg
      {
         id: 3,
         component: (
-            <Spotify
+            <SpotifyLogIn
                 key={refreshKey.toString()}
                 handleRefresh={handleRefresh}
             />

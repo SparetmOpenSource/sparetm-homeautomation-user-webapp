@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import './DeviceCard.css';
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useBackDropOpen, useTheme } from '../../../../Pages/ThemeProvider';
@@ -44,7 +43,6 @@ interface RgbGadgetProps {
 }
 
 const RgbGadget = ({ id, statusValue }: RgbGadgetProps) => {
-    const navigate = useNavigate();
     const currentDevice = useAppSelector(
         (state: any) =>
             state?.device?.deviceData?.body?.find(
@@ -198,7 +196,6 @@ const RgbGadget = ({ id, statusValue }: RgbGadgetProps) => {
                                 rgbGadgetExpandBackdropId={backdropId}
                                 currentDeviceStatus={status}
                                 currentAnimation={pattern}
-                                onNavigate={(path: string) => navigate(path)}
                             />,
                             LandscapeSizeM,
                         );
