@@ -32,7 +32,7 @@
     height: 100%;
     padding: 1rem;
     overflow: hidden;
-    overflow-x: none;
+    overflow-x: auto; /* Corrected from 'none' */
 }
 
 .widgetCarousel-list::-webkit-scrollbar {
@@ -41,7 +41,7 @@
 
 .widgetCarousel-list-item {
     flex-shrink: 0;
-    width: 49%;
+    width: calc(50% - 10px); /* Account for gap safely */
     height: 100%;
-    scroll-snap-align: center;
+    scroll-snap-align: start; /* Changed to start for better alignment */
 }

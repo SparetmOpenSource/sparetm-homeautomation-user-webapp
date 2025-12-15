@@ -6,9 +6,9 @@ import {
     MdBrightnessMedium,
 } from 'react-icons/md';
 
-export const RootUrl = {
-    authMS: 'http://localhost:8085',
-};
+// export const RootUrl = {
+//     authMS: 'http://localhost:8085',
+// };
 export const APPNAME = 'OpenBridge';
 export const TOKEN = 'token';
 export const PROFILE = 'profile';

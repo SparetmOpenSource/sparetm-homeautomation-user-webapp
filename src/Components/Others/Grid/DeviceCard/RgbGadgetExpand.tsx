@@ -48,7 +48,6 @@ interface RgbGadgetExpandProps {
     rgbGadgetExpandBackdropId: string;
     currentDeviceStatus: boolean;
     currentAnimation: string;
-    onNavigate: (path: string) => void;
 }
 
 const RgbGadgetExpand = ({
@@ -59,7 +58,6 @@ const RgbGadgetExpand = ({
     rgbGadgetExpandBackdropId,
     currentDeviceStatus,
     currentAnimation,
-    onNavigate,
 }: RgbGadgetExpandProps) => {
     const currentDevice = useAppSelector(
         (state: any) =>
@@ -102,15 +100,22 @@ const RgbGadgetExpand = ({
     const { mutate: updateDeviceStoreData } = usePatchUpdateData(
         `${featureUrl.update_device_data_store}${id}`,
         updateHeaderConfig,
-        () => {
+        (data: any) => {
             invalidateQueries(queryClient, [SELECT_DEVICE_LIST_QUERY_ID]);
+            displayToastify(
+                "Color saved successfully",
+                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+                TOASTIFYSTATE.SUCCESS,
+            );
+            handleMenuChange(true)
         },
         (error: any) => {
             displayToastify(
-                error?.message,
+                error?.response?.data?.message || error?.message,
                 !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
                 TOASTIFYSTATE.ERROR,
             );
+            handleMenuChange(true)
         },
     );
 
@@ -246,6 +251,7 @@ const RgbGadgetExpand = ({
                                     color: color.text,
                                     backgroundColor: color.element,
                                 }}
+                                title='Active animation'
                             >
                                 {animation}
                             </p>
@@ -270,18 +276,21 @@ const RgbGadgetExpand = ({
                     <div
                         className="rgbGadgetExpand-r"
                         style={{ color: color.text }}
+                        title='Red color value'
                     >
                         {rgb.r}
                     </div>
                     <div
                         className="rgbGadgetExpand-g"
                         style={{ color: color.text }}
+                        title='Green color value'
                     >
                         {rgb.g}
                     </div>
                     <div
                         className="rgbGadgetExpand-b"
                         style={{ color: color.text }}
+                        title='Blue color value'
                     >
                         {rgb.b}
                     </div>
@@ -291,6 +300,7 @@ const RgbGadgetExpand = ({
                             backgroundColor: color.inner,
                             color: color.text,
                         }}
+                        title='Brightness value'
                     >
                         {brightnessPercent}%
                     </div>
@@ -300,6 +310,7 @@ const RgbGadgetExpand = ({
                         whileTap={{ scale: 1.0 }}
                         style={{ cursor: 'pointer' }}
                         onClick={handleColorSave}
+                        title='Save color to reuse'
                     >
                         <IconContext.Provider
                             value={{ size: '2.5em', color: color.icon }}
@@ -313,6 +324,7 @@ const RgbGadgetExpand = ({
                         whileTap={{ scale: 1.0 }}
                         style={{ cursor: 'pointer' }}
                         onClick={handleColorChange}
+                        title='Apply color'
                     >
                         <IconContext.Provider
                             value={{ size: '2em', color: color.icon }}
