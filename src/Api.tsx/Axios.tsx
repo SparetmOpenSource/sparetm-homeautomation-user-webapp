@@ -12,10 +12,14 @@ export const authUrl = {
 
 export const api = axios.create({ baseURL: RootUrl.gateway });
 
+api.interceptors.request.use((config) => {
+    config.headers['ngrok-skip-browser-warning'] = 'true';
+    return config;
+});
+
 export const getHeaderConfig = {
     headers: {
         Accept: 'application/json',
-        'ngrok-skip-browser-warning': 'true',
     },
 };
 
@@ -23,7 +27,6 @@ export const updateHeaderConfig = {
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true',
     },
 };
 
