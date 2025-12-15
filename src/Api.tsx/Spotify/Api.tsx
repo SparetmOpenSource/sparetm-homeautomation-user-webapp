@@ -11,11 +11,11 @@ const getRedirectUri = () => {
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
         return 'http://127.0.0.1:3000/app/dashboard/segment/status';
     }
-    const baseUrl = process.env.REACT_APP_API_URL || 'https://openbridge.netlify.app';
+    const baseUrl = window.location.origin;
     return `${baseUrl}/app/dashboard/segment/status`;
 };
 
-const redirect_uri: string = getRedirectUri();
+export const redirect_uri: string = getRedirectUri();
 const client_id: string = 'ad37eacb72aa4f8891ccda3c0782b86a';
 const scope: string =
     'user-library-modify user-library-read playlist-read-private user-read-playback-state user-modify-playback-state user-read-currently-playing user-read-email user-read-private';

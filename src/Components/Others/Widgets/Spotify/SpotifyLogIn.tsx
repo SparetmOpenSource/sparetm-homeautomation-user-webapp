@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { FaSpotify } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import { profileUrl } from '../../../../Api.tsx/ProfileConfigApis';
-import { handleLogin, setting_up_token } from '../../../../Api.tsx/Spotify/Api';
+import { handleLogin, setting_up_token, redirect_uri } from '../../../../Api.tsx/Spotify/Api';
 import { usePostUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 
@@ -70,7 +70,7 @@ const SpotifyLogIn = ({ handleRefresh }: any) => {
             !hasFetched.current &&
             !tokenFetched
         ) {
-            callForAccessToken({ code, codeVerifier });
+            callForAccessToken({ code, codeVerifier, redirect_uri });
             hasFetched.current = true;
         }
     }, [callForAccessToken, tokenFetched]);
