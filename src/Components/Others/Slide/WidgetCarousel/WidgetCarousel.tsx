@@ -31,9 +31,7 @@ const WidgetCarousel = () => {
     const checkScroll = useCallback(() => {
         if (listRef.current) {
             const { scrollLeft, scrollWidth, clientWidth } = listRef.current;
-            // Add tolerance for sub-pixel rendering or small offsets
             const tolerance = 20;
-            console.log('Scroll:', scrollLeft, scrollWidth, clientWidth);
             setCanScrollLeft(scrollLeft > tolerance);
             setCanScrollRight(scrollLeft < scrollWidth - clientWidth - tolerance);
         }
@@ -91,7 +89,6 @@ const WidgetCarousel = () => {
                 
                 setItems([...reorderedWidgets, ...newWidgets]);
             } catch (e) {
-                console.error('Failed to parse widget order', e);
                 setItems(defaultWidgets);
             }
         } else {

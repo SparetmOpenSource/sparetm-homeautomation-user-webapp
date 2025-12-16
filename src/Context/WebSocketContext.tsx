@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState, useMemo } from 'react';
 import useLocalStorage from '../Hooks/UseLocalStorage';
 import { Client } from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
+
 import { useAppDispatch, useAppSelector } from '../Features/ReduxHooks';
 import { updateDevice, addDevice, removeDevice, updateAllDevices, updateDeviceDataStore, deleteDeviceDataStore } from '../Features/Device/DeviceSlice';
 import { setNotification } from '../Features/Notification/NotificationSlice';
@@ -181,12 +181,23 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                 return;
             }
 
-            // Create SockJS instance
-            const socket = new SockJS(url);
+            // Convert HTTP URL to WebSocket URL
+            // If backend uses SockJS, the raw WebSocket endpoint is usually at /websocket appended to the endpoint
+            // However, often just replacing http->ws works if not restricted.
+            // Let's assume standard behavior: replace protocol.
+            let wsUrl = url.replace('http://', 'ws://').replace('https://', 'wss://');
+            
+            // Append /websocket if it's a SockJS endpoint to bypass SockJS protocol handshake (implied by previous SockJS usage)
+            // If the URL already ends in /websocket, don't append.
+            if (!wsUrl.endsWith('/websocket')) {
+               wsUrl = `${wsUrl}/websocket`; 
+            }
 
-            // Create STOMP client
+            console.log('[WebSocket] Connecting to native endpoint:', wsUrl);
+
+            // Create STOMP client with native brokerURL
             const client = new Client({
-                webSocketFactory: () => socket as any,
+                brokerURL: wsUrl,
                 debug: (str) => {
                     console.log('[STOMP Debug]', str);
                 },

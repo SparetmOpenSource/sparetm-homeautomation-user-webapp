@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { useTheme } from '../../../Pages/ThemeProvider';
 import './Add.css';
@@ -14,6 +14,7 @@ import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 import {
     getCityList,
     getStateList,
+    getCountryList,
     profileUrl,
     successMessage,
 } from '../../../Api.tsx/ProfileConfigApis';
@@ -21,6 +22,7 @@ import { useAppSelector } from '../../../Features/ReduxHooks';
 import {
     SELECT_CITY_LIST_QUERY_ID,
     SELECT_STATE_LIST_QUERY_ID,
+    SELECT_COUNTRY_LIST_QUERY_ID,
 } from '../../../Data/QueryConstant';
 import {
     getMergedHeadersForLocation,
@@ -28,35 +30,31 @@ import {
 } from '../../../Api.tsx/Axios';
 import { usePostUpdateData } from '../../../Api.tsx/useReactQuery_Update';
 import Building from './../../../Asset/desktop.webp';
-import Form from '../../Others/SubmitForm/Form/Form';
-import Selector from '../../Others/SubmitForm/Selector/Selector';
+import DynamicForm, { FieldConfig } from '../../Others/DynamicForm/DynamicForm';
 
 const Add = () => {
     const navigate = useNavigate();
-    const [color, setColor] = useState<any>(light_colors);
     const admin = useAppSelector((state: any) => state?.user?.admin);
     const darkTheme: any = useTheme();
+    // Derived state for color - prevents flicker
+    const color = darkTheme ? dark_colors : light_colors;
+    
+    // Step 1 State
+    const [profileData, setProfileData] = useState<any>({});
+    
+    // Step 2 State
     const [countryIso, setCountryIso] = useState();
     const [stateIso, setStateIso] = useState();
     const [country, setCountry] = useState();
     const [countryCode, setCountryCode] = useState();
     const [state, setState] = useState();
     const [city, setCity] = useState();
-    const [room, setRoom] = useState([]);
-    const [formData, setFormData] = useState<any>({});
+    const [room, setRoom] = useState<any[]>([]);
+    
+    // UI State
     const [formChange, setFormChange] = useState(false);
-    const roomSelectInputRef: any = useRef();
-    const countrySelectInputRef: any = useRef();
-    const stateSelectInputRef: any = useRef();
-    const citySelectInputRef: any = useRef();
 
-    const onClear = () => {
-        roomSelectInputRef?.current?.clearValue();
-        countrySelectInputRef?.current?.clearValue();
-        stateSelectInputRef?.current?.clearValue();
-        citySelectInputRef?.current?.clearValue();
-    };
-
+    // Callbacks for Selector onChange Logic
     const addRoomData = (el: any) => {
         setRoom(el);
     };
@@ -72,43 +70,60 @@ const Add = () => {
         setCountry(el?.name);
         setCountryIso(el?.iso2);
     };
-    const processFormData = (data: any) => {
-        setFormData(data);
-        setFormChange((prev) => !prev);
+
+    const processProfileData = (data: any) => {
+        setProfileData(data);
+        setFormChange(true); // Switch to Step 2
     };
 
-    const on_City_Error = (error: any) => {
+    const displayError = (message: string) => {
         displayToastify(
-            error?.message,
+            message,
             !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
             TOASTIFYSTATE.ERROR,
         );
     };
-    const on_State_Error = (error: any) => {
-        displayToastify(
-            error?.message,
-            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-            TOASTIFYSTATE.ERROR,
-        );
-    };
+
+    const on_City_Error = (error: any) => displayError(error?.message);
+    const on_State_Error = (error: any) => displayError(error?.message);
+    const on_Country_Error = (error: any) => displayError(error?.message);
 
     const on_City_Success = () => {};
     const on_State_Success = () => {};
+    const on_Country_Success = () => {};
 
-    const getHeaderConfig = {
+    // Use memoized header config to avoid re-creation
+    const headerConfig = useMemo(() => ({
         headers: getMergedHeadersForLocation(
             'bEltb0FxY3dhajRDa3NxS1JMcUpMZ3ZDemV3emtBdzdIcm1Fa292bg==',
         ),
-    };
+    }), []);
 
     const cityFn = () => {
-        return getCityList(getHeaderConfig, countryIso, stateIso, darkTheme);
+        return getCityList(headerConfig, countryIso, stateIso, darkTheme);
     };
     const stateFn = () => {
-        return getStateList(getHeaderConfig, countryIso, darkTheme);
+        return getStateList(headerConfig, countryIso, darkTheme);
+    };
+    const countryFn = () => {
+        return getCountryList(headerConfig, darkTheme);
     };
 
-    const { data: selectedCityList, refetch: fetchCity } = useReactQuery_Get(
+    const { data: countryList } = useReactQuery_Get(
+        SELECT_COUNTRY_LIST_QUERY_ID,
+        countryFn,
+        on_Country_Success,
+        on_Country_Error,
+        true, // !fetch_On_Click_Status (Fetch immediately)
+        false, // refetch_On_Mount
+        false, // refetch_On_Window_Focus
+        false, // refetch_Interval
+        false, // refetch_Interval_In_Background
+        300000, 
+        300000, 
+    );
+
+    const { data: selectedCityList, refetch: fetchCity, isFetching: isCityLoading } = useReactQuery_Get(
         SELECT_CITY_LIST_QUERY_ID,
         cityFn,
         on_City_Success,
@@ -121,7 +136,7 @@ const Add = () => {
         300000, // Cache time
         0, // Stale Time
     );
-    const { data: selectedStateList, refetch: fetchState } = useReactQuery_Get(
+    const { data: selectedStateList, refetch: fetchState, isFetching: isStateLoading } = useReactQuery_Get(
         SELECT_STATE_LIST_QUERY_ID,
         stateFn,
         on_State_Success,
@@ -134,10 +149,6 @@ const Add = () => {
         300000, // Cache time
         0, // Stale Time
     );
-
-    useEffect(() => {
-        darkTheme ? setColor(dark_colors) : setColor(light_colors);
-    }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const on_AddProfile_Success = () => {
         displayToastify(
@@ -159,54 +170,39 @@ const Add = () => {
         on_AddProfile_Error,
     );
 
-    const handleSubmit = () => {
-        Object.assign(
-            formData,
-            { countryName: country },
-            { countryCode: countryCode },
-            { stateName: state },
-            { cityName: city },
-            { room: room },
-        );
-        if (
-            room.length > NONPREMIUMROOMCOUNT ||
-            room.length === 0 ||
-            city === undefined ||
-            state === undefined ||
-            country === undefined
-        ) {
-            if (room.length > NONPREMIUMROOMCOUNT) {
-                displayToastify(
-                    `Room count cannot exceed ${NONPREMIUMROOMCOUNT}`,
-                    !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                    TOASTIFYSTATE.ERROR,
-                );
-            } else if (room.length === 0) {
-                displayToastify(
-                    `Please add at least one room`,
-                    !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                    TOASTIFYSTATE.ERROR,
-                );
-            } else {
-                displayToastify(
-                    'Location is required. Please provide a valid entry',
-                    !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                    TOASTIFYSTATE.ERROR,
-                );
-            }
-        } else {
-            mutate(formData);
-            onClear();
+    // Final Submit Handler
+    const handleFinalSubmit = () => {
+        const fullFormData = {
+            ...profileData, // Step 1 data
+            countryName: country,
+            countryCode: countryCode,
+            stateName: state,
+            cityName: city,
+            room: room,
+        };
+
+        // Validation Logic
+        if (room.length === 0) {
+           displayError('Please add at least one room');
+           return;
         }
+        
+        if (room.length > NONPREMIUMROOMCOUNT) {
+            displayError(`Room count cannot exceed ${NONPREMIUMROOMCOUNT}`);
+            return;
+        }
+
+        if (!city || !state || !country) {
+            displayError('Location (Country, State, City) is required.');
+            return;
+        }
+
+        mutate(fullFormData);
     };
 
     useEffect(() => {
         if (room.length > NONPREMIUMROOMCOUNT) {
-            displayToastify(
-                `Room count cannot exceed ${NONPREMIUMROOMCOUNT} for non premium members`,
-                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                TOASTIFYSTATE.ERROR,
-            );
+            displayError(`Room count cannot exceed ${NONPREMIUMROOMCOUNT} for non premium members`);
         }
     }, [room]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -222,63 +218,71 @@ const Add = () => {
         }
     }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const selectorList: Record<string, any> = [
+    // --- Dynamic Form Configurations ---
+
+    // Step 1: Profile Details Form
+    const profileFormFields: FieldConfig[] = [
         {
             id: 1,
-            isMulti: true,
-            label: 'select room type*',
-            option: ProfileConfigRoomNames,
-            onChangeFn: addRoomData,
-            resetRef: roomSelectInputRef,
+            name: 'profileName',
+            type: 'text',
+            label: 'Enter profile name*',
+            validation: {
+                required: 'Profile name is required',
+                minLength: { value: 3, message: 'Profile Name is too short' },
+                maxLength: { value: 36, message: 'Profile Name is too long' },
+            }
         },
         {
             id: 2,
-            formFormat: 'Selection',
-            isMulti: false,
-            label: 'select your country*',
-            option: {},
-            onChangeFn: addCountryData,
-            resetRef: countrySelectInputRef,
-        },
-        {
-            id: 3,
-            formFormat: 'Selection',
-            isMulti: false,
-            label: 'select your state*',
-            option: selectedStateList?.data?.body,
-            onChangeFn: addStateData,
-            resetRef: stateSelectInputRef,
-        },
-        {
-            id: 4,
-            formFormat: 'Selection',
-            isMulti: false,
-            label: 'select your city*',
-            option: selectedCityList?.data?.body,
-            onChangeFn: addCityData,
-            resetRef: citySelectInputRef,
+            name: 'mobileNumber',
+            type: 'mobile number', // Uses internal DynamicForm regex for mobile
+            label: 'Enter mobile number (without country code)*',
+            validation: {
+                required: 'Mobile number is required',
+                minLength: { value: 6, message: 'Mobile number is too short' },
+                maxLength: { value: 12, message: 'Mobile number is too long' },
+            }
         },
     ];
 
-    const formList: Record<string, any> = [
+    // Step 2: Location Form
+    const locationFormFields: FieldConfig[] = [
         {
             id: 1,
-            type: 'profile name',
-            placeholder: 'Enter profile name*',
-            keyName: 'profileName',
-            minLength: 3,
-            maxLength: 36,
-            regex: undefined,
+            name: 'room',
+            type: 'select',
+            label: 'select room type*',
+            options: ProfileConfigRoomNames,
+            isMulti: true,
+            onChangeFn: addRoomData,
         },
         {
             id: 2,
-            type: 'mobile number',
-            placeholder: 'Enter mobile number (without country code)*',
-            keyName: 'mobileNumber',
-            minLength: 6,
-            maxLength: 12,
-            regex: /^\d{10}(\d{2})?$/,
+            name: 'country',
+            type: 'select',
+            label: 'select your country*',
+            options: countryList?.data?.body,
+            onChangeFn: addCountryData,
         },
+        {
+            id: 3,
+            name: 'state',
+            type: 'select',
+            label: 'select your state*',
+            options: selectedStateList?.data?.body,
+            onChangeFn: addStateData,
+            isLoading: isStateLoading,
+        },
+        {
+            id: 4,
+            name: 'city',
+            type: 'select',
+            label: 'select your city*',
+            options: selectedCityList?.data?.body,
+            onChangeFn: addCityData,
+            isLoading: isCityLoading,
+        }
     ];
 
     return (
@@ -295,22 +299,27 @@ const Add = () => {
             </section>
             <section style={{ backgroundColor: color?.inner }}>
                 {!formChange && (
-                    <Form
+                    <DynamicForm
                         heading="Create your home!"
                         subHeading="Submit to Start Your Automation Journey!"
-                        formData={processFormData}
-                        formList={formList}
-                        btnLabel="go ahead"
+                        fields={profileFormFields}
+                        onSubmit={processProfileData}
+                        submitLabel="go ahead"
                     />
                 )}
                 {formChange && (
-                    <Selector
+                    <DynamicForm
                         heading="Let us know where you are"
-                        // subHeading="and we’ll do the rest!"
-                        formList={selectorList}
-                        submit={handleSubmit}
-                        switchForm={setFormChange}
-                        btnLabel="submit"
+                        fields={locationFormFields}
+                        onSubmit={handleFinalSubmit}
+                        submitLabel="submit"
+                        secondaryButtons={[
+                            {
+                                id: 1,
+                                label: 'back',
+                                onClick: () => setFormChange(false)
+                            }
+                        ]}
                     />
                 )}
             </section>

@@ -1,20 +1,9 @@
 import { catchError } from '../Utils/HelperFn';
-import { api, getHeaderConfig, updateHeaderConfig } from './Axios';
-import { useMutation, useQueryClient } from 'react-query';
+import { api, getHeaderConfig } from './Axios';
 
 export const successMessage = {
     profile_added:
         'Your profile successfully added. Redirecting to select profile section',
-};
-
-export const CountryStateCityApiKey =
-    'bEltb0FxY3dhajRDa3NxS1JMcUpMZ3ZDemV3emtBdzdIcm1Fa292bg==';
-
-export const cityCountryState_headers = {
-    headers: {
-        Accept: 'application/json',
-        'X-CSCAPI-KEY': CountryStateCityApiKey,
-    },
 };
 
 export const profileUrl = {
@@ -110,24 +99,4 @@ export const getProfile = async (profileId: any, darkTheme: any) => {
         catchError(error, darkTheme);
         throw new Error('Failed to fetch mqtt credentials');
     }
-};
-
-/************************* Add user profile in profile config page *******************************/
-export const useAddMqttCred = (appUser: any, on_Error: any) => {
-    const queryClient = useQueryClient();
-    return useMutation(
-        (data) => {
-            return api.post(
-                profileUrl.add_mqtt + appUser,
-                data,
-                updateHeaderConfig,
-            );
-        },
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries('get_Mqtt_Cred');
-            },
-            onError: on_Error,
-        },
-    );
 };
