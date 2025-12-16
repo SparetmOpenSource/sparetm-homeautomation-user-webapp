@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { useTheme } from '../../../Pages/ThemeProvider';
 import './Add.css';
@@ -33,9 +33,11 @@ import Selector from '../../Others/SubmitForm/Selector/Selector';
 
 const Add = () => {
     const navigate = useNavigate();
-    const [color, setColor] = useState<any>(light_colors);
     const admin = useAppSelector((state: any) => state?.user?.admin);
     const darkTheme: any = useTheme();
+    // Derived state for color - prevents flicker
+    const color = darkTheme ? dark_colors : light_colors;
+    
     const [countryIso, setCountryIso] = useState();
     const [stateIso, setStateIso] = useState();
     const [country, setCountry] = useState();
@@ -77,38 +79,35 @@ const Add = () => {
         setFormChange((prev) => !prev);
     };
 
-    const on_City_Error = (error: any) => {
+    const displayError = (message: string) => {
         displayToastify(
-            error?.message,
+            message,
             !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
             TOASTIFYSTATE.ERROR,
         );
     };
-    const on_State_Error = (error: any) => {
-        displayToastify(
-            error?.message,
-            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-            TOASTIFYSTATE.ERROR,
-        );
-    };
+
+    const on_City_Error = (error: any) => displayError(error?.message);
+    const on_State_Error = (error: any) => displayError(error?.message);
 
     const on_City_Success = () => {};
     const on_State_Success = () => {};
 
-    const getHeaderConfig = {
+    // Use memoized header config to avoid re-creation
+    const headerConfig = useMemo(() => ({
         headers: getMergedHeadersForLocation(
             'bEltb0FxY3dhajRDa3NxS1JMcUpMZ3ZDemV3emtBdzdIcm1Fa292bg==',
         ),
-    };
+    }), []);
 
     const cityFn = () => {
-        return getCityList(getHeaderConfig, countryIso, stateIso, darkTheme);
+        return getCityList(headerConfig, countryIso, stateIso, darkTheme);
     };
     const stateFn = () => {
-        return getStateList(getHeaderConfig, countryIso, darkTheme);
+        return getStateList(headerConfig, countryIso, darkTheme);
     };
 
-    const { data: selectedCityList, refetch: fetchCity } = useReactQuery_Get(
+    const { data: selectedCityList, refetch: fetchCity, isFetching: isCityLoading } = useReactQuery_Get(
         SELECT_CITY_LIST_QUERY_ID,
         cityFn,
         on_City_Success,
@@ -121,7 +120,7 @@ const Add = () => {
         300000, // Cache time
         0, // Stale Time
     );
-    const { data: selectedStateList, refetch: fetchState } = useReactQuery_Get(
+    const { data: selectedStateList, refetch: fetchState, isFetching: isStateLoading } = useReactQuery_Get(
         SELECT_STATE_LIST_QUERY_ID,
         stateFn,
         on_State_Success,
@@ -134,10 +133,6 @@ const Add = () => {
         300000, // Cache time
         0, // Stale Time
     );
-
-    useEffect(() => {
-        darkTheme ? setColor(dark_colors) : setColor(light_colors);
-    }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const on_AddProfile_Success = () => {
         displayToastify(
@@ -160,53 +155,38 @@ const Add = () => {
     );
 
     const handleSubmit = () => {
-        Object.assign(
-            formData,
-            { countryName: country },
-            { countryCode: countryCode },
-            { stateName: state },
-            { cityName: city },
-            { room: room },
-        );
-        if (
-            room.length > NONPREMIUMROOMCOUNT ||
-            room.length === 0 ||
-            city === undefined ||
-            state === undefined ||
-            country === undefined
-        ) {
-            if (room.length > NONPREMIUMROOMCOUNT) {
-                displayToastify(
-                    `Room count cannot exceed ${NONPREMIUMROOMCOUNT}`,
-                    !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                    TOASTIFYSTATE.ERROR,
-                );
-            } else if (room.length === 0) {
-                displayToastify(
-                    `Please add at least one room`,
-                    !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                    TOASTIFYSTATE.ERROR,
-                );
-            } else {
-                displayToastify(
-                    'Location is required. Please provide a valid entry',
-                    !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                    TOASTIFYSTATE.ERROR,
-                );
-            }
-        } else {
-            mutate(formData);
-            onClear();
+        const fullFormData = {
+            ...formData,
+            countryName: country,
+            countryCode: countryCode,
+            stateName: state,
+            cityName: city,
+            room: room,
+        };
+
+        // Simplified Validation Logic
+        if (room.length === 0) {
+           displayError('Please add at least one room');
+           return;
         }
+        
+        if (room.length > NONPREMIUMROOMCOUNT) {
+            displayError(`Room count cannot exceed ${NONPREMIUMROOMCOUNT}`);
+            return;
+        }
+
+        if (!city || !state || !country) {
+            displayError('Location (Country, State, City) is required.');
+            return;
+        }
+
+        mutate(fullFormData);
+        onClear();
     };
 
     useEffect(() => {
         if (room.length > NONPREMIUMROOMCOUNT) {
-            displayToastify(
-                `Room count cannot exceed ${NONPREMIUMROOMCOUNT} for non premium members`,
-                !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-                TOASTIFYSTATE.ERROR,
-            );
+            displayError(`Room count cannot exceed ${NONPREMIUMROOMCOUNT} for non premium members`);
         }
     }, [room]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -248,6 +228,7 @@ const Add = () => {
             option: selectedStateList?.data?.body,
             onChangeFn: addStateData,
             resetRef: stateSelectInputRef,
+            isLoading: isStateLoading,
         },
         {
             id: 4,
@@ -257,6 +238,7 @@ const Add = () => {
             option: selectedCityList?.data?.body,
             onChangeFn: addCityData,
             resetRef: citySelectInputRef,
+            isLoading: isCityLoading,
         },
     ];
 

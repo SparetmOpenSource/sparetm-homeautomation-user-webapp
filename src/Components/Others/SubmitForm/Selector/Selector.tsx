@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { dark_colors, light_colors } from "../../../../Data/ColorConstant";
 import { useTheme } from "../../../../Pages/ThemeProvider";
 import TextBlinkAnimation from "../../TextBlinkAnimation/TextBlinkAnimation";
@@ -11,18 +10,94 @@ import { getCountryList } from "../../../../Api.tsx/ProfileConfigApis";
 import { getMergedHeadersForLocation } from "../../../../Api.tsx/Axios";
 
 const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel }: any) => {
-    const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
+    // Derived state for color - prevents flicker
+    const color = darkTheme ? dark_colors : light_colors;
 
     const on_success = (data: any) => { console.log(data) };
     const on_error = () => { };
 
-    const getHeaderConfig = {
+    // Use memoized header config to avoid re-creation
+    const headerConfig = {
         headers: getMergedHeadersForLocation('bEltb0FxY3dhajRDa3NxS1JMcUpMZ3ZDemV3emtBdzdIcm1Fa292bg==')
     };
 
+    // Custom styles for react-select to match the theme
+    const customStyles = {
+        control: (base: any, state: any) => ({
+            ...base,
+            background: color?.element,
+            color: color?.text,
+            // Match Form.css: border: 3px solid grey (default) / orange (focus)
+            border: state.isFocused ? '3px solid orange' : '3px solid grey',
+            borderRadius: '0.5rem',
+            padding: '0.6em', // Slightly reduced from 1em as requested
+            fontSize: '1rem', // Match Form.css
+            lineHeight: '24px', // Match Form.css
+            outlineOffset: '5px', // Match Form.css
+            boxShadow: 'none', 
+            transition: '0.5s all ease', // Match Form.css transition
+            '&:hover': {
+                border: '3px solid orange', // Match hover behavior if desired, or keep generic
+            },
+        }),
+        menu: (base: any) => ({
+            ...base,
+            background: color?.element,
+            color: color?.text,
+            zIndex: 9999, // Ensure dropdown is on top
+        }),
+        option: (base: any, state: any) => ({
+            ...base,
+            backgroundColor: state.isFocused ? color?.hover : color?.element,
+            color: color?.text,
+            ':active': {
+                backgroundColor: color?.button,
+            },
+        }),
+        valueContainer: (base: any) => ({
+            ...base,
+            padding: '0', // Remove internal padding so control padding (1em) dictates layout
+            margin: '0',
+        }),
+        singleValue: (base: any) => ({
+            ...base,
+            color: color?.text,
+            margin: '0',
+            padding: '0',
+        }),
+        input: (base: any) => ({
+            ...base,
+            color: color?.text,
+            margin: '0',
+            padding: '0',
+        }),
+        placeholder: (base: any) => ({
+            ...base,
+            color: color?.icon,
+            margin: '0',
+            padding: '0',
+        }),
+        multiValue: (base: any) => ({
+            ...base,
+            backgroundColor: color?.inner,
+        }),
+        multiValueLabel: (base: any) => ({
+            ...base,
+            color: color?.text,
+        }),
+        multiValueRemove: (base: any) => ({
+            ...base,
+            color: color?.text,
+            ':hover': {
+                backgroundColor: color?.error,
+                color: 'white',
+            },
+        }),
+    };
+
     const getCountryDataFn = () => {
-        return getCountryList(getHeaderConfig, darkTheme);
+        return getCountryList(headerConfig, darkTheme);
     };
 
     const { isLoading, data } = useReactQuery_Get(
@@ -52,10 +127,6 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
         },
     ]
 
-    useEffect(() => {
-        darkTheme ? setColor(dark_colors) : setColor(light_colors);
-    }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
-
     return (
         <div className="submitSelectorForm">
             <div
@@ -72,7 +143,7 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
                                     size="calc(35px + (45 - 35) * ((100vw - 1280px) / (1600 - 1280)))"
                                     height="27px"
                                     weight="700"
-                                    opacity="0.5"
+                                    opacity="1" 
                                 >
                                     {letter === ' ' ? '\u00A0' : letter}
                                 </TextBlinkAnimation>
@@ -88,6 +159,7 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
                 <section className="submitSelectorForm-field-wrapper">
                     <Select
                         ref={formList[0]?.resetRef}
+                        styles={customStyles}
                         className="submitSelectorForm-field"
                         classNamePrefix="select"
                         closeMenuOnSelect={false}
@@ -105,6 +177,7 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
 
                     <Select
                         ref={formList[1]?.resetRef}
+                        styles={customStyles}
                         className='submitSelectorForm-field'
                         classNamePrefix="select"
                         closeMenuOnSelect={true}
@@ -122,11 +195,12 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
 
                     <Select
                         ref={formList[2]?.resetRef}
+                        styles={customStyles}
                         className='submitSelectorForm-field'
                         classNamePrefix="select"
                         closeMenuOnSelect={true}
                         isDisabled={false}
-                        isLoading={false}
+                        isLoading={formList[2]?.isLoading}
                         isClearable={true}
                         isSearchable={true}
                         isMulti={formList[2]?.isMulti}
@@ -139,11 +213,12 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
 
                     <Select
                         ref={formList[3]?.resetRef}
+                        styles={customStyles}
                         className='submitSelectorForm-field'
                         classNamePrefix="select"
                         closeMenuOnSelect={true}
                         isDisabled={false}
-                        isLoading={false}
+                        isLoading={formList[3]?.isLoading}
                         isClearable={true}
                         isSearchable={true}
                         isMulti={formList[3]?.isMulti}

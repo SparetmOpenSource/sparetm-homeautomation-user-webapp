@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { dark_colors, light_colors } from "../../../../Data/ColorConstant";
 import { useTheme } from "../../../../Pages/ThemeProvider";
 import { useForm } from "react-hook-form";
@@ -10,8 +10,10 @@ import "./Form.css";
 import Button from "../../CustomButton/Button";
 
 const Form = ({ heading, subHeading, formData, formList, switchForm, typeFlag, btnLabel }: any) => {
-    const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
+    // Derived state for color - prevents flicker
+    const color = darkTheme ? dark_colors : light_colors;
+
     const [showPassword, setShowPassword] = useState(false);
     const PASSWORDTYPE = 'password';
 
@@ -34,10 +36,6 @@ const Form = ({ heading, subHeading, formData, formList, switchForm, typeFlag, b
         reset();
     };
 
-    useEffect(() => {
-        darkTheme ? setColor(dark_colors) : setColor(light_colors);
-    }, [darkTheme]); // eslint-disable-line react-hooks/exhaustive-deps
-
     return (
         <div className="submitForm">
             <form
@@ -55,7 +53,7 @@ const Form = ({ heading, subHeading, formData, formList, switchForm, typeFlag, b
                                     size="calc(35px + (45 - 35) * ((100vw - 1280px) / (1600 - 1280)))"
                                     height="27px"
                                     weight="700"
-                                    opacity="0.5"
+                                    opacity="1"
                                 >
                                     {letter === ' ' ? '\u00A0' : letter}
                                 </TextBlinkAnimation>
