@@ -38,9 +38,7 @@ export const handleLogin = async () => {
 };
 
 export const getPlaybackState = async (
-    callForAccessTokenByRefreshToken: any,
     token: any,
-    refreshToken?: string,
 ) => {
     try {
         const response = await api.get(
@@ -56,9 +54,6 @@ export const getPlaybackState = async (
         }
         return response?.data;
     } catch (error: any) {
-        if (error?.response?.status === 401 && refreshToken) {
-            callForAccessTokenByRefreshToken({ token: refreshToken });
-        }
         throw new Error(
             `Failed to fetch playback state: ${
                 error.response?.data?.error?.message ?? error.message
@@ -232,6 +227,5 @@ export const setting_up_token = (data: any) => {
     const access_token = data?.data?.body?.access_token;
     const refresh_token = data?.data?.body?.refresh_token;
     const accountType = data?.data?.headers?.spotify_account_type?.[0];
-
     return { access_token, refresh_token, accountType };
 };

@@ -16,12 +16,11 @@ import { useTheme } from '../../../../Pages/ThemeProvider';
 import { catchError } from '../../../../Utils/HelperFn';
 import useLocalStorage from '../../../../Hooks/UseLocalStorage';
 import {
-    Current_Date_Time,
+
     SPOTIFY_TOKEN_GLOBAL,
     SPOTIFY_REFRESH_TOKEN_GLOBAL,
     SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_TOKEN_FETCHED_GLOBAL,
-    SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL,
     SPOTIFY_CODE_VERIFIER,
 } from '../../../../Data/Constants';
 
@@ -33,7 +32,6 @@ const SpotifyLogIn = ({ handleRefresh }: any) => {
     const [, setRefreshToken] = useLocalStorage(SPOTIFY_REFRESH_TOKEN_GLOBAL, '');
     const [, setAccountType] = useLocalStorage(SPOTIFY_ACCOUNT_TYPE_GLOBAL, '');
     const [tokenFetched, setTokenFetched] = useLocalStorage(SPOTIFY_TOKEN_FETCHED_GLOBAL, false);
-    const [, setTokenFetchedTime] = useLocalStorage(SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL, '');
 
     const on_success = (data: any) => {
         const { access_token, refresh_token, accountType: acctType } = setting_up_token(data);
@@ -41,7 +39,6 @@ const SpotifyLogIn = ({ handleRefresh }: any) => {
             setAccessToken(access_token);
             setRefreshToken(refresh_token);
             setTokenFetched(true);
-            setTokenFetchedTime(Current_Date_Time);
             handleRefresh();
         }
         if (acctType) {
@@ -72,6 +69,13 @@ const SpotifyLogIn = ({ handleRefresh }: any) => {
         ) {
             callForAccessToken({ code, codeVerifier, redirect_uri });
             hasFetched.current = true;
+            
+            // Remove code from URL to prevent double invocation on re-renders
+            const newUrlParams = new URLSearchParams(window.location.search);
+            newUrlParams.delete('code');
+            const newSearch = newUrlParams.toString();
+            const newPath = window.location.pathname + (newSearch ? `?${newSearch}` : '');
+            window.history.replaceState({}, document.title, newPath);
         }
     }, [callForAccessToken, tokenFetched]);
 

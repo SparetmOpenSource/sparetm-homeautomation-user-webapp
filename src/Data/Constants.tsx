@@ -95,8 +95,7 @@ export const spotify_refresh_playback_constant = {
     play_back_fetch_delay_time: 2000, //1000 * 2 = 3000
 };
 
-export const Current_Date_Time = new Date().toLocaleString('en-IN', {
-    timeZone: 'Asia/Kolkata',
+export const Current_Date_Time = new Date().toLocaleString(undefined, {
     weekday: 'long',
     year: 'numeric',
     month: 'short',

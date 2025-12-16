@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { useTheme } from '../../../Pages/ThemeProvider';
 import './Add.css';
@@ -14,6 +14,7 @@ import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 import {
     getCityList,
     getStateList,
+    getCountryList,
     profileUrl,
     successMessage,
 } from '../../../Api.tsx/ProfileConfigApis';
@@ -21,6 +22,7 @@ import { useAppSelector } from '../../../Features/ReduxHooks';
 import {
     SELECT_CITY_LIST_QUERY_ID,
     SELECT_STATE_LIST_QUERY_ID,
+    SELECT_COUNTRY_LIST_QUERY_ID,
 } from '../../../Data/QueryConstant';
 import {
     getMergedHeadersForLocation,
@@ -28,8 +30,7 @@ import {
 } from '../../../Api.tsx/Axios';
 import { usePostUpdateData } from '../../../Api.tsx/useReactQuery_Update';
 import Building from './../../../Asset/desktop.webp';
-import Form from '../../Others/SubmitForm/Form/Form';
-import Selector from '../../Others/SubmitForm/Selector/Selector';
+import DynamicForm, { FieldConfig } from '../../Others/DynamicForm/DynamicForm';
 
 const Add = () => {
     const navigate = useNavigate();
@@ -38,27 +39,22 @@ const Add = () => {
     // Derived state for color - prevents flicker
     const color = darkTheme ? dark_colors : light_colors;
     
+    // Step 1 State
+    const [profileData, setProfileData] = useState<any>({});
+    
+    // Step 2 State
     const [countryIso, setCountryIso] = useState();
     const [stateIso, setStateIso] = useState();
     const [country, setCountry] = useState();
     const [countryCode, setCountryCode] = useState();
     const [state, setState] = useState();
     const [city, setCity] = useState();
-    const [room, setRoom] = useState([]);
-    const [formData, setFormData] = useState<any>({});
+    const [room, setRoom] = useState<any[]>([]);
+    
+    // UI State
     const [formChange, setFormChange] = useState(false);
-    const roomSelectInputRef: any = useRef();
-    const countrySelectInputRef: any = useRef();
-    const stateSelectInputRef: any = useRef();
-    const citySelectInputRef: any = useRef();
 
-    const onClear = () => {
-        roomSelectInputRef?.current?.clearValue();
-        countrySelectInputRef?.current?.clearValue();
-        stateSelectInputRef?.current?.clearValue();
-        citySelectInputRef?.current?.clearValue();
-    };
-
+    // Callbacks for Selector onChange Logic
     const addRoomData = (el: any) => {
         setRoom(el);
     };
@@ -74,9 +70,10 @@ const Add = () => {
         setCountry(el?.name);
         setCountryIso(el?.iso2);
     };
-    const processFormData = (data: any) => {
-        setFormData(data);
-        setFormChange((prev) => !prev);
+
+    const processProfileData = (data: any) => {
+        setProfileData(data);
+        setFormChange(true); // Switch to Step 2
     };
 
     const displayError = (message: string) => {
@@ -89,9 +86,11 @@ const Add = () => {
 
     const on_City_Error = (error: any) => displayError(error?.message);
     const on_State_Error = (error: any) => displayError(error?.message);
+    const on_Country_Error = (error: any) => displayError(error?.message);
 
     const on_City_Success = () => {};
     const on_State_Success = () => {};
+    const on_Country_Success = () => {};
 
     // Use memoized header config to avoid re-creation
     const headerConfig = useMemo(() => ({
@@ -106,6 +105,23 @@ const Add = () => {
     const stateFn = () => {
         return getStateList(headerConfig, countryIso, darkTheme);
     };
+    const countryFn = () => {
+        return getCountryList(headerConfig, darkTheme);
+    };
+
+    const { data: countryList } = useReactQuery_Get(
+        SELECT_COUNTRY_LIST_QUERY_ID,
+        countryFn,
+        on_Country_Success,
+        on_Country_Error,
+        true, // !fetch_On_Click_Status (Fetch immediately)
+        false, // refetch_On_Mount
+        false, // refetch_On_Window_Focus
+        false, // refetch_Interval
+        false, // refetch_Interval_In_Background
+        300000, 
+        300000, 
+    );
 
     const { data: selectedCityList, refetch: fetchCity, isFetching: isCityLoading } = useReactQuery_Get(
         SELECT_CITY_LIST_QUERY_ID,
@@ -154,9 +170,10 @@ const Add = () => {
         on_AddProfile_Error,
     );
 
-    const handleSubmit = () => {
+    // Final Submit Handler
+    const handleFinalSubmit = () => {
         const fullFormData = {
-            ...formData,
+            ...profileData, // Step 1 data
             countryName: country,
             countryCode: countryCode,
             stateName: state,
@@ -164,7 +181,7 @@ const Add = () => {
             room: room,
         };
 
-        // Simplified Validation Logic
+        // Validation Logic
         if (room.length === 0) {
            displayError('Please add at least one room');
            return;
@@ -181,7 +198,6 @@ const Add = () => {
         }
 
         mutate(fullFormData);
-        onClear();
     };
 
     useEffect(() => {
@@ -202,65 +218,71 @@ const Add = () => {
         }
     }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const selectorList: Record<string, any> = [
+    // --- Dynamic Form Configurations ---
+
+    // Step 1: Profile Details Form
+    const profileFormFields: FieldConfig[] = [
         {
             id: 1,
-            isMulti: true,
-            label: 'select room type*',
-            option: ProfileConfigRoomNames,
-            onChangeFn: addRoomData,
-            resetRef: roomSelectInputRef,
+            name: 'profileName',
+            type: 'text',
+            label: 'Enter profile name*',
+            validation: {
+                required: 'Profile name is required',
+                minLength: { value: 3, message: 'Profile Name is too short' },
+                maxLength: { value: 36, message: 'Profile Name is too long' },
+            }
         },
         {
             id: 2,
-            formFormat: 'Selection',
-            isMulti: false,
+            name: 'mobileNumber',
+            type: 'mobile number', // Uses internal DynamicForm regex for mobile
+            label: 'Enter mobile number (without country code)*',
+            validation: {
+                required: 'Mobile number is required',
+                minLength: { value: 6, message: 'Mobile number is too short' },
+                maxLength: { value: 12, message: 'Mobile number is too long' },
+            }
+        },
+    ];
+
+    // Step 2: Location Form
+    const locationFormFields: FieldConfig[] = [
+        {
+            id: 1,
+            name: 'room',
+            type: 'select',
+            label: 'select room type*',
+            options: ProfileConfigRoomNames,
+            isMulti: true,
+            onChangeFn: addRoomData,
+        },
+        {
+            id: 2,
+            name: 'country',
+            type: 'select',
             label: 'select your country*',
-            option: {},
+            options: countryList?.data?.body,
             onChangeFn: addCountryData,
-            resetRef: countrySelectInputRef,
         },
         {
             id: 3,
-            formFormat: 'Selection',
-            isMulti: false,
+            name: 'state',
+            type: 'select',
             label: 'select your state*',
-            option: selectedStateList?.data?.body,
+            options: selectedStateList?.data?.body,
             onChangeFn: addStateData,
-            resetRef: stateSelectInputRef,
             isLoading: isStateLoading,
         },
         {
             id: 4,
-            formFormat: 'Selection',
-            isMulti: false,
+            name: 'city',
+            type: 'select',
             label: 'select your city*',
-            option: selectedCityList?.data?.body,
+            options: selectedCityList?.data?.body,
             onChangeFn: addCityData,
-            resetRef: citySelectInputRef,
             isLoading: isCityLoading,
-        },
-    ];
-
-    const formList: Record<string, any> = [
-        {
-            id: 1,
-            type: 'profile name',
-            placeholder: 'Enter profile name*',
-            keyName: 'profileName',
-            minLength: 3,
-            maxLength: 36,
-            regex: undefined,
-        },
-        {
-            id: 2,
-            type: 'mobile number',
-            placeholder: 'Enter mobile number (without country code)*',
-            keyName: 'mobileNumber',
-            minLength: 6,
-            maxLength: 12,
-            regex: /^\d{10}(\d{2})?$/,
-        },
+        }
     ];
 
     return (
@@ -277,22 +299,27 @@ const Add = () => {
             </section>
             <section style={{ backgroundColor: color?.inner }}>
                 {!formChange && (
-                    <Form
+                    <DynamicForm
                         heading="Create your home!"
                         subHeading="Submit to Start Your Automation Journey!"
-                        formData={processFormData}
-                        formList={formList}
-                        btnLabel="go ahead"
+                        fields={profileFormFields}
+                        onSubmit={processProfileData}
+                        submitLabel="go ahead"
                     />
                 )}
                 {formChange && (
-                    <Selector
+                    <DynamicForm
                         heading="Let us know where you are"
-                        // subHeading="and we’ll do the rest!"
-                        formList={selectorList}
-                        submit={handleSubmit}
-                        switchForm={setFormChange}
-                        btnLabel="submit"
+                        fields={locationFormFields}
+                        onSubmit={handleFinalSubmit}
+                        submitLabel="submit"
+                        secondaryButtons={[
+                            {
+                                id: 1,
+                                label: 'back',
+                                onClick: () => setFormChange(false)
+                            }
+                        ]}
                     />
                 )}
             </section>
