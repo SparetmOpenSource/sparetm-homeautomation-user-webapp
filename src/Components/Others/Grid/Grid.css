@@ -9,13 +9,13 @@
     grid-template-rows: max-content;
     overflow: auto;
     overflow-x: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
-.profile-grid::-webkit-scrollbar {
+/* .profile-grid::-webkit-scrollbar {
     display: none;
-}
+} */
 
 /* *********** */
 
@@ -41,10 +41,10 @@
     grid-template-rows: max-content;
     overflow: auto;
     overflow-x: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
-.device-grid-data-available::-webkit-scrollbar {
+/* .device-grid-data-available::-webkit-scrollbar {
     display: none;
-}
+} */

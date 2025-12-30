@@ -13,13 +13,13 @@
     height: 100%;
     border-radius: inherit;
     padding: 1.5em 0;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
-.form_wrapper::-webkit-scrollbar {
+/* .form_wrapper::-webkit-scrollbar {
     display: none;
-}
+} */
 
 /* ****************************** */
 .form_wrapper h1 {

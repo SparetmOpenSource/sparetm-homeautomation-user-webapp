@@ -3,16 +3,16 @@
     height: 100%;
     box-sizing: border-box;
     overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
     color: var(--text-primary);
     background-color: transparent; /* Transparent to blend with parent */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.preferences::-webkit-scrollbar {
+/* .preferences::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .preferences-header {
     margin-bottom: 2rem;

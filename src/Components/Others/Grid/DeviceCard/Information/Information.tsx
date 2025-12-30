@@ -33,6 +33,8 @@ import {
 import { updateHeaderConfig } from '../../../../../Api.tsx/Axios';
 import DeviceDataGraph from '../DeviceDataGraph/DeviceDataGraph';
 import DeviceRemote from '../DeviceRemote/DeviceRemote';
+import { MdOutlineMoreTime } from "react-icons/md";
+import Scheduler from '../Scheduler/Scheduler';
 
 const Information = ({
     id,
@@ -47,7 +49,7 @@ const Information = ({
     currentDeviceStatus,
 }: any) => {
     const [color, setColor] = useState<any>(light_colors);
-    const [infoWindowCount, setInfoWindowCount] = useState<number>(0);
+    const [infoWindowCount, setInfoWindowCount] = useState<number>(3);
     const admin = useAppSelector((state: any) => state?.user?.admin);
     const profile = useAppSelector((state: any) => state?.user?.profile);
     const queryClient = useQueryClient();
@@ -60,6 +62,8 @@ const Information = ({
             setInfoWindowCount(1);
         } else if (count === 2) {
             setInfoWindowCount(2);
+        } else if (count === 3) {
+            setInfoWindowCount(3);
         }
     };
 
@@ -111,18 +115,18 @@ const Information = ({
                     <motion.span
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.9 }}
-                        onClick={() => changeInfoWindow(0)}
+                        onClick={() => changeInfoWindow(3)}
                     >
                         <IconContext.Provider
                             value={{
                                 size: '2em',
                                 color:
-                                    infoWindowCount === 0
+                                    infoWindowCount === 3
                                         ? color?.button
                                         : 'gray',
                             }}
                         >
-                            <HiOutlineInformationCircle />
+                            <MdOutlineMoreTime />
                         </IconContext.Provider>
                     </motion.span>
                     {isRemoteActive && (
@@ -159,6 +163,23 @@ const Information = ({
                             }}
                         >
                             <MdOutlineDataSaverOff />
+                        </IconContext.Provider>
+                    </motion.span>
+                    <motion.span
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => changeInfoWindow(0)}
+                    >
+                        <IconContext.Provider
+                            value={{
+                                size: '2em',
+                                color:
+                                    infoWindowCount === 0
+                                        ? color?.button
+                                        : 'gray',
+                            }}
+                        >
+                            <HiOutlineInformationCircle />
                         </IconContext.Provider>
                     </motion.span>
                 </span>
@@ -301,6 +322,11 @@ const Information = ({
             {infoWindowCount === 2 && (
                 <section>
                     <DeviceDataGraph darkTheme={darkTheme} />
+                </section>
+            )}
+            {infoWindowCount === 3 && (
+                <section>
+                    <Scheduler deviceId={id} darkTheme={darkTheme} /> 
                 </section>
             )}
         </div>

@@ -33,15 +33,15 @@
     align-items: flex-start;
     flex-direction: column;
     overflow: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
 }
 
-.search_result::-webkit-scrollbar {
+/* .search_result::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .search_result-isLoading {
     width: 100%;

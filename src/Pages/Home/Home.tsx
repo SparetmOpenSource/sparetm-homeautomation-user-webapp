@@ -16,7 +16,7 @@ import {
 } from '../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
 import { useEffect, useMemo, useRef } from 'react';
-import HomePage_SVG from './../../Asset/HomePage_SVG.svg';
+import ReorderingGrid from '../../Components/Others/ReorderingGrid/ReorderingGrid';
 import { useActive } from '../../Hooks/UseActive';
 import { useNavigate } from 'react-router-dom';
 import { useTheme, useThemeUpdate } from '../ThemeProvider';
@@ -202,13 +202,7 @@ const Home = () => {
                 </motion.button>
 
                 <div className="home-landing-pic-container">
-                    <img
-                        src={HomePage_SVG}
-                        height="100%"
-                        width="100%"
-                        loading="lazy"
-                        alt="Home Automation Concept"
-                    />
+                    <ReorderingGrid />
                 </div>
             </section>
 

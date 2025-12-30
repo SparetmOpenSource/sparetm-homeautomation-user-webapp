@@ -260,13 +260,13 @@
     grid-template-rows: repeat(5, 1fr);
     overflow: scroll;
     overflow-x: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
-.rgbGadgetExpandSavedColor_withData::-webkit-scrollbar {
+/* .rgbGadgetExpandSavedColor_withData::-webkit-scrollbar {
     display: none;
-}
+} */
 
 /* .rgbGadgetExpandSavedColor_withData {
     width: 100%;

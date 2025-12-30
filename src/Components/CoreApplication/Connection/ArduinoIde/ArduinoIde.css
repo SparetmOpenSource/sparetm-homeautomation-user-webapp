@@ -24,14 +24,13 @@
     width: 100%;
     padding: 1rem 1rem;
     overflow-y: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
-.arduinoIde-wrapper::-webkit-scrollbar {
+/* .arduinoIde-wrapper::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .arduinoIde-info-wrapper {
     margin-bottom: 3rem;

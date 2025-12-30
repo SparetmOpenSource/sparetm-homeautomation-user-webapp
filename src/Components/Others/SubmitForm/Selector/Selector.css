@@ -12,15 +12,15 @@
     justify-content: flex-start;
     flex-direction: column;
     overflow: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
     border-radius: 0.5rem;
     padding: 2rem;
 }
 
-.submitSelectorForm-wrapper::-webkit-scrollbar {
+/* .submitSelectorForm-wrapper::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .submitSelectorForm-heading {
     width: auto !important;

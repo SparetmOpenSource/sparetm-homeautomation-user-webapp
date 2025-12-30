@@ -73,7 +73,7 @@ const OptionPage = ({ menuType, menuList }: any) => {
                     </Link>
                 ))}
             </section>
-            <section style={{ backgroundColor: color?.inner }}>
+            <section style={{ backgroundColor: color?.inner }}> 
                 <Outlet />
             </section>
         </div>

@@ -44,6 +44,12 @@
     padding-bottom: 2rem;
     overflow-y: auto;
     flex-direction: column;
+   -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.optionPage>:last-child::-webkit-scrollbar {
+    display: none;
 }
 
 /* ************* */
@@ -63,7 +69,6 @@
 }
 
 .optionPage-block span p {
-    background-color: blueviolet;
     padding: 1rem;
 }
 

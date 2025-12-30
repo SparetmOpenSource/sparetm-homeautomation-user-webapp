@@ -40,14 +40,14 @@
     flex-direction: column;
     padding: 0.5rem;
     overflow: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
     /* background-color: springgreen; */
 }
 
-.deviceRoom-btn::-webkit-scrollbar {
+/* .deviceRoom-btn::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .deviceRoom-status-btn {
     width: 100%;

@@ -18,6 +18,32 @@ body {
         Helvetica, Arial, sans-serif;
 }
 
+
 input, button, select, textarea {
     font-family: inherit;
+}
+
+/* Global Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* For horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #555; 
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #777; 
+}
+
+/* Firefox support (limited) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #555 transparent;
 }
