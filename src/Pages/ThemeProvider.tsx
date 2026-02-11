@@ -70,8 +70,8 @@ export function useBackDropOpen(): BackDropActions {
 
 // Custom hook for theme management
 const useThemeManagement = () => {
-    const [darkTheme, setDarkTheme] = useLocalStorage<boolean>(DARK_THEME_KEY, false);
-    const [themeColors, setThemeColors] = useState<any>(light_colors);
+    const [darkTheme, setDarkTheme] = useLocalStorage<boolean>(DARK_THEME_KEY, true);
+    const [themeColors, setThemeColors] = useState<any>(dark_colors);
 
     const toggleTheme = useCallback(() => {
         setDarkTheme((prev) => !prev);

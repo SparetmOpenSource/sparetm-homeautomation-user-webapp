@@ -6,13 +6,13 @@
     border-radius: inherit;
     padding: 0.5em;
     overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
-.calenderFrame::-webkit-scrollbar {
+/* .calenderFrame::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .calenderFrame_reset {
     width: 100%;

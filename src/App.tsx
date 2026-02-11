@@ -15,6 +15,7 @@ import {
 import useLocalStorage from './Hooks/UseLocalStorage';
 import { WebSocketProvider } from './Context/WebSocketContext';
 import { setNotificationConfig } from './Utils/NotificationConfig';
+//import { CubeMonitor } from './Components/Others/CubeMonitor/CubeMonitor';
 
 function App() {
     const [backgroundColor, setBackgroundColor] = useState<string>('black');
@@ -66,6 +67,7 @@ function App() {
                     </WebSocketProvider>
                 </div>
             </ThemeProvider>
+            {/* <CubeMonitor/> */}
         </Router>      
     );
 }

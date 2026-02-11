@@ -12,17 +12,17 @@
     border-bottom-right-radius: 2rem;
     padding: 0.5rem;
     overflow: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
     -webkit-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 5px 5px 0px rgba(0, 0, 0, 0.75);
     position: relative;
 }
 
-.todo-list-wrapper::-webkit-scrollbar {
+/* .todo-list-wrapper::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .todo-list-wrapper-header {
     width: 100%;

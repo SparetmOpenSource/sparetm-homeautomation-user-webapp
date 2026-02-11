@@ -62,13 +62,13 @@
     flex-direction: column;
     padding: 2rem;
     overflow: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
-.signUp-content > :first-child div > :nth-child(3)::-webkit-scrollbar {
+/* .signUp-content > :first-child div > :nth-child(3)::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .signUp-content-left-quote,
 .signUp-content-right-quote {

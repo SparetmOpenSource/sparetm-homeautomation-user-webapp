@@ -9,13 +9,13 @@
     grid-template-rows: max-content;
     overflow: auto;
     overflow-x: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
-.spotify-library-cover-wrapper::-webkit-scrollbar {
+/* .spotify-library-cover-wrapper::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .spotify-library-cover {
     display: flex;

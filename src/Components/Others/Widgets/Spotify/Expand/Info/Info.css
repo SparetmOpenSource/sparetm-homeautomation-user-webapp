@@ -32,8 +32,8 @@
     padding-bottom: 0.5rem;
     padding-left: 2rem;
     overflow: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
 .spotify-info-wrapper > :last-child div {
@@ -45,9 +45,9 @@
     padding-right: 1rem;
 }
 
-.spotify-info-wrapper > :last-child::-webkit-scrollbar {
+/* .spotify-info-wrapper > :last-child::-webkit-scrollbar {
     display: none;
-}
+} */
 
 /* ******************* */
 

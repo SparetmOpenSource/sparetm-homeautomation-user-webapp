@@ -65,14 +65,15 @@
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    overflow: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* -ms-overflow-style: none;
+    scrollbar-width: none; */
 }
 
-.spotify-expand-content-home-wrapper-song::-webkit-scrollbar {
+/* .spotify-expand-content-home-wrapper-song::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .spotify-expand-content-home-wrapper-song-isLoading {
     width: 100%;

@@ -18,6 +18,7 @@ export const SELECT_DEVICE_SERVICE_URL_LIST_QUERY_ID =
     'get_device_service_url_list';
 export const SELECT_DEVICE_LIST_QUERY_ID = 'get_device_list';
 export const GET_WEBSOCKET_URL_QUERY_ID = 'get_websocket_url';
+export const GET_DEVICE_SCHEDULES_QUERY_ID = 'get_device_schedules';
 
 //-SPOTIFY-//
 export const GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID = 'get_spotify_playback_state';

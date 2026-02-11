@@ -15,32 +15,88 @@ import {
     observer,
 } from '../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
-import { useEffect, useMemo, useRef } from 'react';
-import HomePage_SVG from './../../Asset/HomePage_SVG.svg';
+import { useEffect, useMemo, useRef, useState } from 'react';
+//import ReorderingGrid from '../../Components/Others/ReorderingGrid/ReorderingGrid';
 import { useActive } from '../../Hooks/UseActive';
 import { useNavigate } from 'react-router-dom';
 import { useTheme, useThemeUpdate } from '../ThemeProvider';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { IconContext } from 'react-icons';
 import { CiDark } from 'react-icons/ci';
 import { GoDotFill } from 'react-icons/go';
 import { GrHomeRounded } from 'react-icons/gr';
 import { IoMdContacts } from 'react-icons/io';
-import { FaHourglassStart } from 'react-icons/fa6';
-import { FaArrowUpRightDots } from 'react-icons/fa6';
-import { MdContentPasteSearch } from 'react-icons/md';
+import TextBlinkAnimation from '../../Components/Others/TextBlinkAnimation/TextBlinkAnimation';
 import FloatingCube from './FloatingCube/FloatingCube';
 import { MdWeb } from 'react-icons/md';
 import { FaCode } from 'react-icons/fa';
 import { MdCloudSync } from 'react-icons/md';
-import { FaFileSignature } from 'react-icons/fa6';
-import { MdDashboard } from 'react-icons/md';
-import { MdOutlineConnectWithoutContact } from 'react-icons/md';
+import BirdSimulation from '../../Components/Others/BirdSimulation/BirdSimulation';
 import PolicyModal from '../../Components/Others/PolicyModal/PolicyModal';
-
+import HeroBackground from '../../Asset/Meet-home.svg'
 import { useBackDropOpen } from '../ThemeProvider';
 import { POLICY_MODAL, PolicyModalSize } from '../../Data/Constants';
+import { RiBookOpenLine } from 'react-icons/ri';
+import { HiOutlineSparkles} from 'react-icons/hi';
+import { MdOutlineAutoGraph } from 'react-icons/md';
+
+const StepCard = ({ step }: { step: any }) => {
+    const [showMeta, setShowMeta] = useState(false);
+    const darkTheme: any = useTheme();
+    
+    return (
+        <motion.div
+            whileHover={{ y: -8 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="home-step-card"
+        >
+            <div 
+                className={`home-step-card-header ${darkTheme ? 'dark-header' : ''}`}
+                style={{ backgroundColor: darkTheme ? step.darkColor : step.pastelColor }}
+            >
+                <h3>
+                    {step.titlePrimary} <br />
+                    <span>{step.titleHighlight}</span>
+                </h3>
+                <p>{step.description}</p>
+                <div className="home-step-card-tags">
+                    {step.tags.map((tag: string, i: number) => (
+                        <span key={i} className="home-step-card-tag-pill" style={{ backgroundColor: 'rgba(0,0,0,0.06)' }}>
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            </div>
+
+            <div className="home-step-card-footer">
+                <span className="explore-text">Explore</span>
+                <button 
+                    className={`explore-btn ${showMeta ? 'active' : ''}`}
+                    onClick={() => setShowMeta(!showMeta)}
+                >
+                    <IconContext.Provider value={{ size: '1.2em' }}>
+                        <MdOutlineAutoGraph />
+                    </IconContext.Provider>
+                </button>
+            </div>
+
+            <AnimatePresence>
+                {showMeta && (
+                    <motion.div 
+                        className="home-step-card-info-panel"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                    >
+                        <p>{step.extraInfo}</p>
+                        <button className="close-info-btn" onClick={() => setShowMeta(false)}>Close</button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
+    );
+};
 
 const Home = () => {
     const paragraphLandingRef: any = useRef(null);
@@ -60,30 +116,37 @@ const Home = () => {
     const tranValForMenu = 0.1;
     const tranValForText = 0.7;
 
+    const [activeSection, setActiveSection] = useState(1);
+
     // Memoize MenuList to prevent recreation on every render
     const MenuList = useMemo(() => [
         {
             id: 1,
+            name: 'Home',
             icon: status ? <GrHomeRounded /> : <GoDotFill />,
             ref: paragraphLandingRef,
         },
         {
             id: 2,
-            icon: status ? <FaHourglassStart /> : <GoDotFill />,
+            name: 'Story',
+            icon: status ? <RiBookOpenLine /> : <GoDotFill />,
             ref: paragraphStoryRef,
         },
         {
             id: 3,
-            icon: status ? <MdContentPasteSearch /> : <GoDotFill />,
+            name: 'Features',
+            icon: status ? <HiOutlineSparkles /> : <GoDotFill />,
             ref: paragraphFeaturesRef,
         },
         {
             id: 4,
-            icon: status ? <FaArrowUpRightDots /> : <GoDotFill />,
+            name: 'Steps',
+            icon: status ? <MdOutlineAutoGraph /> : <GoDotFill />,
             ref: paragraphStepsRef,
         },
         {
             id: 5,
+            name: 'Contact',
             icon: status ? <IoMdContacts /> : <GoDotFill />,
             ref: paragraphContactRef,
         },
@@ -94,6 +157,33 @@ const Home = () => {
         hiddenElements.forEach((element) => {
             observer.observe(element);
         });
+
+        // Intersection Observer for Active Section Highlighting
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                    const sectionId = entry.target.getAttribute('data-section-id');
+                    if (sectionId) setActiveSection(parseInt(sectionId));
+                }
+            });
+        }, { threshold: [0.5] });
+
+        const refs = [
+            { ref: paragraphLandingRef, id: 1 },
+            { ref: paragraphStoryRef, id: 2 },
+            { ref: paragraphFeaturesRef, id: 3 },
+            { ref: paragraphStepsRef, id: 4 },
+            { ref: paragraphContactRef, id: 5 },
+        ];
+
+        refs.forEach(({ ref, id }) => {
+            if (ref.current) {
+                ref.current.setAttribute('data-section-id', id.toString());
+                sectionObserver.observe(ref.current);
+            }
+        });
+
+        return () => sectionObserver.disconnect();
     }, []);
 
     logger(PAGE_LOGGER.home_page);
@@ -115,7 +205,7 @@ const Home = () => {
     } as React.CSSProperties), [color, darkTheme, status]);
 
     return (
-        <div className="home" style={themeStyles}>
+        <div className="home" style={themeStyles} data-theme={darkTheme ? 'dark' : 'light'}>
             <motion.span
                 className="home-theme-icon"
                 whileHover={{ scale: 1.2 }}
@@ -134,24 +224,40 @@ const Home = () => {
                 </IconContext.Provider>
             </motion.span>
             
-            <span className="home-bounce-menu-wrapper">
+            <span className={`home-bounce-menu-wrapper ${!status ? 'menu-inactive' : ''}`}>
                 {MenuList.map((item: any) => (
                     <motion.span
                         key={item?.id}
-                        className="home-bounce-menu"
+                        className={`home-bounce-menu ${activeSection === item.id ? 'active' : ''}`}
                         initial={{ scale: 1 }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => doScroll(item?.ref)}
+                        style={{
+                            backgroundColor: activeSection === item.id ? (darkTheme ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)') : 'transparent'
+                        }}
                     >
                         <IconContext.Provider
                             value={{
-                                size: '1.5em',
+                                size: '1.2em',
                                 className: 'home-menu-icon'
                             }}
                         >
                             {item?.icon}
                         </IconContext.Provider>
+                        <AnimatePresence>
+                            {status && (
+                                <motion.span 
+                                    className="home-menu-text"
+                                    initial={{ width: 0, opacity: 0, marginLeft: 0 }}
+                                    animate={{ width: 'auto', opacity: 1, marginLeft: 8 }}
+                                    exit={{ width: 0, opacity: 0, marginLeft: 0 }}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                >
+                                    {item?.name}
+                                </motion.span>
+                            )}
+                        </AnimatePresence>
                     </motion.span>
                 ))}
                 <motion.span
@@ -202,13 +308,13 @@ const Home = () => {
                 </motion.button>
 
                 <div className="home-landing-pic-container">
-                    <img
-                        src={HomePage_SVG}
-                        height="100%"
-                        width="100%"
-                        loading="lazy"
-                        alt="Home Automation Concept"
-                    />
+                    {/* <ReorderingGrid /> */}
+                   <img
+                src={HeroBackground}
+                style={{ width: '99%', height: '98%', objectFit: 'cover', borderRadius: '12.5px' }}
+                loading="lazy"
+                alt="home_hero"
+            />
                 </div>
             </section>
 
@@ -218,8 +324,20 @@ const Home = () => {
                     <section className="home-story-header">
                         <h1 className="hidden-el">
                             The story of <br />
-                            <span className="home-intro-text-style">
-                                {APPNAME}
+                            <span style={{ display: 'inline-block' }}>
+                                {APPNAME.split('').map((char, index) => (
+                                    <TextBlinkAnimation
+                                        key={index}
+                                        customClass="home-intro-text-style"
+                                        customStyle={{
+                                            backgroundSize: '1000% 100%',
+                                            backgroundPosition: `${(index / (APPNAME.length - 1)) * 100}% 0`,
+                                        }}
+                                        color="transparent"
+                                    >
+                                        {char === ' ' ? '\u00A0' : char}
+                                    </TextBlinkAnimation>
+                                ))}
                             </span>{' '}
                             begins <br />
                             with curiosity.
@@ -315,7 +433,7 @@ const Home = () => {
                                 <strong className="home-intro-text-style">Modern Web Interface: </strong>
                                 <span className="text-secondary">
                                     {' '} Our system comes with a <strong><i>visually appealing</i></strong>, 
-                                    an intuitive <strong><i>web-based</i></strong> interface designed for 
+                                    an intuitive <strong><i>web-based</i></strong>{' '}interface designed for 
                                     <strong><i> Seamless appliance control</i></strong>. Whether you're turning on the lights,
                                     adjusting the fan speed, or checking the status of your devices, the user interface
                                     ensures a smooth and responsive experience. With just a few taps or clicks,
@@ -339,9 +457,9 @@ const Home = () => {
                                 <span className="text-secondary">
                                      {' '} One of the core features of our system is <strong><i> full appliance synchronization</i></strong>.
                                     Any change made to the state of an appliance, be it through the UI, physical
-                                    switches, or voice commands, is <strong><i>instantly reflected</i></strong> 
+                                    switches, or voice commands, is <strong><i>instantly reflected{' '}</i></strong> 
                                     across all connected devices and dashboards. This <strong><i>Real-time sync</i></strong> 
-                                    ensures accuracy, consistency, and convenience, no matter where or how you
+                                    {' '}ensures accuracy, consistency, and convenience, no matter where or how you
                                     interact with your home.
                                 </span>
                             </p>
@@ -355,37 +473,52 @@ const Home = () => {
                     <div className="home-steps-grid-container">
                         {[
                             {
-                                icon: <FaFileSignature />,
-                                title: 'Create Your Profile',
+                                tags: ['Users', 'Permissions', 'Access'],
+                                titlePrimary: 'Profile',
+                                titleHighlight: 'Settings',
                                 description:
-                                    'Join to unlock personalized features. Configure your rooms and location for real-time weather updates and a tailored automation experience.',
+                                    'Manage users and permissions. Configure your home location for precise weather and sunrise/sunset data.',
+                                extraInfo: 'Keep your home secure with granular access control. create guest profiles and manage family access.',
+                                pastelColor: '#E8F5E9', // Light Green
+                                darkColor: '#1e3a29', // Dark Green
+                                accentColor: '#4CAF50'
                             },
                             {
-                                icon: <MdDashboard />,
-                                title: 'Personalize Dashboard',
+                                tags: ['Widgets', 'Layouts', 'Control'],
+                                titlePrimary: 'Smart',
+                                titleHighlight: 'Dashboard',
                                 description:
-                                    'Customize your interface to match your workflow. Organize devices, tweak settings, and control your environment effortlessly.',
+                                    'Customize your interface to match your workflow. Organize devices, tweak settings, and control effortlessly.',
+                                extraInfo: 'Choose from hundreds of widgets and layouts. Our drag-and-drop interface lets you build your perfect control center.',
+                                pastelColor: '#E0F7FA', // Light Cyan/Blue
+                                darkColor: '#1a3b47', // Dark Cyan
+                                accentColor: '#00BCD4'
                             },
                             {
-                                icon: <MdOutlineConnectWithoutContact />,
-                                title: 'Connect Your Devices',
+                                tags: ['Rules', 'Schedules', 'Scripts'],
+                                titlePrimary: 'Automation',
+                                titleHighlight: 'Engine',
                                 description:
-                                    'Access step-by-step guides for ESP32, ESP8266, and Raspberry Pi. Seamlessly integrate your custom circuits and start controlling your hardware.',
+                                    'Create powerful automation rules. Set schedules, triggers, and conditions to make your home truly smart.',
+                                extraInfo: 'From simple timers to complex multi-device scenarios, our automation engine handles it all with ease.',
+                                pastelColor: '#FFF3E0', // Light Orange
+                                darkColor: '#4a3b2a', // Dark Orange
+                                accentColor: '#FF9800'
+                            },
+                            {
+                                tags: ['ESP32', 'Raspberry Pi', 'Sensors'],
+                                titlePrimary: 'Custom',
+                                titleHighlight: 'Hardware',
+                                description:
+                                    'Seamlessly integrate your own hardware. Access step-by-step guides for ESP32 and Raspberry Pi.',
+                                extraInfo: 'Secure, local-first control without cloud reliance. Download pre-configured firmware for instant connectivity.',
+                                pastelColor: '#F3E5F5', // Light Purple
+                                darkColor: '#3a2a47', // Dark Purple
+                                pastelBorder: '#E1BEE7',
+                                accentColor: '#9C27B0'
                             },
                         ].map((step, index) => (
-                            <motion.div
-                                key={index}
-                                whileHover={{ y: -10 }}
-                                className="home-step-card"
-                            >
-                                <div className="home-step-icon">
-                                    <IconContext.Provider value={{ size: '3em', className: 'accent-icon' }}>
-                                        {step.icon}
-                                    </IconContext.Provider>
-                                </div>
-                                <h3>{step.title}</h3>
-                                <p>{step.description}</p>
-                            </motion.div>
+                            <StepCard key={index} step={step} />
                         ))}
                     </div>
                 </div>
@@ -393,6 +526,9 @@ const Home = () => {
 
             {/* Contact / Footer Page */}
             <section className="home-contact" ref={paragraphContactRef}>
+                {/* Bird Simulation Background */}
+                <BirdSimulation color={color?.button} opacity={darkTheme ? 0.5 : 0.4} />
+
                 <div className="home-contact-top">
                     <section className="brand-section">
                         <p className="brand-name">

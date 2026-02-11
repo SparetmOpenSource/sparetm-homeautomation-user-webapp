@@ -12,15 +12,15 @@
     justify-content: flex-start;
     flex-direction: column;
     overflow: auto;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    /* -ms-overflow-style: none; 
+    scrollbar-width: none;  */
     border-radius: 0.5rem;
     padding: 2rem;
 }
 
-.dynamicForm-wrapper::-webkit-scrollbar {
+/* .dynamicForm-wrapper::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .dynamicForm-heading {
     width: auto !important;

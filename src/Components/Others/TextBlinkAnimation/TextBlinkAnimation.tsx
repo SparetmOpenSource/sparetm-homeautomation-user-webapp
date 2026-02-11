@@ -8,7 +8,9 @@ const TextBlinkAnimation = ({
     size,
     height,
     weight,
-    opacity
+    opacity,
+    customClass,
+    customStyle
 }: any) => {
     const controls = useAnimationControls();
     const [isPlaying, setIsPlaying] = useState(false);
@@ -35,13 +37,14 @@ const TextBlinkAnimation = ({
                 }
             }}
             onAnimationComplete={() => setIsPlaying(false)}
-            className="textBlinkAnimation"
+            className={`textBlinkAnimation ${customClass || ''}`}
             style={{
                 color: color,
                 fontSize: size,
                 lineHeight: height,
                 fontWeight: weight,
-                opacity: opacity
+                opacity: opacity,
+                ...customStyle
             }}
         >
             {children}

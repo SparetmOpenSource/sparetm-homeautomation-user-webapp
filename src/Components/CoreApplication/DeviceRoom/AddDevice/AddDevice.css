@@ -32,14 +32,14 @@
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(5, 1fr);
     overflow-y: auto; /* Scroll ONLY here */
-    scrollbar-width: none;
+    /* scrollbar-width: none; */
     border-radius: 0.5rem;
     height: 100%;
 }
 
-.addDevice-form-wrapper-select > :first-child ::-webkit-scrollbar {
+/* .addDevice-form-wrapper-select > :first-child ::-webkit-scrollbar {
     display: none;
-}
+} */
 
 
 
