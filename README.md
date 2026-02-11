@@ -1,1 +1,1 @@
-This is a react application for home automation.
+This is a react application for home automation system.
