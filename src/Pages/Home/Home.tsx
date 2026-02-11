@@ -38,20 +38,21 @@ import HeroBackground from '../../Asset/Meet-home.svg'
 import { useBackDropOpen } from '../ThemeProvider';
 import { POLICY_MODAL, PolicyModalSize } from '../../Data/Constants';
 import { RiBookOpenLine } from 'react-icons/ri';
-import { HiOutlineSparkles} from 'react-icons/hi';
+import { HiOutlineSparkles } from 'react-icons/hi';
 import { MdOutlineAutoGraph } from 'react-icons/md';
+import { FaCogs, FaUsers, FaLightbulb } from 'react-icons/fa'; // Added icons for story section
 
 const StepCard = ({ step }: { step: any }) => {
     const [showMeta, setShowMeta] = useState(false);
     const darkTheme: any = useTheme();
-    
+
     return (
         <motion.div
             whileHover={{ y: -8 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
             className="home-step-card"
         >
-            <div 
+            <div
                 className={`home-step-card-header ${darkTheme ? 'dark-header' : ''}`}
                 style={{ backgroundColor: darkTheme ? step.darkColor : step.pastelColor }}
             >
@@ -71,7 +72,7 @@ const StepCard = ({ step }: { step: any }) => {
 
             <div className="home-step-card-footer">
                 <span className="explore-text">Explore</span>
-                <button 
+                <button
                     className={`explore-btn ${showMeta ? 'active' : ''}`}
                     onClick={() => setShowMeta(!showMeta)}
                 >
@@ -83,7 +84,7 @@ const StepCard = ({ step }: { step: any }) => {
 
             <AnimatePresence>
                 {showMeta && (
-                    <motion.div 
+                    <motion.div
                         className="home-step-card-info-panel"
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -109,7 +110,7 @@ const Home = () => {
     const darkTheme: any = useTheme();
     // Derived state for color - eliminates double render from useEffect sync
     const color = useMemo(() => darkTheme ? dark_colors : light_colors, [darkTheme]);
-    
+
     const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
     const navigate = useNavigate();
 
@@ -223,7 +224,7 @@ const Home = () => {
                     {darkTheme ? <MdLightMode /> : <CiDark />}
                 </IconContext.Provider>
             </motion.span>
-            
+
             <span className={`home-bounce-menu-wrapper ${!status ? 'menu-inactive' : ''}`}>
                 {MenuList.map((item: any) => (
                     <motion.span
@@ -247,7 +248,7 @@ const Home = () => {
                         </IconContext.Provider>
                         <AnimatePresence>
                             {status && (
-                                <motion.span 
+                                <motion.span
                                     className="home-menu-text"
                                     initial={{ width: 0, opacity: 0, marginLeft: 0 }}
                                     animate={{ width: 'auto', opacity: 1, marginLeft: 8 }}
@@ -267,8 +268,8 @@ const Home = () => {
                     className="home-bounce-menu-login"
                     onClick={() => navigate(RoutePath.Auth)}
                     style={{
-                         color: status ? color?.text : `rgb(62, 62, 62, ${0.5})`,
-                         backgroundColor: status ? color?.button : `rgb(62, 62, 62, ${tranValForMenu})`
+                        color: status ? color?.text : `rgb(62, 62, 62, ${0.5})`,
+                        backgroundColor: status ? color?.button : `rgb(62, 62, 62, ${tranValForMenu})`
                     }}
                 >
                     Login
@@ -309,18 +310,18 @@ const Home = () => {
 
                 <div className="home-landing-pic-container">
                     {/* <ReorderingGrid /> */}
-                   <img
-                src={HeroBackground}
-                style={{ width: '99%', height: '98%', objectFit: 'cover', borderRadius: '12.5px' }}
-                loading="lazy"
-                alt="home_hero"
-            />
+                    <img
+                        src={HeroBackground}
+                        style={{ width: '99%', height: '98%', objectFit: 'cover', borderRadius: '12.5px' }}
+                        loading="lazy"
+                        alt="home_hero"
+                    />
                 </div>
             </section>
 
             {/* Intro & Features Section */}
             <section className="home-intro">
-                <div className="home-intro-bg-inner">
+                <div className="home-intro-bg-inner home-story-section">
                     <section className="home-story-header">
                         <h1 className="hidden-el">
                             The story of <br />
@@ -344,40 +345,40 @@ const Home = () => {
                         </h1>
                     </section>
                     <section ref={paragraphStoryRef} className="home-story-content">
-                        <p className="hidden-el text-secondary">
-                            From the beginning, we’ve been driven by a passion for{' '}
-                            <strong><i>electronics</i></strong> and{' '}
-                            <strong><i>coding</i></strong>. Our vision has always been to build something
-                            useful for <strong><i>many people.</i></strong>{' '}
-                            And yes — we’ve also experienced those everyday inconveniences,
-                            like being too tired to get up and turn off the lights at night.
-                        </p>
-
-                        <p className="hidden-el text-secondary">
-                            <strong><i>That’s when it clicked.</i></strong>
-                        </p>
-                        
-                        <p className="hidden-el text-secondary">
-                            With the support of the <strong><i>open source</i></strong>{' '}
-                            and <strong><i>DIY community</i></strong>{' '}
-                            — whom we deeply admire — we set out to build a{' '}
-                            <strong><i>platform</i></strong>{' '}
-                            that empowers makers and dreamers alike. A{' '}
-                            <strong><i>home automation</i></strong>{' '}
-                            system that’s not just smart and helpful, but also
-                            open source and fully customizable.
-                        </p>
-                        
-                        <p className="hidden-el text-secondary">
-                            It’s built for people who want to <strong><i>learn</i></strong>,{' '}
-                            <strong><i>create</i></strong>, and even gain{' '}
-                            <strong><i>recognition</i></strong> for their{' '}
-                            <strong><i>contributions.</i></strong>
-                        </p>
-                        
-                        <p className="hidden-el text-secondary">
-                            If that sounds like you, <strong><i>welcome aboard.</i></strong>
-                        </p>
+                        {[
+                            {
+                                title: "Driven by Passion",
+                                text: "From the beginning, we’ve been driven by a passion for electronics and coding. Our vision has always been to build something useful for many people. And yes — we’ve also experienced those everyday inconveniences, like being too tired to get up and turn off the lights at night.",
+                                highlight: "That’s when it clicked.",
+                                icon: <FaCogs />,
+                                reverse: false
+                            },
+                            {
+                                title: "Community First",
+                                text: "With the support of the open source and DIY community — whom we deeply admire — we set out to build a platform that empowers makers and dreamers alike. A home automation system that’s not just smart and helpful, but also open source and fully customizable.",
+                                icon: <FaUsers />,
+                                reverse: true
+                            },
+                            {
+                                title: "Space to Create",
+                                text: "It’s built for people who want to learn, create, and even gain recognition for their contributions. If that sounds like you, welcome aboard.",
+                                icon: <FaLightbulb />,
+                                reverse: false
+                            }
+                        ].map((item, index) => (
+                            <div key={index} className={`home-story-row ${item.reverse ? 'reverse' : ''} hidden-el`}>
+                                <div className="home-story-text-col">
+                                    <h2>{item.title}</h2>
+                                    <p>{item.text}</p>
+                                    {item.highlight && <strong>{item.highlight}</strong>}
+                                </div>
+                                <div className="home-story-visual-col">
+                                    <div className="home-story-icon-wrapper" style={{ color: color?.button }}>
+                                        {item.icon}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </section>
                 </div>
 
@@ -385,7 +386,16 @@ const Home = () => {
                     <div className="home-intro-feature-container">
                         <div className="home-intro-feature-container-top">
                             <FloatingCube />
-                            <div className="home-intro-feature-container-top-stats">
+                            <div className="home-intro-feature-container-top-stats" style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                                gap: '20px',
+                                background: darkTheme ? '#111' : '#f0f0f0',
+                                padding: '30px',
+                                border: '3px solid',
+                                borderColor: darkTheme ? '#333' : '#000',
+                                boxShadow: darkTheme ? '8px 8px 0px #333' : '8px 8px 0px #000'
+                            }}>
                                 <div className="home-intro-feature-container-top-stat">
                                     <p className="home-intro-feature-container-top-label">Interface</p>
                                     <p className="home-intro-feature-container-top-value">
@@ -427,24 +437,24 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div className="home-intro-feature-container-content">
                             <p className="hidden-el">
                                 <strong className="home-intro-text-style">Modern Web Interface: </strong>
                                 <span className="text-secondary">
-                                    {' '} Our system comes with a <strong><i>visually appealing</i></strong>, 
-                                    an intuitive <strong><i>web-based</i></strong>{' '}interface designed for 
+                                    {' '} Our system comes with a <strong><i>visually appealing</i></strong>,
+                                    an intuitive <strong><i>web-based</i></strong>{' '}interface designed for
                                     <strong><i> Seamless appliance control</i></strong>. Whether you're turning on the lights,
                                     adjusting the fan speed, or checking the status of your devices, the user interface
                                     ensures a smooth and responsive experience. With just a few taps or clicks,
-                                    you can manage your entire home environment in <strong><i>real-time</i></strong>, 
+                                    you can manage your entire home environment in <strong><i>real-time</i></strong>,
                                     right from your browser.
                                 </span>
                             </p>
                             <p className="hidden-el">
                                 <strong className="home-intro-text-style">DIY-Friendly Code: </strong>
                                 <span className="text-secondary">
-                                     {' '} For those who love to tinker and build, We’ve got you covered. All our code is
+                                    {' '} For those who love to tinker and build, We’ve got you covered. All our code is
                                     <strong><i> thoroughly documented, </i></strong> making it easy for
                                     <strong><i> DIY enthusiasts and developers</i></strong> to explore, modify or expand the system.
                                     Whether you're integrating new sensors, customizing controls, or simply learning how
@@ -455,10 +465,10 @@ const Home = () => {
                             <p className="hidden-el">
                                 <strong className="home-intro-text-style">Real-Time Sync: </strong>
                                 <span className="text-secondary">
-                                     {' '} One of the core features of our system is <strong><i> full appliance synchronization</i></strong>.
+                                    {' '} One of the core features of our system is <strong><i> full appliance synchronization</i></strong>.
                                     Any change made to the state of an appliance, be it through the UI, physical
-                                    switches, or voice commands, is <strong><i>instantly reflected{' '}</i></strong> 
-                                    across all connected devices and dashboards. This <strong><i>Real-time sync</i></strong> 
+                                    switches, or voice commands, is <strong><i>instantly reflected{' '}</i></strong>
+                                    across all connected devices and dashboards. This <strong><i>Real-time sync</i></strong>
                                     {' '}ensures accuracy, consistency, and convenience, no matter where or how you
                                     interact with your home.
                                 </span>
@@ -466,10 +476,11 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                
+
                 <div className="home-separator"></div>
-                
-                <div ref={paragraphStepsRef} className="home-intro-bg-inner hidden-el">
+
+                <div ref={paragraphStepsRef} className="home-intro-bg-inner home-system-section hidden-el">
+                    <h2 className="home-section-title">THE SYSTEM</h2>
                     <div className="home-steps-grid-container">
                         {[
                             {
@@ -527,7 +538,7 @@ const Home = () => {
             {/* Contact / Footer Page */}
             <section className="home-contact" ref={paragraphContactRef}>
                 {/* Bird Simulation Background */}
-                <BirdSimulation color={color?.button} opacity={darkTheme ? 0.5 : 0.4} />
+                <BirdSimulation color={'#ffffff'} opacity={1.0} />
 
                 <div className="home-contact-top">
                     <section className="brand-section">
@@ -550,7 +561,7 @@ const Home = () => {
                         </ul>
                     </section>
                 </div>
-                
+
                 <div className="home-contact-bottom">
                     <section className="footer-links">
                         <ul>
@@ -559,10 +570,10 @@ const Home = () => {
                                     <p onClick={() => {
                                         if (link === 'ABOUT') navigate(RoutePath.About);
                                         else if (link === 'PRIVACY POLICY' || link === 'COOKIE POLICY') {
-                                             toggleBackDropOpen(
+                                            toggleBackDropOpen(
                                                 POLICY_MODAL,
-                                                <PolicyModal 
-                                                    handleClose={() => toggleBackDropClose(POLICY_MODAL)} 
+                                                <PolicyModal
+                                                    handleClose={() => toggleBackDropClose(POLICY_MODAL)}
                                                     darkTheme={darkTheme}
                                                     initialTab={link === 'COOKIE POLICY' ? 'settings' : 'what'}
                                                 />,
