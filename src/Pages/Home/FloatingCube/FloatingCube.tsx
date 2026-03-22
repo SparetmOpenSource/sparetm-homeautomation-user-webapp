@@ -36,8 +36,7 @@ const FloatingCube = () => {
                         />
                     </g>
                 </defs>
-
-                <g id="cubes" color="#CCCCCC" transform="translate(-180 0)">
+                <g id="cubes" color="#CCCCCC" transform="translate(-207 0)">
                     {[
                         { x: 332.502, y: 52.9973 },
                         { x: 356.502, y: 64.9973 },
