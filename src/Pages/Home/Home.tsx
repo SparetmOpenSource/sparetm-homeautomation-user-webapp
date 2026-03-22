@@ -1,6 +1,5 @@
 import './Home.css';
 import { GiCableStayedBridge } from 'react-icons/gi';
-import { MdLightMode } from 'react-icons/md';
 import {
     APPNAME,
     home_contact_social_list,
@@ -19,11 +18,10 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 //import ReorderingGrid from '../../Components/Others/ReorderingGrid/ReorderingGrid';
 import { useActive } from '../../Hooks/UseActive';
 import { useNavigate } from 'react-router-dom';
-import { useTheme, useThemeUpdate } from '../ThemeProvider';
-import { dark_colors, light_colors } from '../../Data/ColorConstant';
+import { light_colors } from '../../Data/ColorConstant';
+import { home_colors } from '../../Data/ColorConstant';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconContext } from 'react-icons';
-import { CiDark } from 'react-icons/ci';
 import { GoDotFill } from 'react-icons/go';
 import { GrHomeRounded } from 'react-icons/gr';
 import { IoMdContacts } from 'react-icons/io';
@@ -44,7 +42,6 @@ import { FaCogs, FaUsers, FaLightbulb } from 'react-icons/fa'; // Added icons fo
 
 const StepCard = ({ step }: { step: any }) => {
     const [showMeta, setShowMeta] = useState(false);
-    const darkTheme: any = useTheme();
 
     return (
         <motion.div
@@ -53,8 +50,8 @@ const StepCard = ({ step }: { step: any }) => {
             className="home-step-card"
         >
             <div
-                className={`home-step-card-header ${darkTheme ? 'dark-header' : ''}`}
-                style={{ backgroundColor: darkTheme ? step.darkColor : step.pastelColor }}
+                className={`home-step-card-header`}
+                style={{ backgroundColor: step.pastelColor }}
             >
                 <h3>
                     {step.titlePrimary} <br />
@@ -63,7 +60,7 @@ const StepCard = ({ step }: { step: any }) => {
                 <p>{step.description}</p>
                 <div className="home-step-card-tags">
                     {step.tags.map((tag: string, i: number) => (
-                        <span key={i} className="home-step-card-tag-pill" style={{ backgroundColor: 'rgba(0,0,0,0.06)' }}>
+                        <span key={i} className="home-step-card-tag-pill" style={{ backgroundColor: step.pillColor }}>
                             {tag}
                         </span>
                     ))}
@@ -106,10 +103,9 @@ const Home = () => {
     const paragraphStepsRef: any = useRef(null);
     const paragraphContactRef: any = useRef(null);
     const [status] = useActive(2000, true, USE_ACTIVE_SETTINGS);
-    const toggleTheme: any = useThemeUpdate();
-    const darkTheme: any = useTheme();
-    // Derived state for color - eliminates double render from useEffect sync
-    const color = useMemo(() => darkTheme ? dark_colors : light_colors, [darkTheme]);
+
+    // Constantly use light colors as per user request to permanently lock Light Mode
+    const color = light_colors;
 
     const { toggleBackDropOpen, toggleBackDropClose } = useBackDropOpen();
     const navigate = useNavigate();
@@ -162,12 +158,12 @@ const Home = () => {
         // Intersection Observer for Active Section Highlighting
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                if (entry.isIntersecting) {
                     const sectionId = entry.target.getAttribute('data-section-id');
                     if (sectionId) setActiveSection(parseInt(sectionId));
                 }
             });
-        }, { threshold: [0.5] });
+        }, { rootMargin: '-40% 0px -40% 0px' });
 
         const refs = [
             { ref: paragraphLandingRef, id: 1 },
@@ -194,38 +190,47 @@ const Home = () => {
         '--bg-outer': color?.outer,
         '--bg-inner': color?.inner,
         '--text-primary': color?.text,
-        '--color-accent': color?.button,
-        '--bg-card': darkTheme ? color?.element : color?.card,
-        '--card-border': darkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
-        '--card-shadow': darkTheme ? '0 10px 30px rgba(0,0,0,0.3)' : '0 10px 30px rgba(0,0,0,0.05)',
-        '--icon-bg': `${color?.button}20`,
+        '--color-accent': home_colors.c_FFC20E,
+        '--bg-card': color?.card,
+        '--card-border': 'rgba(0,0,0,0.05)',
+        '--card-shadow': '0 10px 30px rgba(0,0,0,0.05)',
+
+        /* Injected dynamically generated variables to power Home.css strictly via Constants */
+        '--color_000000': home_colors.c_000000,
+        '--color_333': home_colors.c_333,
+        '--color_FFFFFF': home_colors.c_FFFFFF,
+        '--color_FAFAFA': home_colors.c_FAFAFA,
+        '--color_666666': home_colors.c_666666,
+        '--color_333333': home_colors.c_333333,
+        '--color_555': home_colors.c_555,
+        '--color_3C4043': home_colors.c_3C4043,
+        '--color_FF7A18': home_colors.c_FF7A18,
+        '--color_AF002D': home_colors.c_AF002D,
+        '--color_319197': home_colors.c_319197,
+        '--color_20C6A9': home_colors.c_20C6A9,
+        '--color_7700FF': home_colors.c_7700FF,
+        '--color_2C7265': home_colors.c_2C7265,
+        '--color_127866': home_colors.c_127866,
+        '--color_F4F4F4': home_colors.c_F4F4F4,
+        '--color_D0D0D0': home_colors.c_D0D0D0,
+        '--color_000': home_colors.c_000,
+        '--color_1A1A1A': home_colors.c_1A1A1A,
+        '--color_4A4A4A': home_colors.c_4A4A4A,
+        '--color_D1D5DB': home_colors.c_D1D5DB,
+        '--color_E5E5E5': home_colors.c_E5E5E5,
+        '--color_F4F4F5': home_colors.c_F4F4F5,
+        '--color_E4E4E7': home_colors.c_E4E4E7,
+        '--color_FFC20E': home_colors.c_FFC20E,
+        '--icon-bg': `${home_colors.c_FFC20E}20`,
         '--menu-bg': status ? color?.icon : `rgb(34, 34, 34, ${tranValForMenu})`,
         '--menu-item-bg': status ? color?.outer : `rgb(62, 62, 62, ${tranValForMenu})`,
         '--menu-icon-color': status ? color?.icon_font : `rgb(62, 62, 62, ${tranValForMenu})`,
         '--text-secondary': `${color?.text?.split(')')[0]}, ${tranValForText})`,
-    } as React.CSSProperties), [color, darkTheme, status]);
+    } as React.CSSProperties), [color, status]);
 
     return (
-        <div className="home" style={themeStyles} data-theme={darkTheme ? 'dark' : 'light'}>
-            <motion.span
-                className="home-theme-icon"
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={toggleTheme}
-            >
-                <IconContext.Provider
-                    value={useMemo(() => {
-                        return {
-                            size: '1.5em',
-                            color: color?.button,
-                        };
-                    }, [color?.button])}
-                >
-                    {darkTheme ? <MdLightMode /> : <CiDark />}
-                </IconContext.Provider>
-            </motion.span>
-
-            <span className={`home-bounce-menu-wrapper ${!status ? 'menu-inactive' : ''}`}>
+        <div className="home" style={themeStyles} data-theme="light">
+            {/* Theme Toggle Button has been removed to enforce permanent Light Mode on landing page */}            <span className={`home-bounce-menu-wrapper ${!status ? 'menu-inactive' : ''}`}>
                 {MenuList.map((item: any) => (
                     <motion.span
                         key={item?.id}
@@ -235,7 +240,7 @@ const Home = () => {
                         whileTap={{ scale: 0.95 }}
                         onClick={() => doScroll(item?.ref)}
                         style={{
-                            backgroundColor: activeSection === item.id ? (darkTheme ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)') : 'transparent'
+                            /* backgroundColor moved to CSS for better contrast control */
                         }}
                     >
                         <IconContext.Provider
@@ -269,7 +274,7 @@ const Home = () => {
                     onClick={() => navigate(RoutePath.Auth)}
                     style={{
                         color: status ? color?.text : `rgb(62, 62, 62, ${0.5})`,
-                        backgroundColor: status ? color?.button : `rgb(62, 62, 62, ${tranValForMenu})`
+                        backgroundColor: status ? home_colors.c_FFC20E : `rgb(62, 62, 62, ${tranValForMenu})`
                     }}
                 >
                     Login
@@ -300,7 +305,7 @@ const Home = () => {
                     onClick={() =>
                         displayToastify(
                             'Demo coming soon!',
-                            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+                            TOASTIFYCOLOR.DARK,
                             TOASTIFYSTATE.INFO,
                         )
                     }
@@ -321,7 +326,7 @@ const Home = () => {
 
             {/* Intro & Features Section */}
             <section className="home-intro">
-                <div className="home-intro-bg-inner home-story-section">
+                <div className="home-intro-bg-inner home-story-section" ref={paragraphStoryRef}>
                     <section className="home-story-header">
                         <h1 className="hidden-el">
                             The story of <br />
@@ -344,7 +349,7 @@ const Home = () => {
                             with curiosity.
                         </h1>
                     </section>
-                    <section ref={paragraphStoryRef} className="home-story-content">
+                    <section className="home-story-content">
                         {[
                             {
                                 title: "Driven by Passion",
@@ -373,7 +378,7 @@ const Home = () => {
                                     {item.highlight && <strong>{item.highlight}</strong>}
                                 </div>
                                 <div className="home-story-visual-col">
-                                    <div className="home-story-icon-wrapper" style={{ color: color?.button }}>
+                                    <div className="home-story-icon-wrapper" style={{ color: home_colors.c_FFC20E }}>
                                         {item.icon}
                                     </div>
                                 </div>
@@ -385,54 +390,58 @@ const Home = () => {
                 <div ref={paragraphFeaturesRef} className="home-intro-bg-outer">
                     <div className="home-intro-feature-container">
                         <div className="home-intro-feature-container-top">
-                            <FloatingCube />
-                            <div className="home-intro-feature-container-top-stats" style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                                gap: '20px',
-                                background: darkTheme ? '#111' : '#f0f0f0',
-                                padding: '30px',
-                                border: '3px solid',
-                                borderColor: darkTheme ? '#333' : '#000',
-                                boxShadow: darkTheme ? '8px 8px 0px #333' : '8px 8px 0px #000'
-                            }}>
-                                <div className="home-intro-feature-container-top-stat">
-                                    <p className="home-intro-feature-container-top-label">Interface</p>
-                                    <p className="home-intro-feature-container-top-value">
-                                        <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
-                                            <MdWeb />
-                                        </IconContext.Provider>
-                                    </p>
-                                    <div className="home-intro-feature-container-top-description-rows">
-                                        <div>React Web App</div>
-                                        <div>Deployed on Netlify</div>
-                                        <div>UI Enhancements Regularly</div>
+                            <div className="home-intro-cube-wrapper">
+                                <FloatingCube />
+                            </div>
+                            <div className="home-intro-stats-wrapper">
+                                <div className="home-intro-feature-container-top-stats" style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                                    gap: '20px',
+                                    background: '#f0f0f0',
+                                    padding: '30px',
+                                    border: '3px solid',
+                                    borderColor: '#000',
+                                    boxShadow: '8px 8px 0px #000'
+                                }}>
+                                    <div className="home-intro-feature-container-top-stat">
+                                        <p className="home-intro-feature-container-top-label">Interface</p>
+                                        <p className="home-intro-feature-container-top-value">
+                                            <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
+                                                <MdWeb />
+                                            </IconContext.Provider>
+                                        </p>
+                                        <div className="home-intro-feature-container-top-description-rows">
+                                            <div>React Web App</div>
+                                            <div>Deployed on Netlify</div>
+                                            <div>UI Enhancements Regularly</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="home-intro-feature-container-top-stat">
-                                    <p className="home-intro-feature-container-top-label">DIY</p>
-                                    <p className="home-intro-feature-container-top-value">
-                                        <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
-                                            <FaCode />
-                                        </IconContext.Provider>
-                                    </p>
-                                    <div className="home-intro-feature-container-top-description-rows">
-                                        <div>Setup Documentation</div>
-                                        <div>Custom Code Snippets</div>
-                                        <div>Regular Idea Updates</div>
+                                    <div className="home-intro-feature-container-top-stat">
+                                        <p className="home-intro-feature-container-top-label">DIY</p>
+                                        <p className="home-intro-feature-container-top-value">
+                                            <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
+                                                <FaCode />
+                                            </IconContext.Provider>
+                                        </p>
+                                        <div className="home-intro-feature-container-top-description-rows">
+                                            <div>Setup Documentation</div>
+                                            <div>Custom Code Snippets</div>
+                                            <div>Regular Idea Updates</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="home-intro-feature-container-top-stat">
-                                    <p className="home-intro-feature-container-top-label">Real-Time</p>
-                                    <p className="home-intro-feature-container-top-value">
-                                        <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
-                                            <MdCloudSync />
-                                        </IconContext.Provider>
-                                    </p>
-                                    <div className="home-intro-feature-container-top-description-rows">
-                                        <div>Appliance State Sync</div>
-                                        <div>Real-time Updates</div>
-                                        <div>Unified Control System</div>
+                                    <div className="home-intro-feature-container-top-stat">
+                                        <p className="home-intro-feature-container-top-label">Real-Time</p>
+                                        <p className="home-intro-feature-container-top-value">
+                                            <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
+                                                <MdCloudSync />
+                                            </IconContext.Provider>
+                                        </p>
+                                        <div className="home-intro-feature-container-top-description-rows">
+                                            <div>Appliance State Sync</div>
+                                            <div>Real-time Updates</div>
+                                            <div>Unified Control System</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -477,7 +486,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="home-separator"></div>
+
 
                 <div ref={paragraphStepsRef} className="home-intro-bg-inner home-system-section hidden-el">
                     <h2 className="home-section-title">THE SYSTEM</h2>
@@ -490,7 +499,8 @@ const Home = () => {
                                 description:
                                     'Manage users and permissions. Configure your home location for precise weather and sunrise/sunset data.',
                                 extraInfo: 'Keep your home secure with granular access control. create guest profiles and manage family access.',
-                                pastelColor: '#E8F5E9', // Light Green
+                                pastelColor: '#E1F3FF', // Light Blue (Web Design)
+                                pillColor: '#B4D2EB', // Darker Blue
                                 darkColor: '#1e3a29', // Dark Green
                                 accentColor: '#4CAF50'
                             },
@@ -501,7 +511,8 @@ const Home = () => {
                                 description:
                                     'Customize your interface to match your workflow. Organize devices, tweak settings, and control effortlessly.',
                                 extraInfo: 'Choose from hundreds of widgets and layouts. Our drag-and-drop interface lets you build your perfect control center.',
-                                pastelColor: '#E0F7FA', // Light Cyan/Blue
+                                pastelColor: '#FFE1CB', // Light Orange/Peach (Graphic Design)
+                                pillColor: '#DCBEA0', // Darker Orange
                                 darkColor: '#1a3b47', // Dark Cyan
                                 accentColor: '#00BCD4'
                             },
@@ -512,7 +523,8 @@ const Home = () => {
                                 description:
                                     'Create powerful automation rules. Set schedules, triggers, and conditions to make your home truly smart.',
                                 extraInfo: 'From simple timers to complex multi-device scenarios, our automation engine handles it all with ease.',
-                                pastelColor: '#FFF3E0', // Light Orange
+                                pastelColor: '#E2DBFA', // Light Purple (Developers)
+                                pillColor: '#B9AFE1', // Darker Purple
                                 darkColor: '#4a3b2a', // Dark Orange
                                 accentColor: '#FF9800'
                             },
@@ -523,7 +535,8 @@ const Home = () => {
                                 description:
                                     'Seamlessly integrate your own hardware. Access step-by-step guides for ESP32 and Raspberry Pi.',
                                 extraInfo: 'Secure, local-first control without cloud reliance. Download pre-configured firmware for instant connectivity.',
-                                pastelColor: '#F3E5F5', // Light Purple
+                                pastelColor: '#D4F6ED', // Light Mint (Copywriting)
+                                pillColor: '#A0D2C3', // Darker Mint
                                 darkColor: '#3a2a47', // Dark Purple
                                 pastelBorder: '#E1BEE7',
                                 accentColor: '#9C27B0'
@@ -574,14 +587,14 @@ const Home = () => {
                                                 POLICY_MODAL,
                                                 <PolicyModal
                                                     handleClose={() => toggleBackDropClose(POLICY_MODAL)}
-                                                    darkTheme={darkTheme}
+                                                    darkTheme={false}
                                                     initialTab={link === 'COOKIE POLICY' ? 'settings' : 'what'}
                                                 />,
                                                 PolicyModalSize,
                                                 false
                                             );
                                         }
-                                        else displayToastify('Implementation in progress', !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.INFO);
+                                        else displayToastify('Implementation in progress', TOASTIFYCOLOR.DARK, TOASTIFYSTATE.INFO);
                                     }}>
                                         {link}
                                     </p>

@@ -42,15 +42,6 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Scanline Overlay */
-/* Scanline Overlay - Removed from global scope */
-
-/* Dark Mode - Solid Black */
-.home[data-theme='dark'] {
-    background-color: #000000;
-    background-image: none;
-}
-
 /* Global Scanline Overlay */
 .home::after {
     content: " ";
@@ -129,7 +120,7 @@
 .home[data-theme='light'] .home-bounce-menu-wrapper {
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid rgba(0, 0, 0, 0.05);
-    color: #333;
+    color: var(--color_333);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
@@ -140,51 +131,28 @@
 
 /* Light Mode Overrides for Step Cards */
 .home[data-theme='light'] .home-step-card {
-    background: #ffffff;
+    background: var(--color_FFFFFF);
     /* Adhere to base retro styles (borders/shadows) */
 }
 
 .home[data-theme='light'] .home-step-card:hover {
-    background: #fafafa;
+    background: var(--color_FAFAFA);
     /* Keep base hover effects */
 }
 
 .home[data-theme='light'] .home-step-card h3 {
-    color: #000000;
+    color: var(--color_000000);
     text-shadow: none;
 }
 
 .home[data-theme='light'] .home-step-card-tag {
-    color: #666666;
+    color: var(--color_666666);
     opacity: 1;
 }
-
-.home[data-theme='light'] .home-step-card-content {
-    background: rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.home[data-theme='light'] .home-step-card-content p {
-    color: #333333;
-}
-
-.home[data-theme='light'] .home-step-card-image {
-    mix-blend-mode: normal;
-    /* 1-bit Dither Effect Simulation */
-    filter: grayscale(100%) contrast(150%) brightness(1.1);
-    opacity: 1;
-}
-
-.home[data-theme='light'] .home-step-card-info-btn {
-    background: #f0f0f0;
-    border-color: #e0e0e0;
-    color: #333;
-}
-
 
 .home[data-theme='light'] .home-bounce-menu-wrapper .home-bounce-menu,
 .home[data-theme='light'] .home-bounce-menu-wrapper .home-bounce-menu-login {
-    color: #555;
+    color: var(--color_555);
 }
 
 .home[data-theme='light'] .home-bounce-menu-wrapper.menu-inactive .home-bounce-menu {
@@ -234,8 +202,8 @@
 
 /* Active Section Highlight */
 .home-bounce-menu.active {
-    background: rgba(var(--color-accent-rgb), 0.15);
-    /* Subtle glow bg */
+    background: rgba(255, 255, 255, 0.1);
+    /* Noticeable pill background for dark mode */
 }
 
 @media (max-width: 768px) {
@@ -249,11 +217,20 @@
     }
 }
 
-.home-bounce-menu.active .home-menu-icon {
+.home-bounce-menu.active .home-menu-icon,
+.home-bounce-menu.active .home-menu-text {
     color: var(--color-accent);
 }
 
-.home-bounce-menu.active .home-menu-text {
+/* High Contrast Override for Light Mode */
+.home[data-theme='light'] .home-bounce-menu.active {
+    background: var(--color_3C4043);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    /* Dark charcoal pill to contrast the frosted menu */
+}
+
+.home[data-theme='light'] .home-bounce-menu.active .home-menu-icon,
+.home[data-theme='light'] .home-bounce-menu.active .home-menu-text {
     color: var(--color-accent);
 }
 
@@ -296,26 +273,7 @@
     color: var(--menu-icon-color);
 }
 
-.home-theme-icon {
-    position: fixed;
-    /* Fixed to stay on screen */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    top: 20px;
-    /* Adjusted spacing */
-    right: 20px;
-    padding: 10px;
-    z-index: 1001;
-    background: var(--bg-inner);
-    border-radius: 50%;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
-/* Page 1: Landing */
+/* Landing Section */
 .home-landing {
     display: flex;
     flex-direction: column;
@@ -355,6 +313,14 @@
     font-weight: bold;
     margin-bottom: 2rem;
     color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .accent-icon {
@@ -388,23 +354,27 @@
     font-family: 'Courier New', Courier, monospace;
     /* Retro tech feel */
     border-left: 5px solid var(--color-accent);
-    padding-left: 20px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 8px;
 }
 
 .home-landing-demo-btn {
     background-color: var(--color-accent);
-    color: #000000;
+    color: var(--color_000000);
     /* Always black text on yellow/accent button */
     padding: 20px 50px;
     font-size: 1.2rem;
-    border: 3px solid #000000;
+    border: 3px solid var(--color_000000);
     /* Hard border */
     border-radius: 0px;
     /* Sharp corners */
     cursor: pointer;
     font-weight: 800;
     text-transform: uppercase;
-    box-shadow: 8px 8px 0px #000000;
+    box-shadow: 8px 8px 0px var(--color_000000);
     /* Hard shadow */
     transition: all 0.1s;
     font-family: 'Courier New', Courier, monospace;
@@ -412,12 +382,12 @@
 
 .home-landing-demo-btn:active {
     transform: translateY(2px);
-    box-shadow: 4px 4px 0px #000000;
+    box-shadow: 4px 4px 0px var(--color_000000);
     /* Reduced shadow */
 }
 
 .home-landing-demo-btn:hover {
-    background-color: #000000;
+    background-color: var(--color_000000);
     color: var(--color-accent);
     box-shadow: 8px 8px 0px var(--color-accent);
     border-color: var(--color-accent);
@@ -425,7 +395,7 @@
 
 .home-landing-demo-btn:active {
     transform: translate(4px, 4px);
-    box-shadow: 4px 4px 0px #000000;
+    box-shadow: 4px 4px 0px var(--color_000000);
 }
 
 .home-landing-pic-container {
@@ -446,11 +416,13 @@
     /* Alternative gradient border approach */
     position: relative;
     background-image: linear-gradient(var(--bg-inner), var(--bg-inner)),
-        linear-gradient(130deg, #ff7a18, #af002d 41.07%, #319197 76.05%);
+        linear-gradient(130deg, var(--color_FF7A18), var(--color_AF002D) 41.07%, var(--color_319197) 76.05%);
     background-origin: border-box;
     background-clip: content-box, border-box;
 
     margin-top: 4rem;
+    margin-bottom: 5rem;
+    /* Pushes the image up from the bottom edge of the landing section */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -467,40 +439,29 @@
 }
 
 /* Page 2: Story Section */
-/* Page 2: Story Section */
 .home-intro-bg-inner {
     background-color: var(--bg-inner);
-    padding: 0;
+    padding: 100px 20px;
     width: 100%;
     display: flex;
     flex-direction: column;
     /* Mobile first: Column */
     align-items: center;
-    /* Horizontal Center (in column) */
-    justify-content: center;
-    /* Vertical Center (in column) */
-    min-height: 100vh;
-    /* Full viewport height for perfect centering */
+    /* Center items horizontally */
+    /* Removed min-height: 100vh so padding naturally spaces content */
 }
-
-/* ... existing code ... */
-
-/* Footer / Contact */
-
 
 @media (min-width: 900px) {
     .home-intro-bg-inner {
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 80px 20px;
+        padding: 140px 20px;
+        /* Big generous padding on desktop */
     }
 }
 
 
 /* Story Section Specific */
 .home-story-section {
-    background-color: #20C6A9;
+    background-color: var(--color_20C6A9);
     /* User Requested Teal Background */
     width: 100%;
 }
@@ -526,21 +487,14 @@
 
 /* System Section Specific */
 .home-system-section {
-    background-color: #7700FF;
+    background-color: var(--color_7700FF);
     /* User Requested System Background */
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* Center vertically */
-    align-items: center;
-    /* Center horizontally */
-    min-height: 100vh;
-    /* Ensure full height for vertical centering */
+    /* Inherits padding and flex layout securely from .home-intro-bg-inner */
 }
 
 .home-system-section .home-section-title {
-    color: #ffffff;
+    color: var(--color_FFFFFF);
     /* Ensure title is readable on purple */
     text-align: center;
     margin-bottom: 40px;
@@ -554,7 +508,7 @@
     text-align: center;
     /* Bigger Header */
     text-align: center;
-    color: #2C7265;
+    color: var(--color_2C7265);
     /* User Light Text Code */
     line-height: 1.1;
     margin: 0;
@@ -621,12 +575,12 @@
     /* Slightly smaller for pill look */
     line-height: 1.2;
     margin-bottom: 20px;
-    color: #ffffff;
+    color: var(--color_FFFFFF);
     /* White text on dark pill */
     font-weight: 800;
     text-transform: uppercase;
-    background-color: #127866;
-    /* User requested Teal/Green #127866 */
+    background-color: var(--color_127866);
+    /* User requested Teal/Green var(--color_127866) */
     padding: 10px 25px;
     /* Pill Padding */
     border-radius: 50px;
@@ -681,9 +635,9 @@
 .home-intro-text-style {
     background: none !important;
     /* Remove rainbow gradient */
-    color: #000000 !important;
+    color: var(--color_000000) !important;
     /* Force solid black */
-    -webkit-text-fill-color: #000000 !important;
+    -webkit-text-fill-color: var(--color_000000) !important;
     /* Override transparent fill */
     display: inline-block;
     font-weight: 900;
@@ -698,28 +652,17 @@
     /* Inherit text colors from theme by default (Light Mode = Dark Text, Dark Mode = Light Text) */
     color: inherit;
 
-    padding: 80px 20px;
+    padding: 100px 20px;
     width: 100%;
-    min-height: 80vh;
+    /* Removed rigid 80vh to let padding dictate vertical rhythm */
     display: flex;
     /* Ensure centering works */
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    /* Vertical Center */
+    gap: 60px;
+    /* Space between white spec card and text block */
 }
 
-/* Force specific text colors ONLY for Dark Mode Aurora section */
-.home[data-theme='dark'] .home-intro-bg-outer {
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.85);
-    color: white;
-}
-
-/* Specific overrides for Dark Mode Aurora section */
-.home[data-theme='dark'] .home-intro-bg-outer .home-intro-feature-container-top-stats {
-    border-color: rgba(255, 255, 255, 0.2);
-}
 
 /* Container for Top (Cube+Stats) and Bottom (Content) */
 .home-intro-feature-container {
@@ -747,14 +690,30 @@
 @media (min-width: 1200px) {
     .home-intro-feature-container-top {
         flex-direction: row;
-        /* Cube left, Stats right on large screens */
-        justify-content: space-between;
-        /* Push to edges to align with text below */
-        padding: 0 20px;
-        /* Match bottom content padding */
+        justify-content: center;
+        /* Center items together in the viewport */
+        align-items: center;
+        /* Ensure vertical alignment matches */
+        gap: 20px;
+        /* Reduced gap to accommodate SVG's intrinsic padding, pulling elements much closer */
+    }
+
+    .home-intro-cube-wrapper {
+        flex: 1;
+        /* Take exactly 50% minus gap/2 */
+        display: flex;
+        justify-content: flex-end;
+        /* Hug the center line */
         width: 100%;
-        gap: 0;
-        /* Let space-between handle spacing */
+    }
+
+    .home-intro-stats-wrapper {
+        flex: 1;
+        /* Take exactly 50% minus gap/2 */
+        display: flex;
+        justify-content: flex-start;
+        /* Hug the center line */
+        width: 100%;
     }
 }
 
@@ -768,19 +727,18 @@
     /* Significantly narrower */
 
     /* Retro Card Styling - Compact & Textured */
-    background-color: #f4f4f4;
-    background-image: radial-gradient(#d0d0d0 1px, transparent 1px);
+    background-color: var(--color_F4F4F4);
+    background-image: radial-gradient(var(--color_D0D0D0) 1px, transparent 1px);
     background-size: 8px 8px;
     /* Texture */
 
-    border: 6px solid #000000;
+    border: 6px solid var(--color_000000);
     /* Thicker Border */
-    box-shadow: 16px 16px 0px #000000;
+    box-shadow: 16px 16px 0px var(--color_000000);
     /* Slightly reduced shadow */
     padding: 25px;
     /* Compact padding */
-    margin-left: auto;
-    margin-right: auto;
+    /* Removed auto margins that interfere with flex centering */
 }
 
 @media (min-width: 768px) {
@@ -792,7 +750,7 @@
         /* Compact padding */
         gap: 20px;
         /* Prevent overflow */
-        border-left: 6px solid #000;
+        border-left: 6px solid var(--color_000);
         /* Match main border */
     }
 }
@@ -820,7 +778,7 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 15px;
-    color: #000000;
+    color: var(--color_000000);
     /* Force Black */
     font-weight: 900;
     /* Extra Bold */
@@ -852,7 +810,7 @@
 .home-intro-feature-container-top-description-rows div {
     font-size: 0.9rem;
     /* Smaller Text */
-    color: #000000;
+    color: var(--color_000000);
     /* High Contrast */
     line-height: 1.4;
     font-weight: 700;
@@ -886,11 +844,6 @@
     /* Low blur */
     -webkit-backdrop-filter: blur(3px);
     border-radius: 12px;
-}
-
-.home[data-theme='dark'] .home-intro-feature-container-content {
-    background: rgba(0, 0, 0, 0.3);
-    /* Dark transparent */
 }
 
 .home-intro-feature-container-content p {
@@ -978,9 +931,9 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border: 4px solid #000000;
+    border: 4px solid var(--color_000000);
     /* Thicker black border */
-    box-shadow: 8px 8px 0px #000000;
+    box-shadow: 8px 8px 0px var(--color_000000);
     /* Reduced Shadow (was 12px) */
     /* Hard shadow */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -989,7 +942,7 @@
 
 .home-step-card:hover {
     transform: translate(-4px, -4px);
-    box-shadow: 14px 14px 0px #000000;
+    box-shadow: 14px 14px 0px var(--color_000000);
 }
 
 /* Header Section (Pastel) */
@@ -1009,7 +962,7 @@
     font-size: 1.5rem;
     /* Reduced from 2.2rem */
     line-height: 1.1;
-    color: #1a1a1a;
+    color: var(--color_1A1A1A);
     margin: 0;
     font-weight: 700;
     text-align: left;
@@ -1028,7 +981,7 @@
     font-size: 0.9rem;
     /* Reduced from 1.1rem */
     line-height: 1.4;
-    color: #4a4a4a;
+    color: var(--color_4A4A4A);
     text-align: left;
     font-weight: 400;
     text-shadow: none;
@@ -1049,7 +1002,7 @@
     border-radius: 100px;
     font-size: 0.9rem;
     font-weight: 500;
-    color: #333;
+    color: var(--color_333);
     font-family: 'Courier New', Courier, monospace;
     /* Monospaced for technical tags */
     /* background-color handled inline or here */
@@ -1059,17 +1012,17 @@
 
 /* Dark Theme Overrides for Card Header */
 .home-step-card-header.dark-header h3 {
-    color: #ffffff;
+    color: var(--color_FFFFFF);
 }
 
 .home-step-card-header.dark-header p {
-    color: #d1d5db;
+    color: var(--color_D1D5DB);
     /* Light gray for readability */
 }
 
 .home-step-card-header.dark-header .home-step-card-tag-pill {
     background-color: rgba(255, 255, 255, 0.1);
-    color: #e5e5e5;
+    color: var(--color_E5E5E5);
     backdrop-filter: blur(4px);
 }
 
@@ -1077,7 +1030,7 @@
 .home-step-card-footer {
     height: 60px;
     /* Reduced from 100px */
-    background-color: #ffffff;
+    background-color: var(--color_FFFFFF);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1088,44 +1041,41 @@
 .explore-text {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color_1A1A1A);
     font-family: 'Courier New', Courier, monospace;
     /* Monospaced for consistency */
 }
 
 .explore-btn {
     width: 36px;
-    /* Reduced from 48px */
     height: 36px;
-    border-radius: 0px;
-    /* Square button */
-    background-color: #f5f5f5;
-    border: 2px solid #000;
-    /* Hard border */
+    border-radius: 8px;
+    /* Rounded corners as per reference image */
+    background-color: var(--color_F4F4F5);
+    /* Soft grey background */
+    border: none;
+    /* Borderless to match reference */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: #1a1a1a;
+    color: var(--color_1A1A1A);
 }
 
 .explore-btn:hover {
-    background-color: #000;
-    color: #FFF;
-    /* Invert */
-    transform: translateX(0px);
-    /* No shift, just color swap */
+    background-color: var(--color_E4E4E7);
+    /* Slightly darker on hover */
+    color: var(--color_1A1A1A);
 }
 
 .explore-btn.active {
-    background-color: #1a1a1a;
-    color: #ffffff;
+    background-color: var(--color_1A1A1A);
+    color: var(--color_FFFFFF);
 }
 
 .explore-btn:active {
     transform: translateY(2px);
-    box-shadow: 1px 1px 0 #000;
 }
 
 /* Info Panel Overlay */
@@ -1142,19 +1092,19 @@
     justify-content: center;
     align-items: flex-start;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    color: #333;
+    color: var(--color_333);
 }
 
 .home-step-card-info-panel p {
     font-size: 1.2rem;
     line-height: 1.6;
-    color: #333;
+    color: var(--color_333);
     margin-bottom: 20px;
 }
 
 .close-info-btn {
     padding: 10px 24px;
-    background-color: #1a1a1a;
+    background-color: var(--color_1A1A1A);
     color: white;
     border: none;
     border-radius: 8px;
@@ -1172,16 +1122,6 @@
     .home-step-card {
         min-height: 420px;
     }
-}
-
-/* Separator */
-.home-separator {
-    width: 80%;
-    height: 3px;
-    margin: 0 auto;
-    background: linear-gradient(90deg, transparent 0%, #ff7a18 20%, #af002d 50%, #319197 80%, transparent 100%);
-    opacity: 0.6;
-    border-radius: 2px;
 }
 
 /* Footer / Contact */
@@ -1204,7 +1144,7 @@
     justify-content: space-between;
     align-items: flex-end;
     border-bottom: 2px solid;
-    border-image-source: linear-gradient(130deg, #ff7a18, #af002d 41.07%, #319197 76.05%);
+    border-image-source: linear-gradient(130deg, var(--color_FF7A18), var(--color_AF002D) 41.07%, var(--color_319197) 76.05%);
     border-image-slice: 1;
     position: relative;
     z-index: 2;
@@ -1269,8 +1209,8 @@
 
 /* Contact Section Styling */
 .home-contact-top {
-    background-color: #000000;
-    /* User requested Upper Black */
+    background-color: var(--color_3C4043);
+    /* User requested Dark Grey */
     padding: 60px 40px 40px;
     /* Increased spacing */
     /* Add padding for the background */
@@ -1279,21 +1219,21 @@
     align-items: flex-end;
     /* Push content to bottom */
     flex-wrap: wrap;
-    color: #ffffff;
+    color: var(--color_FFFFFF);
     /* Ensure text is visible on gray */
 }
 
 /* Brand Section Left */
 .brand-name {
     font-size: 2rem;
-    color: #ffffff;
+    color: var(--color_FFFFFF);
     margin: 0 0 10px 0;
     font-weight: bold;
     line-height: 1;
 }
 
 .brand-name span {
-    color: #FFC20E;
+    color: var(--color_FFC20E);
     /* User requested Yellow Brand */
 }
 
@@ -1343,12 +1283,12 @@
 }
 
 .home-contact-bottom {
-    background-color: #FFC20E;
+    background-color: var(--color_FFC20E);
     /* Theme Yellow (Playdate Style) */
     /* Restored */
     padding: 40px 40px 120px;
     /* Increased spacing */
-    color: #000000;
+    color: var(--color_000000);
     /* Establish black text base for white bg */
     text-align: center;
     position: relative;
@@ -1367,7 +1307,7 @@
 
 .footer-links p {
     font-size: 0.9rem;
-    color: #333333;
+    color: var(--color_333333);
     /* Dark gray for footer links */
     cursor: pointer;
     transition: color 0.3s ease;
@@ -1384,7 +1324,7 @@
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #000000;
+    background-color: var(--color_000000);
     /* Black underline for contrast on Yellow */
     transition: width 0.3s ease-in-out;
 }
@@ -1394,12 +1334,12 @@
 }
 
 .footer-links p:hover {
-    color: #000000;
+    color: var(--color_000000);
     /* Ensure black on hover */
 }
 
 .copyright-section p {
-    color: #000000;
+    color: var(--color_000000);
     /* Black text on Yellow bg */
     line-height: 1.6;
     font-size: 0.9rem;
