@@ -51,6 +51,34 @@ export const light_colors = {
 
 // export const dark_color = { ... };
 
+// export const home_colors = {
+//     c_000000: '#000000',
+//     c_333: '#333',
+//     c_FFFFFF: '#FFFFFF',
+//     c_FAFAFA: '#FAFAFA',
+//     c_666666: '#666666',
+//     c_333333: '#333333',
+//     c_555: '#555',
+//     c_3C4043: '#3C4043',
+//     c_FF7A18: '#FF7A18',
+//     c_AF002D: '#AF002D',
+//     c_319197: '#319197',
+//     c_20C6A9: '#20C6A9',
+//     c_7700FF: '#7700FF',
+//     c_2C7265: '#2C7265',
+//     c_127866: '#127866',
+//     c_F4F4F4: '#F4F4F4',
+//     c_D0D0D0: '#D0D0D0',
+//     c_000: '#000',
+//     c_1A1A1A: '#1A1A1A',
+//     c_4A4A4A: '#4A4A4A',
+//     c_D1D5DB: '#D1D5DB',
+//     c_E5E5E5: '#E5E5E5',
+//     c_F4F4F5: '#F4F4F5',
+//     c_E4E4E7: '#E4E4E7',
+//     c_FFC20E: '#FFC20E',
+// };
+
 export const home_colors = {
     c_000000: '#000000',
     c_333: '#333',
@@ -59,14 +87,14 @@ export const home_colors = {
     c_666666: '#666666',
     c_333333: '#333333',
     c_555: '#555',
-    c_3C4043: '#3C4043',
+    c_3C4043: '#3C4043', // '#3C4043', // Changed: Contact-Top BG
     c_FF7A18: '#FF7A18',
     c_AF002D: '#AF002D',
     c_319197: '#319197',
-    c_20C6A9: '#20C6A9',
-    c_7700FF: '#7700FF',
-    c_2C7265: '#2C7265',
-    c_127866: '#127866',
+    c_20C6A9: '#20C6A9', // Changed: Story Section BG
+    c_7700FF: '#20C6A9', // '#7700FF', // Changed: Steps Section BG
+    c_2C7265: '#2C7265', // Changed: Story Header Text
+    c_127866: '#127866', // Changed: Story Text Pill
     c_F4F4F4: '#F4F4F4',
     c_D0D0D0: '#D0D0D0',
     c_000: '#000',
@@ -76,5 +104,19 @@ export const home_colors = {
     c_E5E5E5: '#E5E5E5',
     c_F4F4F5: '#F4F4F5',
     c_E4E4E7: '#E4E4E7',
-    c_FFC20E: '#FFC20E',
+    c_FFC20E: '#D4A373', // Changed: Accent,Contact-Bottom,Buttons
+};
+
+export const card_pastels = {
+    bluePastel: '#D6E2E9',
+    bluePill: '#B3C6D6',
+
+    peachPastel: '#F4E3D7',
+    peachPill: '#DFBFA9',
+
+    purplePastel: '#E6DCE5',
+    purplePill: '#C8B4C7',
+
+    mintPastel: '#DCE8D7',
+    mintPill: '#B9CFA8',
 };

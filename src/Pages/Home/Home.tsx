@@ -18,7 +18,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 //import ReorderingGrid from '../../Components/Others/ReorderingGrid/ReorderingGrid';
 import { useActive } from '../../Hooks/UseActive';
 import { useNavigate } from 'react-router-dom';
-import { light_colors } from '../../Data/ColorConstant';
+import { card_pastels, light_colors } from '../../Data/ColorConstant';
 import { home_colors } from '../../Data/ColorConstant';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconContext } from 'react-icons';
@@ -499,8 +499,10 @@ const Home = () => {
                                 description:
                                     'Manage users and permissions. Configure your home location for precise weather and sunrise/sunset data.',
                                 extraInfo: 'Keep your home secure with granular access control. create guest profiles and manage family access.',
-                                pastelColor: '#E1F3FF', // Light Blue (Web Design)
-                                pillColor: '#B4D2EB', // Darker Blue
+                                // pastelColor: '#E1F3FF', // Light Blue (Web Design)
+                                // pillColor: '#B4D2EB', // Darker Blue
+                                pastelColor: card_pastels.bluePastel, // Used constant
+                                pillColor: card_pastels.bluePill,   // Used constant
                                 darkColor: '#1e3a29', // Dark Green
                                 accentColor: '#4CAF50'
                             },
@@ -511,8 +513,10 @@ const Home = () => {
                                 description:
                                     'Customize your interface to match your workflow. Organize devices, tweak settings, and control effortlessly.',
                                 extraInfo: 'Choose from hundreds of widgets and layouts. Our drag-and-drop interface lets you build your perfect control center.',
-                                pastelColor: '#FFE1CB', // Light Orange/Peach (Graphic Design)
-                                pillColor: '#DCBEA0', // Darker Orange
+                                // pastelColor: '#FFE1CB', // Light Orange/Peach (Graphic Design)
+                                // pillColor: '#DCBEA0', // Darker Orange
+                                pastelColor: card_pastels.peachPastel, // Used constant
+                                pillColor: card_pastels.peachPill,   // Used constant
                                 darkColor: '#1a3b47', // Dark Cyan
                                 accentColor: '#00BCD4'
                             },
@@ -523,8 +527,10 @@ const Home = () => {
                                 description:
                                     'Create powerful automation rules. Set schedules, triggers, and conditions to make your home truly smart.',
                                 extraInfo: 'From simple timers to complex multi-device scenarios, our automation engine handles it all with ease.',
-                                pastelColor: '#E2DBFA', // Light Purple (Developers)
-                                pillColor: '#B9AFE1', // Darker Purple
+                                // pastelColor: '#E2DBFA', // Light Purple (Developers)
+                                // pillColor: '#B9AFE1', // Darker Purple
+                                pastelColor: card_pastels.purplePastel, // Used constant
+                                pillColor: card_pastels.purplePill,   // Used constant
                                 darkColor: '#4a3b2a', // Dark Orange
                                 accentColor: '#FF9800'
                             },
@@ -535,8 +541,10 @@ const Home = () => {
                                 description:
                                     'Seamlessly integrate your own hardware. Access step-by-step guides for ESP32 and Raspberry Pi.',
                                 extraInfo: 'Secure, local-first control without cloud reliance. Download pre-configured firmware for instant connectivity.',
-                                pastelColor: '#D4F6ED', // Light Mint (Copywriting)
-                                pillColor: '#A0D2C3', // Darker Mint
+                                // pastelColor: '#D4F6ED', // Light Mint (Copywriting)
+                                // pillColor: '#A0D2C3', // Darker Mint
+                                pastelColor: card_pastels.mintPastel, // Used constant
+                                pillColor: card_pastels.mintPill,   // Used constant
                                 darkColor: '#3a2a47', // Dark Purple
                                 pastelBorder: '#E1BEE7',
                                 accentColor: '#9C27B0'
