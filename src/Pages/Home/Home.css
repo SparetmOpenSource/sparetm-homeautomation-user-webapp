@@ -700,20 +700,20 @@
 
     .home-intro-cube-wrapper {
         flex: 1;
-        /* Take exactly 50% minus gap/2 */
         display: flex;
         justify-content: flex-end;
         /* Hug the center line */
         width: 100%;
+        transform: translateX(-15px);
     }
 
     .home-intro-stats-wrapper {
         flex: 1;
-        /* Take exactly 50% minus gap/2 */
         display: flex;
         justify-content: flex-start;
         /* Hug the center line */
         width: 100%;
+        transform: translateX(-45px);
     }
 }
 

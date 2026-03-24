@@ -2,7 +2,7 @@ export const dark_colors = {
     outer: 'rgb(15,17,19)',
     inner: 'rgb(24,28,31)',
     element: 'rgb(43,50,55)',
-    button: 'rgb(255,69,0)',
+    button: 'rgba(212, 163, 115)', // 'rgb(255,69,0)',
     icon: 'rgb(118,123,127)',
     icon_font: 'rgb(118,123,127)',
     text: 'rgb(230,230,250)',
@@ -48,6 +48,23 @@ export const light_colors = {
     warning: 'orange',
     info: 'cyan',
 };
+
+// export const dark_color = {
+//     outer: 'rgb(15,17,19)',
+//     inner: 'rgb(24,28,31)',
+//     element: 'rgb(43,50,55)',
+//     button: 'rgba(0, 255, 208, 1)',
+//     icon: 'rgb(118,123,127)',
+//     icon_font: 'rgb(118,123,127)',
+//     text: 'rgb(230,230,250)',
+//     hover: 'rgba(255, 255, 255, 0.1)',
+//     success: 'rgb(105,188,52)',
+//     error: 'rgb(251,90,90)',
+//     border: 'rgb(128, 128, 128)',
+//     card: 'rgb(8,10,14)',
+//     warning: 'orange',
+//     info: 'cyan',
+// };
 
 // export const dark_color = { ... };
 
@@ -104,7 +121,7 @@ export const home_colors = {
     c_E5E5E5: '#E5E5E5',
     c_F4F4F5: '#F4F4F5',
     c_E4E4E7: '#E4E4E7',
-    c_FFC20E: '#D4A373', // Changed: Accent,Contact-Bottom,Buttons
+    c_FFC20E: '#d4a373', // Changed: Accent,Contact-Bottom,Buttons
 };
 
 export const card_pastels = {
