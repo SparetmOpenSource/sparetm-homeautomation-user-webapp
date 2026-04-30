@@ -1,15 +1,11 @@
-import { useEffect, useState } from 'react';
+
 import './StarterLoader.css';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { useTheme } from '../../ThemeProvider';
 
 const StarterLoader = () => {
-    const [color, setColor] = useState<any>(light_colors);
-    const darkTheme: any = useTheme();
-
-    useEffect(() => {
-        darkTheme ? setColor(dark_colors) : setColor(light_colors);
-    }, [darkTheme]);
+    const darkTheme = useTheme();
+    const color = darkTheme ? dark_colors : light_colors;
 
     return (
         <div className="tile-container">

@@ -10,19 +10,7 @@
     letter-spacing: -1px;
 }
 
-@keyframes aurora-shift {
-    0% {
-        background-position: 0% 50%;
-    }
 
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
 
 .home {
     width: 100%;
@@ -1010,21 +998,7 @@
     /* Slightly darken the pastel bg for the chip */
 }
 
-/* Dark Theme Overrides for Card Header */
-.home-step-card-header.dark-header h3 {
-    color: var(--color_FFFFFF);
-}
 
-.home-step-card-header.dark-header p {
-    color: var(--color_D1D5DB);
-    /* Light gray for readability */
-}
-
-.home-step-card-header.dark-header .home-step-card-tag-pill {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--color_E5E5E5);
-    backdrop-filter: blur(4px);
-}
 
 /* Footer Section (White) */
 .home-step-card-footer {

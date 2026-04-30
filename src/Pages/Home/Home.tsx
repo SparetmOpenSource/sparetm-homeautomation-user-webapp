@@ -15,10 +15,10 @@ import {
 } from '../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
 import { useEffect, useMemo, useRef, useState } from 'react';
-//import ReorderingGrid from '../../Components/Others/ReorderingGrid/ReorderingGrid';
+
 import { useActive } from '../../Hooks/UseActive';
 import { useNavigate } from 'react-router-dom';
-import { card_pastels, light_colors } from '../../Data/ColorConstant';
+import { light_colors } from '../../Data/ColorConstant';
 import { home_colors } from '../../Data/ColorConstant';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconContext } from 'react-icons';
@@ -27,9 +27,6 @@ import { GrHomeRounded } from 'react-icons/gr';
 import { IoMdContacts } from 'react-icons/io';
 import TextBlinkAnimation from '../../Components/Others/TextBlinkAnimation/TextBlinkAnimation';
 import FloatingCube from './FloatingCube/FloatingCube';
-import { MdWeb } from 'react-icons/md';
-import { FaCode } from 'react-icons/fa';
-import { MdCloudSync } from 'react-icons/md';
 import BirdSimulation from '../../Components/Others/BirdSimulation/BirdSimulation';
 import PolicyModal from '../../Components/Others/PolicyModal/PolicyModal';
 import HeroBackground from '../../Asset/Meet-home.svg'
@@ -38,9 +35,46 @@ import { POLICY_MODAL, PolicyModalSize } from '../../Data/Constants';
 import { RiBookOpenLine } from 'react-icons/ri';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { MdOutlineAutoGraph } from 'react-icons/md';
-import { FaCogs, FaUsers, FaLightbulb } from 'react-icons/fa'; // Added icons for story section
 
-const StepCard = ({ step }: { step: any }) => {
+import {
+    HOME_HERO_TITLE,
+    HOME_HERO_TITLE_HIGHLIGHT,
+    HOME_HERO_SUBTITLE,
+    HOME_STORY_CONTENT_LIST,
+    HOME_FEATURE_STATS,
+    HOME_SYSTEM_STEPS,
+    FOOTER_LINKS,
+    MENU_ITEMS,
+    ACTION_EXPLORE_TEXT,
+    ACTION_CLOSE_TEXT,
+    ACTION_LOGIN_TEXT,
+    ACTION_DEMO_TEXT,
+    ACTION_DEMO_TOAST,
+    ACTION_IMPLEMENT_TOAST,
+    HOME_STORY_HEADER_P1,
+    HOME_STORY_HEADER_P2,
+    HOME_STORY_HEADER_P3,
+    HOME_SYSTEM_TITLE,
+    HOME_FEATURES_DESCRIPTIONS,
+    HOME_BRAND_NAME,
+    HOME_BRAND_TAGLINE,
+    FOOTER_COPYRIGHT_TEXT,
+    FOOTER_COPYRIGHT_RIGHTS
+} from '../../Content/HomeContent';
+
+interface StepCardProps {
+    step: {
+        titlePrimary: string;
+        titleHighlight: string;
+        description: string;
+        tags: string[];
+        pastelColor: string;
+        pillColor: string;
+        extraInfo: string;
+    };
+}
+
+const StepCard = ({ step }: StepCardProps) => {
     const [showMeta, setShowMeta] = useState(false);
 
     return (
@@ -68,7 +102,7 @@ const StepCard = ({ step }: { step: any }) => {
             </div>
 
             <div className="home-step-card-footer">
-                <span className="explore-text">Explore</span>
+                <span className="explore-text">{ACTION_EXPLORE_TEXT}</span>
                 <button
                     className={`explore-btn ${showMeta ? 'active' : ''}`}
                     onClick={() => setShowMeta(!showMeta)}
@@ -88,7 +122,7 @@ const StepCard = ({ step }: { step: any }) => {
                         exit={{ opacity: 0, scale: 0.95 }}
                     >
                         <p>{step.extraInfo}</p>
-                        <button className="close-info-btn" onClick={() => setShowMeta(false)}>Close</button>
+                        <button className="close-info-btn" onClick={() => setShowMeta(false)}>{ACTION_CLOSE_TEXT}</button>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -97,11 +131,11 @@ const StepCard = ({ step }: { step: any }) => {
 };
 
 const Home = () => {
-    const paragraphLandingRef: any = useRef(null);
-    const paragraphStoryRef: any = useRef(null);
-    const paragraphFeaturesRef: any = useRef(null);
-    const paragraphStepsRef: any = useRef(null);
-    const paragraphContactRef: any = useRef(null);
+    const paragraphLandingRef = useRef<HTMLElement>(null);
+    const paragraphStoryRef = useRef<HTMLDivElement>(null);
+    const paragraphFeaturesRef = useRef<HTMLDivElement>(null);
+    const paragraphStepsRef = useRef<HTMLDivElement>(null);
+    const paragraphContactRef = useRef<HTMLElement>(null);
     const [status] = useActive(2000, true, USE_ACTIVE_SETTINGS);
 
     // Constantly use light colors as per user request to permanently lock Light Mode
@@ -119,31 +153,31 @@ const Home = () => {
     const MenuList = useMemo(() => [
         {
             id: 1,
-            name: 'Home',
+            name: MENU_ITEMS[0].name,
             icon: status ? <GrHomeRounded /> : <GoDotFill />,
             ref: paragraphLandingRef,
         },
         {
             id: 2,
-            name: 'Story',
+            name: MENU_ITEMS[1].name,
             icon: status ? <RiBookOpenLine /> : <GoDotFill />,
             ref: paragraphStoryRef,
         },
         {
             id: 3,
-            name: 'Features',
+            name: MENU_ITEMS[2].name,
             icon: status ? <HiOutlineSparkles /> : <GoDotFill />,
             ref: paragraphFeaturesRef,
         },
         {
             id: 4,
-            name: 'Steps',
+            name: MENU_ITEMS[3].name,
             icon: status ? <MdOutlineAutoGraph /> : <GoDotFill />,
             ref: paragraphStepsRef,
         },
         {
             id: 5,
-            name: 'Contact',
+            name: MENU_ITEMS[4].name,
             icon: status ? <IoMdContacts /> : <GoDotFill />,
             ref: paragraphContactRef,
         },
@@ -231,7 +265,7 @@ const Home = () => {
     return (
         <div className="home" style={themeStyles} data-theme="light">
             {/* Theme Toggle Button has been removed to enforce permanent Light Mode on landing page */}            <span className={`home-bounce-menu-wrapper ${!status ? 'menu-inactive' : ''}`}>
-                {MenuList.map((item: any) => (
+                {MenuList.map((item) => (
                     <motion.span
                         key={item?.id}
                         className={`home-bounce-menu ${activeSection === item.id ? 'active' : ''}`}
@@ -277,7 +311,7 @@ const Home = () => {
                         backgroundColor: status ? home_colors.c_FFC20E : `rgb(62, 62, 62, ${tranValForMenu})`
                     }}
                 >
-                    Login
+                    {ACTION_LOGIN_TEXT}
                 </motion.span>
             </span>
 
@@ -290,12 +324,11 @@ const Home = () => {
                     </IconContext.Provider>
                 </div>
                 <h1>
-                    Take control of your smart home <br />
-                    your way
+                    {HOME_HERO_TITLE} <br />
+                    {HOME_HERO_TITLE_HIGHLIGHT}
                 </h1>
                 <h2 className="home-subtitle">
-                    Empowering DIYers with open tools, smart tech, and the
-                    freedom to create from anywhere
+                    {HOME_HERO_SUBTITLE}
                 </h2>
 
                 <motion.button
@@ -304,17 +337,17 @@ const Home = () => {
                     whileTap={{ scale: 0.95 }}
                     onClick={() =>
                         displayToastify(
-                            'Demo coming soon!',
+                            ACTION_DEMO_TOAST,
                             TOASTIFYCOLOR.DARK,
                             TOASTIFYSTATE.INFO,
                         )
                     }
                 >
-                    See Demo
+                    {ACTION_DEMO_TEXT}
                 </motion.button>
 
                 <div className="home-landing-pic-container">
-                    {/* <ReorderingGrid /> */}
+
                     <img
                         src={HeroBackground}
                         style={{ width: '99%', height: '98%', objectFit: 'cover', borderRadius: '12.5px' }}
@@ -329,7 +362,7 @@ const Home = () => {
                 <div className="home-intro-bg-inner home-story-section" ref={paragraphStoryRef}>
                     <section className="home-story-header">
                         <h1 className="hidden-el">
-                            The story of <br />
+                            {HOME_STORY_HEADER_P1} <br />
                             <span style={{ display: 'inline-block' }}>
                                 {APPNAME.split('').map((char, index) => (
                                     <TextBlinkAnimation
@@ -345,32 +378,12 @@ const Home = () => {
                                     </TextBlinkAnimation>
                                 ))}
                             </span>{' '}
-                            begins <br />
-                            with curiosity.
+                            {HOME_STORY_HEADER_P2} <br />
+                            {HOME_STORY_HEADER_P3}
                         </h1>
                     </section>
                     <section className="home-story-content">
-                        {[
-                            {
-                                title: "Driven by Passion",
-                                text: "From the beginning, we’ve been driven by a passion for electronics and coding. Our vision has always been to build something useful for many people. And yes — we’ve also experienced those everyday inconveniences, like being too tired to get up and turn off the lights at night.",
-                                highlight: "That’s when it clicked.",
-                                icon: <FaCogs />,
-                                reverse: false
-                            },
-                            {
-                                title: "Community First",
-                                text: "With the support of the open source and DIY community — whom we deeply admire — we set out to build a platform that empowers makers and dreamers alike. A home automation system that’s not just smart and helpful, but also open source and fully customizable.",
-                                icon: <FaUsers />,
-                                reverse: true
-                            },
-                            {
-                                title: "Space to Create",
-                                text: "It’s built for people who want to learn, create, and even gain recognition for their contributions. If that sounds like you, welcome aboard.",
-                                icon: <FaLightbulb />,
-                                reverse: false
-                            }
-                        ].map((item, index) => (
+                        {HOME_STORY_CONTENT_LIST.map((item, index) => (
                             <div key={index} className={`home-story-row ${item.reverse ? 'reverse' : ''} hidden-el`}>
                                 <div className="home-story-text-col">
                                     <h2>{item.title}</h2>
@@ -404,84 +417,32 @@ const Home = () => {
                                     borderColor: '#000',
                                     boxShadow: '8px 8px 0px #000'
                                 }}>
-                                    <div className="home-intro-feature-container-top-stat">
-                                        <p className="home-intro-feature-container-top-label">Interface</p>
-                                        <p className="home-intro-feature-container-top-value">
-                                            <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
-                                                <MdWeb />
-                                            </IconContext.Provider>
-                                        </p>
-                                        <div className="home-intro-feature-container-top-description-rows">
-                                            <div>React Web App</div>
-                                            <div>Deployed on Netlify</div>
-                                            <div>UI Enhancements Regularly</div>
+                                    {HOME_FEATURE_STATS.map((stat, idx) => (
+                                        <div key={idx} className="home-intro-feature-container-top-stat">
+                                            <p className="home-intro-feature-container-top-label">{stat.label}</p>
+                                            <p className="home-intro-feature-container-top-value">
+                                                <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
+                                                    {stat.icon}
+                                                </IconContext.Provider>
+                                            </p>
+                                            <div className="home-intro-feature-container-top-description-rows">
+                                                {stat.rows.map((row, rIdx) => (
+                                                    <div key={rIdx}>{row}</div>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="home-intro-feature-container-top-stat">
-                                        <p className="home-intro-feature-container-top-label">DIY</p>
-                                        <p className="home-intro-feature-container-top-value">
-                                            <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
-                                                <FaCode />
-                                            </IconContext.Provider>
-                                        </p>
-                                        <div className="home-intro-feature-container-top-description-rows">
-                                            <div>Setup Documentation</div>
-                                            <div>Custom Code Snippets</div>
-                                            <div>Regular Idea Updates</div>
-                                        </div>
-                                    </div>
-                                    <div className="home-intro-feature-container-top-stat">
-                                        <p className="home-intro-feature-container-top-label">Real-Time</p>
-                                        <p className="home-intro-feature-container-top-value">
-                                            <IconContext.Provider value={{ size: '1.5em', className: 'accent-icon' }}>
-                                                <MdCloudSync />
-                                            </IconContext.Provider>
-                                        </p>
-                                        <div className="home-intro-feature-container-top-description-rows">
-                                            <div>Appliance State Sync</div>
-                                            <div>Real-time Updates</div>
-                                            <div>Unified Control System</div>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
 
                         <div className="home-intro-feature-container-content">
-                            <p className="hidden-el">
-                                <strong className="home-intro-text-style">Modern Web Interface: </strong>
-                                <span className="text-secondary">
-                                    {' '} Our system comes with a <strong><i>visually appealing</i></strong>,
-                                    an intuitive <strong><i>web-based</i></strong>{' '}interface designed for
-                                    <strong><i> Seamless appliance control</i></strong>. Whether you're turning on the lights,
-                                    adjusting the fan speed, or checking the status of your devices, the user interface
-                                    ensures a smooth and responsive experience. With just a few taps or clicks,
-                                    you can manage your entire home environment in <strong><i>real-time</i></strong>,
-                                    right from your browser.
-                                </span>
-                            </p>
-                            <p className="hidden-el">
-                                <strong className="home-intro-text-style">DIY-Friendly Code: </strong>
-                                <span className="text-secondary">
-                                    {' '} For those who love to tinker and build, We’ve got you covered. All our code is
-                                    <strong><i> thoroughly documented, </i></strong> making it easy for
-                                    <strong><i> DIY enthusiasts and developers</i></strong> to explore, modify or expand the system.
-                                    Whether you're integrating new sensors, customizing controls, or simply learning how
-                                    everything works, the clear and <strong><i>structured codebase </i></strong>
-                                    empowers you to create your own <strong><i>tailored solutions.</i></strong>
-                                </span>
-                            </p>
-                            <p className="hidden-el">
-                                <strong className="home-intro-text-style">Real-Time Sync: </strong>
-                                <span className="text-secondary">
-                                    {' '} One of the core features of our system is <strong><i> full appliance synchronization</i></strong>.
-                                    Any change made to the state of an appliance, be it through the UI, physical
-                                    switches, or voice commands, is <strong><i>instantly reflected{' '}</i></strong>
-                                    across all connected devices and dashboards. This <strong><i>Real-time sync</i></strong>
-                                    {' '}ensures accuracy, consistency, and convenience, no matter where or how you
-                                    interact with your home.
-                                </span>
-                            </p>
+                            {HOME_FEATURES_DESCRIPTIONS.map((desc, idx) => (
+                                <p key={idx} className="hidden-el">
+                                    <strong className="home-intro-text-style">{desc.title}</strong>
+                                    {desc.content}
+                                </p>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -489,67 +450,9 @@ const Home = () => {
 
 
                 <div ref={paragraphStepsRef} className="home-intro-bg-inner home-system-section hidden-el">
-                    <h2 className="home-section-title">THE SYSTEM</h2>
+                    <h2 className="home-section-title">{HOME_SYSTEM_TITLE}</h2>
                     <div className="home-steps-grid-container">
-                        {[
-                            {
-                                tags: ['Users', 'Permissions', 'Access'],
-                                titlePrimary: 'Profile',
-                                titleHighlight: 'Settings',
-                                description:
-                                    'Manage users and permissions. Configure your home location for precise weather and sunrise/sunset data.',
-                                extraInfo: 'Keep your home secure with granular access control. create guest profiles and manage family access.',
-                                // pastelColor: '#E1F3FF', // Light Blue (Web Design)
-                                // pillColor: '#B4D2EB', // Darker Blue
-                                pastelColor: card_pastels.bluePastel, // Used constant
-                                pillColor: card_pastels.bluePill,   // Used constant
-                                darkColor: '#1e3a29', // Dark Green
-                                accentColor: '#4CAF50'
-                            },
-                            {
-                                tags: ['Widgets', 'Layouts', 'Control'],
-                                titlePrimary: 'Smart',
-                                titleHighlight: 'Dashboard',
-                                description:
-                                    'Customize your interface to match your workflow. Organize devices, tweak settings, and control effortlessly.',
-                                extraInfo: 'Choose from hundreds of widgets and layouts. Our drag-and-drop interface lets you build your perfect control center.',
-                                // pastelColor: '#FFE1CB', // Light Orange/Peach (Graphic Design)
-                                // pillColor: '#DCBEA0', // Darker Orange
-                                pastelColor: card_pastels.peachPastel, // Used constant
-                                pillColor: card_pastels.peachPill,   // Used constant
-                                darkColor: '#1a3b47', // Dark Cyan
-                                accentColor: '#00BCD4'
-                            },
-                            {
-                                tags: ['Rules', 'Schedules', 'Scripts'],
-                                titlePrimary: 'Automation',
-                                titleHighlight: 'Engine',
-                                description:
-                                    'Create powerful automation rules. Set schedules, triggers, and conditions to make your home truly smart.',
-                                extraInfo: 'From simple timers to complex multi-device scenarios, our automation engine handles it all with ease.',
-                                // pastelColor: '#E2DBFA', // Light Purple (Developers)
-                                // pillColor: '#B9AFE1', // Darker Purple
-                                pastelColor: card_pastels.purplePastel, // Used constant
-                                pillColor: card_pastels.purplePill,   // Used constant
-                                darkColor: '#4a3b2a', // Dark Orange
-                                accentColor: '#FF9800'
-                            },
-                            {
-                                tags: ['ESP32', 'Raspberry Pi', 'Sensors'],
-                                titlePrimary: 'Custom',
-                                titleHighlight: 'Hardware',
-                                description:
-                                    'Seamlessly integrate your own hardware. Access step-by-step guides for ESP32 and Raspberry Pi.',
-                                extraInfo: 'Secure, local-first control without cloud reliance. Download pre-configured firmware for instant connectivity.',
-                                // pastelColor: '#D4F6ED', // Light Mint (Copywriting)
-                                // pillColor: '#A0D2C3', // Darker Mint
-                                pastelColor: card_pastels.mintPastel, // Used constant
-                                pillColor: card_pastels.mintPill,   // Used constant
-                                darkColor: '#3a2a47', // Dark Purple
-                                pastelBorder: '#E1BEE7',
-                                accentColor: '#9C27B0'
-                            },
-                        ].map((step, index) => (
+                        {HOME_SYSTEM_STEPS.map((step, index) => (
                             <StepCard key={index} step={step} />
                         ))}
                     </div>
@@ -564,10 +467,10 @@ const Home = () => {
                 <div className="home-contact-top">
                     <section className="brand-section">
                         <p className="brand-name">
-                            &reg;&nbsp;<span>Sparetm</span>
+                            &reg;&nbsp;<span>{HOME_BRAND_NAME}</span>
                         </p>
                         <p className="brand-tagline">
-                            Make this app better by connecting with us &#128512;
+                            {HOME_BRAND_TAGLINE}
                         </p>
                     </section>
                     <section className="social-links-section">
@@ -586,25 +489,25 @@ const Home = () => {
                 <div className="home-contact-bottom">
                     <section className="footer-links">
                         <ul>
-                            {['PRIVACY POLICY', 'COOKIE POLICY', 'ABOUT', 'FAQ'].map((link) => (
-                                <li key={link}>
+                            {FOOTER_LINKS.map((link) => (
+                                <li key={link.key}>
                                     <p onClick={() => {
-                                        if (link === 'ABOUT') navigate(RoutePath.About);
-                                        else if (link === 'PRIVACY POLICY' || link === 'COOKIE POLICY') {
+                                        if (link.key === 'about') navigate(RoutePath.About);
+                                        else if (link.key === 'privacy' || link.key === 'cookie') {
                                             toggleBackDropOpen(
                                                 POLICY_MODAL,
                                                 <PolicyModal
                                                     handleClose={() => toggleBackDropClose(POLICY_MODAL)}
                                                     darkTheme={false}
-                                                    initialTab={link === 'COOKIE POLICY' ? 'settings' : 'what'}
+                                                    initialTab={link.key === 'cookie' ? 'settings' : 'what'}
                                                 />,
                                                 PolicyModalSize,
                                                 false
                                             );
                                         }
-                                        else displayToastify('Implementation in progress', TOASTIFYCOLOR.DARK, TOASTIFYSTATE.INFO);
+                                        else displayToastify(ACTION_IMPLEMENT_TOAST, TOASTIFYCOLOR.DARK, TOASTIFYSTATE.INFO);
                                     }}>
-                                        {link}
+                                        {link.label}
                                     </p>
                                 </li>
                             ))}
@@ -612,8 +515,8 @@ const Home = () => {
                     </section>
                     <section className="copyright-section">
                         <p>
-                            COPYRIGHT &copy; {new Date().getFullYear()} OPENBRIDGE INC. <br />
-                            ALL RIGHTS RESERVED.
+                            {FOOTER_COPYRIGHT_TEXT} <br />
+                            {FOOTER_COPYRIGHT_RIGHTS}
                         </p>
                     </section>
                 </div>
