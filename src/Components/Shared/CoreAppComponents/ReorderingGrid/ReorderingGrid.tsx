@@ -2,14 +2,14 @@ import { motion, Transition } from "framer-motion";
 import { useEffect, useState } from "react";
 
 // Assets
-import AlexaHome from '../../../Asset/Alexa-home.png';
-import MicroProcessorHome from '../../../Asset/MicroProcessor-home.png';
-import RaspberryHome from '../../../Asset/Raspberry-home.png';
-import ArduinoHome from '../../../Asset/arduino-home.svg';
-import EspressifHome from '../../../Asset/espressif-home.svg';
-import KafkaHome from '../../../Asset/kafka-home.svg';
-import ReactHome from '../../../Asset/react-home.svg';
-import SpringHome from '../../../Asset/spring-home.svg';
+import AlexaHome from '../../../Assets/Alexa-home.png';
+import MicroProcessorHome from '../../../Assets/MicroProcessor-home.png';
+import RaspberryHome from '../../../Assets/Raspberry-home.png';
+import ArduinoHome from '../../../Assets/arduino-home.svg';
+import EspressifHome from '../../../Assets/espressif-home.svg';
+import KafkaHome from '../../../Assets/kafka-home.svg';
+import ReactHome from '../../../Assets/react-home.svg';
+import SpringHome from '../../../Assets/spring-home.svg';
 
 export default function ReorderingGrid() {
     const [icons, setIcons] = useState(initialIcons);

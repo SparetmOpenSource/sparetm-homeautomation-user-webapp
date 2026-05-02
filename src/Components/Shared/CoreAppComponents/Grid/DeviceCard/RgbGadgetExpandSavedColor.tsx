@@ -21,9 +21,9 @@ import { BiCheck } from 'react-icons/bi';
 import { TbIrregularPolyhedron } from 'react-icons/tb';
 import { GiOilySpiral } from 'react-icons/gi';
 import { LuRainbow } from 'react-icons/lu';
-import { usePatchUpdateData } from '../../../../../Api.tsx/useReactQuery_Update';
-import { featureUrl } from '../../../../../Api.tsx/CoreAppApis';
-import { updateHeaderConfig } from '../../../../../Api.tsx/Axios';
+import { usePatchUpdateData } from '../../../../../Api/useReactQuery_Update';
+import { featureUrl } from '../../../../../Api/CoreAppApis';
+import { updateHeaderConfig } from '../../../../../Api/Axios';
 import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../../Data/QueryConstant';
 import { useQueryClient } from 'react-query';
 

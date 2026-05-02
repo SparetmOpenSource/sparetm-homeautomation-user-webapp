@@ -17,14 +17,14 @@ import {
     useCountryList,
     useCityList,
     useStateList
-} from '../../../Api.tsx/ProfileConfigApis';
+} from '../../../Api/ProfileConfigApis';
 import { useAppSelector } from '../../../Features/ReduxHooks';
 import {
     getMergedHeadersForLocation,
     updateHeaderConfig,
-} from '../../../Api.tsx/Axios';
-import { usePostUpdateData } from '../../../Api.tsx/useReactQuery_Update';
-import Building from './../../../Asset/desktop.webp';
+} from '../../../Api/Axios';
+import { usePostUpdateData } from '../../../Api/useReactQuery_Update';
+import Building from './../../../Assets/desktop.webp';
 import DynamicForm, { FieldConfig } from '../../Shared/CommonComponents/DynamicForm/DynamicForm';
 
 const Add = () => {

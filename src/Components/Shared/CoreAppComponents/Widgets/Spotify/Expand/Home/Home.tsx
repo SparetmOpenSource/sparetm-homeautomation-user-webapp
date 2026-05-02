@@ -13,12 +13,12 @@ import {
 } from '../../../../../../../Utils/HelperFn';
 import './Home.css';
 import { motion } from 'framer-motion';
-import { getMergedHeadersForSpotify } from '../../../../../../../Api.tsx/Axios';
-import { usePostUpdateData } from '../../../../../../../Api.tsx/useReactQuery_Update';
-import { featureUrl } from '../../../../../../../Api.tsx/CoreAppApis';
+import { getMergedHeadersForSpotify } from '../../../../../../../Api/Axios';
+import { usePostUpdateData } from '../../../../../../../Api/useReactQuery_Update';
+import { featureUrl } from '../../../../../../../Api/CoreAppApis';
 
 import { GET_SPOTIFY_QUEUE_STATE_QUERY_ID } from '../../../../../../../Data/QueryConstant';
-import { useSpotifyQueueState } from '../../../../../../../Api.tsx/Spotify/Api';
+import { useSpotifyQueueState } from '../../../../../../../Api/Spotify/Api';
 import { useQueryClient } from 'react-query';
 import {
     LandscapeSizeS,

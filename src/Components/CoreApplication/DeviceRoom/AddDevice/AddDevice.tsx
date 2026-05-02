@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './AddDevice.css';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
-import { featureUrl } from '../../../../Api.tsx/CoreAppApis';
+import { featureUrl } from '../../../../Api/CoreAppApis';
 import {
     appliance,
     catchError,
@@ -14,8 +14,8 @@ import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import { useAppSelector } from '../../../../Features/ReduxHooks';
 import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../Data/QueryConstant';
 import { useQueryClient } from 'react-query';
-import { usePostUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
-import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
+import { usePostUpdateData } from '../../../../Api/useReactQuery_Update';
+import { updateHeaderConfig } from '../../../../Api/Axios';
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
 import DynamicForm, { FieldConfig } from '../../../Shared/CommonComponents/DynamicForm/DynamicForm';

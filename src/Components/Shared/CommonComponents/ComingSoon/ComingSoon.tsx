@@ -1,5 +1,5 @@
 import './ComingSoon.css';
-import ComingSoonImg from '../../../../Asset/ComingSoonCU.svg';
+import ComingSoonImg from '../../../../Assets/ComingSoonCU.svg';
 import { useTheme } from '../../../../Pages/ThemeProvider';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import { useEffect, useState } from 'react';

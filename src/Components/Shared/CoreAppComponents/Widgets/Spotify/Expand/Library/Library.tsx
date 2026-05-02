@@ -16,10 +16,10 @@ import {
     useSpotifyAllAlbums,
     useSpotifyAllPlaylists,
     useSpotifyPlaylistSongs,
-} from '../../../../../../../Api.tsx/Spotify/Api';
-import { usePostUpdateData } from '../../../../../../../Api.tsx/useReactQuery_Update';
-import { featureUrl } from '../../../../../../../Api.tsx/CoreAppApis';
-import { getMergedHeadersForSpotify } from '../../../../../../../Api.tsx/Axios';
+} from '../../../../../../../Api/Spotify/Api';
+import { usePostUpdateData } from '../../../../../../../Api/useReactQuery_Update';
+import { featureUrl } from '../../../../../../../Api/CoreAppApis';
+import { getMergedHeadersForSpotify } from '../../../../../../../Api/Axios';
 import Pagination from '../../../../../CommonComponents/Pagination/Pagination';
 import {
     catchError,

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../../../Features/ReduxHooks';
-import { getMqttConfig, featureUrl } from '../../../../Api.tsx/CoreAppApis';
-import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
-import { useReactQuery_Get } from '../../../../Api.tsx/useReactQuery_Get';
-import { usePostUpdateData, useDeleteData } from '../../../../Api.tsx/useReactQuery_Update';
+import { getMqttConfig, featureUrl } from '../../../../Api/CoreAppApis';
+import { updateHeaderConfig } from '../../../../Api/Axios';
+import { useReactQuery_Get } from '../../../../Api/useReactQuery_Get';
+import { usePostUpdateData, useDeleteData } from '../../../../Api/useReactQuery_Update';
 import { displayToastify } from '../../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';

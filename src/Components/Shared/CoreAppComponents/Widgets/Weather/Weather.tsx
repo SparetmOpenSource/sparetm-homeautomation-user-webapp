@@ -6,7 +6,7 @@ import {
     changeWeatherIcon,
     getFormattedDate,
 } from '../../../../../Utils/HelperFn';
-import { useWeatherQuoteData } from '../../../../../Api.tsx/CoreAppApis';
+import { useWeatherQuoteData } from '../../../../../Api/CoreAppApis';
 import {
     HorizontalSize,
     WEATHER_EXPAND,

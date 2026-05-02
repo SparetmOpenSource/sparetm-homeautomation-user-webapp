@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import useDebounce from './useDebounce';
-import { getSearchState } from '../Api.tsx/Spotify/Api';
+import { getSearchState } from '../Api/Spotify/Api';
 
 export const useSpotifySearch = (query: any, token: any) => {
     const debouncedQuery = useDebounce(query, 1000);

@@ -8,6 +8,9 @@ import { store, persistor } from './Features/Store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { setAppTokenProvider } from './Api/Axios';
+
+setAppTokenProvider(() => store.getState().user.token);
 
 const queryClient = new QueryClient();
 

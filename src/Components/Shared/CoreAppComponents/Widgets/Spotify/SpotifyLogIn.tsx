@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaSpotify } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
-import { profileUrl } from '../../../../../Api.tsx/ProfileConfigApis';
-import { handleLogin, setting_up_token, redirect_uri } from '../../../../../Api.tsx/Spotify/Api';
-import { usePostUpdateData } from '../../../../../Api.tsx/useReactQuery_Update';
-import { updateHeaderConfig } from '../../../../../Api.tsx/Axios';
+import { profileUrl } from '../../../../../Api/ProfileConfigApis';
+import { handleLogin, setting_up_token, redirect_uri } from '../../../../../Api/Spotify/Api';
+import { usePostUpdateData } from '../../../../../Api/useReactQuery_Update';
+import { updateHeaderConfig } from '../../../../../Api/Axios';
 
 import Button from '../../../CommonComponents/CustomButton/Button';
 import { SpotifyActive } from './SpotifyActive';

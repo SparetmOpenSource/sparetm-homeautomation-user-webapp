@@ -20,7 +20,7 @@ import {
 } from '../../Data/Constants';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
 import { useBackDropOpen, useTheme, useThemeUpdate } from '../ThemeProvider';
-import { useProfileData } from '../../Api.tsx/ProfileConfigApis';
+import { useProfileData } from '../../Api/ProfileConfigApis';
 import { useAppSelector } from '../../Features/ReduxHooks';
 import SideNavigation from '../../Components/Shared/CommonComponents/Navigation/SideNavigation/SideNavigation';
 import UpperNavigation from '../../Components/Shared/CommonComponents/Navigation/UpperNavigation/UpperNavigation';

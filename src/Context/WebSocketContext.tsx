@@ -5,9 +5,9 @@ import { Client } from '@stomp/stompjs';
 import { useAppDispatch, useAppSelector } from '../Features/ReduxHooks';
 import { updateDevice, addDevice, removeDevice, updateAllDevices, updateDeviceDataStore, deleteDeviceDataStore } from '../Features/Device/DeviceSlice';
 import { setNotification } from '../Features/Notification/NotificationSlice';
-import { getWebSocketUrl } from '../Api.tsx/ProfileConfigApis';
+import { getWebSocketUrl } from '../Api/ProfileConfigApis';
 import { RoutePath, WEBSOCKET_TOPIC_EVENTS } from '../Data/Constants';
-import { useReactQuery_Get } from '../Api.tsx/useReactQuery_Get';
+import { useReactQuery_Get } from '../Api/useReactQuery_Get';
 import { GET_WEBSOCKET_URL_QUERY_ID } from '../Data/QueryConstant';
 import { displayToastify, handleClickForBlinkNotification, playNotificationSound } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
@@ -15,7 +15,7 @@ import { ACKNOWLEDGED_NOTIFICATIONS_KEY, NOTIFICATION_SOUNDS_ENABLED_KEY, WEBSOC
 import { useTheme } from '../Pages/ThemeProvider';
 import { useLocation } from 'react-router-dom';
 import { dark_colors, light_colors } from '../Data/ColorConstant';
-import { RootUrl } from '../Api.tsx/Axios';
+import { RootUrl } from '../Api/Axios';
 
 type ConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'error';
 

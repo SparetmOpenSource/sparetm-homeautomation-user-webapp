@@ -29,7 +29,7 @@ import TextBlinkAnimation from '../../Components/Shared/HomeComponents/TextBlink
 import FloatingCube from './FloatingCube/FloatingCube';
 import BirdSimulation from '../../Components/Shared/HomeComponents/BirdSimulation/BirdSimulation';
 import PolicyModal from '../../Components/Shared/HomeComponents/PolicyModal/PolicyModal';
-import HeroBackground from '../../Asset/Meet-home.svg'
+import HeroBackground from '../../Assets/Meet-home.svg'
 import { useBackDropOpen } from '../ThemeProvider';
 import { POLICY_MODAL, PolicyModalSize } from '../../Data/Constants';
 import { RiBookOpenLine } from 'react-icons/ri';

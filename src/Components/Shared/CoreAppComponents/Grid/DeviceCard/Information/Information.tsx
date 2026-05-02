@@ -16,8 +16,8 @@ import {
 } from '../../../../../../Utils/HelperFn';
 import { TbDeviceRemote } from 'react-icons/tb';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../Data/Enum';
-import { useDeleteData } from '../../../../../../Api.tsx/useReactQuery_Update';
-import { featureUrl } from '../../../../../../Api.tsx/CoreAppApis';
+import { useDeleteData } from '../../../../../../Api/useReactQuery_Update';
+import { featureUrl } from '../../../../../../Api/CoreAppApis';
 import { useAppSelector } from '../../../../../../Features/ReduxHooks';
 import { useQueryClient } from 'react-query';
 import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../../../Data/QueryConstant';
@@ -30,7 +30,7 @@ import {
     LandscapeSizeS,
     PROFILENAMEKEY,
 } from '../../../../../../Data/Constants';
-import { updateHeaderConfig } from '../../../../../../Api.tsx/Axios';
+import { updateHeaderConfig } from '../../../../../../Api/Axios';
 import DeviceDataGraph from '../DeviceDataGraph/DeviceDataGraph';
 import DeviceRemote from '../DeviceRemote/DeviceRemote';
 import { MdOutlineMoreTime } from "react-icons/md";

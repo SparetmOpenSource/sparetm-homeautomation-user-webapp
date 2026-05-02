@@ -1,6 +1,6 @@
 import { displayToastify, catchError } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
-import { AuthService } from '../Api.tsx/AuthService';
+import { AuthService } from '../Api/AuthService';
 
 export const RegisterUser = async (data: any, darkTheme: boolean) => {
     try {

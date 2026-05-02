@@ -13,9 +13,9 @@ import {
     spotifyQueueAddition,
 } from '../../../../../../../../Data/Constants';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../../Data/Enum';
-import { getMergedHeadersForSpotify } from '../../../../../../../../Api.tsx/Axios';
-import { usePostUpdateData } from '../../../../../../../../Api.tsx/useReactQuery_Update';
-import { featureUrl } from '../../../../../../../../Api.tsx/CoreAppApis';
+import { getMergedHeadersForSpotify } from '../../../../../../../../Api/Axios';
+import { usePostUpdateData } from '../../../../../../../../Api/useReactQuery_Update';
+import { featureUrl } from '../../../../../../../../Api/CoreAppApis';
 import Confirmation from '../../../../../../CommonComponents/BackDrop/Confirmation/Confirmation';
 import useLocalStorage from '../../../../../../../../Hooks/UseLocalStorage';
 import { SPOTIFY_TOKEN_GLOBAL } from '../../../../../../../../Data/Constants';

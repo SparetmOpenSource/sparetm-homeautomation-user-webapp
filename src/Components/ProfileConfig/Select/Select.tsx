@@ -1,4 +1,4 @@
-import { useAllProfiles } from '../../../Api.tsx/ProfileConfigApis';
+import { useAllProfiles } from '../../../Api/ProfileConfigApis';
 import { useAppDispatch, useAppSelector } from '../../../Features/ReduxHooks';
 import { useTheme } from '../../../Pages/ThemeProvider';
 import ProfileGrid from '../../Shared/CoreAppComponents/Grid/ProfileGrid';

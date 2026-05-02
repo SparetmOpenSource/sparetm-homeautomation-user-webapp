@@ -4,8 +4,8 @@ import TextBlinkAnimation from "../../../HomeComponents/TextBlinkAnimation/TextB
 import "./Selector.css";
 import Button from "../../CustomButton/Button";
 import Select from "react-select";
-import { useCountryList } from "../../../../../Api.tsx/ProfileConfigApis";
-import { getMergedHeadersForLocation } from "../../../../../Api.tsx/Axios";
+import { useCountryList } from "../../../../../Api/ProfileConfigApis";
+import { getMergedHeadersForLocation } from "../../../../../Api/Axios";
 
 const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel }: any) => {
     const darkTheme: any = useTheme();

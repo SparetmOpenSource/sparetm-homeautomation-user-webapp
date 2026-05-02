@@ -1,14 +1,14 @@
 // refactor code -----------------------------
 import './Cover.css';
 import Card from './Card';
-import { featureUrl } from '../../../../../../../../Api.tsx/CoreAppApis';
-import { useDeleteData } from '../../../../../../../../Api.tsx/useReactQuery_Update';
+import { featureUrl } from '../../../../../../../../Api/CoreAppApis';
+import { useDeleteData } from '../../../../../../../../Api/useReactQuery_Update';
 import {
     catchError,
     invalidateQueries,
 } from '../../../../../../../../Utils/HelperFn';
 import { useQueryClient } from 'react-query';
-import { getMergedHeadersForSpotify } from '../../../../../../../../Api.tsx/Axios';
+import { getMergedHeadersForSpotify } from '../../../../../../../../Api/Axios';
 import { useMemo } from 'react';
 import useLocalStorage from '../../../../../../../../Hooks/UseLocalStorage';
 import { SPOTIFY_TOKEN_GLOBAL } from '../../../../../../../../Data/Constants';

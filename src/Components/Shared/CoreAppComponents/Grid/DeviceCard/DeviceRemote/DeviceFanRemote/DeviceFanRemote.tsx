@@ -1,12 +1,12 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { atomBergRemoteCode } from '../../../../../../../Data/DeviceRoomConstant';
-import { useDeleteDeviceStoreData, useUpdateDeviceStoreData } from '../../../../../../../Api.tsx/CoreAppApis';
+import { useDeleteDeviceStoreData, useUpdateDeviceStoreData } from '../../../../../../../Api/CoreAppApis';
 import Button from '../../../../../CommonComponents/CustomButton/Button';
 import RemoteButton from '../RemoteButton/RemoteButton';
 import RemoteConfig from '../RemoteConfig/RemoteConfig';
-import { usePatchUpdateData } from '../../../../../../../Api.tsx/useReactQuery_Update';
-import { featureUrl } from '../../../../../../../Api.tsx/CoreAppApis';
-import { updateHeaderConfig } from '../../../../../../../Api.tsx/Axios';
+import { usePatchUpdateData } from '../../../../../../../Api/useReactQuery_Update';
+import { featureUrl } from '../../../../../../../Api/CoreAppApis';
+import { updateHeaderConfig } from '../../../../../../../Api/Axios';
 import { displayToastify } from '../../../../../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../Data/Enum';
 import { useAppSelector } from '../../../../../../../Features/ReduxHooks';

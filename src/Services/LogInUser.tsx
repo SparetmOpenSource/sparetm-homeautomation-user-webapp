@@ -2,7 +2,7 @@ import { RoutePath } from '../Data/Constants';
 import { displayToastify } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import { addAdmin, addToken } from '../Features/User/UserSlice';
-import { AuthService } from '../Api.tsx/AuthService';
+import { AuthService } from '../Api/AuthService';
 
 const login = (
     response: any,

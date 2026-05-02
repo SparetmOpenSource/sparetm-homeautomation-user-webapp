@@ -6,16 +6,16 @@ import {
 import {
     useSpotifyDeviceState,
     useSpotifyProfileState,
-} from '../../../../../../../Api.tsx/Spotify/Api';
+} from '../../../../../../../Api/Spotify/Api';
 import {
     dark_colors,
     light_colors,
 } from '../../../../../../../Data/ColorConstant';
 import { IconContext } from 'react-icons';
 import { motion } from 'framer-motion';
-import { usePostUpdateData } from '../../../../../../../Api.tsx/useReactQuery_Update';
-import { getMergedHeadersForSpotify } from '../../../../../../../Api.tsx/Axios';
-import { featureUrl } from '../../../../../../../Api.tsx/CoreAppApis';
+import { usePostUpdateData } from '../../../../../../../Api/useReactQuery_Update';
+import { getMergedHeadersForSpotify } from '../../../../../../../Api/Axios';
+import { featureUrl } from '../../../../../../../Api/CoreAppApis';
 import LoadingFade from '../../../../../CommonComponents/LoadingAnimation/LoadingFade';
 import {
     catchError,

@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../../Features/ReduxHooks';
 import { IconContext } from 'react-icons';
 import { PiPlugsConnectedFill } from 'react-icons/pi';
 import { TbPlugConnected } from 'react-icons/tb';
-import { featureUrl, useDeviceListData } from '../../../Api.tsx/CoreAppApis';
+import { featureUrl, useDeviceListData } from '../../../Api/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 import { displayToastify, invalidateQueries } from '../../../Utils/HelperFn';
 import DeviceGrid from '../../Shared/CoreAppComponents/Grid/DeviceGrid';
@@ -20,7 +20,7 @@ import ErrorPage from '../../Shared/CommonComponents/ErrorPage/ErrorPage';
 import { ERROR_MSG, RoutePath } from '../../../Data/Constants';
 import { FaPowerOff } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
-import { updateHeaderConfig } from '../../../Api.tsx/Axios';
+import { updateHeaderConfig } from '../../../Api/Axios';
 import { useDeviceMutation } from '../../../Hooks/useDeviceMutation';
 
 

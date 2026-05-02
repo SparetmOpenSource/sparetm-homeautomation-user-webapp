@@ -5,13 +5,13 @@ import { IoMdTime } from 'react-icons/io';
 import { MdDeleteOutline, MdPowerSettingsNew } from 'react-icons/md';
 import { motion, AnimatePresence } from 'framer-motion';
 import { displayToastify } from '../../../../../../Utils/HelperFn';
-import { getHeaderConfig } from '../../../../../../Api.tsx/Axios';
+import { getHeaderConfig } from '../../../../../../Api/Axios';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../Data/Enum';
-import { getDeviceSchedules, profileUrl } from '../../../../../../Api.tsx/ProfileConfigApis';
+import { getDeviceSchedules, profileUrl } from '../../../../../../Api/ProfileConfigApis';
 import { useAppSelector } from '../../../../../../Features/ReduxHooks';
-import { useReactQuery_Get } from '../../../../../../Api.tsx/useReactQuery_Get';
+import { useReactQuery_Get } from '../../../../../../Api/useReactQuery_Get';
 import { GET_DEVICE_SCHEDULES_QUERY_ID } from '../../../../../../Data/QueryConstant';
-import { useDeleteData, usePostUpdateData } from '../../../../../../Api.tsx/useReactQuery_Update';
+import { useDeleteData, usePostUpdateData } from '../../../../../../Api/useReactQuery_Update';
 
 interface SchedulerProps {
     darkTheme: boolean;

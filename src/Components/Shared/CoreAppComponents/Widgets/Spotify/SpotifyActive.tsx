@@ -1,5 +1,5 @@
 // refactor code -----------------------------
-import { useSpotifyPlaybackState } from '../../../../../Api.tsx/Spotify/Api';
+import { useSpotifyPlaybackState } from '../../../../../Api/Spotify/Api';
 import { useTheme } from '../../../../../Pages/ThemeProvider';
 import SpotifyCurrentPlayback from './SpotifyCurrentPlayback/SpotifyCurrentPlayback';
 import useLocalStorage from '../../../../../Hooks/UseLocalStorage';

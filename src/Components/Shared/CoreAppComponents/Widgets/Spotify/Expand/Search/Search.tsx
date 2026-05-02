@@ -15,9 +15,9 @@ import {
 } from '../../../../../../../Data/Constants';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../Data/Enum';
 import { catchError, displayToastify } from '../../../../../../../Utils/HelperFn';
-import { getMergedHeadersForSpotify } from '../../../../../../../Api.tsx/Axios';
-import { usePostUpdateData } from '../../../../../../../Api.tsx/useReactQuery_Update';
-import { featureUrl } from '../../../../../../../Api.tsx/CoreAppApis';
+import { getMergedHeadersForSpotify } from '../../../../../../../Api/Axios';
+import { usePostUpdateData } from '../../../../../../../Api/useReactQuery_Update';
+import { featureUrl } from '../../../../../../../Api/CoreAppApis';
 import { IconContext } from 'react-icons';
 import LoadingFade from '../../../../../CommonComponents/LoadingAnimation/LoadingFade';
 import { FaSadTear } from 'react-icons/fa';

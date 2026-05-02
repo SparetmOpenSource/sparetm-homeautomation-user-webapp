@@ -68,6 +68,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "prop-types": "^15.8.1",
+    "ts-morph": "^28.0.0",
     "webpack": "^5.100.2"
   }
 }

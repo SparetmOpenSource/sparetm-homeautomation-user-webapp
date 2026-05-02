@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useBackDropOpen, useTheme } from '../Pages/ThemeProvider';
-import { usePatchUpdateData } from '../Api.tsx/useReactQuery_Update';
+import { usePatchUpdateData } from '../Api/useReactQuery_Update';
 import {
     LandscapeSizeM,
     MQTT_ERROR_PREFIX,

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { store } from '../Features/Store';
 import { getItem } from '../Hooks/UseLocalStorage';
 import { SPOTIFY_TOKEN_GLOBAL } from '../Data/Constants';
 
@@ -15,12 +14,17 @@ export const authUrl = {
 
 export const api = axios.create({ baseURL: RootUrl.gateway });
 
+let getAppToken: () => string | null = () => null;
+
+export const setAppTokenProvider = (provider: () => string | null) => {
+    getAppToken = provider;
+};
+
 api.interceptors.request.use((config) => {
     config.headers['ngrok-skip-browser-warning'] = 'true';
     
-    // Automatically inject JWT Token from Redux FAANG-Style
-    const state = store.getState().user;
-    const appToken = state.token;
+    // Dynamically inject JWT Token FAANG-Style via Provider
+    const appToken = getAppToken();
     
     const isSpotifyUrl = config.url?.includes('/mpa/api/v1/profiles/spotify');
     const isAuthUrl = config.url?.includes('/msa/api/v1/auth');

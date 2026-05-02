@@ -16,8 +16,8 @@ import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../../Features/ReduxHooks';
-import { featureUrl } from '../../../../../Api.tsx/CoreAppApis';
-import { updateHeaderConfig } from '../../../../../Api.tsx/Axios';
+import { featureUrl } from '../../../../../Api/CoreAppApis';
+import { updateHeaderConfig } from '../../../../../Api/Axios';
 import { updateDeviceStatus } from '../../../../../Features/Device/DeviceSlice';
 import { useDeviceMutation } from '../../../../../Hooks/useDeviceMutation';
 

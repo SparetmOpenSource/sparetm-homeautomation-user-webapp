@@ -14,7 +14,7 @@ import {
 
 import {
     useSpotifyPlaybackState,
-} from '../../../../../../Api.tsx/Spotify/Api';
+} from '../../../../../../Api/Spotify/Api';
 
 import { invalidateQueries } from '../../../../../../Utils/HelperFn';
 import LoadingFade from '../../../../CommonComponents/LoadingAnimation/LoadingFade';

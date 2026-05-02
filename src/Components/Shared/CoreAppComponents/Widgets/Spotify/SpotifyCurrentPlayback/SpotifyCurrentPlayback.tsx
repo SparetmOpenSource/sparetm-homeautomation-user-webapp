@@ -25,9 +25,9 @@ import {
     IoPlaySkipBack,
     IoPlaySkipForward,
 } from 'react-icons/io5';
-import { usePostUpdateData } from '../../../../../../Api.tsx/useReactQuery_Update';
-import { featureUrl } from '../../../../../../Api.tsx/CoreAppApis';
-import { getMergedHeadersForSpotify } from '../../../../../../Api.tsx/Axios';
+import { usePostUpdateData } from '../../../../../../Api/useReactQuery_Update';
+import { featureUrl } from '../../../../../../Api/CoreAppApis';
+import { getMergedHeadersForSpotify } from '../../../../../../Api/Axios';
 import { GET_SPOTIFY_QUEUE_STATE_QUERY_ID } from '../../../../../../Data/QueryConstant';
 import { useQueryClient } from 'react-query';
 import useLocalStorage from '../../../../../../Hooks/UseLocalStorage';

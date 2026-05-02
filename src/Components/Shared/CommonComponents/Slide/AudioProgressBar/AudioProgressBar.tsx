@@ -5,9 +5,9 @@ import {
     displayToastify,
     formatTime,
 } from '../../../../../Utils/HelperFn';
-import { featureUrl } from '../../../../../Api.tsx/CoreAppApis';
-import { getMergedHeadersForSpotify } from '../../../../../Api.tsx/Axios';
-import { usePostUpdateData } from '../../../../../Api.tsx/useReactQuery_Update';
+import { featureUrl } from '../../../../../Api/CoreAppApis';
+import { getMergedHeadersForSpotify } from '../../../../../Api/Axios';
+import { usePostUpdateData } from '../../../../../Api/useReactQuery_Update';
 import { dark_colors, light_colors } from '../../../../../Data/ColorConstant';
 import { spotifyNonPremiumWarning } from '../../../../../Data/Constants';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../Data/Enum';

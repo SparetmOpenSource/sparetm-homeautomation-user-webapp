@@ -12,8 +12,8 @@ import {
     displayToastify,
     invalidateQueries,
 } from '../../../../../Utils/HelperFn';
-import { usePatchUpdateData } from '../../../../../Api.tsx/useReactQuery_Update';
-import { featureUrl } from '../../../../../Api.tsx/CoreAppApis';
+import { usePatchUpdateData } from '../../../../../Api/useReactQuery_Update';
+import { featureUrl } from '../../../../../Api/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../Data/Enum';
 import { useAppSelector } from '../../../../../Features/ReduxHooks';
 import {
@@ -25,7 +25,7 @@ import { useQueryClient } from 'react-query';
 import nanoleaf from '../../../../../Assets/nanoleaf.svg';
 import { ReactSVG } from 'react-svg';
 import { useBackDropOpen } from '../../../../../Pages/ThemeProvider';
-import { updateHeaderConfig } from '../../../../../Api.tsx/Axios';
+import { updateHeaderConfig } from '../../../../../Api/Axios';
 import ApplianceExpand from './ApplianceExpand';
 import RgbGadgetExpandSavedColor from './RgbGadgetExpandSavedColor';
 import { IoMdCloudDownload } from 'react-icons/io';
