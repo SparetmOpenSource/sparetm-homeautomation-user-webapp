@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Home from '../Home';
 import StarterLoader from '../StarterLoader/StarterLoader';
 
-import PageTransition from '../../../Components/Others/PageTransition/PageTransition';
+import PageTransition from '../../../Components/Shared/CommonComponents/PageTransition/PageTransition';
 
 const INTRO_PLAYED_KEY = 'home_intro_played';
 

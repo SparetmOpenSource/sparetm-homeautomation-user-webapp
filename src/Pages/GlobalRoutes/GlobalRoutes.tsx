@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import LoadingFade from '../../Components/Others/LoadingAnimation/LoadingFade';
+import LoadingFade from '../../Components/Shared/CommonComponents/LoadingAnimation/LoadingFade';
 import PublicRoute from '../../Services/PublicRoute';
 import ProtectedRoute from '../../Services/ProtectedRoute';
 import { RoutePath } from '../../Data/Constants';

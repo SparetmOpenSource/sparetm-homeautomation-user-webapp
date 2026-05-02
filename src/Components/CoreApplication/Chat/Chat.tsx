@@ -1,4 +1,4 @@
-import ComingSoon from '../../Others/ComingSoon/ComingSoon';
+import ComingSoon from '../../Shared/CommonComponents/ComingSoon/ComingSoon';
 import './Chat.css';
 
 const Chat = () => {

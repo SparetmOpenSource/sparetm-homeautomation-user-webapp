@@ -25,10 +25,10 @@ import { IconContext } from 'react-icons';
 import { GoDotFill } from 'react-icons/go';
 import { GrHomeRounded } from 'react-icons/gr';
 import { IoMdContacts } from 'react-icons/io';
-import TextBlinkAnimation from '../../Components/Others/TextBlinkAnimation/TextBlinkAnimation';
+import TextBlinkAnimation from '../../Components/Shared/HomeComponents/TextBlinkAnimation/TextBlinkAnimation';
 import FloatingCube from './FloatingCube/FloatingCube';
-import BirdSimulation from '../../Components/Others/BirdSimulation/BirdSimulation';
-import PolicyModal from '../../Components/Others/PolicyModal/PolicyModal';
+import BirdSimulation from '../../Components/Shared/HomeComponents/BirdSimulation/BirdSimulation';
+import PolicyModal from '../../Components/Shared/HomeComponents/PolicyModal/PolicyModal';
 import HeroBackground from '../../Asset/Meet-home.svg'
 import { useBackDropOpen } from '../ThemeProvider';
 import { POLICY_MODAL, PolicyModalSize } from '../../Data/Constants';

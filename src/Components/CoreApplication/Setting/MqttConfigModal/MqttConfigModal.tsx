@@ -8,11 +8,11 @@ import { displayToastify } from '../../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 import { dark_colors, light_colors } from '../../../../Data/ColorConstant';
 import './MqttConfigModal.css';
-import LoadingFade from '../../../Others/LoadingAnimation/LoadingFade';
+import LoadingFade from '../../../Shared/CommonComponents/LoadingAnimation/LoadingFade';
 import { useBackDropOpen } from '../../../../Pages/ThemeProvider';
-import Confirmation from '../../../Others/BackDrop/Confirmation/Confirmation';
+import Confirmation from '../../../Shared/CommonComponents/BackDrop/Confirmation/Confirmation';
 import { LandscapeSizeS, IS_MQTT_CONFIGURED_KEY } from '../../../../Data/Constants';
-import Button from '../../../Others/CustomButton/Button';
+import Button from '../../../Shared/CommonComponents/CustomButton/Button';
 import { copyText } from '../../../../Utils/HelperFn';
 import { IoCopyOutline } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
@@ -33,7 +33,7 @@ const MqttConfigModal = ({ darkTheme, handleClose }: MqttConfigModalProps) => {
     const [isDeleted, setIsDeleted] = useState(false);
 
     const on_fetch_mqtt_config_Success = (data: any) => {
-        const body = data?.data?.body;
+        const body = data?.data?.data;
         if (body && body.mqttServerAddress) {
             setConfigData(body);
             setShowConfig(true);
@@ -49,15 +49,16 @@ const MqttConfigModal = ({ darkTheme, handleClose }: MqttConfigModalProps) => {
     const { isLoading: isFetchingConfig } = useReactQuery_Get(
         'get_mqtt_config',
         get_Mqtt_Config,
-        on_fetch_mqtt_config_Success,
-        () => setShowConfig(false),
-        !isDeleted, // fetch_on_click_status / enabled
-        true, // refetch_on_mount
-        false, // refetch_on_window_focus
-        false, // refetch_interval
-        false, // refetch_interval_in_background
-        300000, // cache_time (5 mins)
-        0 // stale_time
+        {
+            enabled: !isDeleted,
+            refetchOnMount: true,
+            refetchOnWindowFocus: false,
+            cacheTime: 300000,
+            staleTime: 0,
+            retry: false,
+            onSuccess: on_fetch_mqtt_config_Success,
+            onError: () => setShowConfig(false),
+        }
     );
 
     const { mutate: deleteConfig, isLoading: isDeleting } = useDeleteData(
@@ -140,7 +141,7 @@ const MqttConfigModal = ({ darkTheme, handleClose }: MqttConfigModalProps) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!formData.mqttServerAddress || !formData.brokerUserName || !formData.brokerPassword) {
             displayToastify(
                 'Please fill in all fields',
@@ -175,8 +176,8 @@ const MqttConfigModal = ({ darkTheme, handleClose }: MqttConfigModalProps) => {
         >
             <h2 style={{ color: color.text }}>MQTT Configuration</h2>
             <p style={{ color: color.icon }}>
-                {showConfig 
-                    ? 'Current MQTT Configuration Details' 
+                {showConfig
+                    ? 'Current MQTT Configuration Details'
                     : 'Configure your MQTT broker credentials to enable device communication'}
             </p>
 
@@ -198,7 +199,7 @@ const MqttConfigModal = ({ darkTheme, handleClose }: MqttConfigModalProps) => {
                             </motion.span>
                         </div>
                     </div>
-                    
+
                     <div className="mqtt-detail-item">
                         <label style={{ color: color.icon }}>Client ID</label>
                         <div className="mqtt-detail-value">
@@ -264,72 +265,72 @@ const MqttConfigModal = ({ darkTheme, handleClose }: MqttConfigModalProps) => {
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} className="mqtt-form">
-                <div className="mqtt-form-group">
-                    <label style={{ color: color.text }}>Server Address</label>
-                    <input
-                        type="text"
-                        name="mqttServerAddress"
-                        value={formData.mqttServerAddress}
-                        onChange={handleChange}
-                        placeholder="SSL://your-broker.cloud:8883"
-                        style={{
-                            backgroundColor: color.inner,
-                            color: color.text,
-                            borderColor: color.border,
-                        }}
-                    />
-                </div>
+                    <div className="mqtt-form-group">
+                        <label style={{ color: color.text }}>Server Address</label>
+                        <input
+                            type="text"
+                            name="mqttServerAddress"
+                            value={formData.mqttServerAddress}
+                            onChange={handleChange}
+                            placeholder="SSL://your-broker.cloud:8883"
+                            style={{
+                                backgroundColor: color.inner,
+                                color: color.text,
+                                borderColor: color.border,
+                            }}
+                        />
+                    </div>
 
-                <div className="mqtt-form-group">
-                    <label style={{ color: color.text }}>Username</label>
-                    <input
-                        type="text"
-                        name="brokerUserName"
-                        value={formData.brokerUserName}
-                        onChange={handleChange}
-                        placeholder="Enter broker username"
-                        style={{
-                            backgroundColor: color.inner,
-                            color: color.text,
-                            borderColor: color.border,
-                        }}
-                    />
-                </div>
+                    <div className="mqtt-form-group">
+                        <label style={{ color: color.text }}>Username</label>
+                        <input
+                            type="text"
+                            name="brokerUserName"
+                            value={formData.brokerUserName}
+                            onChange={handleChange}
+                            placeholder="Enter broker username"
+                            style={{
+                                backgroundColor: color.inner,
+                                color: color.text,
+                                borderColor: color.border,
+                            }}
+                        />
+                    </div>
 
-                <div className="mqtt-form-group">
-                    <label style={{ color: color.text }}>Password</label>
-                    <input
-                        type="password"
-                        name="brokerPassword"
-                        value={formData.brokerPassword}
-                        onChange={handleChange}
-                        placeholder="Enter broker password"
-                        style={{
-                            backgroundColor: color.inner,
-                            color: color.text,
-                            borderColor: color.border,
-                        }}
-                    />
-                </div>
+                    <div className="mqtt-form-group">
+                        <label style={{ color: color.text }}>Password</label>
+                        <input
+                            type="password"
+                            name="brokerPassword"
+                            value={formData.brokerPassword}
+                            onChange={handleChange}
+                            placeholder="Enter broker password"
+                            style={{
+                                backgroundColor: color.inner,
+                                color: color.text,
+                                borderColor: color.border,
+                            }}
+                        />
+                    </div>
 
-                <div className="mqtt-form-actions">
-                    <Button
-                        label="Cancel"
-                        fn={onCancel}
-                        textCol={color.text}
-                        backCol={color.element}
-                        width="100px"
-                        border={color.border}
-                    />
-                    <Button
-                        label={isLoading ? 'Connecting...' : 'Connect'}
-                        status={isLoading}
-                        textCol="white"
-                        backCol={color.button}
-                        width="120px"
-                        border="none"
-                    />
-                </div>
+                    <div className="mqtt-form-actions">
+                        <Button
+                            label="Cancel"
+                            fn={onCancel}
+                            textCol={color.text}
+                            backCol={color.element}
+                            width="100px"
+                            border={color.border}
+                        />
+                        <Button
+                            label={isLoading ? 'Connecting...' : 'Connect'}
+                            status={isLoading}
+                            textCol="white"
+                            backCol={color.button}
+                            width="120px"
+                            border="none"
+                        />
+                    </div>
                 </form>
             )}
         </div>

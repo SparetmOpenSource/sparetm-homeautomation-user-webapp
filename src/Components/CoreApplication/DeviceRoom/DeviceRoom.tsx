@@ -3,22 +3,20 @@ import './DeviceRoom.css';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { dark_colors, light_colors } from '../../../Data/ColorConstant';
 import { useTheme } from '../../../Pages/ThemeProvider';
-import Button from '../../Others/CustomButton/Button';
+import Button from '../../Shared/CommonComponents/CustomButton/Button';
 import { useAppDispatch, useAppSelector } from '../../../Features/ReduxHooks';
 import { IconContext } from 'react-icons';
 import { PiPlugsConnectedFill } from 'react-icons/pi';
 import { TbPlugConnected } from 'react-icons/tb';
-import { featureUrl, getAllDevices } from '../../../Api.tsx/CoreAppApis';
+import { featureUrl, useDeviceListData } from '../../../Api.tsx/CoreAppApis';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 import { displayToastify, invalidateQueries } from '../../../Utils/HelperFn';
-import DeviceGrid from '../../Others/Grid/DeviceGrid';
-import { useReactQuery_Get } from '../../../Api.tsx/useReactQuery_Get';
+import DeviceGrid from '../../Shared/CoreAppComponents/Grid/DeviceGrid';
 import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../Data/QueryConstant';
 import { useQueryClient } from 'react-query';
 import { addFirstRoom } from '../../../Features/Room/RoomSlice';
-import LoadingFade from '../../Others/LoadingAnimation/LoadingFade';
-import ErrorPage from './../../../Components/Others/ErrorPage/ErrorPage';
-import { addDeviceData } from '../../../Features/Device/DeviceSlice';
+import LoadingFade from '../../Shared/CommonComponents/LoadingAnimation/LoadingFade';
+import ErrorPage from '../../Shared/CommonComponents/ErrorPage/ErrorPage';
 import { ERROR_MSG, RoutePath } from '../../../Data/Constants';
 import { FaPowerOff } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
@@ -30,6 +28,8 @@ const DeviceRoom = () => {
     const [color, setColor] = useState<any>(light_colors);
     const darkTheme: any = useTheme();
     const location = useLocation();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
     const dispatch = useAppDispatch();
     const profileData = useAppSelector(
         (state: any) => state?.user?.profileData,
@@ -41,6 +41,15 @@ const DeviceRoom = () => {
         ?.split('/')[3]
         ?.replace('%20', ' ');
 
+    useEffect(() => {
+        if (!roomType && profileData?.room?.[0]?.room_type) {
+            navigate(
+                `${RoutePath.CoreApplication_Room}/${profileData.room[0].room_type.toLowerCase()}`,
+                { replace: true }
+            );
+        }
+    }, [roomType, profileData, navigate]);
+
     const roomCounts = useAppSelector(
         (state: any) => state.device.roomCounts[roomType?.toLowerCase()],
     );
@@ -49,24 +58,15 @@ const DeviceRoom = () => {
         () => roomCounts ?? { total: 0, on: 0, off: 0 },
         [roomCounts],
     );
-    const navigate = useNavigate();
-    const queryClient = useQueryClient();
     const queryKeys = useMemo(() => [SELECT_DEVICE_LIST_QUERY_ID], []);
-    const deviceFn = () => {
-        return getAllDevices(admin, profile, darkTheme);
-    };
-    const on_fetch_device_Success = (data: any) => {
-        dispatch(addDeviceData(data?.data?.body));
-    };
 
     const { mutate } = useDeviceMutation(
-        `${featureUrl.update_all_device_status}${admin}&profilename=${profile}&roomtype=${roomType}`,
+        `${featureUrl.update_all_device_status}${admin}&profileName=${profile}&roomType=${roomType}`,
         updateHeaderConfig,
         () => {
             invalidateQueries(queryClient, queryKeys);
         },
     );
-
 
     const triggerAllDevices = useCallback(() => {
         if (total === 0) {
@@ -81,27 +81,7 @@ const DeviceRoom = () => {
         mutate({ status: newStatus, statusDetail: '' } as any);
     }, [mutate, on, total, darkTheme]);
 
-    const on_fetch_device_Error = (error: any) => {
-        displayToastify(
-            error?.message,
-            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
-            TOASTIFYSTATE.ERROR,
-        );
-    };
-
-    const { isLoading, isError } = useReactQuery_Get(
-        SELECT_DEVICE_LIST_QUERY_ID,
-        deviceFn,
-        on_fetch_device_Success,
-        on_fetch_device_Error,
-        !!(admin && profile), // !fetch_On_Click_Status
-        false, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        300000, // Stale Time
-    );
+    const { isLoading, isError } = useDeviceListData(admin, profile, darkTheme);
 
     useEffect(() => {
         darkTheme ? setColor(dark_colors) : setColor(light_colors);
@@ -117,18 +97,17 @@ const DeviceRoom = () => {
                     {profile}'s Space
                 </span>
                 <span className="deviceRoom-btn" style={{ color: color?.text }}>
-                    {profileData?.body?.room?.map((item: any) => (
+                    {profileData?.room?.map((item: any) => (
                         <Button
                             key={item?.room_id}
                             label={item?.room_type}
                             textCol={
                                 location?.pathname?.replace('%20', '') ===
-                                `${
-                                    RoutePath?.CoreApplication_Room
-                                }/${item?.room_type
-                                    ?.toLowerCase()
-                                    ?.split(' ')
-                                    ?.join('')}`
+                                    `${RoutePath?.CoreApplication_Room
+                                    }/${item?.room_type
+                                        ?.toLowerCase()
+                                        ?.split(' ')
+                                        ?.join('')}`
                                     ? color?.button
                                     : `${color?.icon_font?.split(')')[0]},0.7)`
                             }
@@ -141,20 +120,18 @@ const DeviceRoom = () => {
                                     ),
                                 );
                                 navigate(
-                                    `${
-                                        RoutePath?.CoreApplication_Room
+                                    `${RoutePath?.CoreApplication_Room
                                     }/${item?.room_type?.toLowerCase()}`,
                                 );
                             }}
                             status={false}
                             border={
                                 location?.pathname?.replace('%20', '') ===
-                                `${
-                                    RoutePath?.CoreApplication_Room
-                                }/${item?.room_type
-                                    ?.toLowerCase()
-                                    ?.split(' ')
-                                    ?.join('')}`
+                                    `${RoutePath?.CoreApplication_Room
+                                    }/${item?.room_type
+                                        ?.toLowerCase()
+                                        ?.split(' ')
+                                        ?.join('')}`
                                     ? color?.button
                                     : `${color?.icon?.split(')')[0]},0.7)`
                             }

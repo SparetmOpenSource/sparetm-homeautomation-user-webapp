@@ -7,7 +7,7 @@ import { useAppSelector } from '../../../Features/ReduxHooks';
 import { RoutePath } from '../../../Data/Constants';
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
-import WidgetCarousel from '../../Others/Slide/WidgetCarousel/WidgetCarousel';
+import WidgetCarousel from '../../Shared/CommonComponents/Slide/WidgetCarousel/WidgetCarousel';
 import { RiCalendarTodoLine } from 'react-icons/ri';
 import { BsActivity } from 'react-icons/bs';
 

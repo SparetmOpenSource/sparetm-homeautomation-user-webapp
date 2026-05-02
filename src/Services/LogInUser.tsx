@@ -1,9 +1,8 @@
-import axios from 'axios';
 import { RoutePath } from '../Data/Constants';
 import { displayToastify } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import { addAdmin, addToken } from '../Features/User/UserSlice';
-import { authUrl } from '../Api.tsx/Axios';
+import { AuthService } from '../Api.tsx/AuthService';
 
 const login = (
     response: any,
@@ -31,14 +30,8 @@ export const LoginUser = async (
     dispatch: any,
     navigate: any,
 ) => {
-    const options = {
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    };
     try {
-        let response = await axios.post(authUrl.app_login, data, options);
+        const response = await AuthService.login(data);
         login(response, darkTheme, dispatch, navigate);
     } catch (error) {
         displayToastify(

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
 import { useTheme } from '../ThemeProvider';
 import { useNavigate } from 'react-router-dom';
-import PageTransition from '../../Components/Others/PageTransition/PageTransition';
+import PageTransition from '../../Components/Shared/CommonComponents/PageTransition/PageTransition';
 
 const NotFound = () => {
     const [color, setColor] = useState<any>(light_colors);

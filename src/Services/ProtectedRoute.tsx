@@ -1,13 +1,13 @@
 import { Navigate } from 'react-router-dom';
-import { RoutePath, TOKEN_GLOBAL } from '../Data/Constants';
-import useLocalStorage from '../Hooks/UseLocalStorage';
+import { RoutePath } from '../Data/Constants';
+import { useAppSelector } from '../Features/ReduxHooks';
 
 const useAuth = (accessToken: any) => {
     return !!accessToken;
 };
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-    const [accessToken] = useLocalStorage(TOKEN_GLOBAL, '');
+    const accessToken = useAppSelector((state) => state.user.token);
     const auth = useAuth(accessToken);
     if (!auth) {
         return <Navigate to={RoutePath.Home} />;

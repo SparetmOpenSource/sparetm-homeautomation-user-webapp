@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
-import { store } from './Features/Store';
+import { store, persistor } from './Features/Store';
+import { PersistGate } from 'redux-persist/integration/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
@@ -16,13 +17,15 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            <QueryClientProvider client={queryClient}>
-                <App />
-                <ReactQueryDevtools
-                    initialIsOpen={false}
-                    position="bottom-right"
-                />
-            </QueryClientProvider>
+            <PersistGate loading={null} persistor={persistor}>
+                <QueryClientProvider client={queryClient}>
+                    <App />
+                    <ReactQueryDevtools
+                        initialIsOpen={false}
+                        position="bottom-right"
+                    />
+                </QueryClientProvider>
+            </PersistGate>
         </Provider>
     </React.StrictMode>,
 );

@@ -1,16 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ADMIN_GLOBAL, PROFILE_GLOBAL, PROFILEID_GLOBAL, TOKEN_GLOBAL } from '../../Data/Constants';
-
-// Helper to safely get from localStorage and convert null to empty string
-const getStorageValue = (key: string): string => {
-    const value = localStorage.getItem(key);
-    if (value === null || value === 'null') return '';
-    try {
-        return JSON.parse(value);
-    } catch (e) {
-        return value;
-    }
-};
 
 // State interface
 interface UserState {
@@ -21,12 +9,12 @@ interface UserState {
     profileData: any;
 }
 
-// initial state
+// initial state (redux-persist handles hydration automatically)
 const initialState: UserState = {
-    admin: getStorageValue(ADMIN_GLOBAL),
-    profile: getStorageValue(PROFILE_GLOBAL),
-    token: getStorageValue(TOKEN_GLOBAL),
-    profileId: getStorageValue(PROFILEID_GLOBAL),
+    admin: '',
+    profile: '',
+    token: '',
+    profileId: '',
     profileData: {},
 };
 

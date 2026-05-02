@@ -21,7 +21,7 @@ import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../Data/Enum';
 
 import { useBackDropOpen } from '../../../../Pages/ThemeProvider';
 import { POLICY_MODAL, PolicyModalSize } from '../../../../Data/Constants';
-import PolicyModal from '../../../../Components/Others/PolicyModal/PolicyModal';
+import PolicyModal from '../../../Shared/HomeComponents/PolicyModal/PolicyModal';
 
 // --- Types & Interfaces ---
 interface SettingOption {

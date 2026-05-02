@@ -19,30 +19,24 @@ import {
     SECURITY_LOCK_TIMEOUT_KEY,
 } from '../../Data/Constants';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../Data/Enum';
 import { useBackDropOpen, useTheme, useThemeUpdate } from '../ThemeProvider';
-import { displayToastify } from '../../Utils/HelperFn';
-import { useReactQuery_Get } from '../../Api.tsx/useReactQuery_Get';
-import { getProfile } from '../../Api.tsx/ProfileConfigApis';
-import { useAppDispatch, useAppSelector } from '../../Features/ReduxHooks';
-import { addFirstRoom } from '../../Features/Room/RoomSlice';
-import { addProfileData } from '../../Features/User/UserSlice';
-import SideNavigation from '../../Components/Others/Navigation/SideNavigation/SideNavigation';
-import UpperNavigation from '../../Components/Others/Navigation/UpperNavigation/UpperNavigation';
-import CommonSkin from '../../Components/Others/UiSkin/CommonNavSkin/CommonNavSkin';
-import LoadingFade from '../../Components/Others/LoadingAnimation/LoadingFade';
+import { useProfileData } from '../../Api.tsx/ProfileConfigApis';
+import { useAppSelector } from '../../Features/ReduxHooks';
+import SideNavigation from '../../Components/Shared/CommonComponents/Navigation/SideNavigation/SideNavigation';
+import UpperNavigation from '../../Components/Shared/CommonComponents/Navigation/UpperNavigation/UpperNavigation';
+import CommonSkin from '../../Components/Shared/CommonComponents/UiSkin/CommonNavSkin/CommonNavSkin';
+import LoadingFade from '../../Components/Shared/CommonComponents/LoadingAnimation/LoadingFade';
 import AddDevice from '../../Components/CoreApplication/DeviceRoom/AddDevice/AddDevice';
 import './CoreApplication.css';
-import { GET_PROFILE_QUERY_ID } from '../../Data/QueryConstant';
-import ErrorPage from '../../Components/Others/ErrorPage/ErrorPage';
+import ErrorPage from '../../Components/Shared/CommonComponents/ErrorPage/ErrorPage';
 import { BsHouseAddFill } from 'react-icons/bs';
 import { SiWechat } from 'react-icons/si';
 import { useUserActivity } from '../../Hooks/useUserActivity';
-import PicFrame from '../../Components/Others/PicFrame/PicFrame';
-import PersistentNotification from '../../Components/Others/Notification/PersistentNotification';
-import PageTransition from '../../Components/Others/PageTransition/PageTransition';
+import PicFrame from '../../Components/Shared/CoreAppComponents/PicFrame/PicFrame';
+import PersistentNotification from '../../Components/Shared/CommonComponents/Notification/PersistentNotification';
+import PageTransition from '../../Components/Shared/CommonComponents/PageTransition/PageTransition';
 import useLocalStorage from '../../Hooks/UseLocalStorage';
-import LockScreen from '../../Components/Others/LockScreen/LockScreen';
+import LockScreen from '../../Components/Shared/CoreAppComponents/LockScreen/LockScreen';
 
 
 interface NavItem {
@@ -63,7 +57,6 @@ interface NavOption {
 
 const CoreApplication = memo(() => {
     const location = useLocation();
-    const dispatch = useAppDispatch();
     const darkTheme = useTheme();
     const toggleTheme = useThemeUpdate();
     const profileId = useAppSelector((state) => state.user?.profileId);
@@ -109,7 +102,7 @@ const CoreApplication = memo(() => {
     useUserActivity({
         timeout: securityLockTimeout,
         enabled: securityLockEnabled && !isLocked, // Don't trigger if already locked
-        onActive: () => {}, // Do nothing on active (unlock is manual)
+        onActive: () => { }, // Do nothing on active (unlock is manual)
         onInactive: () => setIsLocked(true),
 
     });
@@ -123,32 +116,7 @@ const CoreApplication = memo(() => {
         [pathname],
     );
 
-    const { isLoading, isError } = useReactQuery_Get(
-        GET_PROFILE_QUERY_ID,
-        () => getProfile(profileId, darkTheme),
-        (data) => {
-            if (data?.data) {
-                dispatch(addProfileData(data?.data));
-                const firstRoomType =
-                    data?.data?.body?.room?.[0]?.room_type?.toLowerCase();
-                if (firstRoomType) dispatch(addFirstRoom(firstRoomType));
-            }
-        },
-        (error) => {
-            displayToastify(
-                error?.response?.data?.message || 'Failed to load profile',
-                darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
-                TOASTIFYSTATE.ERROR,
-            );
-        },
-        !!profileId,
-        false, // refetchOnMount
-        false, // refetchOnWindowFocus
-        false,
-        false,
-        300000,
-        300000,
-    );
+    const { isLoading, isError } = useProfileData(profileId, darkTheme);
 
     const returnPageSpecificIcon = useCallback(
         (pathCheck: string) =>
@@ -183,9 +151,8 @@ const CoreApplication = memo(() => {
                 id: 2,
                 to: `${RoutePath.CoreApplication_Room}/${firstRoom || ''}`,
                 icon: <GrAppsRounded />,
-                currentPath: `/${pathname.split('/')[1]}/${
-                    pathname.split('/')[2]
-                }/`,
+                currentPath: `/${pathname.split('/')[1]}/${pathname.split('/')[2]
+                    }/`,
                 listPath: `${RoutePath.CoreApplication_Room}/`,
                 label: 'Room',
             },
@@ -213,9 +180,8 @@ const CoreApplication = memo(() => {
         () => [
             {
                 id: 1,
-                to: `${RoutePath.CoreApplication_Docs}/${
-                    RoutePath.GettingStartedDocs.split('/')[1]
-                }`,
+                to: `${RoutePath.CoreApplication_Docs}/${RoutePath.GettingStartedDocs.split('/')[1]
+                    }`,
                 icon: <VscDebugDisconnect />,
                 currentPath,
                 listPath: RoutePath.CoreApplication_Docs,

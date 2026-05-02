@@ -50,7 +50,7 @@ export const RoutePath = {
 
     // Core app route
     // Internal dashboard routes
-    DeviceRoom: 'room/:type',
+    DeviceRoom: 'room/:type?',
     Play: 'play',
     Chat: 'chat',
     // Setting routes
@@ -231,7 +231,7 @@ export const HorizontalSize = ['min(90%, 1200px)', 'clamp(40%, 300px, 90%)'];
 export const PolicyModalSize = ['min(85vh, 650px)', 'min(95%, 500px)'];
 export const FullScreenSize = ['100%', '100%'];
 
-export const socketUrlPostFix = '/api/v1/socket/data/update';
+export const socketUrlPostFix = '/mda/api/v1/socket/data/update';
 export const WEBSOCKET_TOPIC_EVENTS = '/topic/events';
 export const toClientNotificationSocketTopic =
     '/to/client/update/notification/data';

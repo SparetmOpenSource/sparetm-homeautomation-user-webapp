@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { store } from '../Features/Store';
+import { getItem } from '../Hooks/UseLocalStorage';
+import { SPOTIFY_TOKEN_GLOBAL } from '../Data/Constants';
 
 export const RootUrl = {
     gateway: process.env.REACT_APP_API_URL || 'http://localhost:8086',
@@ -14,6 +17,27 @@ export const api = axios.create({ baseURL: RootUrl.gateway });
 
 api.interceptors.request.use((config) => {
     config.headers['ngrok-skip-browser-warning'] = 'true';
+    
+    // Automatically inject JWT Token from Redux FAANG-Style
+    const state = store.getState().user;
+    const appToken = state.token;
+    
+    const isSpotifyUrl = config.url?.includes('/mpa/api/v1/profiles/spotify');
+    const isAuthUrl = config.url?.includes('/msa/api/v1/auth');
+
+    // 1. Inject Core App Token for ALL internal APIs (Including Spotify Gateway Routes)
+    if (appToken && !isAuthUrl) {
+        config.headers['Authorization'] = `Bearer ${appToken}`;
+    }
+
+    // 2. Inject Spotify Token specifically for Spotify Gateway Routes
+    if (isSpotifyUrl) {
+        const spotifyToken = getItem(SPOTIFY_TOKEN_GLOBAL);
+        if (spotifyToken) {
+            config.headers['X-Spotify-Authorization'] = `Bearer ${spotifyToken}`;
+        }
+    }
+
     return config;
 });
 
@@ -74,7 +98,7 @@ export const updateHeaderConfig = {
 export const getMergedHeadersForSpotify = (token: any) => {
     return {
         ...updateHeaderConfig.headers,
-        Authorization: `Bearer ${token}`,
+        // Removed Authorization override so Axios Interceptor can handle dual tokens dynamically
     };
 };
 

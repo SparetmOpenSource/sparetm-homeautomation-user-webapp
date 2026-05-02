@@ -1,5 +1,5 @@
 import './Connection.css';
-import OptionPage from '../../Others/UiSkin/OptionPage/OptionPage';
+import OptionPage from '../../Shared/CommonComponents/UiSkin/OptionPage/OptionPage';
 import { useLocation } from 'react-router-dom';
 import { RoutePath } from '../../../Data/Constants';
 import { GrOverview } from 'react-icons/gr';

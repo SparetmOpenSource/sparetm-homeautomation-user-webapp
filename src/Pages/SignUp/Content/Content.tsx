@@ -8,12 +8,11 @@ import SmilingW from './../../../Assets/SmilingW.svg';
 import SmilingM from './../../../Assets/SmilingM.svg';
 import './Content.css';
 import { useCounter } from '../../../Hooks/useCounter';
-import Form from '../../../Components/Others/SubmitForm/Form/Form';
+import Form from '../../../Components/Shared/CommonComponents/SubmitForm/Form/Form';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../Features/ReduxHooks';
 import { LoginUser } from '../../../Services/LogInUser';
 import { RegisterUser } from '../../../Services/RegisterUser';
-import { authUrl } from '../../../Api.tsx/Axios';
 import { ADMIN } from '../../../Data/Constants';
 
 const Content = () => {
@@ -33,7 +32,7 @@ const Content = () => {
             LoginUser(data, darkTheme, dispatch, navigate);
         } else {
             Object.assign(data, { role: ADMIN.toUpperCase() });
-            RegisterUser(authUrl.app_registration, data, darkTheme);
+            RegisterUser(data, darkTheme);
         }
     };
 

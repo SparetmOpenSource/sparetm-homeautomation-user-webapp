@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import './Setting.css';
-import OptionPage from '../../Others/UiSkin/OptionPage/OptionPage';
+import OptionPage from '../../Shared/CommonComponents/UiSkin/OptionPage/OptionPage';
 import { RoutePath } from '../../../Data/Constants';
 import { MdRoomPreferences, MdSupervisorAccount } from 'react-icons/md';
 

@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import CommonSkin from '../../Components/Others/UiSkin/CommonNavSkin/CommonNavSkin';
+import CommonSkin from '../../Components/Shared/CommonComponents/UiSkin/CommonNavSkin/CommonNavSkin';
 import './ProfileConfig.css';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
 import { useTheme, useThemeUpdate } from '../ThemeProvider';
 import { MdLightMode } from 'react-icons/md';
 import { CiDark } from 'react-icons/ci';
-import UpperNavigation from '../../Components/Others/Navigation/UpperNavigation/UpperNavigation';
-import SideNavigation from '../../Components/Others/Navigation/SideNavigation/SideNavigation';
+import UpperNavigation from '../../Components/Shared/CommonComponents/Navigation/UpperNavigation/UpperNavigation';
+import SideNavigation from '../../Components/Shared/CommonComponents/Navigation/SideNavigation/SideNavigation';
 import { RoutePath } from '../../Data/Constants';
 import { BiSolidSelectMultiple, BiAddToQueue } from 'react-icons/bi';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../Features/ReduxHooks';
 import { resetProfile } from '../../Features/User/UserSlice';
-import PageTransition from '../../Components/Others/PageTransition/PageTransition';
+import PageTransition from '../../Components/Shared/CommonComponents/PageTransition/PageTransition';
 
 const ProfileConfig = () => {
     const [color, setColor] = useState<any>(light_colors);

@@ -13,7 +13,7 @@ import {
     HorizontalSize,
     LandscapeSizeS,
 } from '../../../../../Data/Constants';
-import Confirmation from '../../../../Others/BackDrop/Confirmation/Confirmation';
+import Confirmation from '../../../../Shared/CommonComponents/BackDrop/Confirmation/Confirmation';
 import Edit from './Edit/Edit';
 
 const TodoListTemp = () => {

@@ -18,7 +18,7 @@ import { usePostUpdateData } from '../../../../Api.tsx/useReactQuery_Update';
 import { updateHeaderConfig } from '../../../../Api.tsx/Axios';
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
-import DynamicForm, { FieldConfig } from '../../../Others/DynamicForm/DynamicForm';
+import DynamicForm, { FieldConfig } from '../../../Shared/CommonComponents/DynamicForm/DynamicForm';
 
 const AddDevice = ({ darkTheme, roomType, toggleBackDropClose }: any) => {
     const queryClient = useQueryClient();
@@ -45,7 +45,7 @@ const AddDevice = ({ darkTheme, roomType, toggleBackDropClose }: any) => {
     };
 
     const { mutate } = usePostUpdateData(
-        `${featureUrl?.add_device}${admin}&profilename=${profile}`,
+        `${featureUrl?.add_device}${admin}&profileName=${profile}&roomType=${roomType}`,
         updateHeaderConfig,
         on_Success,
         on_Error,

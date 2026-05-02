@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { dark_colors, light_colors } from '../../Data/ColorConstant';
 import { MdLightMode } from 'react-icons/md';
 import { CiDark } from 'react-icons/ci';
-import CommonNavSkin from '../../Components/Others/UiSkin/CommonNavSkin/CommonNavSkin';
-import UpperNavigation from '../../Components/Others/Navigation/UpperNavigation/UpperNavigation';
+import CommonNavSkin from '../../Components/Shared/CommonComponents/UiSkin/CommonNavSkin/CommonNavSkin';
+import UpperNavigation from '../../Components/Shared/CommonComponents/Navigation/UpperNavigation/UpperNavigation';
 import Content from './Content/Content';
-import PageTransition from '../../Components/Others/PageTransition/PageTransition';
+import PageTransition from '../../Components/Shared/CommonComponents/PageTransition/PageTransition';
 
 const SignUp = () => {
     const darkTheme: any = useTheme();

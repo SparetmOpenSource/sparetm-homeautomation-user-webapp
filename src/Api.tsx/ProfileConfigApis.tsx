@@ -1,5 +1,11 @@
-import { catchError } from '../Utils/HelperFn';
+import { catchError, displayToastify } from '../Utils/HelperFn';
 import { api, getHeaderConfig } from './Axios';
+import { useReactQuery_Get } from './useReactQuery_Get';
+import { useAppDispatch } from '../Features/ReduxHooks';
+import { addFirstRoom } from '../Features/Room/RoomSlice';
+import { addProfileData } from '../Features/User/UserSlice';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
+import { GET_PROFILE_QUERY_ID, SELECT_CITY_LIST_QUERY_ID, SELECT_STATE_LIST_QUERY_ID, SELECT_COUNTRY_LIST_QUERY_ID, SELECT_PROFILE_QUERY_ID } from '../Data/QueryConstant';
 
 export const successMessage = {
     profile_added:
@@ -16,15 +22,15 @@ export const profileUrl = {
     get_mqtt_cred: '/mpa/api/v1/profiles/mqtt/cred?admin=',
     get_spotify_access_token: '/mpa/api/v1/profiles/spotify/token',
     get_spotify_refresh_access_token: '/mpa/api/v1/profiles/spotify/token/refresh',
-    schedule: '/mda/api/v1/schedules',
-    add_schedule: '/mda/api/v1/schedules?admin=',
-    get_schedules: '/mda/api/v1/schedules?deviceId=',
+    schedule: '/mda/api/v1/devices/schedules',
+    add_schedule: '/mda/api/v1/devices/schedules?admin=',
+    get_schedules: '/mda/api/v1/devices/schedules?deviceId=',
 };
 
-export const getDeviceSchedules = async (deviceId: any, darkTheme: any) => {
+export const getDeviceSchedules = async (deviceId: any, admin: any, profileName: any, darkTheme: any) => {
     try {
         const response = await api.get(
-            profileUrl.get_schedules + deviceId,
+            profileUrl.get_schedules + deviceId + `&admin=${admin}&profileName=${profileName}`,
             getHeaderConfig,
         );
         return response;
@@ -34,10 +40,10 @@ export const getDeviceSchedules = async (deviceId: any, darkTheme: any) => {
     }
 };
 
-export const addDeviceSchedule = async (scheduleData: any, admin: any, darkTheme: any) => {
+export const addDeviceSchedule = async (scheduleData: any, admin: any, profileName: any, darkTheme: any) => {
     try {
         const response = await api.post(
-            profileUrl.add_schedule + admin,
+            profileUrl.add_schedule + admin + `&profileName=${profileName}`,
             scheduleData,
             getHeaderConfig,
         );
@@ -142,5 +148,95 @@ export const getProfile = async (profileId: any, darkTheme: any) => {
         catchError(error, darkTheme);
         throw new Error('Failed to fetch mqtt credentials');
     }
+};
+
+export const useProfileData = (profileId: any, darkTheme: any) => {
+    const dispatch = useAppDispatch();
+
+    return useReactQuery_Get(
+        GET_PROFILE_QUERY_ID,
+        () => getProfile(profileId, darkTheme),
+        {
+            enabled: !!profileId,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            staleTime: 300000,
+            cacheTime: 300000,
+            onSuccess: (data: any) => {
+                if (data?.data && data?.data?.body) {
+                    dispatch(addProfileData(data?.data?.body));
+                    const firstRoomType = data?.data?.body?.room?.[0]?.room_type?.toLowerCase();
+                    if (firstRoomType) dispatch(addFirstRoom(firstRoomType));
+                }
+            },
+            onError: (error: any) => {
+                displayToastify(
+                    error?.response?.data?.message || 'Failed to load profile',
+                    darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
+                    TOASTIFYSTATE.ERROR,
+                );
+            }
+        }
+    );
+};
+
+export const useCountryList = (headerOptions: any, darkTheme: any) => {
+    return useReactQuery_Get(
+        SELECT_COUNTRY_LIST_QUERY_ID,
+        () => getCountryList(headerOptions, darkTheme),
+        {
+            enabled: true,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            cacheTime: 300000,
+            staleTime: 300000,
+            onError: (error: any) => displayToastify(error?.message, !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.ERROR)
+        }
+    );
+};
+
+export const useStateList = (headerOptions: any, countryIso: any, darkTheme: any) => {
+    return useReactQuery_Get(
+        SELECT_STATE_LIST_QUERY_ID,
+        () => getStateList(headerOptions, countryIso, darkTheme),
+        {
+            enabled: false,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            cacheTime: 300000,
+            staleTime: 0,
+            onError: (error: any) => displayToastify(error?.message, !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.ERROR)
+        }
+    );
+};
+
+export const useCityList = (headerOptions: any, countryIso: any, stateIso: any, darkTheme: any) => {
+    return useReactQuery_Get(
+        SELECT_CITY_LIST_QUERY_ID,
+        () => getCityList(headerOptions, countryIso, stateIso, darkTheme),
+        {
+            enabled: false,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            cacheTime: 300000,
+            staleTime: 0,
+            onError: (error: any) => displayToastify(error?.message, !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.ERROR)
+        }
+    );
+};
+
+export const useAllProfiles = (admin: any, darkTheme: any) => {
+    return useReactQuery_Get(
+        SELECT_PROFILE_QUERY_ID,
+        () => getProfiles(admin, darkTheme),
+        {
+            enabled: true,
+            refetchOnMount: true,
+            refetchOnWindowFocus: false,
+            cacheTime: 300000,
+            staleTime: 0,
+            onError: (error: any) => catchError(error, darkTheme),
+        }
+    );
 };
 

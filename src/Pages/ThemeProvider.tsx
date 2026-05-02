@@ -14,7 +14,7 @@ import {
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AnimatePresence } from 'framer-motion';
-import WindowDrop from '../Components/Others/BackDrop/WindowDrop/WindowDrop';
+import WindowDrop from '../Components/Shared/CommonComponents/BackDrop/WindowDrop/WindowDrop';
 import { FullScreenSize, DARK_THEME_KEY } from '../Data/Constants';
 import { dark_colors, light_colors } from '../Data/ColorConstant';
 import useLocalStorage from '../Hooks/UseLocalStorage';

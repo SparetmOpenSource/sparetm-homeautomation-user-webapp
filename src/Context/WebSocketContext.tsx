@@ -106,44 +106,40 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     } = useReactQuery_Get(
         GET_WEBSOCKET_URL_QUERY_ID,
         () => getWebSocketUrl(),
-        (data) => {
-            // Handle response structure: { url: ["http://..."], topic: [...] }
-            const responseData = data?.data?.body || data?.data;
-            
-            if (responseData?.url && Array.isArray(responseData.url) && responseData.url.length > 0) {
-                // Backend returns complete URL, but we need to ensure it matches our current gateway
-                // to avoid Mixed Content errors (e.g. backend says http://localhost but we are on https://ngrok)
-                const backendUrl = new URL(responseData.url[0]);
-                const fullUrl = `${RootUrl.gateway}${backendUrl.pathname}${backendUrl.search}`;
+        {
+            enabled: !!token && !!admin && !!profileId && location.pathname.startsWith(RoutePath.CoreApplication),
+            refetchOnMount: true,
+            refetchOnWindowFocus: false,
+            cacheTime: 300000,
+            staleTime: 300000,
+            onSuccess: (data: any) => {
+                const responseData = data?.data?.data || data?.data?.body || data?.data;
                 
-                console.log('[WebSocket] Fetched URL:', fullUrl);
-                setWsUrl(fullUrl);
-                
-                // Extract topic from response
-                if (responseData?.topic && Array.isArray(responseData.topic) && responseData.topic.length > 0) {
-                    const topic = responseData.topic[0];
-                    console.log('[WebSocket] Fetched Topic:', topic);
-                    setWsTopic(topic);
+                if (responseData?.url && Array.isArray(responseData.url) && responseData.url.length > 0) {
+                    const backendUrl = new URL(responseData.url[0]);
+                    const fullUrl = `${RootUrl.gateway}${backendUrl.pathname}${backendUrl.search}`;
+                    
+                    console.log('[WebSocket] Fetched URL:', fullUrl);
+                    setWsUrl(fullUrl);
+                    
+                    if (responseData?.topic && Array.isArray(responseData.topic) && responseData.topic.length > 0) {
+                        const topic = responseData.topic[0];
+                        console.log('[WebSocket] Fetched Topic:', topic);
+                        setWsTopic(topic);
+                    } else {
+                        console.warn('[WebSocket] No topic in response, using default');
+                        setWsTopic(WEBSOCKET_TOPIC_EVENTS);
+                    }
                 } else {
-                    console.warn('[WebSocket] No topic in response, using default');
-                    setWsTopic(WEBSOCKET_TOPIC_EVENTS); // Fallback to constant
+                    console.error('[WebSocket] Invalid URL response:', responseData);
+                    setConnectionStatus('error');
                 }
-            } else {
-                console.error('[WebSocket] Invalid URL response:', responseData);
+            },
+            onError: (error: any) => {
+                console.error('[WebSocket] Failed to fetch URL:', error);
                 setConnectionStatus('error');
             }
-        },
-        (error) => {
-            console.error('[WebSocket] Failed to fetch URL:', error);
-            setConnectionStatus('error');
-        },
-        !!token && !!admin && !!profileId && location.pathname.startsWith(RoutePath.CoreApplication), // Only fetch if authenticated AND profile selected AND on core app routes
-        true, // refetch on mount
-        false, // don't refetch on window focus
-        false, // no refetch interval
-        false, // no background refetch
-        300000, // cache for 5 minutes
-        300000, // stale after 5 minutes
+        }
     );
 
     // Handle WebSocket URL fetch error

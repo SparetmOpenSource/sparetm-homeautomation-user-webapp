@@ -4,7 +4,7 @@ import {
     dark_colors,
     light_colors,
 } from '../../../../../../Data/ColorConstant';
-import Button from '../../../../../Others/CustomButton/Button';
+import Button from '../../../../../Shared/CommonComponents/CustomButton/Button';
 
 const Edit = ({ darkTheme }: any) => {
     const [color, setColor] = useState<any>(light_colors);

@@ -8,29 +8,24 @@ import {
     RoutePath,
 } from '../../../Data/Constants';
 import { useNavigate } from 'react-router-dom';
-import { useReactQuery_Get } from '../../../Api.tsx/useReactQuery_Get';
+
 import { catchError, displayToastify } from '../../../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../Data/Enum';
 import {
-    getCityList,
-    getStateList,
-    getCountryList,
     profileUrl,
     successMessage,
+    useCountryList,
+    useCityList,
+    useStateList
 } from '../../../Api.tsx/ProfileConfigApis';
 import { useAppSelector } from '../../../Features/ReduxHooks';
-import {
-    SELECT_CITY_LIST_QUERY_ID,
-    SELECT_STATE_LIST_QUERY_ID,
-    SELECT_COUNTRY_LIST_QUERY_ID,
-} from '../../../Data/QueryConstant';
 import {
     getMergedHeadersForLocation,
     updateHeaderConfig,
 } from '../../../Api.tsx/Axios';
 import { usePostUpdateData } from '../../../Api.tsx/useReactQuery_Update';
 import Building from './../../../Asset/desktop.webp';
-import DynamicForm, { FieldConfig } from '../../Others/DynamicForm/DynamicForm';
+import DynamicForm, { FieldConfig } from '../../Shared/CommonComponents/DynamicForm/DynamicForm';
 
 const Add = () => {
     const navigate = useNavigate();
@@ -84,71 +79,15 @@ const Add = () => {
         );
     };
 
-    const on_City_Error = (error: any) => displayError(error?.message);
-    const on_State_Error = (error: any) => displayError(error?.message);
-    const on_Country_Error = (error: any) => displayError(error?.message);
-
-    const on_City_Success = () => {};
-    const on_State_Success = () => {};
-    const on_Country_Success = () => {};
-
-    // Use memoized header config to avoid re-creation
     const headerConfig = useMemo(() => ({
         headers: getMergedHeadersForLocation(
             'bEltb0FxY3dhajRDa3NxS1JMcUpMZ3ZDemV3emtBdzdIcm1Fa292bg==',
         ),
     }), []);
 
-    const cityFn = () => {
-        return getCityList(headerConfig, countryIso, stateIso, darkTheme);
-    };
-    const stateFn = () => {
-        return getStateList(headerConfig, countryIso, darkTheme);
-    };
-    const countryFn = () => {
-        return getCountryList(headerConfig, darkTheme);
-    };
-
-    const { data: countryList } = useReactQuery_Get(
-        SELECT_COUNTRY_LIST_QUERY_ID,
-        countryFn,
-        on_Country_Success,
-        on_Country_Error,
-        true, // !fetch_On_Click_Status (Fetch immediately)
-        false, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, 
-        300000, 
-    );
-
-    const { data: selectedCityList, refetch: fetchCity, isFetching: isCityLoading } = useReactQuery_Get(
-        SELECT_CITY_LIST_QUERY_ID,
-        cityFn,
-        on_City_Success,
-        on_City_Error,
-        false, // !fetch_On_Click_Status
-        false, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        0, // Stale Time
-    );
-    const { data: selectedStateList, refetch: fetchState, isFetching: isStateLoading } = useReactQuery_Get(
-        SELECT_STATE_LIST_QUERY_ID,
-        stateFn,
-        on_State_Success,
-        on_State_Error,
-        false, // !fetch_On_Click_Status
-        false, // refetch_On_Mount
-        false, // refetch_On_Window_Focus
-        false, // refetch_Interval
-        false, // refetch_Interval_In_Background
-        300000, // Cache time
-        0, // Stale Time
-    );
+    const { data: countryList } = useCountryList(headerConfig, darkTheme);
+    const { data: selectedStateList, refetch: fetchState, isFetching: isStateLoading } = useStateList(headerConfig, countryIso, darkTheme);
+    const { data: selectedCityList, refetch: fetchCity, isFetching: isCityLoading } = useCityList(headerConfig, countryIso, stateIso, darkTheme);
 
     const on_AddProfile_Success = () => {
         displayToastify(

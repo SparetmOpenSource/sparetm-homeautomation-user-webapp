@@ -11,7 +11,7 @@ import { observer } from '../../Utils/HelperFn';
 import { MdWeb, MdCloudSync } from 'react-icons/md';
 import { FaCode, FaUsers } from 'react-icons/fa';
 import Profile from '../../Assets/Profile.png';
-import PageTransition from '../../Components/Others/PageTransition/PageTransition';
+import PageTransition from '../../Components/Shared/CommonComponents/PageTransition/PageTransition';
 import { home_contact_social_list } from '../../Data/Constants';
 
 const About = () => {

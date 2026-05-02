@@ -8,7 +8,7 @@ import {
     RoutePath,
     IS_MQTT_CONFIGURED_KEY,
 } from '../Data/Constants';
-import ApiErrorModal from '../Components/Others/ApiErrorModal/ApiErrorModal';
+import ApiErrorModal from '../Components/Shared/CommonComponents/ApiErrorModal/ApiErrorModal';
 import { displayToastify } from '../Utils/HelperFn';
 import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
 import { useQueryClient } from 'react-query';
@@ -61,28 +61,28 @@ export const useDeviceMutation = (
                 onAnyError(err);
             }
 
-                // 1. Check for specific MQTT Configuration Error
-                if (
-                    err?.response?.status === 400 &&
-                    err?.response?.data?.message?.startsWith(MQTT_ERROR_PREFIX)
-                ) {
-                    localStorage.setItem(IS_MQTT_CONFIGURED_KEY, 'false');
-                    const backdropId = `api-error-modal-${Date.now()}`;
-                    toggleBackDropOpen(
-                        backdropId,
-                        <ApiErrorModal
-                            message={MQTT_ERROR_USER_MESSAGE}
-                            darkTheme={darkTheme}
-                            onNavigateToSettings={() => {
-                                toggleBackDropClose(backdropId);
-                                navigate(
-                                    `${RoutePath.CoreApplication_Setting}/${RoutePath.Setting_Account}`,
-                                );
-                            }}
-                        />,
-                        modalSize,
-                    );
-                } else {
+            // 1. Check for specific MQTT Configuration Error
+            if (
+                err?.response?.status === 400 &&
+                err?.response?.data?.message?.startsWith(MQTT_ERROR_PREFIX)
+            ) {
+                localStorage.setItem(IS_MQTT_CONFIGURED_KEY, 'false');
+                const backdropId = `api-error-modal-${Date.now()}`;
+                toggleBackDropOpen(
+                    backdropId,
+                    <ApiErrorModal
+                        message={MQTT_ERROR_USER_MESSAGE}
+                        darkTheme={darkTheme}
+                        onNavigateToSettings={() => {
+                            toggleBackDropClose(backdropId);
+                            navigate(
+                                `${RoutePath.CoreApplication_Setting}/${RoutePath.Setting_Account}`,
+                            );
+                        }}
+                    />,
+                    modalSize,
+                );
+            } else {
                 // 2. Fallback to standard error toast or custom handler
                 if (onError) {
                     onError(err);
