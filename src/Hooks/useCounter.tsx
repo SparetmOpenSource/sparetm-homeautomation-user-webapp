@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // **********************used in signIn/signUp page*********************** //
 export function useCounter(loop_len: number, interval: number) {

@@ -1,0 +1,186 @@
+.spotifyCurrentPlayback {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spotifyCurrentPlayback-pic {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.spotifyCurrentPlayback-info {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.spotifyCurrentPlayback-pic-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.8rem;
+}
+
+.spotifyCurrentPlayback-info-ad,
+.spotifyCurrentPlayback-info-unknown,
+.spotifyCurrentPlayback-info-no-data {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.spotifyCurrentPlayback-info-ad h1,
+.spotifyCurrentPlayback-info-unknown h1,
+.spotifyCurrentPlayback-info-no-data h1 {
+    font-size: 0.9rem;
+    margin: 0.2rem 0;
+    font-weight: 600;
+}
+
+.spotifyCurrentPlayback-info-ad p,
+.spotifyCurrentPlayback-info-unknown p,
+.spotifyCurrentPlayback-info-no-data p {
+    font-size: 0.75rem;
+    margin: 0;
+}
+
+.spotifyCurrentPlayback-info-expand {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.5;
+}
+
+.spotifyCurrentPlayback-info-playing {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0.25rem 0.75rem;
+}
+
+.spotifyCurrentPlayback-info-playing h1 {
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spotifyCurrentPlayback-info-playing p {
+    font-size: 0.8rem;
+    margin: 0;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spotifyCurrentPlayback-info-playing-progress {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.25rem;
+}
+
+.spotifyCurrentPlayback-info-playing-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Sizing Modifiers */
+.spotifyCurrentPlayback-pic-s {
+    width: 35%;
+}
+
+.spotifyCurrentPlayback-info-s {
+    width: 65%;
+}
+
+.spotifyCurrentPlayback-pic-xl {
+    width: 30%;
+}
+
+.spotifyCurrentPlayback-info-xl {
+    width: 70%;
+}
+
+/* XL Specific - Centered and Balanced */
+.spotifyCurrentPlayback-info-xl .spotifyCurrentPlayback-info-playing {
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    justify-content: center;
+}
+
+.spotifyCurrentPlayback-info-xl .spotifyCurrentPlayback-info-playing h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.spotifyCurrentPlayback-info-xl .spotifyCurrentPlayback-info-playing p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.spotifyCurrentPlayback-info-xl .spotifyCurrentPlayback-info-playing-progress {
+    margin: 0.75rem 0;
+    width: 90%;
+}
+
+.spotifyCurrentPlayback-info-xl .spotifyCurrentPlayback-info-playing-btn {
+    width: 70%;
+    margin-top: 0.5rem;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.spotifyCurrentPlayback-info-xl .spotifyCurrentPlayback-info-playing-btn span svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.spotifyCurrentPlayback-info-xl .spotifyCurrentPlayback-info-playing-btn span:nth-child(2) svg {
+    width: 3rem;
+    height: 3rem;
+}
+
+.spotifyCurrentPlayback-info-playing-song-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .spotifyCurrentPlayback-info-playing h1 {
+        font-size: 0.95rem;
+    }
+}

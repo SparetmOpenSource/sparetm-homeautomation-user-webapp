@@ -1,16 +1,16 @@
-import { TbCircleDashed } from 'react-icons/tb';
 import { BsMusicPlayerFill } from 'react-icons/bs';
-import { FiMonitor } from 'react-icons/fi';
-import { RiSwitchFill } from 'react-icons/ri';
-import { SiConcourse } from 'react-icons/si';
-import { GiCeilingLight } from 'react-icons/gi';
 import { CgViewSplit } from 'react-icons/cg';
+import { FiMonitor } from 'react-icons/fi';
+import { GiCeilingLight } from 'react-icons/gi';
 import {
     MdBrightness4,
     MdBrightness7,
     MdBrightnessLow,
     MdBrightnessMedium,
 } from 'react-icons/md';
+import { RiSwitchFill } from 'react-icons/ri';
+import { SiConcourse } from 'react-icons/si';
+import { TbCircleDashed } from 'react-icons/tb';
 
 export const changeDeviceIcon = (device: string) => {
     let icon: any;

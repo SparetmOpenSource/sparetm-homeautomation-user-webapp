@@ -1,11 +1,10 @@
-import React from 'react';
-import { TbMicrowave, TbAirConditioning, TbDeviceTvOld, TbFreezeRow } from 'react-icons/tb';
-import { BsMusicPlayerFill, BsSunFill, BsCloudSunFill, BsCloudFill, BsCloudsFill, BsCloudRainFill, BsCloudRainHeavyFill, BsFillCloudLightningRainFill, BsSnow2 } from 'react-icons/bs';
-import { GiCeilingLight, GiBoatPropeller, GiWashingMachine } from 'react-icons/gi';
-import { LuRefrigerator } from 'react-icons/lu';
-import { SiSocketdotio, SiNano } from 'react-icons/si';
-import { RiMistLine, RiMoonClearLine } from 'react-icons/ri';
 import { BiSolidWasher } from 'react-icons/bi';
+import { BsCloudFill, BsCloudRainFill, BsCloudRainHeavyFill, BsCloudsFill, BsCloudSunFill, BsFillCloudLightningRainFill, BsMusicPlayerFill, BsSnow2, BsSunFill } from 'react-icons/bs';
+import { GiBoatPropeller, GiCeilingLight, GiWashingMachine } from 'react-icons/gi';
+import { LuRefrigerator } from 'react-icons/lu';
+import { RiMistLine, RiMoonClearLine } from 'react-icons/ri';
+import { SiNano, SiSocketdotio } from 'react-icons/si';
+import { TbAirConditioning, TbDeviceTvOld, TbFreezeRow, TbMicrowave } from 'react-icons/tb';
 
 export const changeWeatherIcon = (iconCode: string) => {
     let icon: any;

@@ -1,0 +1,92 @@
+.spotify-expand-content-home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.spotify-expand-content-home-widget {
+    width: 100%;
+    height: 25%;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spotify-expand-content-home-wrapper {
+    width: 100%;
+    height: 74%;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.spotify-expand-content-home-wrapper-header {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.spotify-expand-content-home-header-left,
+.spotify-expand-content-home-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.spotify-expand-content-home-header-left p,
+.spotify-expand-content-home-header-right p {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.spotify-expand-content-home-wrapper-header-add-to-album {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.spotify-expand-content-home-wrapper-song {
+    width: 100%;
+    flex: 1;
+    padding: 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.spotify-expand-content-home-wrapper-song::-webkit-scrollbar {
+    width: 6px;
+}
+
+.spotify-expand-content-home-wrapper-song::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.spotify-expand-content-home-wrapper-song::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.spotify-expand-content-home-wrapper-song-isLoading,
+.spotify-expand-content-home-wrapper-song-empty,
+.spotify-expand-content-home-wrapper-song-isError {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.2rem;
+}

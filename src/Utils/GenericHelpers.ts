@@ -1,12 +1,11 @@
 import { toast } from 'react-toastify';
-import { RoutePath } from '../Data/Constants';
-import { displayToastify } from './ToastService';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../Data/Enum';
-import { setBlinkColor, triggerBlink } from '../Features/Blink/BlinkSlice';
-import { getItem } from '../Hooks/UseLocalStorage';
-import { BLINK_NOTIFICATIONS_ENABLED_KEY } from '../Data/Constants';
-import { getNotificationConfig } from './NotificationConfig';
-import { playNotificationSound } from './AudioService';
+import { BLINK_NOTIFICATIONS_ENABLED_KEY, RoutePath } from '../data/constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../data/enum';
+import { playNotificationSound } from '../features/notifications/services/audioservice';
+import { displayToastify } from '../features/notifications/services/toastservice';
+import { setBlinkColor, triggerBlink } from '../features/notifications/store/blink/blinkslice';
+import { getItem } from '../hooks/uselocalstorage';
+import { getNotificationConfig } from './notificationconfig';
 
 export const copyText = async (text: any) => {
     try {
@@ -47,8 +46,8 @@ export const reloadPage = () => {
     window.location.reload();
 };
 
-export const defaultOnSuccess = () => {};
-export const defaultOnError = () => {};
+export const defaultOnSuccess = () => { };
+export const defaultOnError = () => { };
 
 export function getOffsetAndLimit(
     pageNumber: number,
@@ -113,8 +112,8 @@ export const executeLinkInNewTab = (url: string, darkTheme: any) => {
 };
 
 export const trimToNChars = (str: string, lng: number) => {
-    if (str?.length <= lng) return str; 
-    return str?.slice(0, lng) + '...'; 
+    if (str?.length <= lng) return str;
+    return str?.slice(0, lng) + '...';
 };
 
 export const formatTime = (time: any) => {
@@ -144,4 +143,10 @@ export const handleClickForBlinkNotification = (
     dispatch(setBlinkColor(blinkColor));
     dispatch(triggerBlink());
     playNotificationSound();
+};
+
+export const msToTime = (ms: number) => {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 };

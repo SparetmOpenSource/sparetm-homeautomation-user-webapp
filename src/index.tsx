@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import { Provider } from 'react-redux';
-import reportWebVitals from './reportWebVitals';
-import { store, persistor } from './Features/Store';
-import { PersistGate } from 'redux-persist/integration/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { setAppTokenProvider } from './Api/Axios';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import App from './app';
+import { setAppTokenProvider } from './core/api/axios';
+import { setProfileIdProvider } from './features/auth/utils/authhelpers';
+import { persistor, store } from './core/store/store';
+import './index.css';
+import reportWebVitals from './reportwebvitals';
 
 setAppTokenProvider(() => store.getState().user.token);
+setProfileIdProvider(() => store.getState().user.profileId);
 
 const queryClient = new QueryClient();
 
@@ -33,7 +35,4 @@ root.render(
     </React.StrictMode>,
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

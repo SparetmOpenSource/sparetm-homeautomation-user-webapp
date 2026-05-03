@@ -1,0 +1,166 @@
+import 'react-toastify/dist/ReactToastify.css';
+import { useDeleteDeviceStoreData, useUpdateDeviceAcRemote, useUpdateDeviceStoreData } from '../../../../../../../../core/api/coreappapis';
+import { useAppSelector } from '../../../../../../../../core/store/reduxhooks';
+import { lgAcRemoteCode } from '../../../../../../../../data/deviceroomconstant';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../../data/enum';
+import Button from '../../../../../../../../shared/commoncomponents/custombutton/button';
+import { displayToastify } from '../../../../../../../../utils/helperfn';
+import RemoteButton from '../remotebutton/remotebutton';
+import RemoteConfig from '../remoteconfig/remoteconfig';
+import './deviceacremote.css';
+
+interface DeviceAcRemoteProps {
+    deviceId: string;
+    darkTheme: boolean;
+}
+
+
+const DeviceAcRemote: React.FC<DeviceAcRemoteProps> = ({ deviceId, darkTheme }) => {
+    const currentDevice = useAppSelector(
+        (state: any) =>
+            state?.device?.deviceData?.body?.find(
+                (device: any) => device.deviceId === deviceId,
+            ) ?? null,
+    );
+
+    const deviceDataStore = currentDevice?.deviceDataStore || [];
+    const dataStoreSize = deviceDataStore.length;
+
+    const onError = (error: any) => {
+        displayToastify(
+            error?.message,
+            !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
+            TOASTIFYSTATE.ERROR,
+        );
+    };
+
+    const { mutate } = useUpdateDeviceAcRemote(deviceId, () => {}, onError);
+
+    const { mutate: saveDeviceStoreData } = useUpdateDeviceStoreData(
+        deviceId,
+        onError,
+    );
+
+    const { mutate: removeDeviceStoreData } = useDeleteDeviceStoreData(
+        deviceId,
+        onError,
+    );
+
+    const handleRemoteClick = (index: number) => {
+        const code = deviceDataStore[index];
+        if (!code) {
+            displayToastify('No value', !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.WARN);
+            return;
+        }
+        
+        displayToastify(code, !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.INFO);
+        mutate({ status: true, statusDetail: code } as any);
+    };
+
+    const onRemoteCodeSave = (codes: string) => {
+        saveDeviceStoreData({ deviceDataStore: codes } as any);
+        displayToastify(codes, !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT, TOASTIFYSTATE.INFO);
+    };
+
+    if (deviceDataStore.length === 0) {
+        return (
+            <div className="deviceAcRemote">
+                <RemoteConfig
+                    deviceType="ac"
+                    onSave={onRemoteCodeSave}
+                    preConfiguredCodes={lgAcRemoteCode}
+                    codeCount={6}
+                />
+            </div>
+        );
+    }
+
+    return (
+        <div className="deviceAcRemote">
+            <section className="deviceAcRemote_saved_details">
+                <span>
+                    <div>
+                        <p>ON/OFF : {deviceDataStore[0]}</p>
+                        <p>Temp - : {deviceDataStore[1]}</p>
+                        <p>Temp + : {deviceDataStore[2]}</p>
+                        <p>Fan speed : {deviceDataStore[3]}</p>
+                    </div>
+                    <div>
+                        <p>Swing LR : {deviceDataStore[4]}</p>
+                        <p>Swing UD : {deviceDataStore[5]}</p>
+                    </div>
+                </span>
+                <span>
+                    <Button
+                        label="Delete"
+                        textCol="lavender"
+                        backCol="green"
+                        width="100px"
+                        fn={() =>
+                            removeDeviceStoreData({
+                                deviceDataStore: deviceDataStore.join(','),
+                            } as any)
+                        }
+                    />
+                </span>
+            </section>
+
+            <section className="deviceAcRemote_btn">
+                <span>
+                    <RemoteButton
+                        label="ON/OFF"
+                        onClick={() => handleRemoteClick(0)}
+                        isActive={deviceDataStore[0] === currentDevice?.statusDetail}
+                        isDisabled={dataStoreSize === 0}
+                        activeColor="lightgreen"
+                        inactiveColor="red"
+                        width="100px"
+                    />
+                </span>
+                <span>
+                    <RemoteButton
+                        label="Temp -"
+                        onClick={() => handleRemoteClick(1)}
+                        isActive={deviceDataStore[1] === currentDevice?.statusDetail}
+                        isDisabled={dataStoreSize === 0}
+                        width="80px"
+                    />
+                    <RemoteButton
+                        label="Temp +"
+                        onClick={() => handleRemoteClick(2)}
+                        isActive={deviceDataStore[2] === currentDevice?.statusDetail}
+                        isDisabled={dataStoreSize === 0}
+                        width="80px"
+                    />
+                </span>
+                <span>
+                    <RemoteButton
+                        label="Fan Speed"
+                        onClick={() => handleRemoteClick(3)}
+                        isActive={deviceDataStore[3] === currentDevice?.statusDetail}
+                        isDisabled={dataStoreSize === 0}
+                        width="180px"
+                    />
+                </span>
+                <span>
+                    <RemoteButton
+                        label="Swing --"
+                        onClick={() => handleRemoteClick(4)}
+                        isActive={deviceDataStore[4] === currentDevice?.statusDetail}
+                        isDisabled={dataStoreSize === 0}
+                        width="80px"
+                    />
+                    <RemoteButton
+                        label="Swing |"
+                        onClick={() => handleRemoteClick(5)}
+                        isActive={deviceDataStore[5] === currentDevice?.statusDetail}
+                        isDisabled={dataStoreSize === 0}
+                        width="80px"
+                    />
+                </span>
+            </section>
+        </div>
+    );
+};
+
+export default DeviceAcRemote;

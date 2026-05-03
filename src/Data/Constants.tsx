@@ -9,7 +9,7 @@ import {
 // export const RootUrl = {
 //     authMS: 'http://localhost:8085',
 // };
-export const APPNAME = 'OpenBridge';
+export const APPNAME = process.env.REACT_APP_NAME || 'OpenBridge';
 export const TOKEN = 'token';
 export const PROFILE = 'profile';
 export const PROFILEID = 'profileId';
@@ -71,12 +71,12 @@ export const home_contact_social_list = [
     {
         id: 1,
         name: 'GitHub',
-        href: 'https://github.com/SparetmOpenSource',
+        href: process.env.REACT_APP_GITHUB_URL || 'https://github.com/SparetmOpenSource',
     },
     {
         id: 2,
         name: 'Contact us',
-        href: 'https://www.linkedin.com/in/shubham2601',
+        href: process.env.REACT_APP_LINKEDIN_URL || 'https://www.linkedin.com/in/shubham2601',
     },
 ];
 
@@ -87,12 +87,12 @@ export const useMountEffect = (fun: any, dep: any) => useEffect(fun, [dep]); // 
 // -------------------- core app constant ----------------------- //
 
 export const weather_quote_constant = {
-    fetch_delay_time: 1800000, //1000 * 60 * 30 = 1800000
+    fetch_delay_time: Number(process.env.REACT_APP_WEATHER_FETCH_DELAY) || 1800000, //1000 * 60 * 30 = 1800000
     quote_char_limit: 70,
 };
 
 export const spotify_refresh_playback_constant = {
-    play_back_fetch_delay_time: 2000, //1000 * 2 = 3000
+    play_back_fetch_delay_time: Number(process.env.REACT_APP_SPOTIFY_REFRESH_DELAY) || 2000, //1000 * 2 = 2000
 };
 
 export const Current_Date_Time = new Date().toLocaleString(undefined, {
@@ -243,14 +243,14 @@ export const spotifyRefreshToken = 'spotify_refresh_token';
 export const spotifyCodeVerifier = 'spotify_code_verifier_global';
 export const spotifyTokenFetched = 'has_fetched_spotify_access_token';
 export const spotifyTokenFetchedTime = 'has_fetched_spotify_access_token_time';
-export const spotifyNonPremiumWarning =
-    'This feature is only available for spotify premium members.';
+export const spotifyNonPremiumWarning = 'Some premium features are disabled for Spotify Free accounts.';
 export const spotifyUserNotRegisteredWarning =
     'Your Spotify account is not authorized to use this web application. Please contact the developer to request access.';
 export const spotifyNoPlayableDeviceWarning =
     'Oops! No active Spotify device is playing music right now.';
 export const spotifyAlbumAddition = 'Added album to your collection.';
 export const spotifyQueueAddition = 'Added track to your queue.';
+export const spotifyFreeAccountWarning = 'You are currently using a Spotify Free account. Some premium features will be disabled.';
 
 // Global localStorage keys (with _global suffix for Redux persistence)
 export const ADMIN_GLOBAL = `${ADMIN}_global`;
@@ -261,11 +261,12 @@ export const PROFILEID_GLOBAL = `${PROFILEID}_global`;
 export const SPOTIFY_TOKEN_GLOBAL = `${spotifyToken}_global`;
 export const SPOTIFY_REFRESH_TOKEN_GLOBAL = `${spotifyRefreshToken}_global`;
 export const SPOTIFY_ACCOUNT_TYPE_GLOBAL = `${spotifyAccountType}_global`;
+export const SPOTIFY_PREMIUM_ACCOUNT_TYPE = 'premium';
 export const SPOTIFY_TOKEN_FETCHED_GLOBAL = `${spotifyTokenFetched}_global`;
 export const SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL = `${spotifyTokenFetchedTime}_global`;
 export const SPOTIFY_CODE_VERIFIER = spotifyCodeVerifier; // sessionStorage key (no _global suffix)
 
-export const ITEMPERPAGE = 20;
+export const ITEMPERPAGE = Number(process.env.REACT_APP_ITEM_PER_PAGE) || 20;
 
 // backdropIds
 
