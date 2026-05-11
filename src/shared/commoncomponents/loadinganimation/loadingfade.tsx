@@ -1,4 +1,4 @@
-import './loadingfade.css';
+import './Loadingfade.css';
 
 const LoadingFade = () => {
     return (

@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { Link, Outlet } from 'react-router-dom';
-import { useTheme } from '../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import './optionpage.css';
+import { useTheme } from '../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import './Optionpage.css';
 
 const OptionPage = ({ menuType, menuList }: any) => {
     const [color, setColor] = useState<any>(light_colors);

@@ -5,20 +5,20 @@ import { AiOutlineLogout } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
 import { useQueryClient } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
-import { useBackDropOpen, useTheme } from '../../../../core/router/themeprovider';
-import { useAppDispatch } from '../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
+import { useBackDropOpen, useTheme } from '../../../../core/router/Themeprovider';
+import { useAppDispatch } from '../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
 import {
     LandscapeSizeS,
     RoutePath,
     SIDE_NAV_CONFIRMATION_FOR_LOGOUT_PROFILE,
     SIDE_NAV_CONFIRMATION_FOR_PROFILE_CHANGE,
-} from '../../../../data/constants';
+} from '../../../../data/Constants';
 import { resetApp } from '../../../../features/profile/store/user/userslice';
-import { logoutProfileOnClick } from '../../../../features/profile/utils/profileconfighelperfn';
-import { clearLocalStorageOnLogout } from '../../../../utils/helperfn';
-import Confirmation from '../../backdrop/confirmation/confirmation';
-import './sidenavigation.css';
+import { logoutProfileOnClick } from '../../../../features/profile/utils/Profileconfighelperfn';
+import { clearLocalStorageOnLogout } from '../../../../utils/HelperFn';
+import Confirmation from '../../backdrop/confirmation/Confirmation';
+import './Sidenavigation.css';
 
 const SideNavigation = ({
     upper_nav_option,

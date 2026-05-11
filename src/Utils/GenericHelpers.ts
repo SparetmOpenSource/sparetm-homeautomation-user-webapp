@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
-import { BLINK_NOTIFICATIONS_ENABLED_KEY, RoutePath } from '../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../data/enum';
+import { BLINK_NOTIFICATIONS_ENABLED_KEY, RoutePath } from '../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../data/Enum';
 import { playNotificationSound } from '../features/notifications/services/audioservice';
-import { displayToastify } from '../features/notifications/services/toastservice';
-import { setBlinkColor, triggerBlink } from '../features/notifications/store/blink/blinkslice';
-import { getItem } from '../hooks/uselocalstorage';
-import { getNotificationConfig } from './notificationconfig';
+import { displayToastify } from '../features/notifications/services/Toastservice';
+import { setBlinkColor, triggerBlink } from '../features/notifications/store/blink/Blinkslice';
+import { getItem } from '../hooks/useLocalStorage';
+import { getNotificationConfig } from './notificationConfig';
 
 export const copyText = async (text: any) => {
     try {
@@ -67,6 +67,7 @@ export const navigateTo = (navigate: any, to: any) => {
 export const uriArray = [
     RoutePath.CoreApplication_Room,
     RoutePath.SelectProfileConfig,
+    RoutePath.CoreApplication_Setting,
 ];
 
 export const isSearchActive = (uriArray: any, uri: any) => {

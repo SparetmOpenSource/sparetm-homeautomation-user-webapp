@@ -12,8 +12,8 @@ import { IconContext } from 'react-icons';
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from 'react-icons/md';
 import { RiArrowDropLeftFill, RiArrowDropRightFill } from 'react-icons/ri';
 
-import './calendar.css';
-import Cell from './cell';
+import './Calendar.css';
+import Cell from './Cell';
 
 const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 

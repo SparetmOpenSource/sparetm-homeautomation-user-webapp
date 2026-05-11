@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import { RoutePath } from '../../data/constants';
-import { useAppSelector } from '../store/reduxhooks';
+import { RoutePath } from '../../data/Constants';
+import { useAppSelector } from '../store/Reduxhooks';
 
 const useAuth = (accessToken: any) => {
     return !!accessToken;

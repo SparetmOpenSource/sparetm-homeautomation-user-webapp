@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import Home from '../home';
-import StarterLoader from '../starterloader/starterloader';
+import Home from '../Home';
+import StarterLoader from '../starterloader/Starterloader';
 
-import PageTransition from '../../../../../shared/commoncomponents/pagetransition/pagetransition';
+import PageTransition from '../../../../../shared/commoncomponents/pagetransition/Pagetransition';
 
 const INTRO_PLAYED_KEY = 'home_intro_played';
 

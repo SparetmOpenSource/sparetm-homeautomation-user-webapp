@@ -9,15 +9,15 @@ import {
 } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { dark_colors, light_colors } from '../../data/colorconstant';
-import { DARK_THEME_KEY, FullScreenSize } from '../../data/constants';
+import { dark_colors, light_colors } from '../../data/ColorConstant';
+import { DARK_THEME_KEY, FullScreenSize } from '../../data/Constants';
 import {
     ThemeContext,
     ToggleBackDropContext,
     ToggleDarkThemeContext,
-} from '../../hooks/usecontext';
-import useLocalStorage from '../../hooks/uselocalstorage';
-import WindowDrop from '../../shared/commoncomponents/backdrop/windowdrop/windowdrop';
+} from '../../hooks/useContext';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import WindowDrop from '../../shared/commoncomponents/backdrop/windowdrop/Windowdrop';
 
 // Type definitions
 interface ThemeProviderProps {

@@ -1,4 +1,4 @@
-import Button from '../../../../../../../../shared/commoncomponents/custombutton/button';
+import Button from '../../../../../../../../shared/commoncomponents/custombutton/Button';
 
 /**
  * RemoteButton Component

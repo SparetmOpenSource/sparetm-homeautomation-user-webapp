@@ -1,6 +1,6 @@
 import { FaCode, FaCogs, FaLightbulb, FaUsers } from 'react-icons/fa';
 import { MdCloudSync, MdWeb } from 'react-icons/md';
-import { card_pastels } from '../../../../data/colorconstant';
+import { card_pastels } from '../../../../data/ColorConstant';
 
 export const HOME_HERO_TITLE = "Take control of your smart home";
 export const HOME_HERO_TITLE_HIGHLIGHT = "your way";

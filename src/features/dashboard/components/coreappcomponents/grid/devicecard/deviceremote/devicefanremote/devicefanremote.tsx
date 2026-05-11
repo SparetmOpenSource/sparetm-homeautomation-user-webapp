@@ -1,13 +1,13 @@
 import 'react-toastify/dist/ReactToastify.css';
-import { useDeleteDeviceStoreData, useUpdateDeviceFanRemote, useUpdateDeviceStoreData } from '../../../../../../../../core/api/coreappapis';
-import { useAppSelector } from '../../../../../../../../core/store/reduxhooks';
-import { atomBergRemoteCode } from '../../../../../../../../data/deviceroomconstant';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../../data/enum';
-import Button from '../../../../../../../../shared/commoncomponents/custombutton/button';
-import { displayToastify } from '../../../../../../../../utils/helperfn';
-import RemoteButton from '../remotebutton/remotebutton';
-import RemoteConfig from '../remoteconfig/remoteconfig';
-import './devicefanremote.css';
+import { useDeleteDeviceStoreData, useUpdateDeviceFanRemote, useUpdateDeviceStoreData } from '../../../../../../../../core/api/Coreappapis';
+import { useAppSelector } from '../../../../../../../../core/store/Reduxhooks';
+import { atomBergRemoteCode } from '../../../../../../../../data/DeviceRoomConstant';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../../data/Enum';
+import Button from '../../../../../../../../shared/commoncomponents/custombutton/Button';
+import { displayToastify } from '../../../../../../../../utils/HelperFn';
+import RemoteButton from '../remotebutton/Remotebutton';
+import RemoteConfig from '../remoteconfig/Remoteconfig';
+import './Devicefanremote.css';
 
 interface DeviceFanRemoteProps {
     deviceId: string;

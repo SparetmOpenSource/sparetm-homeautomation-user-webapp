@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
-import './pagination.css';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
+import './Pagination.css';
 
 interface PaginationProps {
     totalItems: number;

@@ -9,32 +9,32 @@ import {
 } from 'react-icons/md';
 import { PiPowerFill } from 'react-icons/pi';
 import { VscSymbolColor } from 'react-icons/vsc';
-import { updateHeaderConfig } from '../../../../../../core/api/axios';
-import { featureUrl } from '../../../../../../core/api/coreappapis';
-import { useBackDropOpen, useTheme } from '../../../../../../core/router/themeprovider';
+import { updateHeaderConfig } from '../../../../../../core/api/Axios';
+import { featureUrl } from '../../../../../../core/api/Coreappapis';
+import { useBackDropOpen, useTheme } from '../../../../../../core/router/Themeprovider';
 import {
     useAppDispatch,
     useAppSelector,
-} from '../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
+} from '../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
 import {
     LandscapeSizeM,
     LandscapeSizeS,
     RGB_GADGET_EXPAND,
-} from '../../../../../../data/constants';
+} from '../../../../../../data/Constants';
 import {
     GadgetRgbDefaultColor,
     GadgetRgbDefaultPattern,
     GadgetRgbRainbowPattern,
-} from '../../../../../../data/deviceroomconstant';
+} from '../../../../../../data/DeviceRoomConstant';
 import {
     ConvertTheRangeToRound,
     trimToNChars,
-} from '../../../../../../utils/helperfn';
+} from '../../../../../../utils/HelperFn';
 import { useDeviceMutation } from '../../../../../devices/hooks/usedevicemutation';
-import { updateDeviceStatus } from '../../../../../devices/store/device/deviceslice';
+import { updateDeviceStatus } from '../../../../../devices/store/device/Deviceslice';
 import './devicecard.css';
-import RgbGadgetExpand from './rgbgadgetexpand';
+import RgbGadgetExpand from './Rgbgadgetexpand';
 
 
 interface RgbGadgetProps {

@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { weather_quote_constant } from '../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../data/enum';
-import { addDeviceData } from '../../features/devices/store/device/deviceslice';
-import { catchError, displayToastify } from '../../utils/helperfn';
-import { useAppDispatch } from '../store/reduxhooks';
-import { api, getHeaderConfig, updateHeaderConfig } from './axios';
-import { useReactQuery_Get } from './usereactquery_get';
-import { useDeleteData, usePatchUpdateData, usePostUpdateData } from './usereactquery_update';
-import { GET_DEVICE_SCHEDULES_QUERY_ID } from '../../data/queryconstant';
-import { getDeviceSchedules } from './profileconfigapis';
+import { weather_quote_constant } from '../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../data/Enum';
+import { addDeviceData } from '../../features/devices/store/device/Deviceslice';
+import { catchError, displayToastify } from '../../utils/HelperFn';
+import { useAppDispatch } from '../store/Reduxhooks';
+import { api, getHeaderConfig, updateHeaderConfig } from './Axios';
+import { useReactQuery_Get } from './usereactqueryGet';
+import { useDeleteData, usePatchUpdateData, usePostUpdateData } from './usereactqueryUpdate';
+import { GET_DEVICE_SCHEDULES_QUERY_ID } from '../../data/QueryConstant';
+import { getDeviceSchedules } from './Profileconfigapis';
 
 export const featureUrl = {
     get_weather_quote_1: '/mpa/api/v1/profiles/features?id=',

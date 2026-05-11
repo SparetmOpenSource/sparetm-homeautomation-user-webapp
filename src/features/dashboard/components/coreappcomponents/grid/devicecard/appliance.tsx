@@ -3,22 +3,22 @@ import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { HiOutlineInformationCircle } from 'react-icons/hi2';
 import { PiPowerFill } from 'react-icons/pi';
-import { updateHeaderConfig } from '../../../../../../core/api/axios';
-import { featureUrl } from '../../../../../../core/api/coreappapis';
-import { useBackDropOpen, useTheme } from '../../../../../../core/router/themeprovider';
+import { updateHeaderConfig } from '../../../../../../core/api/Axios';
+import { featureUrl } from '../../../../../../core/api/Coreappapis';
+import { useBackDropOpen, useTheme } from '../../../../../../core/router/Themeprovider';
 import {
     useAppDispatch,
     useAppSelector,
-} from '../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
-import { APPLIANCE_EXPAND, LandscapeSizeM, LandscapeSizeS } from '../../../../../../data/constants';
+} from '../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
+import { APPLIANCE_EXPAND, LandscapeSizeM, LandscapeSizeS } from '../../../../../../data/Constants';
 import {
     changeDeviceIcon,
     trimToNChars,
-} from '../../../../../../utils/helperfn';
+} from '../../../../../../utils/HelperFn';
 import { useDeviceMutation } from '../../../../../devices/hooks/usedevicemutation';
-import { updateDeviceStatus } from '../../../../../devices/store/device/deviceslice';
-import ApplianceExpand from './applianceexpand';
+import { updateDeviceStatus } from '../../../../../devices/store/device/Deviceslice';
+import ApplianceExpand from './Applianceexpand';
 import './devicecard.css';
 
 const Appliance = ({ id, statusValue }: any) => {

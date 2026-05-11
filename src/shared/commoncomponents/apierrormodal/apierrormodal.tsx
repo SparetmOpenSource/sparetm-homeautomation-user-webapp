@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { BiSolidError } from 'react-icons/bi';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
-import './apierrormodal.css';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
+import './Apierrormodal.css';
 
 const ApiErrorModal = ({ message, darkTheme, onNavigateToSettings }: any) => {
     const [color, setColor] = useState<any>(light_colors);

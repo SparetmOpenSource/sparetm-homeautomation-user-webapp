@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 import { AuthService } from '../../../core/api/authservice';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/enum';
-import { catchError, displayToastify } from '../../../utils/helperfn';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/Enum';
+import { catchError, displayToastify } from '../../../utils/HelperFn';
 
 export const useRegister = (darkTheme: boolean) => {
     return useMutation(

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CryingBaby404 from '../../../../assets/cryingbaby404.svg';
-import { useTheme } from '../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import PageTransition from '../../../../shared/commoncomponents/pagetransition/pagetransition';
-import './notfound.css';
+import { useTheme } from '../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import PageTransition from '../../../../shared/commoncomponents/pagetransition/Pagetransition';
+import './Notfound.css';
 
 const NotFound = () => {
     const [color, setColor] = useState<any>(light_colors);

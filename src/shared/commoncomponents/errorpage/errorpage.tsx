@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import WentWrong from '../../../assets/wrong.svg';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
-import './errorpage.css';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
+import './Errorpage.css';
 
 const ErrorPage = ({ errMsg, darkTheme }: any) => {
     const [color, setColor] = useState<any>(light_colors);

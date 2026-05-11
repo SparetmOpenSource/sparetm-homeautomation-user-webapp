@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useTheme } from '../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import './commonnavskin.css';
+import { useTheme } from '../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import './Commonnavskin.css';
 
 const CommonNavSkin = ({
     upper_nav_enable,

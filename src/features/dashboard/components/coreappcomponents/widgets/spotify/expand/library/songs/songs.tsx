@@ -1,14 +1,14 @@
 import { memo, useMemo, useCallback } from 'react';
-import { useBackDropOpen } from '../../../../../../../../../core/router/themeprovider';
+import { useBackDropOpen } from '../../../../../../../../../core/router/Themeprovider';
 import {
     LandscapeSizeS,
     SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION,
-} from '../../../../../../../../../data/constants';
-import Confirmation from '../../../../../../../../../shared/commoncomponents/backdrop/confirmation/confirmation';
+} from '../../../../../../../../../data/Constants';
+import Confirmation from '../../../../../../../../../shared/commoncomponents/backdrop/confirmation/Confirmation';
 import { useSpotifyControls } from '../../../../../../../../../core/api/spotify/useSpotifyControls';
 import { SpotifyApiResponse, SpotifyPlaybackState, SpotifyTrack } from '../../../../../../../../../core/api/spotify/types';
-import SongTemplate from '../../songtemplate';
-import './songs.css';
+import SongTemplate from '../../Songtemplate';
+import './Songs.css';
 
 interface SongItem {
     id?: string;

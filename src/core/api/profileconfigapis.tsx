@@ -1,12 +1,12 @@
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../data/enum';
-import { GET_PROFILE_QUERY_ID, SELECT_CITY_LIST_QUERY_ID, SELECT_COUNTRY_LIST_QUERY_ID, SELECT_PROFILE_QUERY_ID, SELECT_STATE_LIST_QUERY_ID } from '../../data/queryconstant';
-import { addFirstRoom } from '../../features/devices/store/room/roomslice';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../data/Enum';
+import { GET_PROFILE_QUERY_ID, SELECT_CITY_LIST_QUERY_ID, SELECT_COUNTRY_LIST_QUERY_ID, SELECT_PROFILE_QUERY_ID, SELECT_STATE_LIST_QUERY_ID } from '../../data/QueryConstant';
+import { addFirstRoom } from '../../features/devices/store/room/Roomslice';
 import { addProfileData } from '../../features/profile/store/user/userslice';
-import { catchError, displayToastify } from '../../utils/helperfn';
-import { useAppDispatch } from '../store/reduxhooks';
-import { api, getHeaderConfig } from './axios';
-import { useReactQuery_Get } from './usereactquery_get';
-import { usePostUpdateData } from './usereactquery_update';
+import { catchError, displayToastify } from '../../utils/HelperFn';
+import { useAppDispatch } from '../store/Reduxhooks';
+import { api, getHeaderConfig } from './Axios';
+import { useReactQuery_Get } from './usereactqueryGet';
+import { usePostUpdateData } from './usereactqueryUpdate';
 
 export const successMessage = {
     profile_added:

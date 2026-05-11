@@ -3,8 +3,8 @@ import {
     SPOTIFY_TOKEN_FETCHED_GLOBAL,
     SPOTIFY_TOKEN_FETCHED_TIME_GLOBAL,
     SPOTIFY_TOKEN_GLOBAL,
-} from '../../../data/constants';
-import { setItem } from '../../../hooks/uselocalstorage';
+} from '../../../data/Constants';
+import { setItem } from '../../../hooks/useLocalStorage';
 import { getProfileKey } from '../../../features/auth/utils/authhelpers';
 
 // Inline constants to avoid circular dependency with Axios.tsx and ProfileConfigApis.tsx

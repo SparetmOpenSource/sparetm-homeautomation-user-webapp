@@ -8,6 +8,7 @@
     border-radius: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     padding: 0.5rem;
+    overflow: hidden;
 }
 
 .spotify-expand-content {
@@ -15,6 +16,7 @@
     width: 100%;
     height: 89%;
     border-radius: 1rem;
+    overflow: hidden;
 }
 
 .spotify-expand-nav {

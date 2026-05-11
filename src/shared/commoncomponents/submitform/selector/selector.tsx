@@ -1,11 +1,11 @@
 import Select from "react-select";
-import { getMergedHeadersForLocation } from "../../../../core/api/axios";
-import { useCountryList } from "../../../../core/api/profileconfigapis";
-import { useTheme } from "../../../../core/router/themeprovider";
-import { dark_colors, light_colors } from "../../../../data/colorconstant";
-import TextBlinkAnimation from "../../../../features/home/components/homecomponents/textblinkanimation/textblinkanimation";
-import Button from "../../custombutton/button";
-import "./selector.css";
+import { getMergedHeadersForLocation } from "../../../../core/api/Axios";
+import { useCountryList } from "../../../../core/api/Profileconfigapis";
+import { useTheme } from "../../../../core/router/Themeprovider";
+import { dark_colors, light_colors } from "../../../../data/ColorConstant";
+import TextBlinkAnimation from "../../../../features/home/components/homecomponents/textblinkanimation/Textblinkanimation";
+import Button from "../../custombutton/Button";
+import "./Selector.css";
 
 const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel }: any) => {
     const darkTheme: any = useTheme();
@@ -143,7 +143,7 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
                         ref={formList[0]?.resetRef}
                         styles={customStyles}
                         className="submitSelectorForm-field"
-                        classNamePrefix="select"
+                        classNamePrefix="Select"
                         closeMenuOnSelect={false}
                         isMulti={formList[0]?.isMulti}
                         placeholder={formList[0]?.label}
@@ -161,7 +161,7 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
                         ref={formList[1]?.resetRef}
                         styles={customStyles}
                         className='submitSelectorForm-field'
-                        classNamePrefix="select"
+                        classNamePrefix="Select"
                         closeMenuOnSelect={true}
                         isDisabled={isLoading}
                         isLoading={isLoading}
@@ -179,7 +179,7 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
                         ref={formList[2]?.resetRef}
                         styles={customStyles}
                         className='submitSelectorForm-field'
-                        classNamePrefix="select"
+                        classNamePrefix="Select"
                         closeMenuOnSelect={true}
                         isDisabled={false}
                         isLoading={formList[2]?.isLoading}
@@ -197,7 +197,7 @@ const Selector = ({ heading, subHeading, formList, submit, switchForm, btnLabel 
                         ref={formList[3]?.resetRef}
                         styles={customStyles}
                         className='submitSelectorForm-field'
-                        classNamePrefix="select"
+                        classNamePrefix="Select"
                         closeMenuOnSelect={true}
                         isDisabled={false}
                         isLoading={formList[3]?.isLoading}

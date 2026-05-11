@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import './plantsimulator.css';
+import './Plantsimulator.css';
 
 /**
  * how to use:

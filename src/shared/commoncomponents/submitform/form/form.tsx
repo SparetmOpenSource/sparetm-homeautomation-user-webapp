@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IconContext } from "react-icons";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
-import { useTheme } from "../../../../core/router/themeprovider";
-import { dark_colors, light_colors } from "../../../../data/colorconstant";
-import TextBlinkAnimation from "../../../../features/home/components/homecomponents/textblinkanimation/textblinkanimation";
-import Button from "../../custombutton/button";
-import "./form.css";
+import { useTheme } from "../../../../core/router/Themeprovider";
+import { dark_colors, light_colors } from "../../../../data/ColorConstant";
+import TextBlinkAnimation from "../../../../features/home/components/homecomponents/textblinkanimation/Textblinkanimation";
+import Button from "../../custombutton/Button";
+import "./Form.css";
 
 const Form = ({ heading, subHeading, formData, formList, switchForm, typeFlag, btnLabel }: any) => {
     const darkTheme: any = useTheme();

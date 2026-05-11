@@ -3,8 +3,8 @@ import { ResponsiveScatterPlot } from '@nivo/scatterplot';
 import { eachDayOfInterval, endOfWeek, format, startOfWeek } from 'date-fns';
 import { useState } from 'react';
 import { IoCalculatorOutline, IoFlashOutline } from 'react-icons/io5';
-import { dark_colors, light_colors } from '../../../../../../../data/colorconstant';
-import './devicedatagraph.css';
+import { dark_colors, light_colors } from '../../../../../../../data/ColorConstant';
+import './Devicedatagraph.css';
 
 // Mock Data for Usage Duration (Current Week: Mon -> Sun)
 const generateCurrentWeekData = () => {

@@ -1,14 +1,14 @@
 import { AnimatePresence } from 'framer-motion';
 import { Suspense } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { RoutePath } from '../../../data/constants';
-import Todo from '../../../features/dashboard/components/coreapplication/dashboard/todo/todo';
-import Account from '../../../features/dashboard/components/coreapplication/setting/account/account';
-import Preferences from '../../../features/dashboard/components/coreapplication/setting/preferences/preferences';
-import HomeWithLoader from '../../../features/home/pages/home/homewithloader/homewithloader';
-import LoadingFade from '../../../shared/commoncomponents/loadinganimation/loadingfade';
-import ProtectedRoute from '../protectedroute';
-import PublicRoute from '../publicroute';
+import { RoutePath } from '../../../data/Constants';
+import Todo from '../../../features/dashboard/components/coreapplication/dashboard/todo/Todo';
+import Account from '../../../features/dashboard/components/coreapplication/setting/account/Account';
+import Preferences from '../../../features/dashboard/components/coreapplication/setting/preferences/Preferences';
+import HomeWithLoader from '../../../features/home/pages/home/homewithloader/Homewithloader';
+import LoadingFade from '../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import ProtectedRoute from '../Protectedroute';
+import PublicRoute from '../Publicroute';
 import {
     About,
     AddProfile,
@@ -25,7 +25,7 @@ import {
     SelectProfile,
     Setting,
     SignInSignUp,
-} from './globalroutepages';
+} from './Globalroutepages';
 
 const routes = [
     {

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import './calendar.css';
+import './Calendar.css';
 
 const Cell = ({ onClick, children, isActive = false }: any) => {
     return (

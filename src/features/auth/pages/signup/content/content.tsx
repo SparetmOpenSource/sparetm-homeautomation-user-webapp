@@ -4,16 +4,16 @@ import { BiSolidQuoteLeft, BiSolidQuoteRight } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import SmilingM from '../../../../../assets/smilingm.svg';
 import SmilingW from '../../../../../assets/smilingw.svg';
-import { useTheme } from '../../../../../core/router/themeprovider';
-import { useAppDispatch } from '../../../../../core/store/reduxhooks';
-import { SignUpText } from '../../../../../data/applicationcontent';
-import { dark_colors, light_colors } from '../../../../../data/colorconstant';
-import { ADMIN } from '../../../../../data/constants';
-import { useCounter } from '../../../../../hooks/usecounter';
-import Form from '../../../../../shared/commoncomponents/submitform/form/form';
-import { useLogin } from '../../../services/loginuser';
-import { useRegister } from '../../../services/registeruser';
-import './content.css';
+import { useTheme } from '../../../../../core/router/Themeprovider';
+import { useAppDispatch } from '../../../../../core/store/Reduxhooks';
+import { SignUpText } from '../../../../../data/ApplicationContent';
+import { dark_colors, light_colors } from '../../../../../data/ColorConstant';
+import { ADMIN } from '../../../../../data/Constants';
+import { useCounter } from '../../../../../hooks/useCounter';
+import Form from '../../../../../shared/commoncomponents/submitform/form/Form';
+import { useLogin } from '../../../services/Loginuser';
+import { useRegister } from '../../../services/Registeruser';
+import './Content.css';
 
 const Content = () => {
     const [color, setColor] = useState<any>(light_colors);

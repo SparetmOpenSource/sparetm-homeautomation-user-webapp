@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { SpringSuspense } from '../../../../data/constants';
-import Button from '../../custombutton/button';
-import Backdrop from '../backdrop/backdrop';
-import './confirmationbackdropmodel.css';
+import { SpringSuspense } from '../../../../data/Constants';
+import Button from '../../custombutton/Button';
+import Backdrop from '../backdrop/Backdrop';
+import './Confirmationbackdropmodel.css';
 
 const ConfirmationBackdropModel = ({
     handleClose,

@@ -1,8 +1,8 @@
 import { useMutation } from 'react-query';
 import { AuthService } from '../../../core/api/authservice';
-import { RoutePath } from '../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/enum';
-import { displayToastify } from '../../../utils/helperfn';
+import { RoutePath } from '../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/Enum';
+import { displayToastify } from '../../../utils/HelperFn';
 import { addAdmin, addToken } from '../../profile/store/user/userslice';
 
 export const useLogin = (darkTheme: boolean, dispatch: any, navigate: any) => {

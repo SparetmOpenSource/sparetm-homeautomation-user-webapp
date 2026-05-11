@@ -4,12 +4,12 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import App from './app';
-import { setAppTokenProvider } from './core/api/axios';
+import App from './App';
+import { setAppTokenProvider } from './core/api/Axios';
 import { setProfileIdProvider } from './features/auth/utils/authhelpers';
-import { persistor, store } from './core/store/store';
+import { persistor, store } from './core/store/Store';
 import './index.css';
-import reportWebVitals from './reportwebvitals';
+import reportWebVitals from './reportWebVitals';
 
 setAppTokenProvider(() => store.getState().user.token);
 setProfileIdProvider(() => store.getState().user.profileId);

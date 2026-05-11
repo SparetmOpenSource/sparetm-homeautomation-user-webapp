@@ -15,9 +15,9 @@ import {
     SPOTIFY_TOKEN_GLOBAL,
     TOKEN_GLOBAL,
     WEBSOCKET_ENABLED_KEY
-} from '../../../data/constants';
-import { getItem, removeItem } from '../../../hooks/uselocalstorage';
-import useLocalStorageHook from '../../../hooks/uselocalstorage';
+} from '../../../data/Constants';
+import { getItem, removeItem } from '../../../hooks/useLocalStorage';
+import useLocalStorageHook from '../../../hooks/useLocalStorage';
 import { useMemo } from 'react';
 
 import { useSelector } from 'react-redux';

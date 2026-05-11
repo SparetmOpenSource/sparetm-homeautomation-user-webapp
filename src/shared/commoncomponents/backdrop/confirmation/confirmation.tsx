@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import Button from '../../custombutton/button';
-import './confirmation.css';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import Button from '../../custombutton/Button';
+import './Confirmation.css';
 
 const Confirmation = ({
     heading,

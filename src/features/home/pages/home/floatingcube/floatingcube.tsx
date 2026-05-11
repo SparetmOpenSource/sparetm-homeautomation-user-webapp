@@ -1,4 +1,4 @@
-import './floatingcube.css';
+import './Floatingcube.css';
 
 const FloatingCube = () => {
     return (

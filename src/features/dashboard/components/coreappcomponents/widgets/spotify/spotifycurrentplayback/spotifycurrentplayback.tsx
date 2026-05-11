@@ -11,21 +11,21 @@ import {
     IoPlaySkipForward,
 } from 'react-icons/io5';
 import { RiNeteaseCloudMusicLine } from 'react-icons/ri';
-import { useBackDropOpen } from '../../../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../../../data/colorconstant';
+import { useBackDropOpen } from '../../../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../../../data/ColorConstant';
 import {
     HorizontalSize,
     SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_PREMIUM_ACCOUNT_TYPE,
     SPOTIFY_ACTIVE_EXPAND,
-} from '../../../../../../../data/constants';
-import { useProfileLocalStorage } from '../../../../../../../features/auth/utils/authhelpers';
+} from '../../../../../../../data/Constants';
+import { useProfileLocalStorage } from '../../../../../../auth/utils/authhelpers';
 import { SpotifyApiResponse, SpotifyPlaybackState } from '../../../../../../../core/api/spotify/types';
 import { useSpotifyControls } from '../../../../../../../core/api/spotify/useSpotifyControls';
-import AudioProgressBar from '../../../../../../../shared/commoncomponents/slide/audioprogressbar/audioprogressbar';
-import { trimToNChars } from '../../../../../../../utils/helperfn';
-import Expand from '../expand/expand';
-import './spotifycurrentplayback.css';
+import AudioProgressBar from '../../../../../../../shared/commoncomponents/slide/audioprogressbar/Audioprogressbar';
+import { trimToNChars } from '../../../../../../../utils/HelperFn';
+import Expand from '../expand/Expand';
+import './Spotifycurrentplayback.css';
 
 interface SpotifyCurrentPlaybackProps {
     data: SpotifyApiResponse<SpotifyPlaybackState> | null;

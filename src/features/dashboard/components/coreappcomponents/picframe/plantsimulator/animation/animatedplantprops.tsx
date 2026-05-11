@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import PlantSimulator from '../plantsimulator';
+import PlantSimulator from '../Plantsimulator';
 
 interface PlantSimulatorAnimationProps {
     initial: {

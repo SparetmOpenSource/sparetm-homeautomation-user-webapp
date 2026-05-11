@@ -1,7 +1,7 @@
 
-import { useTheme } from '../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../data/colorconstant';
-import './starterloader.css';
+import { useTheme } from '../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../data/ColorConstant';
+import './Starterloader.css';
 
 const StarterLoader = () => {
     const darkTheme = useTheme();

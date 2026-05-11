@@ -7,34 +7,34 @@ import {
     useSpotifyAllAlbums,
     useSpotifyAllPlaylists,
     useSpotifyPlaylistSongs,
-} from '../../../../../../../../core/api/spotify/api';
+} from '../../../../../../../../core/api/spotify/Api';
 // import { useSpotifyControls } from '../../../../../../../../core/api/spotify/useSpotifyControls';
 import { SpotifyApiResponse, SpotifyPlaybackState } from '../../../../../../../../core/api/spotify/types';
 import {
     dark_colors,
     light_colors,
-} from '../../../../../../../../data/colorconstant';
+} from '../../../../../../../../data/ColorConstant';
 import {
     ITEMPERPAGE,
     // SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_TOKEN_GLOBAL,
     // spotifyNonPremiumWarning,
-} from '../../../../../../../../data/constants';
-// import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../../data/enum';
+} from '../../../../../../../../data/Constants';
+// import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../../data/Enum';
 import {
     GET_SPOTIFY_ALL_ALBUM_STATE_QUERY_ID,
     GET_SPOTIFY_ALL_PLAYLIST_STATE_QUERY_ID,
-} from '../../../../../../../../data/queryconstant';
-import { useProfileLocalStorage } from '../../../../../../../../features/auth/utils/authhelpers';
-import LoadingFade from '../../../../../../../../shared/commoncomponents/loadinganimation/loadingfade';
-import Pagination from '../../../../../../../../shared/commoncomponents/pagination/pagination';
+} from '../../../../../../../../data/QueryConstant';
+import { useProfileLocalStorage } from '../../../../../../../auth/utils/authhelpers';
+import LoadingFade from '../../../../../../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import Pagination from '../../../../../../../../shared/commoncomponents/pagination/Pagination';
 import {
     // displayToastify,
     getOffsetAndLimit,
-} from '../../../../../../../../utils/helperfn';
-import Cover from './cover/cover';
-import './library.css';
-import Songs from './songs/songs';
+} from '../../../../../../../../utils/HelperFn';
+import Cover from './cover/Cover';
+import './Library.css';
+import Songs from './songs/Songs';
 
 interface LibraryProps {
     data: SpotifyApiResponse<SpotifyPlaybackState> | null;
@@ -278,7 +278,7 @@ const Library = ({ data, darkTheme }: LibraryProps) => {
                         darkTheme={darkTheme}
                         handleOnClickCover={handleOnClickCoverForPlaylist}
                         selectedLibraryUri={data?.data?.body?.context?.uri}
-                        albumIdQueryIdToBeRefreshed={`${GET_SPOTIFY_ALL_PLAYLIST_STATE_QUERY_ID}_offset(${offsetForPlaylist})_limit(${limitForPlaylist})`}
+                        albumIdQueryIdToBeRefreshed={`${GET_SPOTIFY_ALL_PLAYLIST_STATE_QUERY_ID}_${accessToken}_offset(${offsetForPlaylist})_limit(${limitForPlaylist})`}
                     />
                 )}
 
@@ -289,7 +289,7 @@ const Library = ({ data, darkTheme }: LibraryProps) => {
                         darkTheme={darkTheme}
                         handleOnClickCover={handleOnClickCoverForAlbum}
                         selectedLibraryUri={data?.data?.body?.context?.uri}
-                        albumIdQueryIdToBeRefreshed={`${GET_SPOTIFY_ALL_ALBUM_STATE_QUERY_ID}_offset(${offsetForAlbum})_limit(${limitForAlbum})`}
+                        albumIdQueryIdToBeRefreshed={`${GET_SPOTIFY_ALL_ALBUM_STATE_QUERY_ID}_${accessToken}_offset(${offsetForAlbum})_limit(${limitForAlbum})`}
                     />
                 )}
 

@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import './app.css';
-import { GlobalRoutes } from './core/router/globalroutes/globalroutes';
-import { ThemeProvider } from './core/router/themeprovider';
-import { useAppDispatch, useAppSelector } from './core/store/reduxhooks';
+import './App.css';
+import { GlobalRoutes } from './core/router/globalroutes/Globalroutes';
+import { ThemeProvider } from './core/router/Themeprovider';
+import { useAppDispatch, useAppSelector } from './core/store/Reduxhooks';
 import {
     BACKGROUND_BLINK_SETTING,
     BLINK_NOTIFICATIONS_ENABLED_KEY,
     NOTIFICATION_POSITION_KEY,
     NOTIFICATION_SOUNDS_ENABLED_KEY,
-} from './data/constants';
-import { resetBlink } from './features/notifications/store/blink/blinkslice';
-import { WebSocketProvider } from './features/websocket/context/websocketcontext';
-import useBlink from './hooks/useblink';
-import useLocalStorage from './hooks/uselocalstorage';
-import { setNotificationConfig } from './utils/notificationconfig';
+} from './data/Constants';
+import { resetBlink } from './features/notifications/store/blink/Blinkslice';
+import { WebSocketProvider } from './features/websocket/context/Websocketcontext';
+import useBlink from './hooks/useBlink';
+import useLocalStorage from './hooks/useLocalStorage';
+import { setNotificationConfig } from './utils/notificationConfig';
 
 function App() {
     const [backgroundColor, setBackgroundColor] = useState<string>('black');

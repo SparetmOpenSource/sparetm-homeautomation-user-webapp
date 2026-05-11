@@ -1,5 +1,5 @@
-import SpotifyLogIn from '../../../../features/dashboard/components/coreappcomponents/widgets/spotify/spotifylogin';
-import Weather from '../../../../features/dashboard/components/coreappcomponents/widgets/weather/weather';
+import SpotifyLogIn from '../../../../features/dashboard/components/coreappcomponents/widgets/spotify/Spotifylogin';
+import Weather from '../../../../features/dashboard/components/coreappcomponents/widgets/weather/Weather';
 
 export type WidgetItem = {
     id: number;

@@ -6,15 +6,15 @@ import {
     PAGE_LOGGER,
     RoutePath,
     USE_ACTIVE_SETTINGS,
-} from '../../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../data/enum';
+} from '../../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../data/Enum';
 import {
     displayToastify,
     doScroll,
     logger,
     observer,
-} from '../../../../utils/helperfn';
-import './home.css';
+} from '../../../../utils/HelperFn';
+import './Home.css';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
@@ -26,14 +26,14 @@ import { MdOutlineAutoGraph } from 'react-icons/md';
 import { RiBookOpenLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import HeroBackground from '../../../../assets/meet-home.svg';
-import { useBackDropOpen } from '../../../../core/router/themeprovider';
-import { home_colors, light_colors } from '../../../../data/colorconstant';
-import { POLICY_MODAL, PolicyModalSize } from '../../../../data/constants';
-import { useActive } from '../../../../hooks/useactive';
-import BirdSimulation from '../../components/homecomponents/birdsimulation/birdsimulation';
-import PolicyModal from '../../components/homecomponents/policymodal/policymodal';
-import TextBlinkAnimation from '../../components/homecomponents/textblinkanimation/textblinkanimation';
-import FloatingCube from './floatingcube/floatingcube';
+import { useBackDropOpen } from '../../../../core/router/Themeprovider';
+import { home_colors, light_colors } from '../../../../data/ColorConstant';
+import { POLICY_MODAL, PolicyModalSize } from '../../../../data/Constants';
+import { useActive } from '../../../../hooks/useActive';
+import BirdSimulation from '../../components/homecomponents/birdsimulation/Birdsimulation';
+import PolicyModal from '../../components/homecomponents/policymodal/Policymodal';
+import TextBlinkAnimation from '../../components/homecomponents/textblinkanimation/Textblinkanimation';
+import FloatingCube from './floatingcube/Floatingcube';
 
 import {
     ACTION_CLOSE_TEXT,
@@ -59,7 +59,7 @@ import {
     HOME_SYSTEM_STEPS,
     HOME_SYSTEM_TITLE,
     MENU_ITEMS
-} from '../../data/homecontent';
+} from '../../data/Homecontent';
 
 interface StepCardProps {
     step: {
@@ -491,7 +491,7 @@ const Home = () => {
                             {FOOTER_LINKS.map((link) => (
                                 <li key={link.key}>
                                     <p onClick={() => {
-                                        if (link.key === 'about') navigate(RoutePath.About);
+                                        if (link.key === 'About') navigate(RoutePath.About);
                                         else if (link.key === 'privacy' || link.key === 'cookie') {
                                             toggleBackDropOpen(
                                                 POLICY_MODAL,

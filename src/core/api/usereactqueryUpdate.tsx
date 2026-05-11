@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query';
-import { api } from './axios';
+import { api } from './Axios';
 
 export const usePostUpdateData = (
     url: string,
@@ -8,8 +8,10 @@ export const usePostUpdateData = (
     on_Error: any,
 ) => {
     return useMutation(
-        (data: any) => {
-            return api.post(url, data, updateHeaderConfig);
+        (variables: any) => {
+            const finalUrl = variables?.url || url;
+            const finalData = variables?.url ? variables.data : variables;
+            return api.post(finalUrl, finalData, updateHeaderConfig);
         },
         {
             onSuccess: on_Success,
@@ -25,8 +27,10 @@ export const usePutUpdateData = (
     on_Error: any,
 ) => {
     return useMutation(
-        (data: any) => {
-            return api.put(url, data, updateHeaderConfig);
+        (variables: any) => {
+            const finalUrl = variables?.url || url;
+            const finalData = variables?.url ? variables.data : variables;
+            return api.put(finalUrl, finalData, updateHeaderConfig);
         },
         {
             onSuccess: on_Success,
@@ -42,8 +46,10 @@ export const usePatchUpdateData = (
     on_Error: any,
 ) => {
     return useMutation(
-        (data: any) => {
-            return api.patch(url, data, updateHeaderConfig);
+        (variables: any) => {
+            const finalUrl = variables?.url || url;
+            const finalData = variables?.url ? variables.data : variables;
+            return api.patch(finalUrl, finalData, updateHeaderConfig);
         },
         {
             onSuccess: on_Success,

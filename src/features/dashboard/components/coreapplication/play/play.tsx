@@ -1,5 +1,5 @@
-import ComingSoon from '../../../../../shared/commoncomponents/comingsoon/comingsoon';
-import './play.css';
+import ComingSoon from '../../../../../shared/commoncomponents/comingsoon/Comingsoon';
+import './Play.css';
 
 const Play = () => {
     return (

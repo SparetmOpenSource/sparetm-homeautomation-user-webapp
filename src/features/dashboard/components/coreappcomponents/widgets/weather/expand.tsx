@@ -4,9 +4,9 @@ import { CgCompress } from 'react-icons/cg';
 import { CiLocationOn } from 'react-icons/ci';
 import { GiWhirlwind, GiWindsock } from 'react-icons/gi';
 import { WiHumidity } from 'react-icons/wi';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
-import { Current_Date_Time } from '../../../../../../data/constants';
-import './weather.css';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
+import { Current_Date_Time } from '../../../../../../data/Constants';
+import './Weather.css';
 
 import { WeatherExpandProps } from './types';
 

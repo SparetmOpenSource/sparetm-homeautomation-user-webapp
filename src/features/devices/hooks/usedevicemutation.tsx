@@ -1,18 +1,18 @@
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { usePatchUpdateData } from '../../../core/api/usereactquery_update';
-import { useBackDropOpen, useTheme } from '../../../core/router/themeprovider';
+import { usePatchUpdateData } from '../../../core/api/usereactqueryUpdate';
+import { useBackDropOpen, useTheme } from '../../../core/router/Themeprovider';
 import {
     IS_MQTT_CONFIGURED_KEY,
     LandscapeSizeM,
     MQTT_ERROR_PREFIX,
     MQTT_ERROR_USER_MESSAGE,
     RoutePath,
-} from '../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/enum';
-import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../data/queryconstant';
-import ApiErrorModal from '../../../shared/commoncomponents/apierrormodal/apierrormodal';
-import { displayToastify, invalidateQueries } from '../../../utils/helperfn';
+} from '../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/Enum';
+import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../data/QueryConstant';
+import ApiErrorModal from '../../../shared/commoncomponents/apierrormodal/Apierrormodal';
+import { displayToastify, invalidateQueries } from '../../../utils/HelperFn';
 
 /**
  * Custom hook to handle device mutations with centralized MQTT error handling.

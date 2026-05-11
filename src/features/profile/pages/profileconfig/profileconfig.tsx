@@ -3,15 +3,15 @@ import { BiAddToQueue, BiSolidSelectMultiple } from 'react-icons/bi';
 import { CiDark } from 'react-icons/ci';
 import { MdLightMode } from 'react-icons/md';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useTheme, useThemeUpdate } from '../../../../core/router/themeprovider';
-import { useAppSelector } from '../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import { RoutePath } from '../../../../data/constants';
-import SideNavigation from '../../../../shared/commoncomponents/navigation/sidenavigation/sidenavigation';
-import UpperNavigation from '../../../../shared/commoncomponents/navigation/uppernavigation/uppernavigation';
-import PageTransition from '../../../../shared/commoncomponents/pagetransition/pagetransition';
-import CommonSkin from '../../../../shared/commoncomponents/uiskin/commonnavskin/commonnavskin';
-import './profileconfig.css';
+import { useTheme, useThemeUpdate } from '../../../../core/router/Themeprovider';
+import { useAppSelector } from '../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import { RoutePath } from '../../../../data/Constants';
+import SideNavigation from '../../../../shared/commoncomponents/navigation/sidenavigation/Sidenavigation';
+import UpperNavigation from '../../../../shared/commoncomponents/navigation/uppernavigation/Uppernavigation';
+import PageTransition from '../../../../shared/commoncomponents/pagetransition/Pagetransition';
+import CommonSkin from '../../../../shared/commoncomponents/uiskin/commonnavskin/Commonnavskin';
+import './Profileconfig.css';
 
 const ProfileConfig = () => {
     const darkTheme = useTheme();

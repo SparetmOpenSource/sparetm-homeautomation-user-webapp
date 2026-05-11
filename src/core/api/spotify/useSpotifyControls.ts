@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
-import { GET_SPOTIFY_QUEUE_STATE_QUERY_ID } from '../../../data/queryconstant';
-import { SPOTIFY_TOKEN_GLOBAL, spotifyAlbumAddition } from '../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/enum';
+import { GET_SPOTIFY_QUEUE_STATE_QUERY_ID, GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID } from '../../../data/QueryConstant';
+import { SPOTIFY_TOKEN_GLOBAL, spotifyAlbumAddition } from '../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/Enum';
 import { useProfileLocalStorage } from '../../../features/auth/utils/authhelpers';
-import { catchError, displayToastify, invalidateQueries } from '../../../utils/helperfn';
-import { getMergedHeadersForSpotify } from '../axios';
-import { featureUrl } from '../coreappapis';
-import { usePostUpdateData } from '../usereactquery_update';
+import { catchError, displayToastify, invalidateQueries } from '../../../utils/HelperFn';
+import { getMergedHeadersForSpotify } from '../Axios';
+import { featureUrl } from '../Coreappapis';
+import { usePostUpdateData } from '../usereactqueryUpdate';
 
 interface PlayParams {
     deviceId: string;
@@ -24,9 +24,14 @@ export const useSpotifyControls = (darkTheme: boolean) => {
         headers: getMergedHeadersForSpotify(accessToken),
     };
 
-    const refreshQueue = useCallback(() => {
-        invalidateQueries(queryClient, [GET_SPOTIFY_QUEUE_STATE_QUERY_ID]);
-    }, [queryClient]);
+    const refreshSpotifyState = useCallback(() => {
+        setTimeout(() => {
+            invalidateQueries(queryClient, [
+                `${GET_SPOTIFY_QUEUE_STATE_QUERY_ID}_${accessToken}`,
+                `${GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID}_${accessToken}`
+            ]);
+        }, 1000);
+    }, [queryClient, accessToken]);
 
     const handleError = useCallback((error: any) => {
         catchError(error, darkTheme);
@@ -36,28 +41,28 @@ export const useSpotifyControls = (darkTheme: boolean) => {
     const playMutation = usePostUpdateData(
         `${featureUrl.spotify_base_url}?data=play`,
         updateHeaderConfig,
-        refreshQueue,
+        refreshSpotifyState,
         handleError
     );
 
     const pauseMutation = usePostUpdateData(
         `${featureUrl.spotify_base_url}?data=pause`,
         updateHeaderConfig,
-        refreshQueue,
+        refreshSpotifyState,
         handleError
     );
 
     const nextMutation = usePostUpdateData(
         `${featureUrl.spotify_base_url}?data=next`,
         updateHeaderConfig,
-        refreshQueue,
+        refreshSpotifyState,
         handleError
     );
 
     const previousMutation = usePostUpdateData(
         `${featureUrl.spotify_base_url}?data=previous`,
         updateHeaderConfig,
-        refreshQueue,
+        refreshSpotifyState,
         handleError
     );
 
@@ -72,6 +77,7 @@ export const useSpotifyControls = (darkTheme: boolean) => {
         `${featureUrl.spotify_base_url}?data=addtoqueue`,
         updateHeaderConfig,
         () => {
+            refreshSpotifyState();
             displayToastify(
                 "Added to queue",
                 darkTheme ? TOASTIFYCOLOR.LIGHT : TOASTIFYCOLOR.DARK,
@@ -116,15 +122,17 @@ export const useSpotifyControls = (darkTheme: boolean) => {
     }, [pauseMutation]);
 
     const next = useCallback((deviceId: string) => {
-        nextMutation.mutate({}, {
-            url: `${featureUrl.spotify_base_url}?data=next&id=${deviceId}`
-        } as any);
+        nextMutation.mutate({
+            url: `${featureUrl.spotify_base_url}?data=next&id=${deviceId}`,
+            data: {}
+        });
     }, [nextMutation]);
 
     const previous = useCallback((deviceId: string) => {
-        previousMutation.mutate({}, {
-            url: `${featureUrl.spotify_base_url}?data=previous&id=${deviceId}`
-        } as any);
+        previousMutation.mutate({
+            url: `${featureUrl.spotify_base_url}?data=previous&id=${deviceId}`,
+            data: {}
+        });
     }, [previousMutation]);
 
     const seek = useCallback((deviceId: string, positionMs: number) => {

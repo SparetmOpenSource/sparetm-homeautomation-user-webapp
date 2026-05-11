@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
-import Information from './information/information';
+import { useAppSelector } from '../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
+import Information from './information/Information';
 
 const ApplianceExpand = ({
     id,

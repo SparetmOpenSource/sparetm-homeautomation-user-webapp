@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { IoMdNotificationsOutline } from 'react-icons/io';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import './information.css';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import './Information.css';
 
 const Information = ({ text, darkTheme, type }: any) => {
     const [color, setColor] = useState<any>(light_colors);

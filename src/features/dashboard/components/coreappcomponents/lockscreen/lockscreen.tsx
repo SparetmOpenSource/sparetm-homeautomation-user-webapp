@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { FaLock } from 'react-icons/fa';
-import { useTheme } from '../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../data/colorconstant';
-import './lockscreen.css';
+import { useTheme } from '../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../data/ColorConstant';
+import './Lockscreen.css';
 
 interface LockScreenProps {
     onUnlock: () => void;

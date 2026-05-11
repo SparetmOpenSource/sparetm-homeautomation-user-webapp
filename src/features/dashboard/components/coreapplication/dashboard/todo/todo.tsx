@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { IoIosAddCircle } from 'react-icons/io';
-import { useBackDropOpen, useTheme } from '../../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
-import { ADD_TODO_LIST, LandscapeSizeM } from '../../../../../../data/constants';
-import './todo.css';
-import TodoListTemp from './todolisttemp/todolisttemp';
+import { useBackDropOpen, useTheme } from '../../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
+import { ADD_TODO_LIST, LandscapeSizeM } from '../../../../../../data/Constants';
+import './Todo.css';
+import TodoListTemp from './todolisttemp/Todolisttemp';
 
 const Todo = () => {
     const [color, setColor] = useState<any>(light_colors);

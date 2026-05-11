@@ -1,29 +1,29 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../data/colorconstant';
+import { useTheme } from '../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../data/ColorConstant';
 import {
     NONPREMIUMROOMCOUNT,
     ProfileConfigRoomNames,
     RoutePath,
-} from '../../../../../data/constants';
-import './add.css';
+} from '../../../../../data/Constants';
+import './Add.css';
 
 import Building from '../../../../../assets/desktop.webp';
 import {
     getMergedHeadersForLocation,
-} from '../../../../../core/api/axios';
+} from '../../../../../core/api/Axios';
 import {
     successMessage,
     useAddProfile,
     useCityList,
     useCountryList,
     useStateList
-} from '../../../../../core/api/profileconfigapis';
-import { useAppSelector } from '../../../../../core/store/reduxhooks';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../data/enum';
-import DynamicForm, { FieldConfig } from '../../../../../shared/commoncomponents/dynamicform/dynamicform';
-import { displayToastify } from '../../../../../utils/helperfn';
+} from '../../../../../core/api/Profileconfigapis';
+import { useAppSelector } from '../../../../../core/store/Reduxhooks';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../data/Enum';
+import DynamicForm, { FieldConfig } from '../../../../../shared/commoncomponents/dynamicform/Dynamicform';
+import { displayToastify } from '../../../../../utils/HelperFn';
 
 const Add = () => {
     const navigate = useNavigate();
@@ -180,7 +180,7 @@ const Add = () => {
         {
             id: 1,
             name: 'room',
-            type: 'select',
+            type: 'Select',
             label: 'select room type*',
             options: ProfileConfigRoomNames,
             isMulti: true,
@@ -189,7 +189,7 @@ const Add = () => {
         {
             id: 2,
             name: 'country',
-            type: 'select',
+            type: 'Select',
             label: 'select your country*',
             options: countryList?.data?.body,
             onChangeFn: addCountryData,
@@ -197,7 +197,7 @@ const Add = () => {
         {
             id: 3,
             name: 'state',
-            type: 'select',
+            type: 'Select',
             label: 'select your state*',
             options: selectedStateList?.data?.body,
             onChangeFn: addStateData,
@@ -206,7 +206,7 @@ const Add = () => {
         {
             id: 4,
             name: 'city',
-            type: 'select',
+            type: 'Select',
             label: 'select your city*',
             options: selectedCityList?.data?.body,
             onChangeFn: addCityData,

@@ -1,4 +1,4 @@
-import { api, authUrl } from './axios';
+import { api, authUrl } from './Axios';
 
 export const AuthService = {
     login: async (data: any) => {

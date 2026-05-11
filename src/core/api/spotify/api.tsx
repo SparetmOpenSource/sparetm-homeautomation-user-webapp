@@ -1,4 +1,4 @@
-import { SPOTIFY_CODE_VERIFIER, spotify_refresh_playback_constant } from '../../../data/constants';
+import { SPOTIFY_CODE_VERIFIER, spotify_refresh_playback_constant } from '../../../data/Constants';
 import {
     GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID,
     GET_SPOTIFY_ALL_ALBUM_STATE_QUERY_ID,
@@ -7,14 +7,14 @@ import {
     GET_SPOTIFY_QUEUE_STATE_QUERY_ID,
     GET_SPOTIFY_PROFILE_STATE_QUERY_ID,
     GET_SPOTIFY_DEVICE_STATE_QUERY_ID
-} from '../../../data/queryconstant';
-import { catchError, generateCodeChallenge, resetSpotify } from '../../../utils/helperfn';
-import { api, updateHeaderConfig } from '../axios';
-import { featureUrl } from '../coreappapis';
-import { profileUrl } from '../profileconfigapis';
-import { useReactQuery_Get } from '../usereactquery_get';
-import { useDeleteData, usePostUpdateData } from '../usereactquery_update';
-import { getMergedHeadersForSpotify } from '../axios';
+} from '../../../data/QueryConstant';
+import { catchError, generateCodeChallenge, resetSpotify } from '../../../utils/HelperFn';
+import { api, updateHeaderConfig } from '../Axios';
+import { featureUrl } from '../Coreappapis';
+import { profileUrl } from '../Profileconfigapis';
+import { useReactQuery_Get } from '../usereactqueryGet';
+import { useDeleteData, usePostUpdateData } from '../usereactqueryUpdate';
+import { getMergedHeadersForSpotify } from '../Axios';
 import {
     SpotifyApiResponse,
     SpotifyPlaybackState,
@@ -57,12 +57,15 @@ export const getPlaybackState = async (token: string): Promise<SpotifyApiRespons
 };
 
 
-export const getSearchState = async (query: string, type: string, limit: number, offset: number, token: string): Promise<SpotifyApiResponse<any>> => {
+export const getSearchState = async (query: string, type: string, limit: number, offset: number, token: string, signal?: AbortSignal): Promise<SpotifyApiResponse<any>> => {
     try {
         const response = await api.get(
             featureUrl.spotify_base_url +
             `?data=search&query=${encodeURIComponent(query)}&type=${type}&limit=${limit}&offset=${offset}&include_external=audio&market=IN`,
-            { headers: getMergedHeadersForSpotify(token) }
+            { 
+                headers: getMergedHeadersForSpotify(token),
+                signal 
+            }
         );
         return response as unknown as SpotifyApiResponse<any>;
     } catch (error: any) {

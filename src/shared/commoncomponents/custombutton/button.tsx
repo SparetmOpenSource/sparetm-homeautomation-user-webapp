@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import './button.css';
+import './Button.css';
 
 // fn, status, width, height, backCol, textCol, border, label
 const Button = (props: any) => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useTheme } from '../../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
-import './arduinoide.css';
+import { useTheme } from '../../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
+import './Arduinoide.css';
 
 const ArduinoIde = () => {
     const [color, setColor] = useState(light_colors);

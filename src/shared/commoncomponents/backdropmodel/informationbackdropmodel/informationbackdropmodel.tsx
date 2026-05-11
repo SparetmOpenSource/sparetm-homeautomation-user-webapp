@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { SpringSuspense } from '../../../../data/constants';
-import Backdrop from '../backdrop/backdrop';
-import './informationbackdropmodel.css';
+import { SpringSuspense } from '../../../../data/Constants';
+import Backdrop from '../backdrop/Backdrop';
+import './Informationbackdropmodel.css';
 
 const InformationBackdropModel = ({
     handleClose,

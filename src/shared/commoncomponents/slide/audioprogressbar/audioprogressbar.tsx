@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSpotifyControls } from '../../../../core/api/spotify/useSpotifyControls';
 import { SpotifyApiResponse, SpotifyPlaybackState } from '../../../../core/api/spotify/types';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import { SPOTIFY_ACCOUNT_TYPE_GLOBAL, SPOTIFY_PREMIUM_ACCOUNT_TYPE, spotifyNonPremiumWarning } from '../../../../data/constants';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import { SPOTIFY_ACCOUNT_TYPE_GLOBAL, SPOTIFY_PREMIUM_ACCOUNT_TYPE, spotifyNonPremiumWarning } from '../../../../data/Constants';
 import { useProfileLocalStorage } from '../../../../features/auth/utils/authhelpers';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../data/enum';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../data/Enum';
 import {
     displayToastify,
     formatTime,
-} from '../../../../utils/helperfn';
-import './audioprogressbar.css';
+} from '../../../../utils/HelperFn';
+import './Audioprogressbar.css';
 
 interface AudioProgressBarProps {
     totalTimeMs: number;

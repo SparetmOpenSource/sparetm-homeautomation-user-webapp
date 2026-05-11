@@ -101,4 +101,4 @@ export const GadgetRgbDefaultColor = [177, 216, 213, 0.5];
 export const GadgetRgbDefaultPattern = `Linear`;
 export const GadgetRgbRainbowPattern = `Rainbow`;
 
-export const deviceTypeArr = ['gadget', 'appliance'];
+export const deviceTypeArr = ['gadget', 'Appliance'];

@@ -1,6 +1,6 @@
 import React from 'react';
-import { NotificationType } from '../../../features/notifications/store/notification/notificationslice';
-import './notificationcontent.css';
+import { NotificationType } from '../../../features/notifications/store/notification/Notificationslice';
+import './Notificationcontent.css';
 
 interface NotificationContentProps {
     message: string;

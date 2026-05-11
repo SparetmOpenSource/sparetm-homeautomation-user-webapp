@@ -8,12 +8,12 @@ import {
     useSpotifyDeviceState,
     useSpotifyProfileState,
     useSpotifyTransferPlayback,
-} from '../../../../../../../../core/api/spotify/api';
-import { useBackDropOpen } from '../../../../../../../../core/router/themeprovider';
+} from '../../../../../../../../core/api/spotify/Api';
+import { useBackDropOpen } from '../../../../../../../../core/router/Themeprovider';
 import {
     dark_colors,
     light_colors,
-} from '../../../../../../../../data/colorconstant';
+} from '../../../../../../../../data/ColorConstant';
 import {
     LandscapeSizeS,
     SPOTIFY_ACTIVE_EXPAND,
@@ -21,20 +21,20 @@ import {
     SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_PREMIUM_ACCOUNT_TYPE,
     SPOTIFY_TOKEN_GLOBAL,
-} from '../../../../../../../../data/constants';
+} from '../../../../../../../../data/Constants';
 import {
     GET_SPOTIFY_DEVICE_STATE_QUERY_ID,
-} from '../../../../../../../../data/queryconstant';
-import { useProfileLocalStorage } from '../../../../../../../../features/auth/utils/authhelpers';
-import Confirmation from '../../../../../../../../shared/commoncomponents/backdrop/confirmation/confirmation';
-import Button from '../../../../../../../../shared/commoncomponents/custombutton/button';
-import LoadingFade from '../../../../../../../../shared/commoncomponents/loadinganimation/loadingfade';
+    GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID
+} from '../../../../../../../../data/QueryConstant';
+import { useProfileLocalStorage } from '../../../../../../../auth/utils/authhelpers';
+import Confirmation from '../../../../../../../../shared/commoncomponents/backdrop/confirmation/Confirmation';
+import Button from '../../../../../../../../shared/commoncomponents/custombutton/Button';
+import LoadingFade from '../../../../../../../../shared/commoncomponents/loadinganimation/Loadingfade';
 import {
-    defaultOnSuccess,
     invalidateQueries,
     spotifyLogout,
-} from '../../../../../../../../utils/helperfn';
-import './info.css';
+} from '../../../../../../../../utils/HelperFn';
+import './Info.css';
 
 interface InfoProps {
     darkTheme: boolean;
@@ -58,11 +58,20 @@ const Info = ({ darkTheme, currentActiveDevice, handleRefresh }: InfoProps) => {
     const { isLoading: deviceIsLoading, data: deviceState } = useSpotifyDeviceState(accessToken, darkTheme);
 
 
-    const { mutate: transfer } = useSpotifyTransferPlayback(accessToken, darkTheme, defaultOnSuccess);
+    const transferOnSuccess = useCallback(() => {
+        setTimeout(() => {
+            invalidateQueries(queryClient, [
+                `${GET_SPOTIFY_DEVICE_STATE_QUERY_ID}_${accessToken}`,
+                `${GET_SPOTIFY_PLAYBACK_STATE_QUERY_ID}_${accessToken}`
+            ]);
+        }, 1000);
+    }, [queryClient, accessToken]);
+
+    const { mutate: transfer } = useSpotifyTransferPlayback(accessToken, darkTheme, transferOnSuccess);
 
     const refreshDevice = useCallback(() => {
-        invalidateQueries(queryClient, [GET_SPOTIFY_DEVICE_STATE_QUERY_ID]);
-    }, [queryClient]);
+        invalidateQueries(queryClient, [`${GET_SPOTIFY_DEVICE_STATE_QUERY_ID}_${accessToken}`]);
+    }, [queryClient, accessToken]);
 
     const logoutSpotify = useCallback(() => {
         spotifyLogout();
@@ -169,7 +178,7 @@ const Info = ({ darkTheme, currentActiveDevice, handleRefresh }: InfoProps) => {
                         whileTap={isPremium ? { scale: 0.98 } : {}}
                         className="spotify-info-wrapper-device-list"
                         onClick={() => isPremium && transfer({ device_ids: [item?.id], play: true })}
-                        style={{ 
+                        style={{
                             backgroundColor,
                             cursor: isPremium ? 'pointer' : 'default',
                             opacity: isPremium || isActive ? 1 : 0.5

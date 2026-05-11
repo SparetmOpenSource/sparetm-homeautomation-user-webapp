@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../../../../../core/router/themeprovider';
-import { useAppDispatch } from '../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
-import { openProfileOnClick } from '../../../../../profile/utils/profileconfighelperfn';
-import './profilecard.css';
+import { useTheme } from '../../../../../../core/router/Themeprovider';
+import { useAppDispatch } from '../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
+import { openProfileOnClick } from '../../../../../profile/utils/Profileconfighelperfn';
+import './Profilecard.css';
 
 const ProfileCard = ({
     profileId,

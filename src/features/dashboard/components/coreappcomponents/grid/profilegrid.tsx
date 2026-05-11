@@ -1,6 +1,6 @@
 import { FaFaceGrinSquintTears, FaFaceGrinTongueWink, FaFaceGrinWink, FaFaceKiss, FaFaceLaughBeam, FaFaceLaughWink, FaFaceRollingEyes, FaFaceSadTear, FaFaceSurprise } from 'react-icons/fa6';
 import './grid.css';
-import ProfileCard from './profilecard/profilecard';
+import ProfileCard from './profilecard/Profilecard';
 
 const ProfileGrid = (props: any) => {
     let faceArr: any[] = [

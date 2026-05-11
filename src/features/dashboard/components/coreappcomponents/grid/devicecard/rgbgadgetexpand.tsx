@@ -8,29 +8,29 @@ import { SiNano } from 'react-icons/si';
 import { useQueryClient } from 'react-query';
 import { ReactSVG } from 'react-svg';
 import nanoleaf from '../../../../../../assets/nanoleaf.svg';
-import { updateHeaderConfig } from '../../../../../../core/api/axios';
-import { featureUrl, useUpdateDeviceStoreData } from '../../../../../../core/api/coreappapis';
-import { useBackDropOpen } from '../../../../../../core/router/themeprovider';
-import { useAppSelector } from '../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
+import { updateHeaderConfig } from '../../../../../../core/api/Axios';
+import { featureUrl, useUpdateDeviceStoreData } from '../../../../../../core/api/Coreappapis';
+import { useBackDropOpen } from '../../../../../../core/router/Themeprovider';
+import { useAppSelector } from '../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
 import {
     LandscapeSizeM,
     RGB_GADGET_EXPAND_INFO
-} from '../../../../../../data/constants';
-import { GadgetRgbRainbowPattern } from '../../../../../../data/deviceroomconstant';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/enum';
-import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../../../data/queryconstant';
-import ColorPicker from '../../../../../../shared/commoncomponents/colorpicker/colorpicker';
+} from '../../../../../../data/Constants';
+import { GadgetRgbRainbowPattern } from '../../../../../../data/DeviceRoomConstant';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/Enum';
+import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../../../data/QueryConstant';
+import ColorPicker from '../../../../../../shared/commoncomponents/colorpicker/Colorpicker';
 import {
     ConvertTheRange,
     ConvertTheRangeToRound,
     displayToastify,
     invalidateQueries,
-} from '../../../../../../utils/helperfn';
+} from '../../../../../../utils/HelperFn';
 import { useDeviceMutation } from '../../../../../devices/hooks/usedevicemutation';
-import ApplianceExpand from './applianceexpand';
+import ApplianceExpand from './Applianceexpand';
 import './devicecard.css';
-import RgbGadgetExpandSavedColor from './rgbgadgetexpandsavedcolor';
+import RgbGadgetExpandSavedColor from './Rgbgadgetexpandsavedcolor';
 
 interface RGBA {
     r: number;

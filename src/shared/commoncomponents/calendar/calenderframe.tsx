@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { WiRefresh } from 'react-icons/wi';
-import Calendar from './calendar';
-import './calendar.css';
+import Calendar from './Calendar';
+import './Calendar.css';
 
 const CalenderFrame = ({ setNewDate }: any) => {
     const [currentDate, setCurrentDate] = useState(new Date());

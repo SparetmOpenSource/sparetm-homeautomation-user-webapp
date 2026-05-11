@@ -1,4 +1,4 @@
-import { getNotificationConfig } from '../../../utils/notificationconfig';
+import { getNotificationConfig } from '../../../utils/notificationConfig';
 
 const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
 let audioCtx: AudioContext | null = null;

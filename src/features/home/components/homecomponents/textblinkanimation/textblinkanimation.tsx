@@ -1,6 +1,6 @@
 import { motion, useAnimationControls } from 'framer-motion';
 import { useState } from 'react';
-import './textblinkanimation.css';
+import './Textblinkanimation.css';
 
 const TextBlinkAnimation = ({
     children,

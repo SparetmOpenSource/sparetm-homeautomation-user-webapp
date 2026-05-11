@@ -1,14 +1,14 @@
 // refactor code -----------------------------
 import { useMemo } from 'react';
 import { useQueryClient } from 'react-query';
-import { useSpotifyDeleteAlbum } from '../../../../../../../../../core/api/spotify/api';
-import { SPOTIFY_TOKEN_GLOBAL, SPOTIFY_ACCOUNT_TYPE_GLOBAL, SPOTIFY_PREMIUM_ACCOUNT_TYPE } from '../../../../../../../../../data/constants';
-import { useProfileLocalStorage } from '../../../../../../../../../features/auth/utils/authhelpers';
+import { useSpotifyDeleteAlbum } from '../../../../../../../../../core/api/spotify/Api';
+import { SPOTIFY_TOKEN_GLOBAL, SPOTIFY_ACCOUNT_TYPE_GLOBAL, SPOTIFY_PREMIUM_ACCOUNT_TYPE } from '../../../../../../../../../data/Constants';
+import { useProfileLocalStorage } from '../../../../../../../../auth/utils/authhelpers';
 import {
     invalidateQueries,
-} from '../../../../../../../../../utils/helperfn';
-import Card from './card';
-import './cover.css';
+} from '../../../../../../../../../utils/HelperFn';
+import Card from './Card';
+import './Cover.css';
 
 interface CoverProps {
     listData: {
@@ -39,7 +39,9 @@ const Cover = ({
     const isPremium = spotifyAcntType?.trim().toLowerCase() === SPOTIFY_PREMIUM_ACCOUNT_TYPE;
 
     const onSuccess = () => {
-        invalidateQueries(queryClient, [albumIdQueryIdToBeRefreshed]);
+        setTimeout(() => {
+            invalidateQueries(queryClient, [albumIdQueryIdToBeRefreshed]);
+        }, 500);
     };
 
     const { mutate: deleteFromAlbumList } = useSpotifyDeleteAlbum(accessToken, darkTheme, onSuccess);

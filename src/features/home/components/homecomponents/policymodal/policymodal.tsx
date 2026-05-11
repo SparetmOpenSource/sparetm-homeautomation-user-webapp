@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Button from '../../../../../shared/commoncomponents/custombutton/button';
+import Button from '../../../../../shared/commoncomponents/custombutton/Button';
 
-import { dark_colors, light_colors } from '../../../../../data/colorconstant';
-import { COOKIES_PREFERENCES_KEY } from '../../../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../data/enum';
-import useLocalStorage from '../../../../../hooks/uselocalstorage';
-import { displayToastify } from '../../../../../utils/helperfn';
-import './policymodal.css';
+import { dark_colors, light_colors } from '../../../../../data/ColorConstant';
+import { COOKIES_PREFERENCES_KEY } from '../../../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../data/Enum';
+import useLocalStorage from '../../../../../hooks/useLocalStorage';
+import { displayToastify } from '../../../../../utils/HelperFn';
+import './Policymodal.css';
 
 const PolicyModal = ({ handleClose, darkTheme, initialTab }: { handleClose: () => void, darkTheme: boolean, initialTab?: 'settings' | 'what' | 'useful' }) => {
     const [activeTab, setActiveTab] = useState<'settings' | 'what' | 'useful'>(initialTab || 'useful');
@@ -109,7 +109,7 @@ const PolicyModal = ({ handleClose, darkTheme, initialTab }: { handleClose: () =
                         <p>These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages.</p>
                          <div className="policy-setting-row">
                             <span>Functional Cookies</span>
-                             <label className="switch">
+                             <label className="Switch">
                                 <input 
                                     type="checkbox" 
                                     checked={localPreferences.functional} 
@@ -122,7 +122,7 @@ const PolicyModal = ({ handleClose, darkTheme, initialTab }: { handleClose: () =
                         <p>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites.</p>
                          <div className="policy-setting-row">
                             <span>Targeting Cookies</span>
-                             <label className="switch">
+                             <label className="Switch">
                                 <input 
                                     type="checkbox" 
                                     checked={localPreferences.targeting}

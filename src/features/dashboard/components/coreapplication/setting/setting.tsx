@@ -1,8 +1,8 @@
 import { MdRoomPreferences, MdSupervisorAccount } from 'react-icons/md';
 import { useLocation } from 'react-router-dom';
-import { RoutePath } from '../../../../../data/constants';
-import OptionPage from '../../../../../shared/commoncomponents/uiskin/optionpage/optionpage';
-import './setting.css';
+import { RoutePath } from '../../../../../data/Constants';
+import OptionPage from '../../../../../shared/commoncomponents/uiskin/optionpage/Optionpage';
+import './Setting.css';
 
 const Setting = () => {
     const location = useLocation();

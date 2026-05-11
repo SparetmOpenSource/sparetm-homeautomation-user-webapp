@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import ComingSoonImg from '../../../assets/comingsooncu.svg';
-import { useTheme } from '../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
-import Button from '../custombutton/button';
-import './comingsoon.css';
+import { useTheme } from '../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
+import Button from '../custombutton/Button';
+import './Comingsoon.css';
 
 const ComingSoon = ({ page }: any) => {
     const [color, setColor] = useState<any>(light_colors);

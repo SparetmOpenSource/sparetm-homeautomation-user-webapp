@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAppSelector } from '../../../../../../../core/store/reduxhooks';
-import DeviceAcRemote from './deviceacremote/deviceacremote';
-import DeviceFanRemote from './devicefanremote/devicefanremote';
-import './deviceremote.css';
+import { useAppSelector } from '../../../../../../../core/store/Reduxhooks';
+import DeviceAcRemote from './deviceacremote/Deviceacremote';
+import DeviceFanRemote from './devicefanremote/Devicefanremote';
+import './Deviceremote.css';
 
 interface DeviceRemoteProps {
     deviceId: string;

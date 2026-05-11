@@ -2,17 +2,17 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { IconContext } from 'react-icons';
 import { IoCopyOutline } from 'react-icons/io5';
-import { useConnectMqtt, useDeleteMqttConfig, useGetMqttConfig } from '../../../../../../core/api/coreappapis';
-import { useBackDropOpen } from '../../../../../../core/router/themeprovider';
-import { useAppSelector } from '../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
-import { IS_MQTT_CONFIGURED_KEY, LandscapeSizeS } from '../../../../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/enum';
-import Confirmation from '../../../../../../shared/commoncomponents/backdrop/confirmation/confirmation';
-import Button from '../../../../../../shared/commoncomponents/custombutton/button';
-import LoadingFade from '../../../../../../shared/commoncomponents/loadinganimation/loadingfade';
-import { copyText, displayToastify } from '../../../../../../utils/helperfn';
-import './mqttconfigmodal.css';
+import { useConnectMqtt, useDeleteMqttConfig, useGetMqttConfig } from '../../../../../../core/api/Coreappapis';
+import { useBackDropOpen } from '../../../../../../core/router/Themeprovider';
+import { useAppSelector } from '../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
+import { IS_MQTT_CONFIGURED_KEY, LandscapeSizeS } from '../../../../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/Enum';
+import Confirmation from '../../../../../../shared/commoncomponents/backdrop/confirmation/Confirmation';
+import Button from '../../../../../../shared/commoncomponents/custombutton/Button';
+import LoadingFade from '../../../../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import { copyText, displayToastify } from '../../../../../../utils/HelperFn';
+import './Mqttconfigmodal.css';
 
 interface MqttConfigModalProps {
     darkTheme: boolean;

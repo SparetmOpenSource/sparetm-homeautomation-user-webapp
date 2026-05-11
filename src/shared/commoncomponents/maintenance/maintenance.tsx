@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import MaintenancePic from '../../../assets/maintenance.svg';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
-import { reloadPage } from '../../../utils/helperfn';
-import Button from '../custombutton/button';
-import './maintenance.css';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
+import { reloadPage } from '../../../utils/HelperFn';
+import Button from '../custombutton/Button';
+import './Maintenance.css';
 
 const Maintenance = ({ darkTheme }: any) => {
     const [color, setColor] = useState<any>(light_colors);

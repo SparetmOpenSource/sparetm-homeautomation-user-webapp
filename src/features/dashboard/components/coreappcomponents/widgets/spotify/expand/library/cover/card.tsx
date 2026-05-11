@@ -3,16 +3,16 @@ import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { RiNeteaseCloudMusicLine } from 'react-icons/ri';
-import { useBackDropOpen } from '../../../../../../../../../core/router/themeprovider';
+import { useBackDropOpen } from '../../../../../../../../../core/router/Themeprovider';
 import {
     dark_colors,
     light_colors,
-} from '../../../../../../../../../data/colorconstant';
+} from '../../../../../../../../../data/ColorConstant';
 import {
     LandscapeSizeS,
     SPOTIFY_EXPAND_ALBUM_DELETE_CONFIRMATION,
-} from '../../../../../../../../../data/constants';
-import Confirmation from '../../../../../../../../../shared/commoncomponents/backdrop/confirmation/confirmation';
+} from '../../../../../../../../../data/Constants';
+import Confirmation from '../../../../../../../../../shared/commoncomponents/backdrop/confirmation/Confirmation';
 
 interface CardProps {
     id: string | number;
@@ -72,11 +72,7 @@ const Card = ({
     };
 
     const handleMainClick = () => {
-        if (type === 1) fn(id);
-    };
-
-    const handleBottomClick = () => {
-        if (type === 2) fn(id);
+        fn(id);
     };
 
     return (
@@ -122,10 +118,6 @@ const Card = ({
             <div
                 className="spotify-library-cover-info"
                 style={{ backgroundColor: color.inner }}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    handleBottomClick();
-                }}
             >
                 <div className="spotify-library-cover-info-text">
                     <h4 style={{ color: color.text }}>

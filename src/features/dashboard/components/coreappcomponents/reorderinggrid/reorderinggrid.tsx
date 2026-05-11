@@ -91,7 +91,7 @@ const item: React.CSSProperties = {
 const imgStyle: React.CSSProperties = {
     width: "100%",
     height: "100%",
-    objectFit: "contain", // Or 'cover' depending on preference, 'contain' ensures full logo visibility
+    objectFit: "contain", // Or 'Cover' depending on preference, 'contain' ensures full logo visibility
     pointerEvents: "none", // Prevent image dragging interfering with motion
     padding: "35px", // Increased internal spacing to shrink logos
 };

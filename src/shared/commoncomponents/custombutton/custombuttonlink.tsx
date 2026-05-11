@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import './button.css';
+import './Button.css';
 
 const CustomButtonLink = (props: any) => {
     return (

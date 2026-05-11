@@ -7,10 +7,10 @@ import { MdLightMode } from 'react-icons/md';
 import { SiWechat } from 'react-icons/si';
 import { VscDebugDisconnect } from 'react-icons/vsc';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useProfileData } from '../../../../core/api/profileconfigapis';
-import { useBackDropOpen, useTheme, useThemeUpdate } from '../../../../core/router/themeprovider';
-import { useAppSelector } from '../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
+import { useProfileData } from '../../../../core/api/Profileconfigapis';
+import { useBackDropOpen, useTheme, useThemeUpdate } from '../../../../core/router/Themeprovider';
+import { useAppSelector } from '../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
 import {
     CORE_APP_ADD_DEVICE,
     ERROR_MSG,
@@ -23,21 +23,21 @@ import {
     SCREENSAVER_TIMEOUT_KEY,
     SECURITY_LOCK_ENABLED_KEY,
     SECURITY_LOCK_TIMEOUT_KEY,
-} from '../../../../data/constants';
-import useLocalStorage from '../../../../hooks/uselocalstorage';
-import { useUserActivity } from '../../../../hooks/useuseractivity';
-import ErrorPage from '../../../../shared/commoncomponents/errorpage/errorpage';
-import LoadingFade from '../../../../shared/commoncomponents/loadinganimation/loadingfade';
-import SideNavigation from '../../../../shared/commoncomponents/navigation/sidenavigation/sidenavigation';
-import UpperNavigation from '../../../../shared/commoncomponents/navigation/uppernavigation/uppernavigation';
-import PersistentNotification from '../../../../shared/commoncomponents/notification/persistentnotification';
-import PageTransition from '../../../../shared/commoncomponents/pagetransition/pagetransition';
-import CommonSkin from '../../../../shared/commoncomponents/uiskin/commonnavskin/commonnavskin';
-import LockScreen from '../../components/coreappcomponents/lockscreen/lockscreen';
-// import PicFrame from '../../components/coreappcomponents/picframe/picframe';
-import AddDevice from '../../components/coreapplication/deviceroom/adddevice/adddevice';
-import './coreapplication.css';
-import StandbyClock from '../../components/coreappcomponents/StandbyClock/StandbyClock';
+} from '../../../../data/Constants';
+import useLocalStorage from '../../../../hooks/useLocalStorage';
+import { useUserActivity } from '../../../../hooks/useUserActivity';
+import ErrorPage from '../../../../shared/commoncomponents/errorpage/Errorpage';
+import LoadingFade from '../../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import SideNavigation from '../../../../shared/commoncomponents/navigation/sidenavigation/Sidenavigation';
+import UpperNavigation from '../../../../shared/commoncomponents/navigation/uppernavigation/Uppernavigation';
+import PersistentNotification from '../../../../shared/commoncomponents/notification/Persistentnotification';
+import PageTransition from '../../../../shared/commoncomponents/pagetransition/Pagetransition';
+import CommonSkin from '../../../../shared/commoncomponents/uiskin/commonnavskin/Commonnavskin';
+import LockScreen from '../../components/coreappcomponents/lockscreen/Lockscreen';
+// import PicFrame from '../../components/coreappcomponents/picframe/Picframe';
+import AddDevice from '../../components/coreapplication/deviceroom/adddevice/Adddevice';
+import './Coreapplication.css';
+import StandbyClock from '../../components/coreappcomponents/standbyclock/StandbyClock';
 
 
 interface NavItem {

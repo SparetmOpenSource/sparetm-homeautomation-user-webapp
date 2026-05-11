@@ -19,6 +19,7 @@
     height: 100%;
     width: 85%;
     border-bottom-right-radius: 0.5rem;
+    overflow: hidden;
 }
 
 .deviceRoom-name {

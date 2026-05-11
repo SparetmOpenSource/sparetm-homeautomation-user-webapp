@@ -2,12 +2,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IoMdTime } from 'react-icons/io';
 import { MdDeleteOutline, MdPowerSettingsNew } from 'react-icons/md';
-import { useAddDeviceSchedule, useDeleteDeviceSchedule, useGetDeviceSchedules } from '../../../../../../../core/api/coreappapis';
-import { useAppSelector } from '../../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../../data/colorconstant';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../data/enum';
-import { displayToastify } from '../../../../../../../utils/helperfn';
-import './scheduler.css';
+import { useAddDeviceSchedule, useDeleteDeviceSchedule, useGetDeviceSchedules } from '../../../../../../../core/api/Coreappapis';
+import { useAppSelector } from '../../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../../data/ColorConstant';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../data/Enum';
+import { displayToastify } from '../../../../../../../utils/HelperFn';
+import './Scheduler.css';
 
 interface SchedulerProps {
     darkTheme: boolean;
@@ -145,7 +145,7 @@ const Scheduler: React.FC<SchedulerProps> = ({ darkTheme, deviceId }) => {
                     />
                     
                     <motion.div 
-                        role="button"
+                        role="Button"
                         aria-label={`Toggle Action: Currently ${selectedAction}`}
                         className="scheduler_action_toggle"
                         style={{ 

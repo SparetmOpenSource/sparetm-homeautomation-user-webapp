@@ -33,4 +33,5 @@
 
 .common-nav-skin-content-data {
     border-bottom-right-radius: 0.5rem;
+    overflow: hidden;
 }

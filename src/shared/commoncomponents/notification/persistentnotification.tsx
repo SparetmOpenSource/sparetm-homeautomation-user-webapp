@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
-import { useBackDropOpen } from '../../../core/router/themeprovider';
-import { useAppDispatch, useAppSelector } from '../../../core/store/reduxhooks';
-import { GLOBAL_NOTIFICATION, LandscapeSizeM } from '../../../data/constants';
-import { acknowledgeNotification, hideNotification } from '../../../features/notifications/store/notification/notificationslice';
-import useLocalStorage from '../../../hooks/uselocalstorage';
-import NotificationContent from './notificationcontent';
+import { useBackDropOpen } from '../../../core/router/Themeprovider';
+import { useAppDispatch, useAppSelector } from '../../../core/store/Reduxhooks';
+import { GLOBAL_NOTIFICATION, LandscapeSizeM } from '../../../data/Constants';
+import { acknowledgeNotification, hideNotification } from '../../../features/notifications/store/notification/Notificationslice';
+import useLocalStorage from '../../../hooks/useLocalStorage';
+import NotificationContent from './Notificationcontent';
 
-import { ACKNOWLEDGED_NOTIFICATIONS_KEY } from '../../../data/constants';
+import { ACKNOWLEDGED_NOTIFICATIONS_KEY } from '../../../data/Constants';
 
 const PersistentNotification: React.FC = () => {
     const dispatch = useAppDispatch();

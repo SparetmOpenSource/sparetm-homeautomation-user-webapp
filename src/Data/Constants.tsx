@@ -203,7 +203,7 @@ export const SpringSuspense = {
 
 
 
-export const deviceTypeArr = ['gadget', 'appliance'];
+export const deviceTypeArr = ['gadget', 'Appliance'];
 
 export const colorNotificationStatus = ['success', 'error'];
 

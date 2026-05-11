@@ -1,8 +1,8 @@
-import './picframe.css';
-// import Pooh from './../../../Assets/Pooh.jpg';
+import './Picframe.css';
+// import Pooh from './../../../assets/pooh.jpg';
 import { useMemo, useState } from 'react';
-import { useWindowSize } from '../../../../../hooks/usewindowsize';
-import PlantSimulatorAnimated from './plantsimulator/animation/animatedplantprops';
+import { useWindowSize } from '../../../../../hooks/useWindowSize';
+import PlantSimulatorAnimated from './plantsimulator/animation/Animatedplantprops';
 
 const PicFrame = () => {
 

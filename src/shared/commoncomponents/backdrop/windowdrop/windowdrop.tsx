@@ -2,10 +2,10 @@ import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import { SpringSuspense } from '../../../../data/constants';
-import BackDrop from '../backdrop';
-import './windowdrop.css';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import { SpringSuspense } from '../../../../data/Constants';
+import BackDrop from '../Backdrop';
+import './Windowdrop.css';
 
 const WindowDrop = ({
     children,

@@ -3,30 +3,30 @@ import { useMemo } from 'react';
 import { IconContext } from 'react-icons';
 import { FaSadTear } from 'react-icons/fa';
 import { IoIosAddCircle } from 'react-icons/io';
-import { useSpotifyQueueState } from '../../../../../../../../core/api/spotify/api';
+import { useSpotifyQueueState } from '../../../../../../../../core/api/spotify/Api';
 import { useSpotifyControls } from '../../../../../../../../core/api/spotify/useSpotifyControls';
 import { SpotifyApiResponse, SpotifyPlaybackState } from '../../../../../../../../core/api/spotify/types';
-import { useBackDropOpen } from '../../../../../../../../core/router/themeprovider';
+import { useBackDropOpen } from '../../../../../../../../core/router/Themeprovider';
 import {
     dark_colors,
     light_colors,
-} from '../../../../../../../../data/colorconstant';
+} from '../../../../../../../../data/ColorConstant';
 import {
     LandscapeSizeS,
     // SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_EXPAND_ADD_ALBUM_CONFIRMATION,
     SPOTIFY_TOKEN_GLOBAL,
     // spotifyNonPremiumWarning,
-} from '../../../../../../../../data/constants';
-// import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../../data/enum';
-import { useProfileLocalStorage } from '../../../../../../../../features/auth/utils/authhelpers';
-import Confirmation from '../../../../../../../../shared/commoncomponents/backdrop/confirmation/confirmation';
-import Error from '../../../../../../../../shared/commoncomponents/errorpage/errorpage';
-import LoadingFade from '../../../../../../../../shared/commoncomponents/loadinganimation/loadingfade';
-import { trimToNChars } from '../../../../../../../../utils/helperfn';
-import SpotifyCurrentPlayback from '../../spotifycurrentplayback/spotifycurrentplayback';
-import SongTemplate from '../songtemplate';
-import './home.css';
+} from '../../../../../../../../data/Constants';
+// import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../../data/Enum';
+import { useProfileLocalStorage } from '../../../../../../../auth/utils/authhelpers';
+import Confirmation from '../../../../../../../../shared/commoncomponents/backdrop/confirmation/Confirmation';
+import Error from '../../../../../../../../shared/commoncomponents/errorpage/Errorpage';
+import LoadingFade from '../../../../../../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import { trimToNChars } from '../../../../../../../../utils/HelperFn';
+import SpotifyCurrentPlayback from '../../spotifycurrentplayback/Spotifycurrentplayback';
+import SongTemplate from '../Songtemplate';
+import './Home.css';
 
 interface HomeProps {
     data: SpotifyApiResponse<SpotifyPlaybackState> | null;

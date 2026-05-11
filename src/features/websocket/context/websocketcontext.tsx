@@ -1,20 +1,20 @@
 import { Client } from '@stomp/stompjs';
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import useLocalStorage from '../../../hooks/uselocalstorage';
+import useLocalStorage from '../../../hooks/useLocalStorage';
 
 import { useLocation } from 'react-router-dom';
-import { RootUrl } from '../../../core/api/axios';
-import { getWebSocketUrl } from '../../../core/api/profileconfigapis';
-import { useReactQuery_Get } from '../../../core/api/usereactquery_get';
-import { useTheme } from '../../../core/router/themeprovider';
-import { useAppDispatch, useAppSelector } from '../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
-import { ACKNOWLEDGED_NOTIFICATIONS_KEY, NOTIFICATION_SOUNDS_ENABLED_KEY, RoutePath, WEBSOCKET_ENABLED_KEY, WEBSOCKET_TOPIC_EVENTS } from '../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/enum';
-import { GET_WEBSOCKET_URL_QUERY_ID } from '../../../data/queryconstant';
-import { displayToastify, handleClickForBlinkNotification, playNotificationSound } from '../../../utils/helperfn';
-import { addDevice, deleteDeviceDataStore, removeDevice, updateAllDevices, updateDevice, updateDeviceDataStore } from '../../devices/store/device/deviceslice';
-import { setNotification } from '../../notifications/store/notification/notificationslice';
+import { RootUrl } from '../../../core/api/Axios';
+import { getWebSocketUrl } from '../../../core/api/Profileconfigapis';
+import { useReactQuery_Get } from '../../../core/api/usereactqueryGet';
+import { useTheme } from '../../../core/router/Themeprovider';
+import { useAppDispatch, useAppSelector } from '../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
+import { ACKNOWLEDGED_NOTIFICATIONS_KEY, NOTIFICATION_SOUNDS_ENABLED_KEY, RoutePath, WEBSOCKET_ENABLED_KEY, WEBSOCKET_TOPIC_EVENTS } from '../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/Enum';
+import { GET_WEBSOCKET_URL_QUERY_ID } from '../../../data/QueryConstant';
+import { displayToastify, handleClickForBlinkNotification, playNotificationSound } from '../../../utils/HelperFn';
+import { addDevice, deleteDeviceDataStore, removeDevice, updateAllDevices, updateDevice, updateDeviceDataStore } from '../../devices/store/device/Deviceslice';
+import { setNotification } from '../../notifications/store/notification/Notificationslice';
 
 type ConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'error';
 
@@ -54,7 +54,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     const location = useLocation();
     const darkTheme = useTheme();
     const lastNotificationIdRef = useRef<string | null>(null); // Track last notification that played sound
-    
+
     // Use hooks for settings and storage
     const [acknowledgedIds] = useLocalStorage<string[]>(ACKNOWLEDGED_NOTIFICATIONS_KEY, []);
     const [notificationSoundsEnabled] = useLocalStorage(NOTIFICATION_SOUNDS_ENABLED_KEY, true);
@@ -71,7 +71,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     useEffect(() => {
         notificationSoundsEnabledRef.current = notificationSoundsEnabled;
     }, [notificationSoundsEnabled]);
-    
+
     const color = useMemo(
         () => (darkTheme ? dark_colors : light_colors),
         [darkTheme],
@@ -97,9 +97,9 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     // Fetch WebSocket URL using React Query
     // This approach is more secure as the backend can return the actual service URL
     // without exposing internal routing details to the client
-    const { 
-        isLoading: isLoadingWsUrl, 
-        refetch, 
+    const {
+        isLoading: isLoadingWsUrl,
+        refetch,
         isFetching,
         isError
     } = useReactQuery_Get(
@@ -113,14 +113,14 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
             staleTime: 300000,
             onSuccess: (data: any) => {
                 const responseData = data?.data?.data || data?.data?.body || data?.data;
-                
+
                 if (responseData?.url && Array.isArray(responseData.url) && responseData.url.length > 0) {
                     const backendUrl = new URL(responseData.url[0]);
                     const fullUrl = `${RootUrl.gateway}${backendUrl.pathname}${backendUrl.search}`;
-                    
+
                     console.log('[WebSocket] Fetched URL:', fullUrl);
                     setWsUrl(fullUrl);
-                    
+
                     if (responseData?.topic && Array.isArray(responseData.topic) && responseData.topic.length > 0) {
                         const topic = responseData.topic[0];
                         console.log('[WebSocket] Fetched Topic:', topic);
@@ -181,11 +181,11 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
             // However, often just replacing http->ws works if not restricted.
             // Let's assume standard behavior: replace protocol.
             let wsUrl = url.replace('http://', 'ws://').replace('https://', 'wss://');
-            
+
             // Append /websocket if it's a SockJS endpoint to bypass SockJS protocol handshake (implied by previous SockJS usage)
             // If the URL already ends in /websocket, don't append.
             if (!wsUrl.endsWith('/websocket')) {
-               wsUrl = `${wsUrl}/websocket`; 
+                wsUrl = `${wsUrl}/websocket`;
             }
 
             console.log('[WebSocket] Connecting to native endpoint:', wsUrl);
@@ -211,7 +211,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                     clearInterval(blinkIntervalRef.current);
                     blinkIntervalRef.current = null;
                 }
-                
+
                 displayToastify(
                     'Real-time connection established',
                     !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
@@ -267,7 +267,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                                         // Check if notification is already acknowledged BEFORE dispatching
                                         // We use the REF value here to avoid stale closures in the callback
                                         const isNotAcknowledged = !acknowledgedIdsRef.current.includes(payload.payload.id);
-                                        
+
                                         if (isNotAcknowledged) {
                                             // Dispatch every time the server sends it (updates timestamp)
                                             dispatch(setNotification({
@@ -275,7 +275,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                                                 message: payload.payload.message,
                                                 type: payload.payload.type || 'INFO'
                                             }));
-                                            
+
                                             // Play sound for EVERY server payload if not acknowledged
                                             // We check the sound setting from the REF
                                             lastNotificationIdRef.current = payload.payload.id;
@@ -288,7 +288,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                                 default:
                                     console.warn('[WebSocket] Unknown message type:', payload.type);
                             }
-                        } 
+                        }
                         // Fallback for legacy format (Direct device object)
                         else if (payload.deviceId) {
                             dispatch(updateDevice({
@@ -312,7 +312,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
             client.onWebSocketClose = () => {
                 console.log('[WebSocket] Connection closed');
                 setConnectionStatus('disconnected');
-                
+
                 // Only show error toast if it wasn't an intentional disconnect
                 if (!isIntentionalDisconnectRef.current && reconnectAttemptsRef.current === 0) {
                     displayToastify(
@@ -321,7 +321,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
                         TOASTIFYSTATE.ERROR,
                     );
                 }
-                
+
                 if (!isIntentionalDisconnectRef.current) {
                     scheduleReconnect();
                 }
@@ -353,16 +353,16 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
             if (reconnectAttemptsRef.current === MAX_RECONNECT_ATTEMPTS) {
                 console.error('[WebSocket] Max reconnection attempts reached');
                 setConnectionStatus('error');
-                
+
                 displayToastify(
                     'Failed to reconnect. Please refresh the page.',
                     !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
                     TOASTIFYSTATE.ERROR,
                 );
-                
+
                 // Initial blink
                 handleClickForBlinkNotification(color, 'ERROR', dispatch);
-                
+
                 // Start persistent blink interval (every 5 seconds)
                 if (blinkIntervalRef.current) clearInterval(blinkIntervalRef.current);
                 blinkIntervalRef.current = setInterval(() => {
@@ -381,7 +381,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
         console.log(
             `[WebSocket] Reconnecting in ${delay}ms (attempt ${reconnectAttemptsRef.current}/${MAX_RECONNECT_ATTEMPTS})`
         );
-        
+
         displayToastify(
             `Reconnecting... (Attempt ${reconnectAttemptsRef.current})`,
             !darkTheme ? TOASTIFYCOLOR.DARK : TOASTIFYCOLOR.LIGHT,
@@ -418,7 +418,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     const disconnect = () => {
         console.log('[WebSocket] Disconnecting...');
         isIntentionalDisconnectRef.current = true;
-        
+
         if (reconnectTimeoutRef.current) {
             clearTimeout(reconnectTimeoutRef.current);
             reconnectTimeoutRef.current = null;

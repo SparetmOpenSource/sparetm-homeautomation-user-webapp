@@ -1,7 +1,7 @@
-import { RoutePath } from '../../../data/constants';
+import { RoutePath } from '../../../data/Constants';
 import {
     clearLocalStorageOnProfileSwitch,
-} from '../../../utils/helperfn';
+} from '../../../utils/HelperFn';
 import {
     addProfile,
     addProfileId,

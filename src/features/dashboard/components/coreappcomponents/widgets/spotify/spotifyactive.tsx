@@ -1,17 +1,17 @@
 // refactor code -----------------------------
 import { useEffect } from 'react';
-import { useSpotifyPlaybackState, useSpotifyProfileState } from '../../../../../../core/api/spotify/api';
-import { useTheme } from '../../../../../../core/router/themeprovider';
+import { useSpotifyPlaybackState, useSpotifyProfileState } from '../../../../../../core/api/spotify/Api';
+import { useTheme } from '../../../../../../core/router/Themeprovider';
 import {
     SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_PREMIUM_ACCOUNT_TYPE,
     SPOTIFY_TOKEN_GLOBAL,
     spotifyFreeAccountWarning,
-} from '../../../../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/enum';
-import { useProfileLocalStorage } from '../../../../../../features/auth/utils/authhelpers';
-import { displayToastify } from '../../../../../../utils/helperfn';
-import SpotifyCurrentPlayback from './spotifycurrentplayback/spotifycurrentplayback';
+} from '../../../../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/Enum';
+import { useProfileLocalStorage } from '../../../../../auth/utils/authhelpers';
+import { displayToastify } from '../../../../../../utils/HelperFn';
+import SpotifyCurrentPlayback from './spotifycurrentplayback/Spotifycurrentplayback';
 
 interface SpotifyActiveProps {
     handleRefresh: () => void;

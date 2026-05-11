@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import './canvasanimation.css';
+import './Canvasanimation.css';
 
 const CanvasAnimation = ({ children }: any) => {
     useEffect(() => {

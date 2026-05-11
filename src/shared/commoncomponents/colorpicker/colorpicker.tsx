@@ -1,6 +1,6 @@
 import iro from '@jaames/iro';
 import { useEffect, useRef, useState } from 'react';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
 
 const ColorPicker = ({ rgb, setRgb, darkTheme }: any) => {
     const colorPickerContainerRef = useRef<HTMLDivElement>(null);

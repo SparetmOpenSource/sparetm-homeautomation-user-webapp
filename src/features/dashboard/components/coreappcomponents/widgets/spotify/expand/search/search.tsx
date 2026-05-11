@@ -1,26 +1,26 @@
 import { useMemo, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { FaSadTear } from 'react-icons/fa';
-import { useBackDropOpen } from '../../../../../../../../core/router/themeprovider';
+import { useBackDropOpen } from '../../../../../../../../core/router/Themeprovider';
 import {
     dark_colors,
     light_colors,
-} from '../../../../../../../../data/colorconstant';
+} from '../../../../../../../../data/ColorConstant';
 import {
     LandscapeSizeS,
     // SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_EXPAND_ADD_TRACK_TO_QUEUE_CONFIRMATION,
     SPOTIFY_TOKEN_GLOBAL
-} from '../../../../../../../../data/constants';
-import { useProfileLocalStorage } from '../../../../../../../../features/auth/utils/authhelpers';
-import Confirmation from '../../../../../../../../shared/commoncomponents/backdrop/confirmation/confirmation';
-import LoadingFade from '../../../../../../../../shared/commoncomponents/loadinganimation/loadingfade';
-import DoSearch from '../../../../../../../../shared/commoncomponents/search/dosearch';
+} from '../../../../../../../../data/Constants';
+import { useProfileLocalStorage } from '../../../../../../../auth/utils/authhelpers';
+import Confirmation from '../../../../../../../../shared/commoncomponents/backdrop/confirmation/Confirmation';
+import LoadingFade from '../../../../../../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import DoSearch from '../../../../../../../../shared/commoncomponents/search/Dosearch';
 import { useSpotifySearch } from '../../../../../../../spotify/hooks/usespotifysearch';
 import { useSpotifyControls } from '../../../../../../../../core/api/spotify/useSpotifyControls';
 import { SpotifyApiResponse, SpotifyPlaybackState } from '../../../../../../../../core/api/spotify/types';
-import SongTemplate from '../songtemplate';
-import './search.css';
+import SongTemplate from '../Songtemplate';
+import './Search.css';
 
 interface SearchProps {
     data: SpotifyApiResponse<SpotifyPlaybackState> | null;
@@ -86,6 +86,7 @@ const Search = ({ data, darkTheme }: SearchProps) => {
                     darkTheme={darkTheme}
                     value={query}
                     onChange={(e: any) => setQuery(e?.target?.value)}
+                    autoFocus={true}
                 />
             </section>
             <section

@@ -4,16 +4,16 @@ import { Controller, useForm } from 'react-hook-form';
 import { IconContext } from 'react-icons';
 import { VscEye, VscEyeClosed } from 'react-icons/vsc';
 import Select from 'react-select';
-import { useTheme } from '../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
-import TextBlinkAnimation from '../../../features/home/components/homecomponents/textblinkanimation/textblinkanimation';
-import Button from '../custombutton/button';
-import './dynamicform.css';
+import { useTheme } from '../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
+import TextBlinkAnimation from '../../../features/home/components/homecomponents/textblinkanimation/Textblinkanimation';
+import Button from '../custombutton/Button';
+import './Dynamicform.css';
 
 export interface FieldConfig {
     id: string | number;
     name: string;
-    type: 'text' | 'password' | 'mobile number' | 'select';
+    type: 'text' | 'password' | 'mobile number' | 'Select';
     label?: string; // Placeholder or Label
     
     // Select specific
@@ -175,7 +175,7 @@ const DynamicForm = ({ heading, subHeading, fields, onSubmit, defaultValues = {}
                     <div key={field.id} className="dynamicForm-field-wrapper">
                         
                         {/* SELECT FIELD */}
-                        {field.type === 'select' ? (
+                        {field.type === 'Select' ? (
                             <Controller
                                 name={field.name}
                                 control={control}
@@ -194,7 +194,7 @@ const DynamicForm = ({ heading, subHeading, fields, onSubmit, defaultValues = {}
                                         styles={customStyles}
                                         placeholder={field.label}
                                         className="dynamicForm-select"
-                                        classNamePrefix="select"
+                                        classNamePrefix="Select"
                                         closeMenuOnSelect={!field.isMulti}
                                         isDisabled={false}
                                         isClearable={true}

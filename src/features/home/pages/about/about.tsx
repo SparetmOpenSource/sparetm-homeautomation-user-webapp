@@ -5,12 +5,12 @@ import { CiDark } from 'react-icons/ci';
 import { FaCode, FaGithub, FaLinkedin, FaUsers } from 'react-icons/fa';
 import { MdCloudSync, MdLightMode, MdWeb } from 'react-icons/md';
 import Profile from '../../../../assets/profile.png';
-import { useTheme, useThemeUpdate } from '../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import { home_contact_social_list } from '../../../../data/constants';
-import PageTransition from '../../../../shared/commoncomponents/pagetransition/pagetransition';
-import { observer } from '../../../../utils/helperfn';
-import './about.css';
+import { useTheme, useThemeUpdate } from '../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import { home_contact_social_list } from '../../../../data/Constants';
+import PageTransition from '../../../../shared/commoncomponents/pagetransition/Pagetransition';
+import { observer } from '../../../../utils/HelperFn';
+import './About.css';
 
 const About = () => {
     const darkTheme: any = useTheme();

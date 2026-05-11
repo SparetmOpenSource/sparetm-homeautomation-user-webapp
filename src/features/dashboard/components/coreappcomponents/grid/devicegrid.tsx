@@ -1,13 +1,13 @@
 import { useLocation } from 'react-router-dom';
-import { useTheme } from '../../../../../core/router/themeprovider';
-import { useAppSelector } from '../../../../../core/store/reduxhooks';
-import { DATA_NOT_FOUND_MSG, deviceTypeArr } from '../../../../../data/constants';
-import ErrorPage from '../../../../../shared/commoncomponents/errorpage/errorpage';
-import Appliance from './devicecard/appliance';
-import RgbGadget from './devicecard/rgbgadget';
+import { useTheme } from '../../../../../core/router/Themeprovider';
+import { useAppSelector } from '../../../../../core/store/Reduxhooks';
+import { DATA_NOT_FOUND_MSG, deviceTypeArr } from '../../../../../data/Constants';
+import ErrorPage from '../../../../../shared/commoncomponents/errorpage/Errorpage';
+import Appliance from './devicecard/Appliance';
+import RgbGadget from './devicecard/Rgbgadget';
 import './grid.css';
 
-const DeviceGrid = () => {
+const DeviceGrid = ({ searchQuery = '' }: { searchQuery?: string }) => {
     const location = useLocation();
     const darkTheme = useTheme();
 
@@ -16,8 +16,13 @@ const DeviceGrid = () => {
         ?.replace('%20', ' ')
         .toLowerCase();
 
-    const devices = useAppSelector(
+    const allDevices = useAppSelector(
         (state: any) => state?.device?.deviceData?.body ?? [],
+    );
+
+    const devices = allDevices.filter((el: any) =>
+        String(el?.deviceName || '').toLowerCase().includes(searchQuery) ||
+        String(el?.showName || '').toLowerCase().includes(searchQuery)
     );
 
     return (

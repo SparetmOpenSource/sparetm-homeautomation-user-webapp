@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
-import useLocalStorage from '../../../hooks/uselocalstorage';
+import useLocalStorage from '../../../hooks/useLocalStorage';
 
 interface PageTransitionProps {
     children: ReactNode;

@@ -2,23 +2,23 @@ import { motion } from 'framer-motion';
 import { memo, useMemo } from 'react';
 import { IconContext } from 'react-icons';
 import { CiCircleMore } from 'react-icons/ci';
-import { useWeatherQuoteData } from '../../../../../../core/api/coreappapis';
-import { useBackDropOpen, useTheme } from '../../../../../../core/router/themeprovider';
-import { useAppSelector } from '../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
+import { useWeatherQuoteData } from '../../../../../../core/api/Coreappapis';
+import { useBackDropOpen, useTheme } from '../../../../../../core/router/Themeprovider';
+import { useAppSelector } from '../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
 import {
     WEATHER_EXPAND,
     LandscapeSizeM,
-} from '../../../../../../data/constants';
-import LoadingFade from '../../../../../../shared/commoncomponents/loadinganimation/loadingfade';
-import WidgetError from '../../../../../../shared/commoncomponents/widgeterror/widgeterror';
+} from '../../../../../../data/Constants';
+import LoadingFade from '../../../../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import WidgetError from '../../../../../../shared/commoncomponents/widgeterror/Widgeterror';
 import {
     changeWeatherIcon,
     getFormattedDate,
-} from '../../../../../../utils/helperfn';
+} from '../../../../../../utils/HelperFn';
 import { WeatherData } from './types';
-import Expand from './expand';
-import './weather.css';
+import Expand from './Expand';
+import './Weather.css';
 
 const Weather = memo(() => {
     const profileId = useAppSelector((state) => state?.user?.profileId);

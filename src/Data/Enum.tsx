@@ -1,5 +1,5 @@
 export const TOASTIFYSTATE = {
-    INFO: 'info',
+    INFO: 'Info',
     SUCCESS: 'success',
     WARN: 'warn',
     ERROR: 'error',

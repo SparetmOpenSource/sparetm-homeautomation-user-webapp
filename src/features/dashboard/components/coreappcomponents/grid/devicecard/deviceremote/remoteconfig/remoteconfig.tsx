@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { MdOutlineElectricalServices } from 'react-icons/md';
-import Button from '../../../../../../../../shared/commoncomponents/custombutton/button';
-import { copyText } from '../../../../../../../../utils/helperfn';
-import './remoteconfig.css';
+import Button from '../../../../../../../../shared/commoncomponents/custombutton/Button';
+import { copyText } from '../../../../../../../../utils/HelperFn';
+import './Remoteconfig.css';
 
 interface RemoteConfigProps {
     deviceType: 'ac' | 'fan';

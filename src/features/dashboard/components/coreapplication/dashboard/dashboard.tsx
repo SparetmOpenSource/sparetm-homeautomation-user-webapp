@@ -4,12 +4,12 @@ import { IconContext } from 'react-icons';
 import { BsActivity } from 'react-icons/bs';
 import { RiCalendarTodoLine } from 'react-icons/ri';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useTheme } from '../../../../../core/router/themeprovider';
-import { useAppSelector } from '../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../data/colorconstant';
-import { RoutePath } from '../../../../../data/constants';
-import WidgetCarousel from '../../../../../shared/commoncomponents/slide/widgetcarousel/widgetcarousel';
-import './dashboard.css';
+import { useTheme } from '../../../../../core/router/Themeprovider';
+import { useAppSelector } from '../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../data/ColorConstant';
+import { RoutePath } from '../../../../../data/Constants';
+import WidgetCarousel from '../../../../../shared/commoncomponents/slide/widgetcarousel/Widgetcarousel';
+import './Dashboard.css';
 
 const DashBoard = () => {
     const [color, setColor] = useState<any>(light_colors);

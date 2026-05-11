@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { IconContext } from 'react-icons';
 import { LuServerOff } from 'react-icons/lu';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
-import './widgeterror.css';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
+import './Widgeterror.css';
 
 const getThemeColors = (isDark: boolean) =>
     isDark ? dark_colors : light_colors;

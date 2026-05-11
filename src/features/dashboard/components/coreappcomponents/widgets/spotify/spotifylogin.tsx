@@ -3,23 +3,23 @@ import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { FaSpotify } from 'react-icons/fa';
-import { handleLogin, redirect_uri, setting_up_token, useSpotifyAccessToken } from '../../../../../../core/api/spotify/api';
+import { handleLogin, redirect_uri, setting_up_token, useSpotifyAccessToken } from '../../../../../../core/api/spotify/Api';
 import './spotify.css';
 
-import { useTheme } from '../../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
+import { useTheme } from '../../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
 import {
     SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_CODE_VERIFIER,
     SPOTIFY_REFRESH_TOKEN_GLOBAL,
     SPOTIFY_TOKEN_FETCHED_GLOBAL,
     SPOTIFY_TOKEN_GLOBAL,
-} from '../../../../../../data/constants';
-import { useProfileLocalStorage } from '../../../../../../features/auth/utils/authhelpers';
-import Button from '../../../../../../shared/commoncomponents/custombutton/button';
-import LoadingFade from '../../../../../../shared/commoncomponents/loadinganimation/loadingfade';
-import { catchError } from '../../../../../../utils/helperfn';
-import { SpotifyActive } from './spotifyactive';
+} from '../../../../../../data/Constants';
+import { useProfileLocalStorage } from '../../../../../auth/utils/authhelpers';
+import Button from '../../../../../../shared/commoncomponents/custombutton/Button';
+import LoadingFade from '../../../../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import { catchError } from '../../../../../../utils/HelperFn';
+import { SpotifyActive } from './Spotifyactive';
 
 const SpotifyLogIn = ({ handleRefresh }: any) => {
     const [color, setColor] = useState<any>(light_colors);

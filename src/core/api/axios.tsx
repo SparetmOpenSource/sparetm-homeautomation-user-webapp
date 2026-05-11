@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { SPOTIFY_REFRESH_TOKEN_GLOBAL, SPOTIFY_TOKEN_GLOBAL } from '../../data/constants';
-import { getItem } from '../../hooks/uselocalstorage';
+import { SPOTIFY_REFRESH_TOKEN_GLOBAL, SPOTIFY_TOKEN_GLOBAL } from '../../data/Constants';
+import { getItem } from '../../hooks/useLocalStorage';
 import { getProfileKey } from '../../features/auth/utils/authhelpers';
 
 export const RootUrl = {

@@ -1,19 +1,19 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
-import { useAddDevice } from '../../../../../../core/api/coreappapis';
-import { useAppSelector } from '../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/enum';
-import DynamicForm, { FieldConfig } from '../../../../../../shared/commoncomponents/dynamicform/dynamicform';
+import { useAddDevice } from '../../../../../../core/api/Coreappapis';
+import { useAppSelector } from '../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/Enum';
+import DynamicForm, { FieldConfig } from '../../../../../../shared/commoncomponents/dynamicform/Dynamicform';
 import {
     appliance,
     catchError,
     changeDeviceIcon,
     displayToastify,
     trimToNChars,
-} from '../../../../../../utils/helperfn';
-import './adddevice.css';
+} from '../../../../../../utils/HelperFn';
+import './Adddevice.css';
 
 const AddDevice = ({ darkTheme, roomType, toggleBackDropClose }: any) => {
     const [color, setColor] = useState<any>(light_colors);

@@ -11,10 +11,10 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import deviceReducer from '../../features/devices/store/device/deviceslice';
-import roomReducer from '../../features/devices/store/room/roomslice';
-import blinkReducer from '../../features/notifications/store/blink/blinkslice';
-import notificationReducer from '../../features/notifications/store/notification/notificationslice';
+import deviceReducer from '../../features/devices/store/device/Deviceslice';
+import roomReducer from '../../features/devices/store/room/Roomslice';
+import blinkReducer from '../../features/notifications/store/blink/Blinkslice';
+import notificationReducer from '../../features/notifications/store/notification/Notificationslice';
 import userReducer from '../../features/profile/store/user/userslice';
 
 const rootReducer = combineReducers({

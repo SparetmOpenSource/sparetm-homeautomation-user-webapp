@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { CiDark } from 'react-icons/ci';
 import { MdLightMode } from 'react-icons/md';
-import { useTheme, useThemeUpdate } from '../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
-import UpperNavigation from '../../../../shared/commoncomponents/navigation/uppernavigation/uppernavigation';
-import PageTransition from '../../../../shared/commoncomponents/pagetransition/pagetransition';
-import CommonNavSkin from '../../../../shared/commoncomponents/uiskin/commonnavskin/commonnavskin';
-import Content from './content/content';
-import './signup.css';
+import { useTheme, useThemeUpdate } from '../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
+import UpperNavigation from '../../../../shared/commoncomponents/navigation/uppernavigation/Uppernavigation';
+import PageTransition from '../../../../shared/commoncomponents/pagetransition/Pagetransition';
+import CommonNavSkin from '../../../../shared/commoncomponents/uiskin/commonnavskin/Commonnavskin';
+import Content from './content/Content';
+import './Signup.css';
 
 const SignUp = () => {
     const darkTheme: any = useTheme();

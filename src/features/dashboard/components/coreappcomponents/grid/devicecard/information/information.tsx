@@ -7,25 +7,25 @@ import { HiOutlineInformationCircle } from 'react-icons/hi2';
 import { IoCopyOutline } from 'react-icons/io5';
 import { MdOutlineDataSaverOff, MdOutlineMoreTime } from 'react-icons/md';
 import { TbDeviceRemote } from 'react-icons/tb';
-import { useDeleteDevice } from '../../../../../../../core/api/coreappapis';
-import { useBackDropOpen } from '../../../../../../../core/router/themeprovider';
-import { useAppSelector } from '../../../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../../../data/colorconstant';
+import { useDeleteDevice } from '../../../../../../../core/api/Coreappapis';
+import { useBackDropOpen } from '../../../../../../../core/router/Themeprovider';
+import { useAppSelector } from '../../../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../../../data/ColorConstant';
 import {
     DEVICE_CARD_DELETE_DEVICE_CONFIRMATION,
     LandscapeSizeS,
-} from '../../../../../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../data/enum';
-import Confirmation from '../../../../../../../shared/commoncomponents/backdrop/confirmation/confirmation';
+} from '../../../../../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../../data/Enum';
+import Confirmation from '../../../../../../../shared/commoncomponents/backdrop/confirmation/Confirmation';
 import {
     copyText,
     displayToastify,
     trimToNChars,
-} from '../../../../../../../utils/helperfn';
-import DeviceDataGraph from '../devicedatagraph/devicedatagraph';
-import DeviceRemote from '../deviceremote/deviceremote';
-import Scheduler from '../scheduler/scheduler';
-import './information.css';
+} from '../../../../../../../utils/HelperFn';
+import DeviceDataGraph from '../devicedatagraph/Devicedatagraph';
+import DeviceRemote from '../deviceremote/Deviceremote';
+import Scheduler from '../scheduler/Scheduler';
+import './Information.css';
 
 const Information = ({
     id,

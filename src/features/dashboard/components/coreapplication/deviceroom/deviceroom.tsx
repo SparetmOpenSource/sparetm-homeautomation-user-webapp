@@ -1,28 +1,27 @@
-import { motion } from 'framer-motion';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import { IconContext } from 'react-icons';
 import { FaPowerOff } from 'react-icons/fa6';
 import { PiPlugsConnectedFill } from 'react-icons/pi';
 import { TbPlugConnected } from 'react-icons/tb';
 import { useQueryClient } from 'react-query';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { updateHeaderConfig } from '../../../../../core/api/axios';
-import { featureUrl, useDeviceListData } from '../../../../../core/api/coreappapis';
-import { useTheme } from '../../../../../core/router/themeprovider';
-import { useAppDispatch, useAppSelector } from '../../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../../data/colorconstant';
-import { ERROR_MSG, RoutePath } from '../../../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../data/enum';
-import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../../data/queryconstant';
-import Button from '../../../../../shared/commoncomponents/custombutton/button';
-import ErrorPage from '../../../../../shared/commoncomponents/errorpage/errorpage';
-import LoadingFade from '../../../../../shared/commoncomponents/loadinganimation/loadingfade';
-import { displayToastify, invalidateQueries } from '../../../../../utils/helperfn';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { updateHeaderConfig } from '../../../../../core/api/Axios';
+import { featureUrl, useDeviceListData } from '../../../../../core/api/Coreappapis';
+import { useTheme } from '../../../../../core/router/Themeprovider';
+import { useAppDispatch, useAppSelector } from '../../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../../data/ColorConstant';
+import { ERROR_MSG, RoutePath } from '../../../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../data/Enum';
+import { SELECT_DEVICE_LIST_QUERY_ID } from '../../../../../data/QueryConstant';
+import Button from '../../../../../shared/commoncomponents/custombutton/Button';
+import ErrorPage from '../../../../../shared/commoncomponents/errorpage/Errorpage';
+import LoadingFade from '../../../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import { displayToastify, invalidateQueries } from '../../../../../utils/HelperFn';
 import { useDeviceMutation } from '../../../../devices/hooks/usedevicemutation';
-import { addFirstRoom } from '../../../../devices/store/room/roomslice';
-import DeviceGrid from '../../coreappcomponents/grid/devicegrid';
-import './deviceroom.css';
-
+import { addFirstRoom } from '../../../../devices/store/room/Roomslice';
+import DeviceGrid from '../../coreappcomponents/grid/Devicegrid';
+import './Deviceroom.css';
 
 const DeviceRoom = () => {
     const [color, setColor] = useState<any>(light_colors);
@@ -31,6 +30,10 @@ const DeviceRoom = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const dispatch = useAppDispatch();
+    const [searchParams] = useSearchParams();
+    const searchQuery = searchParams.get('q')?.toLowerCase() || '';
+    const [isSearching, setIsSearching] = useState(false);
+
     const profileData = useAppSelector(
         (state: any) => state?.user?.profileData,
     );
@@ -40,6 +43,14 @@ const DeviceRoom = () => {
     const roomType: any = location?.pathname
         ?.split('/')[3]
         ?.replace('%20', ' ');
+
+    useEffect(() => {
+        setIsSearching(true);
+        const timer = setTimeout(() => {
+            setIsSearching(false);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
 
     useEffect(() => {
         if (!roomType && profileData?.room?.[0]?.room_type) {
@@ -200,17 +211,17 @@ const DeviceRoom = () => {
                 </span>
             </section>
             <section style={{ backgroundColor: color?.inner }}>
-                {isLoading && (
+                {(isLoading || isSearching) && (
                     <div className="deviceRoom_isLoading">
                         <LoadingFade />
                     </div>
                 )}
-                {!isLoading && isError && (
+                {!isLoading && !isSearching && isError && (
                     <div className="deviceRoom_isError">
                         <ErrorPage errMsg={ERROR_MSG} darkTheme={darkTheme} />
                     </div>
                 )}
-                {!isLoading && !isError && <DeviceGrid />}
+                {!isLoading && !isSearching && !isError && <DeviceGrid searchQuery={searchQuery} />}
             </section>
         </div>
     );

@@ -1,8 +1,8 @@
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { NETWORKERRORKEY, spotifyNonPremiumWarning, spotifyNoPlayableDeviceWarning, spotifyUserNotRegisteredWarning } from '../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/enum';
-import { getNotificationConfig } from '../../../utils/notificationconfig';
+import { NETWORKERRORKEY, spotifyNonPremiumWarning, spotifyNoPlayableDeviceWarning, spotifyUserNotRegisteredWarning } from '../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../data/Enum';
+import { getNotificationConfig } from '../../../utils/notificationConfig';
 import { playNotificationSound } from './audioservice';
 
 const toastProperty: any = (color: any) => {

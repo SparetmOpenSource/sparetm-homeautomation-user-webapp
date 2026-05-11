@@ -3,17 +3,17 @@ import { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { LiaUserEditSolid } from 'react-icons/lia';
 import { MdFileOpen, MdOutlineDeleteOutline } from 'react-icons/md';
-import { useBackDropOpen, useTheme } from '../../../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../../../data/colorconstant';
+import { useBackDropOpen, useTheme } from '../../../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../../../data/ColorConstant';
 import {
     DELETING_TODO_LIST,
     EDIT_TODO_LIST,
     HorizontalSize,
     LandscapeSizeS,
-} from '../../../../../../../data/constants';
-import Confirmation from '../../../../../../../shared/commoncomponents/backdrop/confirmation/confirmation';
-import Edit from './edit/edit';
-import './todolisttemp.css';
+} from '../../../../../../../data/Constants';
+import Confirmation from '../../../../../../../shared/commoncomponents/backdrop/confirmation/Confirmation';
+import Edit from './edit/Edit';
+import './Todolisttemp.css';
 
 const TodoListTemp = () => {
     const [color, setColor] = useState<any>(light_colors);

@@ -1,4 +1,4 @@
-import './switch.css';
+import './Switch.css';
 
 const Switch = ({ isOn, handleToggle, onColor }: any) => {
     return (

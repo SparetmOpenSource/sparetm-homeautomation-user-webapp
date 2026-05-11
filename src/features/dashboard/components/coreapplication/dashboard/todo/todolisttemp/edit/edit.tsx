@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import {
     dark_colors,
     light_colors,
-} from '../../../../../../../../data/colorconstant';
-import Button from '../../../../../../../../shared/commoncomponents/custombutton/button';
-import './edit.css';
+} from '../../../../../../../../data/ColorConstant';
+import Button from '../../../../../../../../shared/commoncomponents/custombutton/Button';
+import './Edit.css';
 
 const Edit = ({ darkTheme }: any) => {
     const [color, setColor] = useState<any>(light_colors);

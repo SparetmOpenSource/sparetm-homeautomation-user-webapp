@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useTheme } from '../../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
-import { page_4_socialContact_list } from '../../../../../../data/homepageconstant';
-import './overview.css';
+import { useTheme } from '../../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
+import { page_4_socialContact_list } from '../../../../../../data/HomePageConstant';
+import './Overview.css';
 
 const Overview = () => {
     const [color, setColor] = useState(light_colors);

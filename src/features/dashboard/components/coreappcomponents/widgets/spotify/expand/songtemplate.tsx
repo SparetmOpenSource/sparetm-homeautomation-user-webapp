@@ -9,10 +9,10 @@ import { useSpotifyControls } from '../../../../../../../core/api/spotify/useSpo
 import {
     dark_colors,
     light_colors,
-} from '../../../../../../../data/colorconstant';
-import { SPOTIFY_ACCOUNT_TYPE_GLOBAL, SPOTIFY_PREMIUM_ACCOUNT_TYPE } from '../../../../../../../data/constants';
-import { useProfileLocalStorage } from '../../../../../../../features/auth/utils/authhelpers';
-import { msToTime, trimToNChars } from '../../../../../../../utils/helperfn';
+} from '../../../../../../../data/ColorConstant';
+import { SPOTIFY_ACCOUNT_TYPE_GLOBAL, SPOTIFY_PREMIUM_ACCOUNT_TYPE } from '../../../../../../../data/Constants';
+import { useProfileLocalStorage } from '../../../../../../auth/utils/authhelpers';
+import { msToTime, trimToNChars } from '../../../../../../../utils/HelperFn';
 
 interface SongTemplateProps {
     index: number;
@@ -91,7 +91,7 @@ const SongTemplate = ({
                     <img
                         className="spotify_song_template_image"
                         src={imgUrl}
-                        alt="cover"
+                        alt="Cover"
                         loading="lazy"
                     />
                 )}

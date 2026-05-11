@@ -6,31 +6,31 @@ import { IoMdSearch } from 'react-icons/io';
 import { IoHomeOutline } from 'react-icons/io5';
 import { MdDeviceHub } from 'react-icons/md';
 import { VscLibrary } from 'react-icons/vsc';
-import { dark_colors, light_colors } from '../../../../../../../data/colorconstant';
+import { dark_colors, light_colors } from '../../../../../../../data/ColorConstant';
 import {
     GET_SPOTIFY_QUEUE_STATE_QUERY_ID,
-} from '../../../../../../../data/queryconstant';
-import './expand.css';
+} from '../../../../../../../data/QueryConstant';
+import './Expand.css';
 
 import {
     useSpotifyPlaybackState,
-} from '../../../../../../../core/api/spotify/api';
+} from '../../../../../../../core/api/spotify/Api';
 
-import LoadingFade from '../../../../../../../shared/commoncomponents/loadinganimation/loadingfade';
-import WidgetError from '../../../../../../../shared/commoncomponents/widgeterror/widgeterror';
-import { invalidateQueries } from '../../../../../../../utils/helperfn';
-import { Home } from './home/home';
-import Info from './info/info';
-import Library from './library/library';
-import Search from './search/search';
+import LoadingFade from '../../../../../../../shared/commoncomponents/loadinganimation/Loadingfade';
+import WidgetError from '../../../../../../../shared/commoncomponents/widgeterror/Widgeterror';
+import { invalidateQueries } from '../../../../../../../utils/HelperFn';
+import { Home } from './home/Home';
+import Info from './info/Info';
+import Library from './library/Library';
+import Search from './search/Search';
 
 import { useQueryClient } from 'react-query';
 import {
     SPOTIFY_ACCOUNT_TYPE_GLOBAL,
     SPOTIFY_PREMIUM_ACCOUNT_TYPE,
     SPOTIFY_TOKEN_GLOBAL,
-} from '../../../../../../../data/constants';
-import { useProfileLocalStorage } from '../../../../../../../features/auth/utils/authhelpers';
+} from '../../../../../../../data/Constants';
+import { useProfileLocalStorage } from '../../../../../../auth/utils/authhelpers';
 
 const Expand = ({ darkTheme, handleRefresh }: any) => {
     const [accessToken] = useProfileLocalStorage(SPOTIFY_TOKEN_GLOBAL, '');

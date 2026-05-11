@@ -2,14 +2,14 @@
 import { motion, Reorder } from 'framer-motion';
 import { IconContext } from 'react-icons';
 import { CiCircleChevLeft, CiCircleChevRight, CiLock, CiUnlock } from 'react-icons/ci';
-import './widgetcarousel.css';
+import './Widgetcarousel.css';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useTheme } from '../../../../core/router/themeprovider';
-import { useAppSelector } from '../../../../core/store/reduxhooks';
-import { dark_colors, light_colors } from '../../../../data/colorconstant';
+import { useTheme } from '../../../../core/router/Themeprovider';
+import { useAppSelector } from '../../../../core/store/Reduxhooks';
+import { dark_colors, light_colors } from '../../../../data/ColorConstant';
 
-import { getWidgets, WidgetItem } from './widgetconfig';
+import { getWidgets, WidgetItem } from './Widgetconfig';
 
 const getThemeColors = (isDark: boolean) =>
     isDark ? dark_colors : light_colors;

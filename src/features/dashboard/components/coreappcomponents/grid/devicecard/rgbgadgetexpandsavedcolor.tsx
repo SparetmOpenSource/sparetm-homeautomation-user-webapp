@@ -7,19 +7,19 @@ import { FaHubspot } from 'react-icons/fa';
 import { GiOilySpiral } from 'react-icons/gi';
 import { LuRainbow } from 'react-icons/lu';
 import { TbIrregularPolyhedron } from 'react-icons/tb';
-import { useDeleteDeviceStoreData } from '../../../../../../core/api/coreappapis';
-import { useBackDropOpen } from '../../../../../../core/router/themeprovider';
-import { dark_colors, light_colors } from '../../../../../../data/colorconstant';
+import { useDeleteDeviceStoreData } from '../../../../../../core/api/Coreappapis';
+import { useBackDropOpen } from '../../../../../../core/router/Themeprovider';
+import { dark_colors, light_colors } from '../../../../../../data/ColorConstant';
 import {
     LandscapeSizeS,
     RGB_GADGET_DELETE_DEVICE_SAVED_DATA,
-} from '../../../../../../data/constants';
-import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/enum';
-import Confirmation from '../../../../../../shared/commoncomponents/backdrop/confirmation/confirmation';
+} from '../../../../../../data/Constants';
+import { TOASTIFYCOLOR, TOASTIFYSTATE } from '../../../../../../data/Enum';
+import Confirmation from '../../../../../../shared/commoncomponents/backdrop/confirmation/Confirmation';
 import {
     ConvertTheRange,
     displayToastify,
-} from '../../../../../../utils/helperfn';
+} from '../../../../../../utils/HelperFn';
 import './devicecard.css';
 
 interface RGBA {

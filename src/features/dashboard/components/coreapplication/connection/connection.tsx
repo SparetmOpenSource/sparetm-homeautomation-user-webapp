@@ -7,9 +7,9 @@ import {
 } from 'react-icons/md';
 import { RiPsychotherapyLine } from 'react-icons/ri';
 import { useLocation } from 'react-router-dom';
-import { RoutePath } from '../../../../../data/constants';
-import OptionPage from '../../../../../shared/commoncomponents/uiskin/optionpage/optionpage';
-import './connection.css';
+import { RoutePath } from '../../../../../data/Constants';
+import OptionPage from '../../../../../shared/commoncomponents/uiskin/optionpage/Optionpage';
+import './Connection.css';
 
 const Connection = () => {
     const location = useLocation();

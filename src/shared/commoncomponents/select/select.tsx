@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { dark_colors, light_colors } from '../../../data/colorconstant';
-import { appliance, gadget } from '../../../utils/helperfn';
-import './select.css';
+import { dark_colors, light_colors } from '../../../data/ColorConstant';
+import { appliance, gadget } from '../../../utils/HelperFn';
+import './Select.css';
 
 const Select = ({ darkTheme, setType }: any) => {
   const [color, setColor] = useState<any>(light_colors);
